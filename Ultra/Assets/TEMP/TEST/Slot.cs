@@ -14,7 +14,7 @@ public class Slot : MonoBehaviour
     SlotState state = SlotState.free;
 
     short playerID;
-    GameObject Character;
+    public GameObject Character;
 
     #region State Get/Set
     public SlotState GetSlotState()
