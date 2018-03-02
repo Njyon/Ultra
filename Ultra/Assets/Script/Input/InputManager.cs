@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 
 public class InputManager : MonoBehaviour {
 
@@ -35,7 +34,7 @@ public class InputManager : MonoBehaviour {
             public static P1_LeftStickRight P1_LeftStickRightAction;
             public delegate void P1_LeftStickLeft();
             public static P1_LeftStickLeft P1_LeftStickLeftAction;
-        #endregion
+    #endregion
         #region Vertical Axis
             public delegate void P1_LeftStickUp();
             public static P1_LeftStickUp P1_LeftStickUpAction;
@@ -100,7 +99,7 @@ public class InputManager : MonoBehaviour {
             public static P2_LeftStickRight P2_LeftStickRightAction;
             public delegate void P2_LeftStickLeft();
             public static P2_LeftStickLeft P2_LeftStickLeftAction;
-        #endregion
+    #endregion
         #region Vertical Axis
             public delegate void P2_LeftStickUp();
             public static P2_LeftStickUp P2_LeftStickUpAction;
@@ -344,13 +343,13 @@ public class InputManager : MonoBehaviour {
         #region Vertical Axis
         if (Input.GetAxisRaw("P2_Vertical") == 1)
         {
-            Debug.Log("P1_Horizontal Down");
+            Debug.Log("P2_Horizontal Down");
             if (P2_LeftStickDownAction != null)
                 P2_LeftStickDownAction();
         }
         else if (Input.GetAxisRaw("P2_Vertical") == -1)
         {
-            Debug.Log("P1_Horizontal Up");
+            Debug.Log("P2_Horizontal Up");
             if (P2_LeftStickUpAction != null)
                 P2_LeftStickUpAction();
         }

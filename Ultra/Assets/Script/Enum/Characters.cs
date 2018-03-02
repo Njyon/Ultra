@@ -1,4 +1,5 @@
-﻿public enum Caracters
+﻿[System.Serializable]
+public enum Characters
 {
     None,
     Keeram,
