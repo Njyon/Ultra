@@ -44,7 +44,7 @@ public class CharacterSelecterV2 : MonoBehaviour
         InputManager.P1_LeftStickLeftAction += playerOne.SwitchSlotDown;
         InputManager.P2_LeftStickLeftAction += playerTwo.SwitchSlotDown;
 
-        //Fix
+        //Fix because The Input is an Update and gets called Every Frame
         playerOne.SwitchUpAction += P1SwitchUp;
         playerOne.SwitchDownAction += P1SwitchDown;
         playerTwo.SwitchUpAction += P2SwitchUp;
