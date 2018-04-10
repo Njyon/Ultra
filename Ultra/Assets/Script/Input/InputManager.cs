@@ -141,13 +141,11 @@ public class InputManager : MonoBehaviour {
         #region A Button
         if (Input.GetButtonDown("P1_AButton"))
         {
-            Debug.Log("P1 The 'A' Button Down");
             if (P1_AButtonDownAction != null)
                 P1_AButtonDownAction();
         }
         else if(Input.GetButtonUp("P1_AButton"))
         {
-            Debug.Log("P1 The 'A' Button Up");
             if (P1_AButtonUpAction != null)
                 P1_AButtonUpAction();
         }
@@ -155,13 +153,11 @@ public class InputManager : MonoBehaviour {
         #region B Button
         if (Input.GetButtonDown("P1_BButton"))
         {
-            Debug.Log("P1 The 'B' Button Down");
             if (P1_BButtonDownAction != null)
                 P1_BButtonDownAction();
         }
         else if (Input.GetButtonUp("P1_BButton"))
         {
-            Debug.Log("P1 The 'B' Button Up");
             if (P1_BButtonUpAction != null)
                 P1_BButtonUpAction();
         }
@@ -169,13 +165,11 @@ public class InputManager : MonoBehaviour {
         #region X Button
         if (Input.GetButtonDown("P1_XButton"))
         {
-            Debug.Log("P1 The 'X' Button Down");
             if (P1_XButtonDownAction != null)
                 P1_XButtonDownAction();
         }
         else if (Input.GetButtonUp("P1_XButton"))
         {
-            Debug.Log("P1 The 'X' Button Up");
             if (P1_XButtonUpAction != null)
                 P1_XButtonUpAction();
         }
@@ -183,13 +177,11 @@ public class InputManager : MonoBehaviour {
         #region Y Button
         if (Input.GetButtonDown("P1_YButton"))
         {
-            Debug.Log("P1 The 'Y' Button Down");
             if (P1_YButtonDownAction != null)
                 P1_YButtonDownAction();
         }
         else if (Input.GetButtonUp("P1_YButton"))
         {
-            Debug.Log("P1 The 'Y' Button Up");
             if (P1_YButtonUpAction != null)
                 P1_YButtonUpAction();
         }
@@ -197,13 +189,11 @@ public class InputManager : MonoBehaviour {
         #region Horizontal Axis
         if (Input.GetAxisRaw("P1_Horizontal") == 1)
         {
-            Debug.Log("P1_Horizontal right");
             if (P1_LeftStickRightAction != null)
                 P1_LeftStickRightAction();
         }
         else if(Input.GetAxisRaw("P1_Horizontal") == -1)
         {
-            Debug.Log("P1_Horizontal left");
             if (P1_LeftStickLeftAction != null)
                 P1_LeftStickLeftAction();
         }
@@ -211,13 +201,11 @@ public class InputManager : MonoBehaviour {
         #region Vertical Axis
         if (Input.GetAxisRaw("P1_Vertical") == 1)
         {
-            Debug.Log("P1_Horizontal Down");
             if (P1_LeftStickDownAction != null)
                 P1_LeftStickDownAction();
         }
         else if (Input.GetAxisRaw("P1_Vertical") == -1)
         {
-            Debug.Log("P1_Horizontal Up");
             if (P1_LeftStickUpAction != null)
                 P1_LeftStickUpAction();
         }
@@ -226,14 +214,12 @@ public class InputManager : MonoBehaviour {
         if (Input.GetAxisRaw("P1_LEFTTrigger") == 1 && !P1_TriggerStateLeft)
         {
             P1_TriggerStateLeft = true;
-            Debug.Log("P1 The 'LeftTrigger' Button Down");
             if (P1_LeftTriggerDownAction != null)
                 P1_LeftTriggerDownAction();
         }
         else if(Input.GetAxisRaw("P1_LEFTTrigger") == 0 && P1_TriggerStateLeft)
         {
             P1_TriggerStateLeft = false;
-            Debug.Log("P1 The 'LeftTrigger' Button Up");
             if (P1_LeftTriggerUpAction != null)
                 P1_LeftTriggerUpAction();
         }
@@ -242,14 +228,12 @@ public class InputManager : MonoBehaviour {
         if (Input.GetAxisRaw("P1_RIGHTTrigger") == -1 && !P1_TriggertStateRight)
         {
             P1_TriggertStateRight = true;
-            Debug.Log("P1 The 'RightTrigger' Button Down");
             if (P1_RightTiggerDownAction != null)
                 P1_RightTiggerDownAction();
         }
         else if (Input.GetAxisRaw("P1_RIGHTTrigger") == 0 && P1_TriggertStateRight)
         {
             P1_TriggertStateRight = false;
-            Debug.Log("P1 The 'RightTrigger' Button Up");
             if (P1_RightTiggerUpAction != null)
                 P1_RightTiggerUpAction();
         }
@@ -257,13 +241,11 @@ public class InputManager : MonoBehaviour {
         #region START / BACK
         if(Input.GetButtonDown("P1_START"))
         {
-            Debug.Log("P1 START Pressed");
             if (P1_StartButtonAction != null)
                 P1_StartButtonAction();
         }
         if(Input.GetButtonDown("P1_BACK"))
         {
-            Debug.Log("P1 SELECT Pressed");
             if (P1_SelectButtonAction != null)
                 P1_SelectButtonAction();
         }
@@ -273,13 +255,11 @@ public class InputManager : MonoBehaviour {
         #region A Button
         if (Input.GetButtonDown("P2_AButton"))
         {
-            Debug.Log("P2 The 'A' Button Down");
             if (P2_AButtonDownAction != null)
                 P2_AButtonDownAction();
         }
         else if (Input.GetButtonUp("P2_AButton"))
         {
-            Debug.Log("P2 The 'A' Button Up");
             if (P2_AButtonUpAction != null)
                 P2_AButtonUpAction();
         }
@@ -287,13 +267,11 @@ public class InputManager : MonoBehaviour {
         #region B Button
         if (Input.GetButtonDown("P2_BButton"))
         {
-            Debug.Log("P2 The 'B' Button Down");
             if (P2_BButtonDownAction != null)
                 P2_BButtonDownAction();
         }
         else if (Input.GetButtonUp("P2_BButton"))
         {
-            Debug.Log("P2 The 'B' Button Up");
             if (P2_BButtonUpAction != null)
                 P2_BButtonUpAction();
         }
@@ -301,13 +279,11 @@ public class InputManager : MonoBehaviour {
         #region X Button
         if (Input.GetButtonDown("P2_XButton"))
         {
-            Debug.Log("P2 The 'X' Button Down");
             if (P2_XButtonDownAction != null)
                 P2_XButtonDownAction();
         }
         else if (Input.GetButtonUp("P2_XButton"))
         {
-            Debug.Log("P2 The 'X' Button Up");
             if (P2_XButtonUpAction != null)
                 P2_XButtonUpAction();
         }
@@ -315,13 +291,11 @@ public class InputManager : MonoBehaviour {
         #region Y Button
         if (Input.GetButtonDown("P2_YButton"))
         {
-            Debug.Log("P2 The 'Y' Button Down");
             if (P2_YButtonDownAction != null)
                 P2_YButtonDownAction();
         }
         else if (Input.GetButtonUp("P2_YButton"))
         {
-            Debug.Log("P2 The 'Y' Button Up");
             if (P2_YButtonUpAction != null)
                 P2_YButtonUpAction();
         }
@@ -329,13 +303,11 @@ public class InputManager : MonoBehaviour {
         #region Horizontal Axis
         if (Input.GetAxisRaw("P2_Horizontal") == 1)
         {
-            Debug.Log("P2_Horizontal right");
             if (P2_LeftStickRightAction != null)
                 P2_LeftStickRightAction();
         }
         else if (Input.GetAxisRaw("P2_Horizontal") == -1)
         {
-            Debug.Log("P2_Horizontal left");
             if (P2_LeftStickLeftAction != null)
                 P2_LeftStickLeftAction();
         }
@@ -343,13 +315,11 @@ public class InputManager : MonoBehaviour {
         #region Vertical Axis
         if (Input.GetAxisRaw("P2_Vertical") == 1)
         {
-            Debug.Log("P2_Horizontal Down");
             if (P2_LeftStickDownAction != null)
                 P2_LeftStickDownAction();
         }
         else if (Input.GetAxisRaw("P2_Vertical") == -1)
         {
-            Debug.Log("P2_Horizontal Up");
             if (P2_LeftStickUpAction != null)
                 P2_LeftStickUpAction();
         }
@@ -358,14 +328,12 @@ public class InputManager : MonoBehaviour {
         if (Input.GetAxisRaw("P2_LEFTTrigger") == 1 && !P2_TriggerStateLeft)
         {
             P2_TriggerStateLeft = true;
-            Debug.Log("P2 The 'LeftTrigger' Button Down");
             if (P2_LeftTriggerDownAction != null)
                 P2_LeftTriggerDownAction();
         }
         else if (Input.GetAxisRaw("P2_LEFTTrigger") == 0 && P2_TriggerStateLeft)
         {
             P2_TriggerStateLeft = false;
-            Debug.Log("P2 The 'LeftTrigger' Button Up");
             if (P2_LeftTriggerUpAction != null)
                 P2_LeftTriggerUpAction();
         }
@@ -374,14 +342,12 @@ public class InputManager : MonoBehaviour {
         if (Input.GetAxisRaw("P2_RIGHTTrigger") == -1 && !P2_TriggertStateRight)
         {
             P2_TriggertStateRight = true;
-            Debug.Log("P2 The 'RightTrigger' Button Down");
             if (P2_RightTiggerDownAction != null)
                 P2_RightTiggerDownAction();
         }
         else if (Input.GetAxisRaw("P2_RIGHTTrigger") == 0 && P2_TriggertStateRight)
         {
             P2_TriggertStateRight = false;
-            Debug.Log("P2 The 'RightTrigger' Button Up");
             if (P2_RightTiggerUpAction != null)
                 P2_RightTiggerUpAction();
         }
@@ -389,13 +355,11 @@ public class InputManager : MonoBehaviour {
         #region START / BACK
         if (Input.GetButtonDown("P2_START"))
         {
-            Debug.Log("P2 START Pressed");
             if (P2_StartButtonAction != null)
                 P2_StartButtonAction();
         }
         if (Input.GetButtonDown("P2_BACK"))
         {
-            Debug.Log("P2 SELECT Pressed");
             if (P2_SelectButtonAction != null)
                 P2_SelectButtonAction();
         }

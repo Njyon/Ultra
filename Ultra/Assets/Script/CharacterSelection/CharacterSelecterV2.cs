@@ -59,11 +59,21 @@ public class CharacterSelecterV2 : MonoBehaviour
         InputManager.P1_AButtonDownAction -= playerOne.SelectSlot;
         InputManager.P2_AButtonDownAction -= playerTwo.SelectSlot;
 
+        InputManager.P1_AButtonDownAction -= Check;
+        InputManager.P2_AButtonDownAction -= Check;
+
         InputManager.P1_AButtonDownAction -= playerOne.UnselectSlot;
         InputManager.P2_AButtonDownAction -= playerTwo.UnselectSlot;
+
+        InputManager.P1_LeftStickRightAction -= playerOne.SwitchSlotUp;
+        InputManager.P2_LeftStickRightAction -= playerTwo.SwitchSlotUp;
+
+        InputManager.P1_LeftStickLeftAction -= playerOne.SwitchSlotDown;
+        InputManager.P2_LeftStickLeftAction -= playerTwo.SwitchSlotDown;
     }
 #endregion
-    
+
+    // TEST
     void Update()
     {
         if (Input.GetButtonDown("Jump"))
