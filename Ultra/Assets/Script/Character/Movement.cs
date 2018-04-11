@@ -4,37 +4,97 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public float jumpVelocity;
-    public float movementSpeed;
-    [Range(0,10)]
-    public float fallSpeed;
+
+    // Helper
     MyCharacter myCharacter;
     Rigidbody rb;
-
     PlayerEnum playerEnum = PlayerEnum.NotAssigned;
 
+    // Movement
+    public float movementSpeed;
+    float wallDetectionLength = 0.6f;
+    bool isFalling = false;
+   
+    // Jump
+    public float jumpVelocity;
+    [Range(0, 10)]
+    public float fallSpeed;
     int jumps = 0;
     [Header("How much Jumps in a Row")]
     public int maxJumps;
 
+    //Dash
+    [Header("Dash")]
+    public float dashLength;
+    public float dashTime;
+    float currentDashTime;
+    float journeyLength;
+    float dashWallDistance = 0.6f;
+    bool isDashing = false;
+    Vector3 dashEndPoint;
+
+    //WallSlide
+    bool isOnWallRight = false;
+    bool isOnWallLeft = false;
+
     void Awake()
     {
         rb = this.gameObject.GetComponent<Rigidbody>();
-        rb.sleepThreshold = 0;
     }
+
+    //////////////////////////////////////////////////
+    ////////////////       Update       //////////////
+    //////////////////////////////////////////////////
 
     void Update()
     {
-        if(rb.velocity.y == 0)
+        Falling();
+        Dash();
+
+
+        if(this.isOnWallRight)
         {
-            if (jumps > 0)
-                ResetJumps();
+            RaycastHit hit;
+            if (this.gameObject.transform.localPosition.x < 0)
+            {
+                if (!Physics.Raycast(this.gameObject.transform.position, new Vector3(-this.gameObject.transform.localPosition.x, 0, 0), out hit, this.wallDetectionLength, 9, QueryTriggerInteraction.Ignore))
+                {
+                    this.isOnWallRight = false;
+                }
+            }
+            else
+            {
+                if (!Physics.Raycast(this.gameObject.transform.position, new Vector3(this.gameObject.transform.localPosition.x, 0, 0), out hit, this.wallDetectionLength, 9, QueryTriggerInteraction.Ignore))
+                {
+                    this.isOnWallRight = false;
+                }
+            }
         }
-        else if(rb.velocity.y < 0)
+        else if(this.isOnWallLeft)
         {
-          rb.velocity += Vector3.up * Physics.gravity.y * (fallSpeed - 1) * Time.deltaTime;
+            RaycastHit hit;
+            if (this.gameObject.transform.localPosition.x < 0)
+            {
+                if (!Physics.Raycast(this.gameObject.transform.position, new Vector3(this.gameObject.transform.localPosition.x, 0, 0), out hit, this.wallDetectionLength, 9, QueryTriggerInteraction.Ignore))
+                {
+                    this.isOnWallLeft = false;
+                    Debug.Log("LEFT");
+                }
+            }
+            else
+            {
+                if (!Physics.Raycast(this.gameObject.transform.position, new Vector3(-this.gameObject.transform.localPosition.x, 0, 0), out hit, this.wallDetectionLength, 9, QueryTriggerInteraction.Ignore))
+                {
+                    Debug.Log("LefT");
+                    this.isOnWallLeft = false;
+                }
+            }
         }
     }
+
+    //////////////////////////////////////////////////
+    ////////////////       Helper       //////////////
+    //////////////////////////////////////////////////
 
     #region Input
     public void AssigneInput()
@@ -91,7 +151,7 @@ public class Movement : MonoBehaviour
         jumps = 0;
     }
     
-    void DashCoolDown()
+    void DashInvinceble()
     {
         myCharacter.canGetDamaged = true;
     }
@@ -104,12 +164,12 @@ public class Movement : MonoBehaviour
                 if(Input.GetAxisRaw("P1_Horizontal") == 1)
                 {
                     //Right
-                    DashRayCast();
+                    DashRayCast(true);
                 }
                 else if(Input.GetAxisRaw("P1_Horizontal") == -1)
                 {
                     //Left
-
+                    DashRayCast(false);
                 }
                 else
                 {
@@ -120,13 +180,13 @@ public class Movement : MonoBehaviour
                 if (Input.GetAxisRaw("P2_Horizontal") == 1)
                 {
                     //Right
-                    DashRayCast();
+                    DashRayCast(true);
 
                 }
                 else if (Input.GetAxisRaw("P2_Horizontal") == -1)
                 {
                     //Left
-
+                    DashRayCast(false);
                 }
                 else
                 {
@@ -138,6 +198,37 @@ public class Movement : MonoBehaviour
                 break;
         }
     }
+    // Change Gravity for Jump Balancing!  Edit -> Project Setting -> Physics -> Gravity Y
+    void Falling()
+    {
+        if(this.isOnWallLeft || this.isOnWallRight)
+        {
+            if(jumps == 0)
+                rb.velocity = -Vector3.up * 2;
+        }
+        else if (rb.velocity.y == 0)
+        {
+            isFalling = false;
+            if (jumps > 0)
+                ResetJumps();
+        }
+        else if (rb.velocity.y < 0)
+        {
+            isFalling = true;
+            rb.velocity += Vector3.up * Physics.gravity.y * (fallSpeed - 1) * Time.deltaTime;
+        }
+    }
+
+    void Dash()
+    {
+        if (isDashing)
+        {
+            currentDashTime -= Time.deltaTime;
+            float travel = currentDashTime / journeyLength;
+
+            this.transform.position = Vector3.Lerp(this.gameObject.transform.localPosition, this.dashEndPoint, travel);
+        }
+    }
 
     //////////////////////////////////////////////////
     //////////////// Movement Functions //////////////
@@ -145,27 +236,120 @@ public class Movement : MonoBehaviour
 
     void MoveRight()
     {
+        RaycastHit hit;
+
         if(this.transform.rotation.y != 0)
         {
             this.transform.rotation = new Quaternion(0,0,0,0);
         }
-        this.gameObject.transform.position += Vector3.right * movementSpeed * Time.deltaTime;
+        if (this.gameObject.transform.localPosition.x < 0)
+        {
+            if (Physics.Raycast(this.gameObject.transform.position, new Vector3(-this.gameObject.transform.localPosition.x, 0, 0), out hit, this.wallDetectionLength, 9, QueryTriggerInteraction.Ignore))
+            {
+                //Wallrun
+                if(!this.isOnWallLeft && !this.isOnWallRight)
+                {
+                    this.isOnWallRight = true;
+                    ResetJumps();
+                }
+            }
+            else
+            {
+                this.gameObject.transform.position += Vector3.right * movementSpeed * Time.deltaTime;
+            }
+        }
+        else
+        {
+            if (Physics.Raycast(this.gameObject.transform.position, new Vector3(this.gameObject.transform.localPosition.x, 0, 0), out hit, this.wallDetectionLength, 9, QueryTriggerInteraction.Ignore))
+            {
+                //Wallrun
+                if (!this.isOnWallLeft && !this.isOnWallRight)
+                {
+                    this.isOnWallRight = true;
+                    ResetJumps();
+                }
+            }
+            else
+            {
+                this.gameObject.transform.position += Vector3.right * movementSpeed * Time.deltaTime;
+            }
+        }
     }
 
     void MoveLeft()
     {
+        RaycastHit hit;
+
         if (this.transform.rotation.y != 180)
         {
             this.transform.rotation = new Quaternion(0, 180, 0, 0);
         }
-        this.gameObject.transform.position += Vector3.left * movementSpeed * Time.deltaTime;
+        if (this.gameObject.transform.localPosition.x < 0)
+        {
+            if (Physics.Raycast(this.gameObject.transform.position, new Vector3(this.gameObject.transform.localPosition.x, 0, 0), out hit, this.wallDetectionLength, 9, QueryTriggerInteraction.Ignore))
+            {
+                //Wallrun
+                if (!this.isOnWallLeft && !this.isOnWallRight)
+                {
+                    this.isOnWallLeft = true;
+                    ResetJumps();
+                }
+            }
+            else
+            {
+                this.gameObject.transform.position += Vector3.left * movementSpeed * Time.deltaTime;
+            }
+        }
+        else
+        {
+            if (Physics.Raycast(this.gameObject.transform.position, new Vector3(-this.gameObject.transform.localPosition.x, 0, 0), out hit, this.wallDetectionLength, 9, QueryTriggerInteraction.Ignore))
+            {
+                //Wallrun
+                if (!this.isOnWallLeft && !this.isOnWallRight)
+                {
+                    this.isOnWallLeft = true;
+                    ResetJumps();
+                }
+            }
+            else
+            {
+                this.gameObject.transform.position += Vector3.left * movementSpeed * Time.deltaTime;
+            }
+        }
     }
 
     void Jump()
     {
-        if (jumps < maxJumps)
+        if (this.isOnWallLeft)
         {
-            this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.up * jumpVelocity;
+            if(this.gameObject.transform.position.x < 0)
+            {
+                this.rb.velocity = Vector3.up * jumpVelocity + Vector3.right * jumpVelocity;
+                jumps++;
+            }
+            else
+            {
+                this.rb.velocity = Vector3.up * jumpVelocity + Vector3.right * jumpVelocity;
+                jumps++;
+            }
+            Debug.Log("Left");
+        }
+        else if(this.isOnWallRight)
+        {
+            if (this.gameObject.transform.position.x < 0)
+            {
+                this.rb.velocity = Vector3.up * jumpVelocity + Vector3.left * jumpVelocity;
+                jumps++;
+            }
+            else
+            {
+                this.rb.velocity = Vector3.up * jumpVelocity + Vector3.left * jumpVelocity;
+                jumps++;
+            }
+        }
+        else if (jumps < maxJumps)
+        {
+            this.rb.velocity = Vector3.up * jumpVelocity;
             jumps++;
         }
     }
@@ -176,17 +360,84 @@ public class Movement : MonoBehaviour
         Invoke("DashCoolDown", myCharacter.dashTime);
     }
 
-    void DashRayCast()
+    void DashRayCast(bool directionRight)
     {
+        currentDashTime = dashTime;
+        isDashing = true;
         RaycastHit hit;
-        Debug.Log("FUCKUUUUUUUUUUUUUUUUUUUU");
-        
-        Debug.DrawRay(this.gameObject.transform.position + Vector3.up, Vector3.right * 10, Color.red, 10.0f);
-        if(Physics.Raycast(this.gameObject.transform.position + Vector3.up, Vector3.right, out hit, 5.0f))
+        StartCoroutine(TEST());
+
+        if (directionRight)     //Right
         {
-            Debug.Log(hit.collider.gameObject.name);
+            if (this.gameObject.transform.localPosition.x < 0)
+            {
+                if (Physics.Raycast(this.gameObject.transform.position, new Vector3(-this.gameObject.transform.localPosition.x, 0, 0), out hit, dashLength, 9, QueryTriggerInteraction.Ignore))            //WALLHIT
+                {
+                    Debug.Log(hit.transform.gameObject.name);
+                    Debug.DrawLine(this.gameObject.transform.position, hit.point, Color.red, 10f);
+
+                    dashEndPoint = new Vector3(hit.point.x - wallDetectionLength, hit.point.y, hit.point.z);
+                }
+                else            //NO WALL
+                {
+                    dashEndPoint = new Vector3(this.gameObject.transform.localPosition.x + dashLength, this.gameObject.transform.localPosition.y, this.gameObject.transform.localPosition.z);
+                }
+                journeyLength = Vector3.Distance(this.gameObject.transform.localPosition, dashEndPoint);
+            }
+            else
+            {
+                if (Physics.Raycast(this.gameObject.transform.position, new Vector3(this.gameObject.transform.localPosition.x, 0, 0), out hit, dashLength, 9, QueryTriggerInteraction.Ignore))             //WALLHIT
+                {
+                    Debug.Log(hit.transform.gameObject.name);
+                    Debug.DrawLine(this.gameObject.transform.position, hit.point, Color.red, 10f);
+
+                    dashEndPoint = new Vector3(hit.point.x + wallDetectionLength, hit.point.y, hit.point.z);
+                }
+                else                // NO WALL
+                {
+                    dashEndPoint = new Vector3(this.gameObject.transform.localPosition.x + dashLength, this.gameObject.transform.localPosition.y, this.gameObject.transform.localPosition.z);
+                }
+                journeyLength = Vector3.Distance(this.gameObject.transform.localPosition, dashEndPoint);
+            }
+        }
+        else                //Left
+        {
+            if (this.gameObject.transform.localPosition.x < 0)
+            {
+                if (Physics.Raycast(this.gameObject.transform.position, new Vector3(this.gameObject.transform.localPosition.x, 0, 0), out hit, dashLength, 9, QueryTriggerInteraction.Ignore))         //WALLHIT
+                {
+                    Debug.Log(hit.transform.gameObject.name);
+                    Debug.DrawLine(this.gameObject.transform.position, hit.point, Color.red, 10f);
+
+                    dashEndPoint = new Vector3(hit.point.x - wallDetectionLength, hit.point.y, hit.point.z);
+                }
+                else                        // NO WALL
+                {
+                    dashEndPoint = new Vector3(this.gameObject.transform.localPosition.x - dashLength, this.gameObject.transform.localPosition.y, this.gameObject.transform.localPosition.z);
+                }
+                journeyLength = Vector3.Distance(this.gameObject.transform.localPosition, dashEndPoint);
+            }
+            else
+            {
+                if (Physics.Raycast(this.gameObject.transform.position, new Vector3(-this.gameObject.transform.localPosition.x, 0, 0), out hit, dashLength, 9, QueryTriggerInteraction.Ignore))        //WALLHIT
+                {
+                    Debug.Log(hit.transform.gameObject.name);
+                    Debug.DrawLine(this.gameObject.transform.position, hit.point, Color.red, 10f);
+
+                    dashEndPoint = new Vector3(hit.point.x + wallDetectionLength, hit.point.y, hit.point.z);
+                }
+                else                        // NO WALL
+                {
+                    dashEndPoint = new Vector3(this.gameObject.transform.localPosition.x - dashLength, this.gameObject.transform.localPosition.y, this.gameObject.transform.localPosition.z);
+                }
+                journeyLength = Vector3.Distance(this.gameObject.transform.localPosition, dashEndPoint);
+            }
         }
     }
 
-
+    IEnumerator TEST()
+    {
+        yield return new WaitForSeconds(0.2f);
+        isDashing = false;
+    }
 }
