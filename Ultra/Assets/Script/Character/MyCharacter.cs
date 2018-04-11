@@ -4,7 +4,16 @@ using UnityEngine;
 
 public class MyCharacter : MonoBehaviour
 {
-    PlayerEnum playerEnum = PlayerEnum.NotAssigned;
+    public float dashTime;
+    [HideInInspector]
+    public PlayerEnum playerEnum = PlayerEnum.NotAssigned;
+    [HideInInspector]
+    public bool canGetDamaged = true;
+
+    public void Posses()
+    {
+        this.gameObject.GetComponent<Movement>().AssigneInput();
+    }
 
     void Awake()
     {
@@ -13,7 +22,7 @@ public class MyCharacter : MonoBehaviour
 
     void Start ()
     {
-		
+
 	}
 
 	void Update ()

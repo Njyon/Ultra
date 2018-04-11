@@ -22,7 +22,10 @@ GameObject:
   - component: {fileID: 33400153578110134}
   - component: {fileID: 65302234029837068}
   - component: {fileID: 23340730608084304}
-  m_Layer: 0
+  - component: {fileID: 54525834856652716}
+  - component: {fileID: 114056567882989614}
+  - component: {fileID: 114624803549891892}
+  m_Layer: 8
   m_Name: pref_Nav
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +43,7 @@ GameObject:
   - component: {fileID: 33980318641153332}
   - component: {fileID: 65663383435424396}
   - component: {fileID: 23657607789620668}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Direction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,6 +159,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1724769240192612}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54525834856652716
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1392969457632022}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 88
+  m_CollisionDetection: 0
 --- !u!65 &65302234029837068
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -180,3 +198,32 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114056567882989614
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1392969457632022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55ffb1bf9a8876d4b98692fa8f378be8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashTime: 0
+  playerEnum: 0
+  canGetDamaged: 1
+--- !u!114 &114624803549891892
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1392969457632022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 065ca2ba2f9d99d4a82029ef3e158dc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpVelocity: 6.5
+  movementSpeed: 5
+  fallSpeed: 1.5
+  maxJumps: 2

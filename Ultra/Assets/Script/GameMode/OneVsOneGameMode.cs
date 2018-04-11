@@ -59,20 +59,28 @@ public class OneVsOneGameMode : MonoBehaviour
                 if(isPlayerOne)
                 {
                     PlayerOne = Instantiate(keeram, SpawnLocationP1.transform.position, SpawnLocationP1.transform.rotation);
+                    PlayerOne.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerOne;
+                    PlayerOne.GetComponent<MyCharacter>().Posses();
                 }
                 else
                 {
                     PlayerTwo = Instantiate(keeram, SpawnLocationP2.transform.position, SpawnLocationP2.transform.rotation);
+                    PlayerTwo.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerTwo;
+                    PlayerTwo.GetComponent<MyCharacter>().Posses();
                 }
                 break;
             case Characters.Nav:
                 if (isPlayerOne)
                 {
                     PlayerOne = Instantiate(nav, SpawnLocationP1.transform.position, SpawnLocationP1.transform.rotation);
+                    PlayerOne.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerOne;
+                    PlayerOne.GetComponent<MyCharacter>().Posses();
                 }
                 else
                 {
                     PlayerTwo = Instantiate(nav, SpawnLocationP2.transform.position, SpawnLocationP2.transform.rotation);
+                    PlayerTwo.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerTwo;
+                    PlayerTwo.GetComponent<MyCharacter>().Posses();
                 }
 
                 break;
