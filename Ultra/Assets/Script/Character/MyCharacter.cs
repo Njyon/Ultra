@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class MyCharacter : MonoBehaviour
 {
-    public float dashTime;
     [HideInInspector]
     public PlayerEnum playerEnum = PlayerEnum.NotAssigned;
     [HideInInspector]
     public bool canGetDamaged = true;
+    [HideInInspector]
+    public bool isDisabled = false;
+    [HideInInspector]
+    public bool isStunned = false;
 
     public void Posses()
     {

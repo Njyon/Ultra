@@ -27,7 +27,6 @@ public class OneVsOneGameMode : MonoBehaviour
         if(playerInfoManagerObj == null)
         {
             Debug.Log("<color=red> Player Info Manager GameObject Not Found </color>");
-            UnityEditor.EditorApplication.isPlaying = false;
         }
 
         //Get PlayerInfoManager
@@ -35,7 +34,6 @@ public class OneVsOneGameMode : MonoBehaviour
         if(playerInfoManager == null)
         {
             Debug.Log("<color=red> Player Info Manager Script Not Found </color>");
-            UnityEditor.EditorApplication.isPlaying = false;
         }
 
         //PlayerOne
@@ -50,7 +48,6 @@ public class OneVsOneGameMode : MonoBehaviour
         if (keeram == null || nav == null)
         {
             Debug.Log("<color=red> Characters not Assigned to GameMode </color>");
-            UnityEditor.EditorApplication.isPlaying = false;
         }
 
         switch (character)
@@ -89,12 +86,10 @@ public class OneVsOneGameMode : MonoBehaviour
                 if(isPlayerOne)
                 {
                     Debug.Log("<color=red> Player One No Character Assigned </color>");
-                    UnityEditor.EditorApplication.isPlaying = false;
                 }
                 else
                 {
                     Debug.Log("<color=red> Player Two No Character Assigned </color>");
-                    UnityEditor.EditorApplication.isPlaying = false;
                 }
                 break;
         }

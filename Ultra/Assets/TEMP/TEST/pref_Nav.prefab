@@ -209,7 +209,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55ffb1bf9a8876d4b98692fa8f378be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashTime: 0
   playerEnum: 0
   canGetDamaged: 1
 --- !u!114 &114624803549891892
@@ -224,8 +223,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 5
+  inAirSpeed: 5
   jumpVelocity: 6.5
   fallSpeed: 1.5
   maxJumps: 2
+  maxDashes: 2
   dashLength: 5
   dashTime: 1
+  dashCoolDown: 0.7
