@@ -23,8 +23,8 @@ GameObject:
   - component: {fileID: 65302234029837068}
   - component: {fileID: 23340730608084304}
   - component: {fileID: 54525834856652716}
-  - component: {fileID: 114056567882989614}
-  - component: {fileID: 114624803549891892}
+  - component: {fileID: 114803605130952990}
+  - component: {fileID: 114398072283876412}
   m_Layer: 8
   m_Name: pref_Nav
   m_TagString: Untagged
@@ -198,7 +198,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114056567882989614
+--- !u!114 &114398072283876412
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -206,28 +206,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 1392969457632022}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55ffb1bf9a8876d4b98692fa8f378be8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerEnum: 0
-  canGetDamaged: 1
---- !u!114 &114624803549891892
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1392969457632022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 065ca2ba2f9d99d4a82029ef3e158dc4, type: 3}
+  m_Script: {fileID: 11500000, guid: 13169db08a88eef47be2d9c411bafcc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 5
-  inAirSpeed: 5
-  jumpVelocity: 6.5
+  inAirSpeed: 3
+  jumpVelocity: 5
   fallSpeed: 1.5
   maxJumps: 2
   maxDashes: 2
   dashLength: 5
   dashTime: 1
   dashCoolDown: 0.7
+--- !u!114 &114803605130952990
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1392969457632022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5023ab56b196b041a96abc8bc28cfd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerEnum: 0
+  canGetDamaged: 1
+  isDisabled: 0
+  isStunned: 0
