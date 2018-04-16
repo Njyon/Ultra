@@ -15,7 +15,7 @@ public class destructible : MonoBehaviour {
     private Vector3 origPos;
     private float origPosX;
 
-
+    #region Public Game Objects
     //Public
     public GameObject trigger;
     public GameObject AButton;
@@ -24,6 +24,8 @@ public class destructible : MonoBehaviour {
     public GameObject YButton;
     public GameObject JoyLeft;
     //public GameObject JoyRight;
+
+    #endregion
 
 
 
@@ -129,6 +131,7 @@ public class destructible : MonoBehaviour {
     }
 
 
+
     private void OnTriggerEnter(Collider trigger)
     {
         UnfreezeMovement();
@@ -173,7 +176,6 @@ public class destructible : MonoBehaviour {
 
     private void ChangeColor(GameObject button, Color newColor)
     {
-        //button = button.GetComponent<Renderer>();
         Material rend = button.GetComponent<Renderer>().material;
         rend.color = newColor;
     } 
