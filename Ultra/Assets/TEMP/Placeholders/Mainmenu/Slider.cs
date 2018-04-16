@@ -2,17 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Slider : mmTest {
+public class Slider : MonoBehaviour {
 
-    private GameObject[] player;
-    //public GameObject slider;
-    private int sliderCurrent;
-    private int sliderRange = 10;
-    public int sliderStart = 0;
-    private Vector3 sliderStep;
+    private GameObject playerObj;
+    private float xValue = 0.0f;
+    private float incrementX = 1.0f;
 
     private bool inTrigger = false;
-    private bool plus;
 
 
 
@@ -20,59 +16,64 @@ public class Slider : mmTest {
     // Use this for initialization
     void Start () {
 
-        player = GameObject.FindGameObjectsWithTag("player");
+        playerObj = GameObject.Find("player");
 
-        sliderCurrent = sliderStart;
-        sliderStep = new Vector3(1.0f, 0, 0);
+        return;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetAxisRaw("P1_RIGHTTrigger") == 1)
-        {
-            Debug.Log("trigger_RIGHT");
-            Activated(true);
-        }else if (Input.GetAxisRaw("P1_LEFTTrigger") == 1)
-        {
-            Debug.Log("trigger_LEFT");
-            Activated(false);
-        }
+
+
+
+
+        //if (Input.GetButtonDown("P1_YButton"))
+        //{
+        //    Debug.Log("trigger_Y");
+        //    Activated();
+        //}
+        //else if (Input.GetButtonDown("P1_XButton"))
+        //{
+        //    Debug.Log("trigger_X");
+        //    Activated();
+        //}
     }
 
-    private void OnTriggerEnter(Collider player)
+    private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("Enter");
-        inTrigger = true;
-
-           
+        Activated();
+        //how to acces a specific collider that collides with this trigger?
     }
 
-    private void OnTriggerExit(Collider player)
+    private void OnTriggerExit(Collider other)
     {
-        //Debug.Log("Exit");
         inTrigger = false;
-
     }
 
-    private void Activated(bool add)
+    private void Activated()
     {
-        if(this.transform.position.x >= -5 && this.transform.position.x <= 5 && add == true)
-        {
-            this.transform.position += sliderStep;
-            //sliderCurrent++;
-            Debug.Log("1");
 
-        }else if (this.transform.position.x >= -5  && this.transform.position.x <= 5 && add == false)
+        if (xValue >= -5 && xValue <= 5)
         {
-            Debug.Log("2");
-            this.transform.position -= sliderStep;
-            //sliderCurrent--;
-           
+            if(Input.GetButtonDown("P1_YButton"))
+            {
+                xValue += incrementX;
+                Debug.Log("Y");
+
+                transform.Translate(xValue, 0, 0);
+                Debug.Log(transform.position.x + "  :  " + xValue);
+            }
+            else if(Input.GetButtonDown("P1_XButton"))
+            {
+                xValue -= incrementX;
+                Debug.Log("X");
+
+                transform.Translate(xValue, 0, 0);
+                Debug.Log(transform.position.x + "  :  " + xValue);
+            }
         }
         else
         {
-            Rigidbody rb = this.gameObject.GetComponent<Rigidbody>();
-            rb.constraints = RigidbodyConstraints.FreezePositionX;
             Debug.Log("not met");
         }
     } 

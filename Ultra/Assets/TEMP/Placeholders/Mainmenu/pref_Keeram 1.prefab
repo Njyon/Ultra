@@ -206,13 +206,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1539067981596278}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d57bb2ed7a835047b7af39d00f5b562, type: 3}
+  m_Script: {fileID: 11500000, guid: 56663af525b629444af9df176dc5aab6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 2
-  inAirSpeed: 5
+  movementSpeed: 5
+  inAirSpeed: 2
   jumpVelocity: 15
-  fallSpeed: 2
+  fallSpeed: 10
   maxJumps: 2
   maxDashes: 2
   dashLength: 2
@@ -226,7 +226,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1539067981596278}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0c5a89dadc703f4e8aac81dc6988418, type: 3}
+  m_Script: {fileID: 11500000, guid: 41bd87689ecb1284881014eec8f82581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerEnum: 0
