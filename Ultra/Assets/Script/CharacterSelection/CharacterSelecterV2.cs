@@ -124,14 +124,12 @@ public class CharacterSelecterV2 : MonoBehaviour
         if (p1Keeram == null || p2Keeram == null)
         {
             Debug.Log("<color=red>Not Enough Characters in CharacterSelecter</color> ");
-            UnityEditor.EditorApplication.isPlaying = false;
         }
         for (int i = 0; i < amountOfPlayableCharacters; i++)
         {
             if (playerOne.characters[i] == null || playerTwo.characters[i] == null)
             {
                 Debug.Log("<color=red>Not Enough Characters in CharacterSelecter Array</color> ");
-                UnityEditor.EditorApplication.isPlaying = false;
             }
         }
 #endregion
