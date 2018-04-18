@@ -10,6 +10,12 @@ public class Movement : MonoBehaviour
     Rigidbody rb;
     PlayerEnum playerEnum = PlayerEnum.NotAssigned;
     bool lookToTheRight;
+    bool isTurningRight = false;
+    bool isTurningLeft = false;
+    float currentTurntime = 0;
+
+    [Header("Time the Character needs to turn")]
+    public float maxTurningTime;
 
     // Movement
     [Header("Movement")]
@@ -44,7 +50,7 @@ public class Movement : MonoBehaviour
     //WallSlide
     bool isOnWallRight = false;
     bool isOnWallLeft = false;
-
+    
     void Awake()
     {
         rb = this.gameObject.GetComponent<Rigidbody>();
@@ -59,9 +65,12 @@ public class Movement : MonoBehaviour
         if (myCharacter == null)
             return;
 
+        //this.transform.rotation = Quaternion.Lerp(this.transform.rotation, new Quaternion(200, 200, 200, 0), 0.00001f);
+
         Falling();
         Dash();
         WallSlide();
+        Turning();
     }
 
     //////////////////////////////////////////////////
@@ -352,8 +361,12 @@ public class Movement : MonoBehaviour
     {
         if (this.transform.rotation.y != 0)
         {
-            this.transform.rotation = new Quaternion(0, 0, 0, 0);
+            //this.transform.rotation = new Quaternion(0, 0, 0, 0);
+            this.currentTurntime = this.maxTurningTime;
+            this.isTurningRight = true;
             this.lookToTheRight = true;
+
+            this.isTurningLeft = false;
         }
     }
 
@@ -361,8 +374,36 @@ public class Movement : MonoBehaviour
     {
         if (this.transform.rotation.y != 180)
         {
-            this.transform.rotation = new Quaternion(0, 180, 0, 0);
+            //this.transform.rotation = new Quaternion(0, 100, 0, 0);
+            this.currentTurntime = this.maxTurningTime;
+            this.isTurningLeft = true;
             this.lookToTheRight = false;
+
+            this.isTurningRight = false;
+        }
+    }
+
+    void Turning()
+    {
+        if(this.isTurningRight)
+        {
+            if(this.transform.rotation == new Quaternion(0, 0, 0, 1))
+            {
+                this.isTurningRight = false;
+                return;
+            }
+
+            this.transform.rotation = Quaternion.Lerp(this.transform.rotation, new Quaternion(0,0,0,1), 0.2f);
+        }
+        else if(this.isTurningLeft)
+        {
+            if (this.transform.rotation == new Quaternion(0, 1, 0, 0))
+            {
+                this.isTurningLeft = false;
+                return;
+            }
+
+            this.transform.rotation = Quaternion.Lerp(this.transform.rotation, new Quaternion(0, 1, 0, 0), 0.2f);
         }
     }
 

@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 65137875240805458}
   - component: {fileID: 23310016034182246}
   - component: {fileID: 54931133013637518}
-  - component: {fileID: 114691601193820608}
+  - component: {fileID: 114573705504079294}
   - component: {fileID: 114263016929266598}
   m_Layer: 8
   m_Name: pref_Keeram
@@ -209,6 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13169db08a88eef47be2d9c411bafcc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxTurningTime: 0.5
   movementSpeed: 5
   inAirSpeed: 3
   jumpVelocity: 5
@@ -218,7 +219,7 @@ MonoBehaviour:
   dashLength: 5
   dashTime: 1
   dashCoolDown: 0.7
---- !u!114 &114691601193820608
+--- !u!114 &114573705504079294
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -226,7 +227,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1539067981596278}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5023ab56b196b041a96abc8bc28cfd3, type: 3}
+  m_Script: {fileID: 11500000, guid: 9365613bcd3f7b34e93c2ccc73dc1f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerEnum: 0
