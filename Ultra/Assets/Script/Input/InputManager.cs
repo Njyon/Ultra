@@ -40,17 +40,23 @@ public class InputManager : MonoBehaviour {
             public static P1_LeftStickUp P1_LeftStickUpAction;
             public delegate void P1_LeftStickDown();
             public static P1_LeftStickDown P1_LeftStickDownAction;
+    #endregion
+        #region LeftStickZero
+            public delegate void P1_LeftStickZero();
+            public static P1_LeftStickZero P1_LeftStickZeroAction;
+
+            bool p1_LeftStickZeroed = false;
         #endregion
         #region TriggerRight
-            public delegate void P1_RightTiggerDown();
-            public static P1_RightTiggerDown P1_RightTiggerDownAction;
-            public delegate void P1_RightTiggerUp();
-            public static P1_RightTiggerUp P1_RightTiggerUpAction;
-            /// <summary>
-            /// Needed bool for event System
-            /// </summary>
-            bool P1_TriggertStateRight = false;
-        #endregion
+    public delegate void P1_RightTiggerDown();
+                public static P1_RightTiggerDown P1_RightTiggerDownAction;
+                public delegate void P1_RightTiggerUp();
+                public static P1_RightTiggerUp P1_RightTiggerUpAction;
+                /// <summary>
+                /// Needed bool for event System
+                /// </summary>
+                bool P1_TriggertStateRight = false;
+            #endregion
         #region TriggerLeft
             public delegate void P1_LeftTriggerDown();
             public static P1_LeftTriggerDown P1_LeftTriggerDownAction;
@@ -105,9 +111,15 @@ public class InputManager : MonoBehaviour {
             public static P2_LeftStickUp P2_LeftStickUpAction;
             public delegate void P2_LeftStickDown();
             public static P2_LeftStickDown P2_LeftStickDownAction;
+    #endregion
+        #region LeftStickZero
+            public delegate void P2_LeftStickZero();
+            public static P2_LeftStickZero P2_LeftStickZeroAction;
+
+            bool p2_LeftStickZeroed = false;
         #endregion
         #region TriggerRight
-            public delegate void P2_RightTiggerDown();
+    public delegate void P2_RightTiggerDown();
             public static P2_RightTiggerDown P2_RightTiggerDownAction;
             public delegate void P2_RightTiggerUp();
             public static P2_RightTiggerUp P2_RightTiggerUpAction;
@@ -135,7 +147,7 @@ public class InputManager : MonoBehaviour {
     #endregion
 
     // Check for Input
-    void Update ()
+    void Update()
     {
         //Player 1
         #region A Button
@@ -144,7 +156,7 @@ public class InputManager : MonoBehaviour {
             if (P1_AButtonDownAction != null)
                 P1_AButtonDownAction();
         }
-        else if(Input.GetButtonUp("P1_AButton"))
+        else if (Input.GetButtonUp("P1_AButton"))
         {
             if (P1_AButtonUpAction != null)
                 P1_AButtonUpAction();
@@ -190,24 +202,46 @@ public class InputManager : MonoBehaviour {
         if (Input.GetAxisRaw("P1_Horizontal") == 1)
         {
             if (P1_LeftStickRightAction != null)
+            {
+                p1_LeftStickZeroed = false;
                 P1_LeftStickRightAction();
+            }
         }
         else if(Input.GetAxisRaw("P1_Horizontal") == -1)
         {
             if (P1_LeftStickLeftAction != null)
+            {
+                p1_LeftStickZeroed = false;
                 P1_LeftStickLeftAction();
+            }
         }
         #endregion
         #region Vertical Axis
         if (Input.GetAxisRaw("P1_Vertical") == 1)
         {
             if (P1_LeftStickDownAction != null)
+            {
+                p1_LeftStickZeroed = false;
                 P1_LeftStickDownAction();
+            }
         }
         else if (Input.GetAxisRaw("P1_Vertical") == -1)
         {
             if (P1_LeftStickUpAction != null)
+            {
+                p1_LeftStickZeroed = false;
                 P1_LeftStickUpAction();
+            }
+        }
+        #endregion
+        #region LeftStickZero
+        if (Input.GetAxisRaw("P1_Horizontal") < 0.3f && Input.GetAxisRaw("P1_Vertical") < 0.3f && Input.GetAxisRaw("P1_Horizontal") > -0.3f && Input.GetAxisRaw("P1_Vertical") > -0.3f)
+        {
+            if (!p1_LeftStickZeroed && P1_LeftStickZeroAction != null)
+            {
+                p1_LeftStickZeroed = true;
+                P1_LeftStickZeroAction();
+            }
         }
         #endregion
         #region TriggerLeft
@@ -304,24 +338,46 @@ public class InputManager : MonoBehaviour {
         if (Input.GetAxisRaw("P2_Horizontal") == 1)
         {
             if (P2_LeftStickRightAction != null)
+            {
+                p2_LeftStickZeroed = false;
                 P2_LeftStickRightAction();
+            }
         }
         else if (Input.GetAxisRaw("P2_Horizontal") == -1)
         {
             if (P2_LeftStickLeftAction != null)
+            {
+                p2_LeftStickZeroed = false;
                 P2_LeftStickLeftAction();
+            }
         }
         #endregion
         #region Vertical Axis
         if (Input.GetAxisRaw("P2_Vertical") == 1)
         {
             if (P2_LeftStickDownAction != null)
+            {
+                p2_LeftStickZeroed = false;
                 P2_LeftStickDownAction();
+            }
         }
         else if (Input.GetAxisRaw("P2_Vertical") == -1)
         {
             if (P2_LeftStickUpAction != null)
+            {
+                p2_LeftStickZeroed = false;
                 P2_LeftStickUpAction();
+            }
+        }
+        #endregion
+        #region LeftStickZero
+        if (Input.GetAxisRaw("P2_Horizontal") != 1 && Input.GetAxisRaw("P2_Vertical") != -1 && Input.GetAxisRaw("P2_Horizontal") != 1 && Input.GetAxisRaw("P2_Vertical") != -1)
+        {
+            if (!p2_LeftStickZeroed && P2_LeftStickZeroAction != null)
+            {
+                p2_LeftStickZeroed = true;
+                P2_LeftStickZeroAction();
+            }
         }
         #endregion
         #region TriggerLeft

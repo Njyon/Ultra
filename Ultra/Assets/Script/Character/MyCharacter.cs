@@ -12,6 +12,7 @@ public class MyCharacter : MonoBehaviour
     public bool isDisabled = false;
     [HideInInspector]
     public bool isStunned = false;
+    public float disabledTime;
 
     Rigidbody rb;
 
@@ -32,7 +33,7 @@ public class MyCharacter : MonoBehaviour
     void Awake()
     {
         tEST = GameObject.Find("TEST");
-        InputManager.P1_YButtonDownAction += TEST;
+        InputManager.P2_YButtonDownAction += TEST;
     }
 
     void Start ()
@@ -42,7 +43,7 @@ public class MyCharacter : MonoBehaviour
 
     void TEST()
     {
-        Damage(tEST.transform.position, 20);
+        Damage(tEST.transform.position, 100);
     }
 
     //////////////////////////////////////////////////
@@ -75,11 +76,18 @@ public class MyCharacter : MonoBehaviour
     void Damage(Vector3 enemyTran, int damage)
     {
         Debug.Log("LOL");
-        percent = percent * dmgMultiplier + damage;
+        percent += damage;
 
-        enemyTran = new Vector3(enemyTran.x * this.transform.position.x, enemyTran.y * this.transform.position.y, enemyTran.z * this.transform.position.z);
+        enemyTran = new Vector3(this.transform.position.x - enemyTran.x, this.transform.position.y / 10 - enemyTran.y / 10, 0);
         Debug.DrawLine(this.transform.position, enemyTran, Color.red);
-        rb.AddForce(enemyTran * percent);
+        rb.AddForce(enemyTran.normalized * percent);
+        this.isDisabled = true;
+        StartCoroutine(DisabledTimeInAir(disabledTime));
     }
-    
+
+    IEnumerator DisabledTimeInAir(float disabledTime)
+    {
+        yield return new WaitForSeconds(disabledTime);
+        this.isDisabled = false;
+    }
 }
