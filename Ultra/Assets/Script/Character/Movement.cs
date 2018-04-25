@@ -12,7 +12,7 @@ public class Movement : MonoBehaviour
     bool isTurningRight = false;
     bool isTurningLeft = false;
     float currentTurntime = 0;
-
+    bool isIdling = true;
     Vector3 lastPos;
 
     [Header("Time the Character needs to turn")]
@@ -26,7 +26,7 @@ public class Movement : MonoBehaviour
     bool isFalling = false;
     bool canMove = true;
     bool isNotMoving = true;
-   
+
     // Jump
     public float jumpVelocity;
     [Range(0, 10)]
@@ -48,11 +48,12 @@ public class Movement : MonoBehaviour
     Vector3 dashEndPoint;
     bool canDash = true;
     public float dashCoolDown;
+    public float dogeTime;
 
     //WallSlide
     bool isOnWallRight = false;
     bool isOnWallLeft = false;
-    
+
     void Awake()
     {
         rb = this.gameObject.GetComponent<Rigidbody>();
@@ -66,6 +67,8 @@ public class Movement : MonoBehaviour
     {
         if (myCharacter == null)
             return;
+
+        Debug.Log(isFalling);
 
         Idle();
         Falling();
@@ -94,7 +97,6 @@ public class Movement : MonoBehaviour
                 InputManager.P1_AButtonDownAction += Jump;
                 InputManager.P1_LeftTriggerDownAction += DashCheck;
                 InputManager.P1_RightTiggerDownAction += DashCheck;
-                InputManager.P1_LeftStickZeroAction += LeftStickZeroed;
 
                 break;
             case PlayerEnum.PlayerTwo:
@@ -103,12 +105,11 @@ public class Movement : MonoBehaviour
                 InputManager.P2_AButtonDownAction += Jump;
                 InputManager.P2_LeftTriggerDownAction += DashCheck;
                 InputManager.P2_RightTiggerDownAction += DashCheck;
-                InputManager.P2_LeftStickZeroAction += LeftStickZeroed;
 
                 break;
             case PlayerEnum.NotAssigned:
                 Debug.Log("<color=red> MovementClass cant Find the PlayerEnum </color>");
-                
+
                 break;
         }
     }
@@ -127,11 +128,6 @@ public class Movement : MonoBehaviour
                 break;
         }
     }
-    void LeftStickZeroed()
-    {
-        if(isNotMoving)
-            isNotMoving = true;
-    }
 
     //////////////////////////////////////////////////
     ////////////////       Helper       //////////////
@@ -141,26 +137,21 @@ public class Movement : MonoBehaviour
     {
         jumps = 0;
     }
-    
-    void DashInvinceble()
-    {
-        myCharacter.canGetDamaged = true;
-    }
 
     void DashCheck()
     {
         if (myCharacter.isDisabled)
             return;
 
-        switch(playerEnum)
+        switch (playerEnum)
         {
             case PlayerEnum.PlayerOne:
-                if(Input.GetAxisRaw("P1_Horizontal") == 1)
+                if (Input.GetAxisRaw("P1_Horizontal") == 1)
                 {
                     //Right
                     DirectionDash(true);
                 }
-                else if(Input.GetAxisRaw("P1_Horizontal") == -1)
+                else if (Input.GetAxisRaw("P1_Horizontal") == -1)
                 {
                     //Left
                     DirectionDash(false);
@@ -192,7 +183,7 @@ public class Movement : MonoBehaviour
                 break;
         }
     }
-  
+
     void WallSlide()
     {
         if (myCharacter.isDisabled)
@@ -245,7 +236,7 @@ public class Movement : MonoBehaviour
 
         RaycastHit hit;
 
-        if(this.gameObject.transform.position.x < 0)
+        if (this.gameObject.transform.position.x < 0)
         {
             if (lookToTheRight)
             {
@@ -276,7 +267,7 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            if(lookToTheRight)
+            if (lookToTheRight)
             {
                 if (Physics.Raycast(this.gameObject.transform.position, new Vector3(this.gameObject.transform.localPosition.x, 0, 0), out hit, this.wallDetectionLength + 0.1f, 9, QueryTriggerInteraction.Ignore))
                 {
@@ -331,17 +322,17 @@ public class Movement : MonoBehaviour
 
     void Turning()
     {
-        if(this.isTurningRight)
+        if (this.isTurningRight)
         {
-            if(this.transform.rotation == new Quaternion(0, 0, 0, 1))
+            if (this.transform.rotation == new Quaternion(0, 0, 0, 1))
             {
                 this.isTurningRight = false;
                 return;
             }
 
-            this.transform.rotation = Quaternion.Lerp(this.transform.rotation, new Quaternion(0,0,0,1), 0.2f);
+            this.transform.rotation = Quaternion.Lerp(this.transform.rotation, new Quaternion(0, 0, 0, 1), 0.2f);
         }
-        else if(this.isTurningLeft)
+        else if (this.isTurningLeft)
         {
             if (this.transform.rotation == new Quaternion(0, 1, 0, 0))
             {
@@ -355,8 +346,16 @@ public class Movement : MonoBehaviour
 
     void Idle()
     {
-        if (isNotMoving)
-            isNotMoving = true;
+        if (lastPos == this.transform.position)
+        {
+            if (!isIdling)
+                isIdling = true;
+        }
+        else
+        {
+            if (isIdling)
+                isIdling = false;
+        }
     }
 
     void Grounded()
@@ -367,13 +366,14 @@ public class Movement : MonoBehaviour
         {
             this.isOnWallLeft = false;
             this.isOnWallRight = false;
+            this.isFalling = false;
+            this.canDash = true;
             if (jumps > 0)
                 ResetJumps();
             if (currentDashes > 0)
                 currentDashes = 0;
             if (myCharacter.isDisabled)
                 myCharacter.isDisabled = false;
-            this.isFalling = false;
         }
     }
 
@@ -532,7 +532,7 @@ public class Movement : MonoBehaviour
 
         if (this.isOnWallLeft && this.isFalling)
         {
-            if(this.gameObject.transform.position.x < 0)
+            if (this.gameObject.transform.position.x < 0)
             {
                 this.rb.velocity = Vector3.up * jumpVelocity + Vector3.right * jumpVelocity;
                 jumps++;
@@ -545,7 +545,7 @@ public class Movement : MonoBehaviour
             LookRight();
             StartCoroutine(JumpCoolDown());
         }
-        else if(this.isOnWallRight && this.isFalling)
+        else if (this.isOnWallRight && this.isFalling)
         {
             if (this.gameObject.transform.position.x < 0)
             {
@@ -562,7 +562,7 @@ public class Movement : MonoBehaviour
         }
         else if (jumps < maxJumps)
         {
-            this.rb.velocity = new Vector3(rb.velocity.x, jumpVelocity , 0);
+            this.rb.velocity = new Vector3(rb.velocity.x, jumpVelocity, 0);
             jumps++;
         }
         this.isFalling = true;
@@ -570,14 +570,15 @@ public class Movement : MonoBehaviour
 
     void DashStanding()
     {
-        if(canDash)
+        if (canDash)
         {
             myCharacter.canGetDamaged = false;
             canDash = false;
             rb.velocity = Vector3.zero;
             rb.useGravity = false;
-            StartCoroutine(DashCoolDown());
+            StartCoroutine(DashCoolDown(dashCoolDown));
             StartCoroutine(DashTime());
+            StartCoroutine(DogeTime(dogeTime));
         }
     }
 
@@ -662,8 +663,7 @@ public class Movement : MonoBehaviour
                 this.isOnWallRight = false;
                 return;
             }
-
-            if (jumps == 0)
+            if(jumps == 0)
                 rb.velocity = Vector3.down * 2;
         }
         else if (rb.velocity.y < 0)
@@ -690,9 +690,18 @@ public class Movement : MonoBehaviour
                 if (canDash)
                 {
                     canDash = false;
-                    rb.velocity = new Vector3(this.rb.velocity.x, 0, 0);
-                    StartCoroutine(DashCoolDown());
+                    if (isFalling)
+                    {
+                        StartCoroutine(DogeTime(dogeTime));
+                        StartCoroutine(DashCoolDown(dashCoolDown));
+                    }
+                    else
+                    {
+                        currentDashes = 0;
+                        StartCoroutine(DashCoolDown(0.2f));
+                    }
                 }
+                
                 currentDashTime -= Time.deltaTime;
                 float travel = currentDashTime / journeyLength;
 
@@ -719,9 +728,16 @@ public class Movement : MonoBehaviour
         this.canMove = true;
     }
 
-    IEnumerator DashCoolDown()
+    IEnumerator DashCoolDown(float time)
     {
-        yield return new WaitForSeconds(dashCoolDown);
+        yield return new WaitForSeconds(time);
         canDash = true;
+    }
+
+    IEnumerator DogeTime(float time)
+    {
+        myCharacter.canGetDamaged = false;
+        yield return new WaitForSeconds(time);
+        myCharacter.canGetDamaged = true;
     }
 }

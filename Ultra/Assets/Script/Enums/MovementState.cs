@@ -4,12 +4,14 @@ using UnityEngine;
 
 public enum MovementState
 {
-    Idle,
+    Grounded,
     MoveRight,
     DashRight,
     MoveLeft,
     DashLeft,
-    FallDown,
+    Falling,
     ForceDown,
-    JumpUp
+    JumpUp,
+    OnWallRight,
+    OnWallLeft
 }

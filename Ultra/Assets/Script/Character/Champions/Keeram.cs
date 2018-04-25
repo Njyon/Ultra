@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class Keeram : MyCharacter
 {
-    
+    [Header("HitBoxes")]
+    public GameObject xHit;
 }
