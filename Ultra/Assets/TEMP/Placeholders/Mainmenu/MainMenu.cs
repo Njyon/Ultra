@@ -25,26 +25,18 @@ public class MainMenu : MonoBehaviour {
 
     private Animator anim;
 
+    private int index = 0;
 
-    public GameObject buttonOn1;
-    public GameObject buttonOn2;
-    public GameObject buttonHit1;
-    public GameObject buttonHit2;
+    GameObject buttonOn;
+    GameObject buttonHit;
+
+    [HideInInspector] public Resolution[] resolutions;
+
 
     //----------------START UPDATE------------------------//
 
     private void Awake()
     {
-
-    
-
-
-        origMat = buttonOn1.GetComponent<Renderer>().material;
-        resetCol = origMat.color;
-
-        origMat1 = buttonHit1.GetComponent<Renderer>().material;
-        resetCol1 = origMat1.color;
-
 
     }
 
@@ -52,112 +44,53 @@ public class MainMenu : MonoBehaviour {
     void Start()
     {
 
-        SetResolution();
-
-        anim = buttonHit1.GetComponent<Animator>();
-
-    }
-
-
-    void Update () {
-
-        HitButton(buttonHit1);
-        OnButton(buttonOn1);
-        HitButton(buttonHit2);
-        OnButton(buttonOn2);
-
-    }
-
-
-    public void SetResolution()  //called in "Buttons script
-    {
-
-        #region Sets text to Current Screen
-
         Resolution currentScreen = Screen.currentResolution;
         string s_width = currentScreen.width.ToString();
         string s_height = currentScreen.height.ToString();
         textObj = GameObject.Find("ResolutionText");
         text = textObj.GetComponent<Text>();
         text.text = s_width + " x " + s_height;
+        resolutions = Screen.resolutions;
 
-        #endregion
-
-        #region Makes a list of all resolutions
-
-        List<Resolution> resolutionsList = new List<Resolution>();
-        List<string> resString = new List<string>();
-
-         //------------Adds current resolution to list------------//
-        resolutionsList.Add(currentScreen);
-        resString.Add(s_width + "x" + s_height);
-
-        //---------Adds all available resolutions to list----------//
-        Resolution[] resolutions = Screen.resolutions;
-        foreach (Resolution res in resolutions)
-        {
-            resolutionsList.Add(res);
-            resString.Add(res.width.ToString() + "x" + res.height.ToString());
-        }
-
-        #endregion
-
-
-        //int i = 0;
-
-        string newRes = resString[0];
-        Debug.Log("newRes: " + newRes + "  reslist1: " + resolutionsList[0]);
-
-        //Text text = textObj.GetComponent<Text>();
-        //text.text = (resolutions[1].width.ToString() + "x" + resolutions[1].height.ToString());
-
+        SetResolution();
     }
 
+    //----------------Functions-----------------------//
 
-
-
-
-
-    //----------------Buttons-----------------------//
-
-    private void ChangeCol(Color newColor, GameObject obj)
+    public void SetResolution() 
     {
-        Material rend = obj.GetComponent<Renderer>().material;
-        rend.color = newColor;
-    }
-
-    private void HitButton(GameObject currentButton)
-    {
-        if (inTrigger == true && currentButton)
+        for(int i = 0; i < resolutions.Length; i++)
         {
-            if (Input.GetButtonDown("P1_XButton"))
+            if(resolutions[i].height == currentRes.height && resolutions[i].width == currentRes.width)
             {
-                anim.SetBool("onButtonPressed", true);
-                anim.Play("anim_buttonWiggle");
-                ChangeCol(Color.green, currentButton);
-
-            }
-            else if (Input.GetButtonUp("P1_XButton"))
-            {
-                anim.SetBool("onButtonPressed", false);
-                ChangeCol(resetCol1, currentButton);
+                index = i;
             }
         }
+        
+        text.text = (resolutions[index].width.ToString() + "x" + resolutions[index].height.ToString());
+
     }
 
-    private void OnButton(GameObject currentButton)
+    public void ResIndexIncrease()
     {
-        if (inTrigger == true && currentButton)
-        {
-            ChangeCol(Color.red, currentButton);
-        }
-        else
-        {
-            ChangeCol(resetCol, currentButton);
-        }
+        if (index + 1 >= resolutions.Length)
+            return;
+
+        index++;
+        text.text = (resolutions[index].width.ToString() + "x" + resolutions[index].height.ToString());
+        Screen.SetResolution(resolutions[index].width, resolutions[index].height, true);
+        Screen.fullScreen = true;
     }
 
+    public void ResIndexDecrease()
+    {
+        if (index - 1 < 0)
+            return;
 
-
+        index--;
+        text.text = (resolutions[index].width.ToString() + "x" + resolutions[index].height.ToString());
+        Screen.SetResolution(resolutions[index].width, resolutions[index].height, true);
+        Screen.fullScreen = true;
+    }
 
 }

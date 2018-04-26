@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33585343556528056}
   - component: {fileID: 65375443348354576}
   - component: {fileID: 23593639678619238}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Direction
   m_TagString: player
   m_Icon: {fileID: 0}
@@ -206,18 +206,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1539067981596278}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56663af525b629444af9df176dc5aab6, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d57bb2ed7a835047b7af39d00f5b562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxTurningTime: 1
   movementSpeed: 5
-  inAirSpeed: 2
-  jumpVelocity: 15
-  fallSpeed: 10
-  maxJumps: 2
+  inAirSpeed: 5
+  jumpVelocity: 10
+  fallSpeed: 2
+  maxJumps: 3
   maxDashes: 2
-  dashLength: 2
-  dashTime: 2
-  dashCoolDown: 0
+  dashLength: 5
+  dashTime: 1
+  dashCoolDown: 0.7
+  dogeTime: 1
 --- !u!114 &114702403818876630
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -226,10 +228,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1539067981596278}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41bd87689ecb1284881014eec8f82581, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d3efac59299410478047a3f57fdd40e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerEnum: 0
   canGetDamaged: 1
   isDisabled: 0
   isStunned: 0
+  disabledTime: 0
+  xHit: {fileID: 0}
