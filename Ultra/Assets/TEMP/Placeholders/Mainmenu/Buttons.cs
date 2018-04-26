@@ -2,42 +2,67 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Buttons : mmTest {
-    
-    GameObject[] player;
-    Color resetCol;
-    Material origMat;
+public class Buttons : MonoBehaviour {
 
+    private MainMenu mainMenu;
 
-
-    // Use this for initialization
     void Start () {
-		player = GameObject.FindGameObjectsWithTag("player");
 
-        origMat = GetComponent<Renderer>().material;
-        resetCol = origMat.color;
-
+        mainMenu = GameObject.Find("EventSystem").GetComponent<MainMenu>();
     }
-	
-	// Update is called once per frame
+
+
 	void Update () {
-	
-	}
+    
+    }
 
-    private void OnTriggerEnter(Collider player)
+    private void OnTriggerEnter(Collider other)
     {
-        ChangeCol(Color.red);
+        if (other.gameObject.tag == "Player")
+        {
+            mainMenu.inTrigger = true;
+        }
+    }
+
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.gameObject.tag == "Player")
+    //    {
+    //        mainMenu.inTrigger = true;
+    //    }
+    //}
+
+
+    private void OnTriggerExit(Collider other)
+    {
         
+        if (other.gameObject.tag == "Player")
+        {
+            mainMenu.inTrigger = false;
+        }
     }
 
-    private void OnTriggerExit(Collider trigger)
-    {
-        ChangeCol(resetCol);
-    }
 
-    private void ChangeCol(Color newColor)
-    {
-        Material rend = GetComponent<Renderer>().material;
-        rend.color = newColor;
-    }
+
+    //private void HitButton()
+    //{
+    //    if (inTrigger == true && gameObject.tag == "ScrollButton")
+    //    {
+    //        if (Input.GetButtonDown("P1_XButton"))
+    //        {
+    //            anim.SetBool("onButtonPressed", true);
+    //            anim.Play("anim_buttonWiggle");
+    //            //ChangeCol(Color.green);
+
+    //        }
+    //        else if (Input.GetButtonUp("P1_XButton"))
+    //        {
+    //            anim.SetBool("onButtonPressed", false);
+    //            //ChangeCol(resetCol);
+    //        }
+    //    }else if (inTrigger == true && gameObject.tag != "ScrollButton")
+    //    {
+    //        //ChangeCol(Color.red);
+    //    }
+    //}
 }

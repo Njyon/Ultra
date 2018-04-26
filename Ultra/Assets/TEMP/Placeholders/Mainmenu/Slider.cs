@@ -6,59 +6,34 @@ using UnityEngine.Audio;
 public class Slider : MonoBehaviour {
 
     //--------------------------LIST-------------------------------//
-
-        //--Public--//
+    #region Variables
+    //--Public--//
 
     public float minValueX;
     public float maxValueX;
 
-    public AudioMixer aMixer;
-
     public string mixerParameter;
+
+    public AudioMixer aMixer;
 
         //--Private--//
 
     private bool inTrigger = false;
 
-    private Vector3 minPos;
-    private Vector3 maxPos;
-
-
-    private float currentVal;
-    private float updateVal;
-    private float currentY;
-    private float currentZ;
-    private float percentVolume;
     private float currentMixerVol;
     private float minAudio = -80.0f;
     private float maxAudio = 20.0f;
     private float incrementX = 1.0f;
     private float currentAudio;
-    private float startPos;
 
+    #endregion
 
     //-------------------------START - UPDATE--------------------------------//
 
     // Use this for initialization
     void Start ()
     {
-        aMixer.GetFloat(mixerParameter, out currentMixerVol);
-        currentAudio = currentMixerVol;
-        //percentVolume = PerectageCalc(minAudio, maxAudio, currentAudio);
-        currentY = transform.position.y;
-        currentZ = transform.position.z;
-        //currentVal = FindValue(percentVolume, maxValueX, minValueX);
-        //transform.position = new Vector3(currentVal, currentY, currentZ);
-        //Debug.Log(this.gameObject.transform.position.x + " : " + currentMixerVol + " -- " + "current val: " + currentVal);
-
-
-
-        minPos = new Vector3(minValueX, currentY, currentZ);
-        maxPos = new Vector3(maxValueX, currentY, currentZ);
-        float dist = Vector3.Distance(minPos, maxPos);
-        Debug.Log(dist);
-
-
+        SetPos();
     }
 	
 	// Update is called once per frame
@@ -73,21 +48,18 @@ public class Slider : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         
-        if (other.gameObject.tag == "player")
+        if (other.gameObject.tag == "Player")
         {
             inTrigger = true;
         }
-        
-                                                                                //how to acces a specific collider that collides with this trigger?
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "player")
+        if (other.gameObject.tag == "Player")
         {
             inTrigger = false;
-        }
-     
+        }     
     }
 
 
@@ -104,8 +76,6 @@ public class Slider : MonoBehaviour {
                 //Increase
                 if (this.gameObject.transform.position.x < maxValueX)
                 {
-
-                    Debug.Log("maxvaluex: " + maxValueX);
                     this.transform.position += Vector3.right * incrementX;
                     ChangeVolume(true);
                 }
@@ -115,7 +85,6 @@ public class Slider : MonoBehaviour {
                 //Decrease
                 if (this.gameObject.transform.position.x > minValueX)
                 {
-                    Debug.Log("minvaluex: " + minValueX);
                     this.transform.position += Vector3.left * incrementX;
                     ChangeVolume(false);
                 }
@@ -156,25 +125,50 @@ public class Slider : MonoBehaviour {
 
         currentMixerVol = currentAudio;
         aMixer.SetFloat(mixerParameter, currentMixerVol);
-        Debug.Log("currentMixerVol: " + currentMixerVol + " -- " + "currentAudio: " + currentAudio + " -- " + "current pos x: " + this.gameObject.transform.position.x);
     }
 
-    private float PerectageCalc(float min, float max, float currentPos)
+    private void SetPos()
     {
-        float y = (((max - min) - (max - currentPos)) / (max - min));
+        aMixer.GetFloat(mixerParameter, out currentMixerVol);
+        currentAudio = currentMixerVol;
 
-        return currentPos;
+        float currentX = this.transform.position.x;
+
+        //Don't know why i need this....but i do
+        float currentY = transform.position.y;
+        float currentZ = transform.position.z;
+
+
+        //get distance of start point of slider and current position
+        Vector3 minPos = new Vector3(minValueX, currentY, currentZ);
+        Vector3 currPos = new Vector3(currentX, currentY, currentZ);
+        float dist = Vector3.Distance(minPos, currPos);
+
+        //get distance of start point of volume and current volume
+        Vector3 minPosAudio = new Vector3(minAudio, currentY, currentZ);
+        Vector3 currPosAudio = new Vector3(currentAudio, currentY, currentZ);
+        float distAudio = Vector3.Distance(minPosAudio, currPosAudio);
+
+
+
+        float newCurrentX = (distAudio / 10); 
+
+        while(dist != newCurrentX)
+        {
+            if(dist < newCurrentX)
+            {
+                currentX += 1.0f;
+                dist += 1.0f;
+            }
+            else if(dist > newCurrentX)
+            {
+                currentX -= 1.0f;
+                dist -= 1.0f;
+            }
+        }
+
+        transform.position = new Vector3(currentX, currentY, currentZ);
     }
-
-    private float FindValue(float currentPercent, float maxValue, float minValue)
-    {
-
-        float valX = ((maxValue * currentPercent) - (minValue * currentPercent) + (100 * minValue)) / 100;
-        //float valX = (currentPercent / 100) * maxValue;
-        Debug.Log("valx: " + valX);
-        return valX; 
-    }
-
 }
 
 
