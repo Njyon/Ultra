@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-
     // Helper
     MyCharacter myCharacter;
     Rigidbody rb;
     PlayerEnum playerEnum = PlayerEnum.NotAssigned;
     bool lookToTheRight;
+    bool isTurningRight = false;
+    bool isTurningLeft = false;
+    float currentTurntime = 0;
+    bool isIdling = true;
+    Vector3 lastPos;
+
+    [Header("Time the Character needs to turn")]
+    public float maxTurningTime;
 
     // Movement
     [Header("Movement")]
@@ -18,7 +25,8 @@ public class Movement : MonoBehaviour
     float wallDetectionLength = 0.6f;
     bool isFalling = false;
     bool canMove = true;
-   
+    bool isNotMoving = true;
+
     // Jump
     public float jumpVelocity;
     [Range(0, 10)]
@@ -40,6 +48,7 @@ public class Movement : MonoBehaviour
     Vector3 dashEndPoint;
     bool canDash = true;
     public float dashCoolDown;
+    public float dogeTime;
 
     //WallSlide
     bool isOnWallRight = false;
@@ -59,9 +68,15 @@ public class Movement : MonoBehaviour
         if (myCharacter == null)
             return;
 
+        Debug.Log(isFalling);
+
+        Idle();
         Falling();
         Dash();
         WallSlide();
+        Turning();
+
+        lastPos = this.transform.position;
     }
 
     //////////////////////////////////////////////////
@@ -94,7 +109,7 @@ public class Movement : MonoBehaviour
                 break;
             case PlayerEnum.NotAssigned:
                 Debug.Log("<color=red> MovementClass cant Find the PlayerEnum </color>");
-                
+
                 break;
         }
     }
@@ -122,26 +137,21 @@ public class Movement : MonoBehaviour
     {
         jumps = 0;
     }
-    
-    void DashInvinceble()
-    {
-        myCharacter.canGetDamaged = true;
-    }
 
     void DashCheck()
     {
         if (myCharacter.isDisabled)
             return;
 
-        switch(playerEnum)
+        switch (playerEnum)
         {
             case PlayerEnum.PlayerOne:
-                if(Input.GetAxisRaw("P1_Horizontal") == 1)
+                if (Input.GetAxisRaw("P1_Horizontal") == 1)
                 {
                     //Right
                     DirectionDash(true);
                 }
-                else if(Input.GetAxisRaw("P1_Horizontal") == -1)
+                else if (Input.GetAxisRaw("P1_Horizontal") == -1)
                 {
                     //Left
                     DirectionDash(false);
@@ -171,68 +181,6 @@ public class Movement : MonoBehaviour
             case PlayerEnum.NotAssigned:
                 Debug.Log("<color=red> MovementClass -> DashCheck() cant Find the PlayerEnum </color>");
                 break;
-        }
-    }
-    // Change Gravity for Jump Balancing!  Edit -> Project Setting -> Physics -> Gravity Y
-    void Falling()
-    {
-        if (isDashing)
-            return;
-
-        if(this.isOnWallLeft || this.isOnWallRight)
-        {
-            if (myCharacter.isDisabled)
-            {
-                this.isOnWallLeft = false;
-                this.isOnWallRight = false;
-                return;
-            }
-
-            if(jumps == 0)
-                rb.velocity = Vector3.down * 2;
-        }
-        else if (rb.velocity.y == 0)
-        {
-            this.isOnWallLeft = false;
-            this.isOnWallRight = false;
-            isFalling = false;
-            if (jumps > 0)
-                ResetJumps();
-            if (currentDashes > 0)
-                currentDashes = 0;
-            if (myCharacter.isDisabled)
-                myCharacter.isDisabled = false;
-        }
-        else if (rb.velocity.y < 0)
-        {
-            if(!isFalling)
-                isFalling = true;
-            rb.velocity += Vector3.up * Physics.gravity.y * (fallSpeed - 1) * Time.deltaTime;
-            FallingWallDetection();
-        }
-        else if(rb.velocity.y > 0)
-        {
-            if(!isFalling)
-                this.isFalling = true;
-        }
-    }
-
-    void Dash()
-    {
-        if (currentDashes <= maxDashes)
-        {
-            if (isDashing)
-            {
-                if(canDash)
-                {
-                    canDash = false;
-                    StartCoroutine(DashCoolDown());
-                }
-                currentDashTime -= Time.deltaTime;
-                float travel = currentDashTime / journeyLength;
-
-                this.transform.position = Vector3.Lerp(this.gameObject.transform.localPosition, this.dashEndPoint, travel);
-            }
         }
     }
 
@@ -288,7 +236,7 @@ public class Movement : MonoBehaviour
 
         RaycastHit hit;
 
-        if(this.gameObject.transform.position.x < 0)
+        if (this.gameObject.transform.position.x < 0)
         {
             if (lookToTheRight)
             {
@@ -319,7 +267,7 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            if(lookToTheRight)
+            if (lookToTheRight)
             {
                 if (Physics.Raycast(this.gameObject.transform.position, new Vector3(this.gameObject.transform.localPosition.x, 0, 0), out hit, this.wallDetectionLength + 0.1f, 9, QueryTriggerInteraction.Ignore))
                 {
@@ -352,8 +300,11 @@ public class Movement : MonoBehaviour
     {
         if (this.transform.rotation.y != 0)
         {
-            this.transform.rotation = new Quaternion(0, 0, 0, 0);
+            this.currentTurntime = this.maxTurningTime;
+            this.isTurningRight = true;
             this.lookToTheRight = true;
+
+            this.isTurningLeft = false;
         }
     }
 
@@ -361,8 +312,68 @@ public class Movement : MonoBehaviour
     {
         if (this.transform.rotation.y != 180)
         {
-            this.transform.rotation = new Quaternion(0, 180, 0, 0);
+            this.currentTurntime = this.maxTurningTime;
+            this.isTurningLeft = true;
             this.lookToTheRight = false;
+
+            this.isTurningRight = false;
+        }
+    }
+
+    void Turning()
+    {
+        if (this.isTurningRight)
+        {
+            if (this.transform.rotation == new Quaternion(0, 0, 0, 1))
+            {
+                this.isTurningRight = false;
+                return;
+            }
+
+            this.transform.rotation = Quaternion.Lerp(this.transform.rotation, new Quaternion(0, 0, 0, 1), 0.2f);
+        }
+        else if (this.isTurningLeft)
+        {
+            if (this.transform.rotation == new Quaternion(0, 1, 0, 0))
+            {
+                this.isTurningLeft = false;
+                return;
+            }
+
+            this.transform.rotation = Quaternion.Lerp(this.transform.rotation, new Quaternion(0, 1, 0, 0), 0.2f);
+        }
+    }
+
+    void Idle()
+    {
+        if (lastPos == this.transform.position)
+        {
+            if (!isIdling)
+                isIdling = true;
+        }
+        else
+        {
+            if (isIdling)
+                isIdling = false;
+        }
+    }
+
+    void Grounded()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(this.gameObject.transform.position, new Vector3(0, -this.transform.position.y, 0), out hit, 1, 9, QueryTriggerInteraction.Ignore) && isFalling)
+        {
+            this.isOnWallLeft = false;
+            this.isOnWallRight = false;
+            this.isFalling = false;
+            this.canDash = true;
+            if (jumps > 0)
+                ResetJumps();
+            if (currentDashes > 0)
+                currentDashes = 0;
+            if (myCharacter.isDisabled)
+                myCharacter.isDisabled = false;
         }
     }
 
@@ -400,7 +411,7 @@ public class Movement : MonoBehaviour
                     }
                     else if (rb.velocity.x > this.inAirSpeed)
                     {
-                        rb.velocity = new Vector3(this.inAirSpeed, this.rb.velocity.y, this.rb.velocity.z);
+                        rb.velocity = new Vector3(this.inAirSpeed, this.rb.velocity.y, 0);
                     }
                 }
                 else
@@ -431,7 +442,7 @@ public class Movement : MonoBehaviour
                     }
                     else if (rb.velocity.x > this.inAirSpeed)
                     {
-                        rb.velocity = new Vector3(this.inAirSpeed, this.rb.velocity.y, this.rb.velocity.z);
+                        rb.velocity = new Vector3(this.inAirSpeed, this.rb.velocity.y, 0);
                     }
                 }
                 else
@@ -472,7 +483,7 @@ public class Movement : MonoBehaviour
                     }
                     else if (rb.velocity.x < -this.inAirSpeed)
                     {
-                        rb.velocity = new Vector3(-this.inAirSpeed, this.rb.velocity.y, this.rb.velocity.z);
+                        rb.velocity = new Vector3(-this.inAirSpeed, this.rb.velocity.y, 0);
                     }
                 }
                 else
@@ -503,7 +514,7 @@ public class Movement : MonoBehaviour
                     }
                     else if (rb.velocity.x < -this.inAirSpeed)
                     {
-                        rb.velocity = new Vector3(-this.inAirSpeed, this.rb.velocity.y, this.rb.velocity.z);
+                        rb.velocity = new Vector3(-this.inAirSpeed, this.rb.velocity.y, 0);
                     }
                 }
                 else
@@ -521,7 +532,7 @@ public class Movement : MonoBehaviour
 
         if (this.isOnWallLeft && this.isFalling)
         {
-            if(this.gameObject.transform.position.x < 0)
+            if (this.gameObject.transform.position.x < 0)
             {
                 this.rb.velocity = Vector3.up * jumpVelocity + Vector3.right * jumpVelocity;
                 jumps++;
@@ -534,7 +545,7 @@ public class Movement : MonoBehaviour
             LookRight();
             StartCoroutine(JumpCoolDown());
         }
-        else if(this.isOnWallRight && this.isFalling)
+        else if (this.isOnWallRight && this.isFalling)
         {
             if (this.gameObject.transform.position.x < 0)
             {
@@ -551,21 +562,23 @@ public class Movement : MonoBehaviour
         }
         else if (jumps < maxJumps)
         {
-            this.rb.velocity = new Vector3(rb.velocity.x, jumpVelocity , 0);
+            this.rb.velocity = new Vector3(rb.velocity.x, jumpVelocity, 0);
             jumps++;
         }
+        this.isFalling = true;
     }
 
     void DashStanding()
     {
-        if(canDash)
+        if (canDash)
         {
             myCharacter.canGetDamaged = false;
             canDash = false;
-            rb.velocity = new Vector3(0, 0, 0);
+            rb.velocity = Vector3.zero;
             rb.useGravity = false;
-            StartCoroutine(DashCoolDown());
+            StartCoroutine(DashCoolDown(dashCoolDown));
             StartCoroutine(DashTime());
+            StartCoroutine(DogeTime(dogeTime));
         }
     }
 
@@ -636,15 +649,76 @@ public class Movement : MonoBehaviour
         }
     }
 
+    // Change Gravity for Jump Balancing!  Edit -> Project Setting -> Physics -> Gravity Y
+    void Falling()
+    {
+        if (isDashing)
+            return;
+
+        if (this.isOnWallLeft || this.isOnWallRight)
+        {
+            if (myCharacter.isDisabled)
+            {
+                this.isOnWallLeft = false;
+                this.isOnWallRight = false;
+                return;
+            }
+            if(jumps == 0)
+                rb.velocity = Vector3.down * 2;
+        }
+        else if (rb.velocity.y < 0)
+        {
+            if (!isFalling)
+                isFalling = true;
+            rb.velocity += Vector3.up * Physics.gravity.y * (fallSpeed - 1) * Time.deltaTime;
+            FallingWallDetection();
+        }
+        else if (rb.velocity.y > 0)
+        {
+            if (!isFalling)
+                this.isFalling = true;
+        }
+        Grounded();
+    }
+
+    void Dash()
+    {
+        if (currentDashes <= maxDashes)
+        {
+            if (isDashing)
+            {
+                if (canDash)
+                {
+                    canDash = false;
+                    if (isFalling)
+                    {
+                        StartCoroutine(DogeTime(dogeTime));
+                        StartCoroutine(DashCoolDown(dashCoolDown));
+                    }
+                    else
+                    {
+                        currentDashes = 0;
+                        StartCoroutine(DashCoolDown(0.2f));
+                    }
+                }
+                
+                currentDashTime -= Time.deltaTime;
+                float travel = currentDashTime / journeyLength;
+
+                this.transform.position = Vector3.Lerp(this.gameObject.transform.localPosition, this.dashEndPoint, travel);
+            }
+        }
+    }
+
     //////////////////////////////////////////////////
     ////////////////    IENUMERATOR     //////////////
     //////////////////////////////////////////////////
 
     IEnumerator DashTime()
     {
-        yield return new WaitForSeconds(0.2f);
-        isDashing = false;
+        yield return new WaitForSeconds(0.17f);
         rb.useGravity = true;
+        isDashing = false;
     }
 
     IEnumerator JumpCoolDown()
@@ -654,9 +728,16 @@ public class Movement : MonoBehaviour
         this.canMove = true;
     }
 
-    IEnumerator DashCoolDown()
+    IEnumerator DashCoolDown(float time)
     {
-        yield return new WaitForSeconds(dashCoolDown);
+        yield return new WaitForSeconds(time);
         canDash = true;
+    }
+
+    IEnumerator DogeTime(float time)
+    {
+        myCharacter.canGetDamaged = false;
+        yield return new WaitForSeconds(time);
+        myCharacter.canGetDamaged = true;
     }
 }
