@@ -4,6 +4,26 @@ using UnityEngine;
 
 public class Keeram : MyCharacter
 {
-    [Header("HitBoxes")]
-    public GameObject xHit;
+    public float XHitNormalStunTime;
+
+    private void Start()
+    {
+        XAttackNormalAction += LightAttack;
+    }
+
+    void LightAttack()
+    {
+        Debug.Log("LOL");
+        if (XNormalHitBox)
+        {
+            Stun(XHitNormalStunTime);
+            enemy.GetComponent<MyCharacter>().Damage(50);
+            Invoke("Kick", XHitNormalStunTime);
+        }
+    }
+
+    void Kick()
+    {
+        KickAway(enemy.transform.position);
+    }
 }

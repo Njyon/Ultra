@@ -68,8 +68,6 @@ public class Movement : MonoBehaviour
         if (myCharacter == null)
             return;
 
-        Debug.Log(isFalling);
-
         Idle();
         Falling();
         Dash();
@@ -133,11 +131,31 @@ public class Movement : MonoBehaviour
     ////////////////       Helper       //////////////
     //////////////////////////////////////////////////
 
+    //      Public      //
+
+    /// <summary>
+    /// Resets currents Jumps to Zero
+    /// </summary>
     public void ResetJumps()
     {
         jumps = 0;
     }
 
+
+    /// <summary>
+    /// Stunes the Player for "time"
+    /// </summary>
+    /// <param name="time"></param>
+    public void Stun(float time)
+    {
+        canMove = false;
+        rb.useGravity = false;
+        rb.velocity = Vector3.zero;
+        Invoke("EndStun", time);
+    }
+
+
+    //      Private     //
     void DashCheck()
     {
         if (myCharacter.isDisabled)
@@ -375,6 +393,12 @@ public class Movement : MonoBehaviour
             if (myCharacter.isDisabled)
                 myCharacter.isDisabled = false;
         }
+    }
+
+    void EndStun()
+    {
+        canMove = true;
+        rb.useGravity = true;
     }
 
     //////////////////////////////////////////////////

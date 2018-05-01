@@ -22,13 +22,23 @@ public class InputManager : MonoBehaviour {
             public static P1_XButtonDown P1_XButtonDownAction;
             public delegate void P1_XButtonUp();
             public static P1_XButtonUp P1_XButtonUpAction;
+
+            public delegate void P1_XButtonLeft();
+            public static P1_XButtonLeft P1_XButtonLeftAction;
+            public delegate void P1_XButtonRight();
+            public static P1_XButtonRight P1_XButtonRightAction;
+
+            public delegate void P1_XButtonTop();
+            public static P1_XButtonTop P1_XButtonTopAction;
+            public delegate void P1_XButtonBottom();
+            public static P1_XButtonBottom P1_XButtonBottomAction;
         #endregion
         #region Y Button
-            public delegate void P1_YButtonDown();
-            public static P1_YButtonDown P1_YButtonDownAction;
-            public delegate void P1_YButtonUp();
-            public static P1_YButtonUp P1_YButtonUpAction;
-        #endregion
+    public delegate void P1_YButtonDown();
+                public static P1_YButtonDown P1_YButtonDownAction;
+                public delegate void P1_YButtonUp();
+                public static P1_YButtonUp P1_YButtonUpAction;
+            #endregion
         #region Horizontal Axis
             public delegate void P1_LeftStickRight();
             public static P1_LeftStickRight P1_LeftStickRightAction;
@@ -93,9 +103,19 @@ public class InputManager : MonoBehaviour {
             public static P1_XButtonDown P2_XButtonDownAction;
             public delegate void P2_XButtonUp();
             public static P2_XButtonUp P2_XButtonUpAction;
+
+            public delegate void P2_XButtonLeft();
+            public static P2_XButtonLeft P2_XButtonLeftAction;
+            public delegate void P2_XButtonRight();
+            public static P2_XButtonRight P2_XButtonRightAction;
+
+            public delegate void P2_XButtonTop();
+            public static P2_XButtonTop P2_XButtonTopAction;
+            public delegate void P2_XButtonBottom();
+            public static P2_XButtonBottom P2_XButtonBottomAction;
         #endregion
         #region Y Button
-            public delegate void P2_YButtonDown();
+    public delegate void P2_YButtonDown();
             public static P2_YButtonDown P2_YButtonDownAction;
             public delegate void P2_YButtonUp();
             public static P2_YButtonUp P2_YButtonUpAction;
@@ -175,7 +195,27 @@ public class InputManager : MonoBehaviour {
         }
         #endregion
         #region X Button
-        if (Input.GetButtonDown("P1_XButton"))
+        if(Input.GetButtonDown("P1_XButton") && Input.GetAxisRaw("P1_Horizontal") == 1)
+        {
+            if (P1_XButtonRightAction != null)
+                P1_XButtonRightAction();
+        }
+        else if(Input.GetButtonDown("P1_XButton") && Input.GetAxisRaw("P1_Horizontal") == -1)
+        {
+            if (P1_XButtonLeftAction != null)
+                P1_XButtonLeftAction();
+        }
+        else if(Input.GetButtonDown("P1_XButton") && Input.GetAxisRaw("P1_Vertical") == 1)
+        {
+            if (P1_XButtonBottomAction != null)
+                P1_XButtonBottomAction();
+        }
+        else if (Input.GetButtonDown("P1_XButton") && Input.GetAxisRaw("P1_Vertical") == -1)
+        {
+            if (P1_XButtonTopAction != null)
+                P1_XButtonTopAction();
+        }
+        else if (Input.GetButtonDown("P1_XButton"))
         {
             if (P1_XButtonDownAction != null)
                 P1_XButtonDownAction();
@@ -311,7 +351,27 @@ public class InputManager : MonoBehaviour {
         }
         #endregion
         #region X Button
-        if (Input.GetButtonDown("P2_XButton"))
+        if (Input.GetButtonDown("P2_XButton") && Input.GetAxisRaw("P2_Horizontal") == 1)
+        {
+            if (P2_XButtonRightAction != null)
+                P2_XButtonRightAction();
+        }
+        else if (Input.GetButtonDown("P2_XButton") && Input.GetAxisRaw("P2_Horizontal") == -1)
+        {
+            if (P2_XButtonLeftAction != null)
+                P2_XButtonLeftAction();
+        }
+        else if (Input.GetButtonDown("P2_XButton") && Input.GetAxisRaw("P2_Vertical") == 1)
+        {
+            if (P2_XButtonBottomAction != null)
+                P2_XButtonBottomAction();
+        }
+        else if (Input.GetButtonDown("P2_XButton") && Input.GetAxisRaw("P2_Vertical") == -1)
+        {
+            if (P2_XButtonTopAction != null)
+                P2_XButtonTopAction();
+        }
+        else if (Input.GetButtonDown("P2_XButton"))
         {
             if (P2_XButtonDownAction != null)
                 P2_XButtonDownAction();
