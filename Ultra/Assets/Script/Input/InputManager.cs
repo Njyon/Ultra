@@ -275,7 +275,7 @@ public class InputManager : MonoBehaviour {
         }
         #endregion
         #region LeftStickZero
-        if (Input.GetAxisRaw("P1_Horizontal") < 0.3f && Input.GetAxisRaw("P1_Vertical") < 0.3f && Input.GetAxisRaw("P1_Horizontal") > -0.3f && Input.GetAxisRaw("P1_Vertical") > -0.3f)
+        if (Input.GetAxis("P1_Horizontal") < 0.3f && Input.GetAxis("P1_Vertical") < 0.3f && Input.GetAxis("P1_Horizontal") > -0.3f && Input.GetAxis("P1_Vertical") > -0.3f)
         {
             if (!p1_LeftStickZeroed && P1_LeftStickZeroAction != null)
             {
@@ -431,7 +431,7 @@ public class InputManager : MonoBehaviour {
         }
         #endregion
         #region LeftStickZero
-        if (Input.GetAxisRaw("P2_Horizontal") != 1 && Input.GetAxisRaw("P2_Vertical") != -1 && Input.GetAxisRaw("P2_Horizontal") != 1 && Input.GetAxisRaw("P2_Vertical") != -1)
+        if (Input.GetAxis("P2_Horizontal") < 0.3f && Input.GetAxis("P2_Vertical") < 0.3f && Input.GetAxis("P2_Horizontal") > -0.3f && Input.GetAxis("P2_Vertical") > -0.3f)
         {
             if (!p2_LeftStickZeroed && P2_LeftStickZeroAction != null)
             {

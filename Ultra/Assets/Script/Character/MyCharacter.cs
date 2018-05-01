@@ -28,15 +28,15 @@ public class MyCharacter : MonoBehaviour
 
     #region X Attack 
     public delegate void XHitNormal();
-    public static XHitNormal XAttackNormalAction;
+    public  XHitNormal XAttackNormalAction;
     public delegate void XHitRight();
-    public static XHitRight XAttackRightAction;
+    public  XHitRight XAttackRightAction;
     public delegate void XHitLeft();
-    public static XHitLeft XAttackLeftAction;
+    public  XHitLeft XAttackLeftAction;
     public delegate void XHitUp();
-    public static XHitUp XAttackUpAction;
+    public  XHitUp XAttackUpAction;
     public delegate void XHitDown();
-    public static XHitDown XAttackDownAction;
+    public  XHitDown XAttackDownAction;
     #endregion
 
     #region Y/B Attack

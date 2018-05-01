@@ -4818,8 +4818,9 @@ MonoBehaviour:
   maxTurningTime: 1
   movementSpeed: 5
   inAirSpeed: 5
-  jumpVelocity: 10
-  fallSpeed: 1.5
+  jumpVelocity: 12
+  fallSpeed: 2
+  maxFallVelocity: 10
   maxJumps: 3
   maxDashes: 2
   dashLength: 5
@@ -4845,6 +4846,7 @@ MonoBehaviour:
   disabledTime: 1
   XNormalHitBox: 0
   XHitNormalStunTime: 1
+  lol: {fileID: 1646915763002504, guid: 40485be533a17f9498ba214ffeb76494, type: 2}
 --- !u!114 &114953473213352082
 MonoBehaviour:
   m_ObjectHideFlags: 1

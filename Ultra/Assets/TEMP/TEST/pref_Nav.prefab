@@ -1043,8 +1043,8 @@ GameObject:
   - component: {fileID: 23340730608084304}
   - component: {fileID: 54525834856652716}
   - component: {fileID: 114532094157897230}
-  - component: {fileID: 114310626826785154}
   - component: {fileID: 136439231409751026}
+  - component: {fileID: 114580614076684540}
   m_Layer: 8
   m_Name: pref_Nav
   m_TagString: player
@@ -4774,24 +4774,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114310626826785154
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1392969457632022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bca3a5fedbcc484691ba92da24fd651, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerEnum: 0
-  canGetDamaged: 1
-  isDisabled: 0
-  isStunned: 0
-  enemy: {fileID: 0}
-  disabledTime: 1
-  XNormalHitBox: 0
 --- !u!114 &114532094157897230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4806,14 +4788,34 @@ MonoBehaviour:
   maxTurningTime: 1
   movementSpeed: 5
   inAirSpeed: 5
-  jumpVelocity: 10
-  fallSpeed: 1.5
+  jumpVelocity: 12
+  fallSpeed: 2
   maxJumps: 3
   maxDashes: 2
   dashLength: 5
   dashTime: 1
   dashCoolDown: 0.7
   dogeTime: 1
+--- !u!114 &114580614076684540
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1392969457632022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9487e8971e1ab0640bc8c7961700852e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerEnum: 0
+  canGetDamaged: 1
+  isDisabled: 0
+  isStunned: 0
+  enemy: {fileID: 0}
+  disabledTime: 1
+  XNormalHitBox: 0
+  XHitNormalStunTime: 0
+  lol: {fileID: 1646915763002504, guid: 40485be533a17f9498ba214ffeb76494, type: 2}
 --- !u!136 &136439231409751026
 CapsuleCollider:
   m_ObjectHideFlags: 1

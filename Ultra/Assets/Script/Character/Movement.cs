@@ -11,6 +11,9 @@ public class Movement : MonoBehaviour
     bool lookToTheRight;
     bool isTurningRight = false;
     bool isTurningLeft = false;
+    bool fallStraight = true;
+    bool forcingDown = false;
+    bool forceDownEnabled = true;
     float currentTurntime = 0;
     bool isIdling = true;
     Vector3 lastPos;
@@ -31,6 +34,8 @@ public class Movement : MonoBehaviour
     public float jumpVelocity;
     [Range(0, 10)]
     public float fallSpeed;
+    [Range(5, 30)]
+    public float maxFallVelocity;
     int jumps = 0;
     [Header("How much Jumps in a Row")]
     public int maxJumps;
@@ -68,11 +73,14 @@ public class Movement : MonoBehaviour
         if (myCharacter == null)
             return;
 
+        Debug.Log(rb.velocity.y);
+
         Idle();
         Falling();
         Dash();
         WallSlide();
         Turning();
+        Grounded();
 
         lastPos = this.transform.position;
     }
@@ -95,6 +103,9 @@ public class Movement : MonoBehaviour
                 InputManager.P1_AButtonDownAction += Jump;
                 InputManager.P1_LeftTriggerDownAction += DashCheck;
                 InputManager.P1_RightTiggerDownAction += DashCheck;
+                InputManager.P1_LeftStickZeroAction += FallStraight;
+                InputManager.P1_LeftStickDownAction += ForceDown;
+                InputManager.P1_LeftStickUpAction += LookUp;
 
                 break;
             case PlayerEnum.PlayerTwo:
@@ -103,6 +114,9 @@ public class Movement : MonoBehaviour
                 InputManager.P2_AButtonDownAction += Jump;
                 InputManager.P2_LeftTriggerDownAction += DashCheck;
                 InputManager.P2_RightTiggerDownAction += DashCheck;
+                InputManager.P2_LeftStickZeroAction += FallStraight;
+                InputManager.P2_LeftStickDownAction += ForceDown;
+                InputManager.P2_LeftStickUpAction += LookUp;
 
                 break;
             case PlayerEnum.NotAssigned:
@@ -380,18 +394,25 @@ public class Movement : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(this.gameObject.transform.position, new Vector3(0, -this.transform.position.y, 0), out hit, 1, 9, QueryTriggerInteraction.Ignore) && isFalling)
+        if (Physics.Raycast(this.gameObject.transform.position, new Vector3(0, -this.transform.position.y, 0), out hit, 2, 9, QueryTriggerInteraction.Ignore))
         {
-            this.isOnWallLeft = false;
-            this.isOnWallRight = false;
-            this.isFalling = false;
-            this.canDash = true;
-            if (jumps > 0)
-                ResetJumps();
-            if (currentDashes > 0)
-                currentDashes = 0;
-            if (myCharacter.isDisabled)
-                myCharacter.isDisabled = false;
+            if(isFalling)
+            {
+                this.isOnWallLeft = false;
+                this.isOnWallRight = false;
+                this.isFalling = false;
+                this.canDash = true;
+                if (jumps > 0)
+                    ResetJumps();
+                if (currentDashes > 0)
+                    currentDashes = 0;
+                if (myCharacter.isDisabled)
+                    myCharacter.isDisabled = false;
+            }
+        }
+        else
+        {
+            isFalling = true;
         }
     }
 
@@ -399,6 +420,22 @@ public class Movement : MonoBehaviour
     {
         canMove = true;
         rb.useGravity = true;
+    }
+
+    void FallStraight()
+    {
+        fallStraight = true;
+        forcingDown = false;
+    }
+
+    void ForceDown()
+    {
+        forcingDown = true;
+    }
+
+    void LookUp()
+    {
+        forcingDown = false;
     }
 
     //////////////////////////////////////////////////
@@ -411,6 +448,8 @@ public class Movement : MonoBehaviour
             return;
 
         RaycastHit hit;
+        fallStraight = false;
+        forcingDown = false;
 
         LookRight();
         if (this.gameObject.transform.localPosition.x < 0)              //NEGATIVE
@@ -431,7 +470,7 @@ public class Movement : MonoBehaviour
                 {
                     if (rb.velocity.x < this.inAirSpeed)
                     {
-                        rb.velocity += Vector3.right * this.inAirSpeed;
+                        rb.velocity = new Vector3(this.inAirSpeed, this.rb.velocity.y, 0);
                     }
                     else if (rb.velocity.x > this.inAirSpeed)
                     {
@@ -462,7 +501,7 @@ public class Movement : MonoBehaviour
                 {
                     if (rb.velocity.x < this.inAirSpeed)
                     {
-                        rb.velocity += Vector3.right * this.inAirSpeed;
+                        rb.velocity = new Vector3(this.inAirSpeed, this.rb.velocity.y, 0);
                     }
                     else if (rb.velocity.x > this.inAirSpeed)
                     {
@@ -483,6 +522,8 @@ public class Movement : MonoBehaviour
             return;
 
         RaycastHit hit;
+        fallStraight = false;
+        forcingDown = false;
 
         LookLeft();
         if (this.gameObject.transform.localPosition.x < 0)          //NEGATIVE
@@ -503,7 +544,7 @@ public class Movement : MonoBehaviour
                 {
                     if (rb.velocity.x > -this.inAirSpeed)
                     {
-                        rb.velocity += Vector3.left * this.inAirSpeed;
+                        rb.velocity = new Vector3(-this.inAirSpeed, this.rb.velocity.y, 0);
                     }
                     else if (rb.velocity.x < -this.inAirSpeed)
                     {
@@ -534,7 +575,7 @@ public class Movement : MonoBehaviour
                 {
                     if (rb.velocity.x > -this.inAirSpeed)
                     {
-                        rb.velocity += Vector3.left * this.inAirSpeed;
+                        rb.velocity = new Vector3(-this.inAirSpeed, this.rb.velocity.y, 0);
                     }
                     else if (rb.velocity.x < -this.inAirSpeed)
                     {
@@ -568,6 +609,7 @@ public class Movement : MonoBehaviour
             }
             LookRight();
             StartCoroutine(JumpCoolDown());
+            StartCoroutine(ForceDownDelay());
         }
         else if (this.isOnWallRight && this.isFalling)
         {
@@ -583,11 +625,13 @@ public class Movement : MonoBehaviour
             }
             LookLeft();
             StartCoroutine(JumpCoolDown());
+            StartCoroutine(ForceDownDelay());
         }
         else if (jumps < maxJumps)
         {
             this.rb.velocity = new Vector3(rb.velocity.x, jumpVelocity, 0);
             jumps++;
+            StartCoroutine(ForceDownDelay());
         }
         this.isFalling = true;
     }
@@ -690,11 +734,29 @@ public class Movement : MonoBehaviour
             if(jumps == 0)
                 rb.velocity = Vector3.down * 2;
         }
+        else if (isFalling && forcingDown && forceDownEnabled)
+        {
+            rb.velocity += Vector3.up * Physics.gravity.y * (fallSpeed * 2) * Time.deltaTime;
+        }
+        else if(fallStraight && isFalling)
+        {
+            if(rb.velocity.x < 0)
+            {
+                rb.velocity += new Vector3(1, 0, 0);
+            }
+            else if (rb.velocity.x > 0)
+            {
+                rb.velocity -= new Vector3(1, 0, 0);
+            }
+        }
         else if (rb.velocity.y < 0)
         {
             if (!isFalling)
                 isFalling = true;
-            rb.velocity += Vector3.up * Physics.gravity.y * (fallSpeed - 1) * Time.deltaTime;
+            if (rb.velocity.y > maxFallVelocity)
+                rb.velocity = new Vector3(rb.velocity.x, maxFallVelocity, 0);
+
+            //rb.velocity += Vector3.up * Physics.gravity.y * (fallSpeed - 1) * Time.deltaTime;
             FallingWallDetection();
         }
         else if (rb.velocity.y > 0)
@@ -702,7 +764,6 @@ public class Movement : MonoBehaviour
             if (!isFalling)
                 this.isFalling = true;
         }
-        Grounded();
     }
 
     void Dash()
@@ -748,7 +809,7 @@ public class Movement : MonoBehaviour
     IEnumerator JumpCoolDown()
     {
         this.canMove = false;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
         this.canMove = true;
     }
 
@@ -763,5 +824,12 @@ public class Movement : MonoBehaviour
         myCharacter.canGetDamaged = false;
         yield return new WaitForSeconds(time);
         myCharacter.canGetDamaged = true;
+    }
+
+    IEnumerator ForceDownDelay()
+    {
+        forceDownEnabled = false;
+        yield return new WaitForSeconds(0.1f);
+        forceDownEnabled = true;
     }
 }
