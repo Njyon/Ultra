@@ -100,23 +100,37 @@ public class Movement : MonoBehaviour
             case PlayerEnum.PlayerOne:
                 InputManager.P1_LeftStickRightAction += MoveRight;
                 InputManager.P1_LeftStickLeftAction += MoveLeft;
-                InputManager.P1_AButtonDownAction += Jump;
                 InputManager.P1_LeftTriggerDownAction += DashCheck;
                 InputManager.P1_RightTiggerDownAction += DashCheck;
                 InputManager.P1_LeftStickZeroAction += FallStraight;
                 InputManager.P1_LeftStickDownAction += ForceDown;
                 InputManager.P1_LeftStickUpAction += LookUp;
 
+                InputManager.p1_OnKeyPressed += (KeyCode keyCode) =>
+                {
+                    if(keyCode == KeyCode.Joystick1Button0 && canMove)
+                    {
+                        Jump();
+                    }
+                };
+
                 break;
             case PlayerEnum.PlayerTwo:
                 InputManager.P2_LeftStickRightAction += MoveRight;
                 InputManager.P2_LeftStickLeftAction += MoveLeft;
-                InputManager.P2_AButtonDownAction += Jump;
                 InputManager.P2_LeftTriggerDownAction += DashCheck;
                 InputManager.P2_RightTiggerDownAction += DashCheck;
                 InputManager.P2_LeftStickZeroAction += FallStraight;
                 InputManager.P2_LeftStickDownAction += ForceDown;
                 InputManager.P2_LeftStickUpAction += LookUp;
+
+                InputManager.p2_OnKeyPressed += (KeyCode keyCode) =>
+                {
+                    if (keyCode == KeyCode.Joystick2Button0 && canMove)
+                    {
+                        Jump();
+                    }
+                };
 
                 break;
             case PlayerEnum.NotAssigned:

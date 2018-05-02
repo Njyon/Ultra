@@ -4,25 +4,31 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour {
 
-    #region Player 1 Input
-        #region A Button
-            public delegate void P1_AButtonDown();
-            public static P1_AButtonDown P1_AButtonDownAction;
-            public delegate void P1_AButtonUp();
-            public static P1_AButtonUp P1_AButtonUpAction;
-        #endregion
-        #region B Button
-            public delegate void P1_BButtonDown();
-            public static P1_BButtonDown P1_BButtonDownAction;
-            public delegate void P1_BButtonUp();
-            public static P1_BButtonUp P1_BButtonUpAction;
-        #endregion
-        #region X Button
-            public delegate void P1_XButtonDown();
-            public static P1_XButtonDown P1_XButtonDownAction;
-            public delegate void P1_XButtonUp();
-            public static P1_XButtonUp P1_XButtonUpAction;
+    // Button Inputs
+    public delegate void P1_OnKeyPressedDelegate(KeyCode keyCode);
+    public delegate void P1_OnKeyReleasedDelegate(KeyCode keyCode);
+    public delegate void P2_OnKeyPressedDelegate(KeyCode keyCode);
+    public delegate void P2_OnKeyReleasedDelegate(KeyCode keyCode);
 
+    public static P1_OnKeyPressedDelegate p1_OnKeyPressed;
+    public static P1_OnKeyReleasedDelegate p1_OnKeyReleased;
+    public static P2_OnKeyPressedDelegate p2_OnKeyPressed;
+    public static P2_OnKeyReleasedDelegate p2_OnKeyReleased;
+    
+
+    #region Player 1 Input
+        #region Special
+            public delegate void P1_SpecalLeft();
+            public static P1_SpecalLeft P1_SpecalLeftAction;
+            public delegate void P1_SpecalRight();
+            public static P1_SpecalRight P1_SpecalRightAction;
+
+            public delegate void P1_SpecalTop();
+            public static P1_SpecalTop P1_SpecalTopAction;
+            public delegate void P1_SpecalBottom();
+            public static P1_SpecalBottom P1_SpecalBottomAction;
+        #endregion
+        #region Ligth Attack
             public delegate void P1_XButtonLeft();
             public static P1_XButtonLeft P1_XButtonLeftAction;
             public delegate void P1_XButtonRight();
@@ -33,12 +39,6 @@ public class InputManager : MonoBehaviour {
             public delegate void P1_XButtonBottom();
             public static P1_XButtonBottom P1_XButtonBottomAction;
         #endregion
-        #region Y Button
-    public delegate void P1_YButtonDown();
-                public static P1_YButtonDown P1_YButtonDownAction;
-                public delegate void P1_YButtonUp();
-                public static P1_YButtonUp P1_YButtonUpAction;
-            #endregion
         #region Horizontal Axis
             public delegate void P1_LeftStickRight();
             public static P1_LeftStickRight P1_LeftStickRightAction;
@@ -77,33 +77,21 @@ public class InputManager : MonoBehaviour {
             /// </summary>
             bool P1_TriggerStateLeft = false;
         #endregion
-        #region START / SELECT
-            public delegate void P1_StartButton();
-            public static P1_StartButton P1_StartButtonAction;
-            public delegate void P1_SelectButton();
-            public static P1_SelectButton P1_SelectButtonAction;
-    #endregion
     #endregion
 
     #region Player 2 Input
-        #region A Button
-            public delegate void P2_AButtonDown();
-            public static P2_AButtonDown P2_AButtonDownAction;
-            public delegate void P2_AButtonUp();
-            public static P2_AButtonUp P2_AButtonUpAction;
-        #endregion
-        #region B Button
-            public delegate void P2_BButtonDown();
-            public static P2_BButtonDown P2_BButtonDownAction;
-            public delegate void P2_BButtonUp();
-            public static P2_BButtonUp P2_BButtonUpAction;
-        #endregion
-        #region X Button
-            public delegate void P2_XButtonDown();
-            public static P1_XButtonDown P2_XButtonDownAction;
-            public delegate void P2_XButtonUp();
-            public static P2_XButtonUp P2_XButtonUpAction;
+        #region Special
+            public delegate void P2_SpecalLeft();
+            public static P2_SpecalLeft P2_SpecalLeftAction;
+            public delegate void P2_SpecalRight();
+            public static P2_SpecalRight P2_SpecalRightAction;
 
+            public delegate void P2_SpecalTop();
+            public static P2_SpecalTop P2_SpecalTopAction;
+            public delegate void P2_SpecalBottom();
+            public static P2_SpecalBottom P2_SpecalBottomAction;
+    #endregion
+        #region Light Attack
             public delegate void P2_XButtonLeft();
             public static P2_XButtonLeft P2_XButtonLeftAction;
             public delegate void P2_XButtonRight();
@@ -113,12 +101,6 @@ public class InputManager : MonoBehaviour {
             public static P2_XButtonTop P2_XButtonTopAction;
             public delegate void P2_XButtonBottom();
             public static P2_XButtonBottom P2_XButtonBottomAction;
-        #endregion
-        #region Y Button
-    public delegate void P2_YButtonDown();
-            public static P2_YButtonDown P2_YButtonDownAction;
-            public delegate void P2_YButtonUp();
-            public static P2_YButtonUp P2_YButtonUpAction;
         #endregion
         #region Horizontal Axis
             public delegate void P2_LeftStickRight();
@@ -158,12 +140,6 @@ public class InputManager : MonoBehaviour {
             /// </summary>
             bool P2_TriggerStateLeft = false;
         #endregion
-        #region START / BACK
-            public delegate void P2_StartButton();
-            public static P2_StartButton P2_StartButtonAction;
-            public delegate void P2_SelectButton();
-            public static P2_SelectButton P2_SelectButtonAction;
-    #endregion
     #endregion
 
     // Check for Input
@@ -171,71 +147,111 @@ public class InputManager : MonoBehaviour {
     {
         //Player 1
         #region A Button
-        if (Input.GetButtonDown("P1_AButton"))
+        if (Input.GetKeyDown(KeyCode.Joystick1Button0))
         {
-            if (P1_AButtonDownAction != null)
-                P1_AButtonDownAction();
+            if (p1_OnKeyPressed != null)
+                p1_OnKeyPressed(KeyCode.Joystick1Button0);
         }
-        else if (Input.GetButtonUp("P1_AButton"))
+        else if(Input.GetKeyUp(KeyCode.Joystick1Button0))
         {
-            if (P1_AButtonUpAction != null)
-                P1_AButtonUpAction();
+            if (p1_OnKeyReleased != null)
+                p1_OnKeyReleased(KeyCode.Joystick1Button0);
         }
         #endregion
         #region B Button
-        if (Input.GetButtonDown("P1_BButton"))
+        if (Input.GetKeyDown(KeyCode.Joystick1Button1) && Input.GetAxisRaw("P1_Horizontal") == 1)
         {
-            if (P1_BButtonDownAction != null)
-                P1_BButtonDownAction();
+            if (P1_SpecalLeftAction != null)
+                P1_SpecalLeftAction();
         }
-        else if (Input.GetButtonUp("P1_BButton"))
+        else if (Input.GetKeyDown(KeyCode.Joystick1Button1) && Input.GetAxisRaw("P1_Horizontal") == -1)
         {
-            if (P1_BButtonUpAction != null)
-                P1_BButtonUpAction();
+            if (P1_SpecalLeftAction != null)
+                P1_SpecalLeftAction();
+        }
+        else if (Input.GetKeyDown(KeyCode.Joystick1Button1) && Input.GetAxisRaw("P1_Vertical") == 1)
+        {
+            if (P1_SpecalBottomAction != null)
+                P1_SpecalBottomAction();
+        }
+        else if (Input.GetKeyDown(KeyCode.Joystick1Button1) && Input.GetAxisRaw("P1_Vertical") == -1)
+        {
+            if (P1_SpecalTopAction != null)
+                P1_SpecalTopAction();
+        }
+        else if (Input.GetKeyDown(KeyCode.Joystick1Button1))
+        {
+            if (p1_OnKeyPressed != null)
+                p1_OnKeyPressed(KeyCode.Joystick1Button1);
+        }
+        else if (Input.GetKeyUp(KeyCode.Joystick1Button1))
+        {
+            if (p1_OnKeyReleased != null)
+                p1_OnKeyReleased(KeyCode.Joystick1Button1);
         }
         #endregion
         #region X Button
-        if(Input.GetButtonDown("P1_XButton") && Input.GetAxisRaw("P1_Horizontal") == 1)
+        if (Input.GetKeyDown(KeyCode.Joystick1Button2) && Input.GetAxisRaw("P1_Horizontal") == 1)
         {
             if (P1_XButtonRightAction != null)
                 P1_XButtonRightAction();
         }
-        else if(Input.GetButtonDown("P1_XButton") && Input.GetAxisRaw("P1_Horizontal") == -1)
+        else if(Input.GetKeyDown(KeyCode.Joystick1Button2) && Input.GetAxisRaw("P1_Horizontal") == -1)
         {
             if (P1_XButtonLeftAction != null)
                 P1_XButtonLeftAction();
         }
-        else if(Input.GetButtonDown("P1_XButton") && Input.GetAxisRaw("P1_Vertical") == 1)
+        else if(Input.GetKeyDown(KeyCode.Joystick1Button2) && Input.GetAxisRaw("P1_Vertical") == 1)
         {
             if (P1_XButtonBottomAction != null)
                 P1_XButtonBottomAction();
         }
-        else if (Input.GetButtonDown("P1_XButton") && Input.GetAxisRaw("P1_Vertical") == -1)
+        else if (Input.GetKeyDown(KeyCode.Joystick1Button2) && Input.GetAxisRaw("P1_Vertical") == -1)
         {
             if (P1_XButtonTopAction != null)
                 P1_XButtonTopAction();
         }
-        else if (Input.GetButtonDown("P1_XButton"))
+        else if (Input.GetKeyDown(KeyCode.Joystick1Button2))
         {
-            if (P1_XButtonDownAction != null)
-                P1_XButtonDownAction();
+            if (p1_OnKeyPressed != null)
+                p1_OnKeyPressed(KeyCode.Joystick1Button2);
         }
-        else if (Input.GetButtonUp("P1_XButton"))
+        else if (Input.GetKeyUp(KeyCode.Joystick1Button2))
         {
-            if (P1_XButtonUpAction != null)
-                P1_XButtonUpAction();
+            if (p1_OnKeyReleased != null)
+                p1_OnKeyReleased(KeyCode.Joystick1Button2);
         }
         #endregion
         #region Y Button
-        if (Input.GetButtonDown("P1_YButton"))
+        if (Input.GetKeyDown(KeyCode.Joystick1Button3) && Input.GetAxisRaw("P1_Horizontal") == 1)
         {
-            if (P1_YButtonDownAction != null)
-                P1_YButtonDownAction();
+            if (P1_SpecalLeftAction != null)
+                P1_SpecalLeftAction();
         }
-        else if (Input.GetButtonUp("P1_YButton"))
+        else if (Input.GetKeyDown(KeyCode.Joystick1Button3) && Input.GetAxisRaw("P1_Horizontal") == -1)
         {
-            if (P1_YButtonUpAction != null)
-                P1_YButtonUpAction();
+            if (P1_SpecalLeftAction != null)
+                P1_SpecalLeftAction();
+        }
+        else if (Input.GetKeyDown(KeyCode.Joystick1Button3) && Input.GetAxisRaw("P1_Vertical") == 1)
+        {
+            if (P1_SpecalBottomAction != null)
+                P1_SpecalBottomAction();
+        }
+        else if (Input.GetKeyDown(KeyCode.Joystick1Button3) && Input.GetAxisRaw("P1_Vertical") == -1)
+        {
+            if (P1_SpecalTopAction != null)
+                P1_SpecalTopAction();
+        }
+        else if (Input.GetKeyDown(KeyCode.Joystick1Button3))
+        {
+            if (p1_OnKeyPressed != null)
+                p1_OnKeyPressed(KeyCode.Joystick1Button3);
+        }
+        else if (Input.GetKeyDown(KeyCode.Joystick1Button3))
+        {
+            if (p1_OnKeyReleased != null)
+                p1_OnKeyReleased(KeyCode.Joystick1Button3);
         }
         #endregion
         #region Horizontal Axis
@@ -313,85 +329,125 @@ public class InputManager : MonoBehaviour {
         }
         #endregion
         #region START / BACK
-        if(Input.GetButtonDown("P1_START"))
+        if (Input.GetKeyDown(KeyCode.Joystick1Button7))
         {
-            if (P1_StartButtonAction != null)
-                P1_StartButtonAction();
+            if (p1_OnKeyPressed != null)
+                p1_OnKeyPressed(KeyCode.Joystick1Button7);
         }
-        if(Input.GetButtonDown("P1_BACK"))
+        if(Input.GetKeyDown(KeyCode.Joystick1Button6))
         {
-            if (P1_SelectButtonAction != null)
-                P1_SelectButtonAction();
+            if (p1_OnKeyPressed != null)
+                p1_OnKeyPressed(KeyCode.Joystick1Button6);
         }
         #endregion
 
         //Player 2
         #region A Button
-        if (Input.GetButtonDown("P2_AButton"))
+        if (Input.GetKeyDown(KeyCode.Joystick2Button0))
         {
-            if (P2_AButtonDownAction != null)
-                P2_AButtonDownAction();
+            if (p2_OnKeyPressed != null)
+                p2_OnKeyPressed(KeyCode.Joystick2Button0);
         }
-        else if (Input.GetButtonUp("P2_AButton"))
+        else if (Input.GetKeyUp(KeyCode.Joystick2Button0))
         {
-            if (P2_AButtonUpAction != null)
-                P2_AButtonUpAction();
+            if (p2_OnKeyReleased != null)
+                p2_OnKeyReleased(KeyCode.Joystick2Button0);
         }
         #endregion
         #region B Button
-        if (Input.GetButtonDown("P2_BButton"))
+        if (Input.GetKeyDown(KeyCode.Joystick2Button1) && Input.GetAxisRaw("P2_Horizontal") == 1)
         {
-            if (P2_BButtonDownAction != null)
-                P2_BButtonDownAction();
+            if (P2_SpecalLeftAction != null)
+                P2_SpecalLeftAction();
         }
-        else if (Input.GetButtonUp("P2_BButton"))
+        else if (Input.GetKeyDown(KeyCode.Joystick2Button1) && Input.GetAxisRaw("P2_Horizontal") == -1)
         {
-            if (P2_BButtonUpAction != null)
-                P2_BButtonUpAction();
+            if (P2_SpecalLeftAction != null)
+                P2_SpecalLeftAction();
+        }
+        else if (Input.GetKeyDown(KeyCode.Joystick2Button1) && Input.GetAxisRaw("P2_Vertical") == 1)
+        {
+            if (P2_SpecalBottomAction != null)
+                P2_SpecalBottomAction();
+        }
+        else if (Input.GetKeyDown(KeyCode.Joystick2Button1) && Input.GetAxisRaw("P2_Vertical") == -1)
+        {
+            if (P2_SpecalTopAction != null)
+                P2_SpecalTopAction();
+        }
+        else if (Input.GetKeyDown(KeyCode.Joystick2Button1))
+        {
+            if (p2_OnKeyPressed != null)
+                p2_OnKeyPressed(KeyCode.Joystick2Button1);
+        }
+        else if (Input.GetKeyUp(KeyCode.Joystick2Button1))
+        {
+            if (p2_OnKeyReleased != null)
+                p2_OnKeyReleased(KeyCode.Joystick2Button1);
         }
         #endregion
         #region X Button
-        if (Input.GetButtonDown("P2_XButton") && Input.GetAxisRaw("P2_Horizontal") == 1)
+        if (Input.GetKeyDown(KeyCode.Joystick2Button2) && Input.GetAxisRaw("P2_Horizontal") == 1)
         {
             if (P2_XButtonRightAction != null)
                 P2_XButtonRightAction();
         }
-        else if (Input.GetButtonDown("P2_XButton") && Input.GetAxisRaw("P2_Horizontal") == -1)
+        else if (Input.GetKeyDown(KeyCode.Joystick2Button2) && Input.GetAxisRaw("P2_Horizontal") == -1)
         {
             if (P2_XButtonLeftAction != null)
                 P2_XButtonLeftAction();
         }
-        else if (Input.GetButtonDown("P2_XButton") && Input.GetAxisRaw("P2_Vertical") == 1)
+        else if (Input.GetKeyDown(KeyCode.Joystick2Button2) && Input.GetAxisRaw("P2_Vertical") == 1)
         {
             if (P2_XButtonBottomAction != null)
                 P2_XButtonBottomAction();
         }
-        else if (Input.GetButtonDown("P2_XButton") && Input.GetAxisRaw("P2_Vertical") == -1)
+        else if (Input.GetKeyDown(KeyCode.Joystick2Button2) && Input.GetAxisRaw("P2_Vertical") == -1)
         {
             if (P2_XButtonTopAction != null)
                 P2_XButtonTopAction();
         }
-        else if (Input.GetButtonDown("P2_XButton"))
+        else if (Input.GetKeyDown(KeyCode.Joystick2Button2))
         {
-            if (P2_XButtonDownAction != null)
-                P2_XButtonDownAction();
+            if (p2_OnKeyPressed != null)
+                p2_OnKeyPressed(KeyCode.Joystick2Button2);
         }
-        else if (Input.GetButtonUp("P2_XButton"))
+        else if (Input.GetKeyDown(KeyCode.Joystick2Button2))
         {
-            if (P2_XButtonUpAction != null)
-                P2_XButtonUpAction();
+            if (p2_OnKeyReleased != null)
+                p2_OnKeyReleased(KeyCode.Joystick2Button2);
         }
         #endregion
         #region Y Button
-        if (Input.GetButtonDown("P2_YButton"))
+        if (Input.GetKeyDown(KeyCode.Joystick2Button3) && Input.GetAxisRaw("P2_Horizontal") == 1)
         {
-            if (P2_YButtonDownAction != null)
-                P2_YButtonDownAction();
+            if (P2_SpecalLeftAction != null)
+                P2_SpecalLeftAction();
         }
-        else if (Input.GetButtonUp("P2_YButton"))
+        else if (Input.GetKeyDown(KeyCode.Joystick2Button3) && Input.GetAxisRaw("P2_Horizontal") == -1)
         {
-            if (P2_YButtonUpAction != null)
-                P2_YButtonUpAction();
+            if (P2_SpecalLeftAction != null)
+                P2_SpecalLeftAction();
+        }
+        else if (Input.GetKeyDown(KeyCode.Joystick2Button3) && Input.GetAxisRaw("P2_Vertical") == 1)
+        {
+            if (P2_SpecalBottomAction != null)
+                P2_SpecalBottomAction();
+        }
+        else if (Input.GetKeyDown(KeyCode.Joystick2Button3) && Input.GetAxisRaw("P2_Vertical") == -1)
+        {
+            if (P2_SpecalTopAction != null)
+                P2_SpecalTopAction();
+        }
+        else if (Input.GetKeyDown(KeyCode.Joystick2Button3))
+        {
+            if (p2_OnKeyPressed != null)
+                p2_OnKeyPressed(KeyCode.Joystick2Button3);
+        }
+        else if (Input.GetKeyUp(KeyCode.Joystick2Button3))
+        {
+            if (p2_OnKeyReleased != null)
+                p2_OnKeyReleased(KeyCode.Joystick2Button3);
         }
         #endregion
         #region Horizontal Axis
@@ -469,15 +525,15 @@ public class InputManager : MonoBehaviour {
         }
         #endregion
         #region START / BACK
-        if (Input.GetButtonDown("P2_START"))
+        if (Input.GetKeyDown(KeyCode.Joystick2Button7))
         {
-            if (P2_StartButtonAction != null)
-                P2_StartButtonAction();
+            if (p2_OnKeyPressed != null)
+                p2_OnKeyPressed(KeyCode.Joystick2Button7);
         }
-        if (Input.GetButtonDown("P2_BACK"))
+        if (Input.GetKeyDown(KeyCode.Joystick2Button6))
         {
-            if (P2_SelectButtonAction != null)
-                P2_SelectButtonAction();
+            if (p2_OnKeyPressed != null)
+                p2_OnKeyPressed(KeyCode.Joystick2Button6);
         }
         #endregion
     }

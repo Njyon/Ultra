@@ -37,13 +37,13 @@ public class MenuSelecter
     public void UnselectSlot()
     {
 
-        if (!charakterSelected)
+        if (charakterSelected)
         {
             charakterSelected = false;
 
-            characters[slotIndex].transform.position = new Vector3(characterPosition.x, characterPosition.y, characterPosition.z);
+            characters[slotIndex].transform.position = characterPosition;
         }
-        else if (charakterSelected)
+        else if (!charakterSelected)
         {
             // TODO: Leave Lobby  OR Some Stuff
         }
@@ -54,7 +54,7 @@ public class MenuSelecter
     /// </summary>
     public void SwitchSlotUp()
     {
-        if(!isSwitchingUp)
+        if(!isSwitchingUp && !charakterSelected)
         {
             Debug.Log("First: " + characters[0].name + " Second: " + characters[1].name);
 
@@ -75,7 +75,7 @@ public class MenuSelecter
     /// </summary>
     public void SwitchSlotDown()
     {
-        if (!isSwitchingDown)
+        if (!isSwitchingDown && !charakterSelected)
         {
             isSwitchingDown = true;
             characters[slotIndex].SetActive(false);

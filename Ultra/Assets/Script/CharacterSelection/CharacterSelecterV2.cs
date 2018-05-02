@@ -22,21 +22,18 @@ public class CharacterSelecterV2 : MonoBehaviour
     //Player Slots
     MenuSelecter playerOne = new MenuSelecter();
     MenuSelecter playerTwo = new MenuSelecter();
-
-#region Subscibe & Unsubscribe from Delegates
+    
+    #region Subscibe & Unsubscribe from Delegates
     /// <summary>
     /// Subscribe to Delegate
     /// </summary>
     void OnEnable()
     {
-        InputManager.P1_AButtonDownAction += playerOne.SelectSlot;
-        InputManager.P2_AButtonDownAction += playerTwo.SelectSlot;
+        InputManager.p1_OnKeyPressed += P1_InputDownCheck;
+        InputManager.p2_OnKeyPressed += P2_InputDownCheck;
 
-        InputManager.P1_AButtonDownAction += Check;
-        InputManager.P2_AButtonDownAction += Check;
-
-        InputManager.P1_AButtonDownAction += playerOne.UnselectSlot;
-        InputManager.P2_AButtonDownAction += playerTwo.UnselectSlot;
+        InputManager.p1_OnKeyPressed += P1_InputUpCheck;
+        InputManager.p2_OnKeyPressed += P2_InputUpCheck;
 
         InputManager.P1_LeftStickRightAction += playerOne.SwitchSlotUp;
         InputManager.P2_LeftStickRightAction += playerTwo.SwitchSlotUp;
@@ -56,37 +53,67 @@ public class CharacterSelecterV2 : MonoBehaviour
     /// </summary>
     void OnDisable()
     {
-        InputManager.P1_AButtonDownAction -= playerOne.SelectSlot;
-        InputManager.P2_AButtonDownAction -= playerTwo.SelectSlot;
-
-        InputManager.P1_AButtonDownAction -= Check;
-        InputManager.P2_AButtonDownAction -= Check;
-
-        InputManager.P1_AButtonDownAction -= playerOne.UnselectSlot;
-        InputManager.P2_AButtonDownAction -= playerTwo.UnselectSlot;
+        InputManager.p1_OnKeyPressed -= P1_InputDownCheck;
+        InputManager.p2_OnKeyPressed -= P2_InputDownCheck;
+        
+        InputManager.p1_OnKeyReleased -= P1_InputUpCheck;
+        InputManager.p2_OnKeyReleased -= P2_InputUpCheck;
 
         InputManager.P1_LeftStickRightAction -= playerOne.SwitchSlotUp;
         InputManager.P2_LeftStickRightAction -= playerTwo.SwitchSlotUp;
 
         InputManager.P1_LeftStickLeftAction -= playerOne.SwitchSlotDown;
         InputManager.P2_LeftStickLeftAction -= playerTwo.SwitchSlotDown;
+
+        playerOne.SwitchUpAction -= P1SwitchUp;
+        playerOne.SwitchDownAction -= P1SwitchDown;
+        playerTwo.SwitchUpAction -= P2SwitchUp;
+        playerTwo.SwitchDownAction -= P2SwitchDown;
     }
-#endregion
-
-    // TEST
-    void Update()
+    #endregion
+    #region Check Input
+    void P1_InputDownCheck(KeyCode keyCode)
     {
-        if (Input.GetButtonDown("Jump"))
+        if(keyCode == KeyCode.Joystick1Button0)                                     // P1: Press A
         {
-
+            playerOne.SelectSlot();
+        }
+        else if(keyCode == KeyCode.Joystick1Button1)                                // P1: Press B
+        {
+            playerOne.UnselectSlot();
+        }
+    }
+    void P1_InputUpCheck(KeyCode keyCode)
+    {
+        if (keyCode == KeyCode.Joystick1Button0)                                    // P1: Release A
+        {
+            Check();        //Check if Game can Start
         }
     }
 
- 
-
+    void P2_InputDownCheck(KeyCode keyCode)
+    {
+        if (keyCode == KeyCode.Joystick2Button0)                                    // P2: Press A
+        {
+            playerTwo.SelectSlot();
+        }
+        else if (keyCode == KeyCode.Joystick2Button1)                               // P2: Press B
+        {
+            playerTwo.UnselectSlot();
+        }
+    }
+    void P2_InputUpCheck(KeyCode keyCode)
+    {
+        if (keyCode == KeyCode.Joystick2Button0)                                    // P2: Release A
+        {
+            Check();        //Check if Game can Start
+        }
+    }
+#endregion
+    
     void Check()
     {
-        if (playerOne.charakterSelected && playerTwo.charakterSelected)
+        if (playerOne.charakterSelected && playerTwo.charakterSelected && !gameStarting)
         {
             // TODO: TIMER!
 
@@ -96,6 +123,7 @@ public class CharacterSelecterV2 : MonoBehaviour
             playerInfoManager.playerTwo.character = playerTwo.characterEnum;
 
             StartGame();
+            
         }
     }
 
@@ -139,12 +167,13 @@ public class CharacterSelecterV2 : MonoBehaviour
         playerInfoManager = PlayerInfoManagerObj.GetComponent<PlayerInfoManager>();
 
         playerOne.characterPosition = playerOne.characters[playerOne.slotIndex].transform.position;
+        playerTwo.characterPosition = playerTwo.characters[playerTwo.slotIndex].transform.position;
 
-#endregion
+        #endregion
 
-#region Setter Stuff
+        #region Setter Stuff
 
-#endregion
+        #endregion
 
         for (int i = 1; i < playerOne.characters.Length; i++)
         {
@@ -154,7 +183,7 @@ public class CharacterSelecterV2 : MonoBehaviour
                 playerTwo.characters[i].SetActive(false);
         }
     }
-#region TEST
+    #region Load Next Scene
     void StartGame()
     {
         StartCoroutine(LoadNewScene());
