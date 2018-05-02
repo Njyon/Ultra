@@ -78,25 +78,38 @@ public class Buttons : MonoBehaviour {
 
     void AssigneInputP1()
     {
-        InputManager.P1_XButtonDownAction += OnButtonDown;
+        InputManager.p1_OnKeyPressed += P1_CheckInputDown;
     }
 
     void AssigneInputP2()
     {
-        InputManager.P2_XButtonDownAction += OnButtonDown;
+        InputManager.p2_OnKeyPressed += P2_CheckInputDown;
     }
 
     void RemoveInputP1()
     {
-        InputManager.P1_XButtonDownAction -= OnButtonDown;
+        InputManager.p1_OnKeyPressed -= P1_CheckInputDown;
     }
 
     void RemoveInputP2() 
     {
-        InputManager.P2_XButtonDownAction -= OnButtonDown;
+        InputManager.p2_OnKeyPressed -= P2_CheckInputDown;
     }
 
     //----------------Functions--------------------//
+
+    void P1_CheckInputDown(KeyCode keyCode)
+    {
+        if (keyCode == KeyCode.Joystick1Button0)
+            OnButtonDown();
+    }
+
+    void P2_CheckInputDown(KeyCode keyCode)
+    {
+        if (keyCode == KeyCode.Joystick2Button0)
+            OnButtonDown();
+    }
+
 
     void OnButtonDown()
     {

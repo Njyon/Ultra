@@ -57,14 +57,16 @@ public class MyCharacter : MonoBehaviour
         switch(playerEnum)
         {
             case PlayerEnum.PlayerOne:
-                InputManager.P1_XButtonDownAction += XAttackNormal;
+                InputManager.p1_OnKeyPressed += P1_InputDownCheck;
+                InputManager.p1_OnKeyReleased += P1_InputUpCheck;
                 InputManager.P1_XButtonRightAction += XAttackRight;
                 InputManager.P1_XButtonLeftAction += XAttackLeft;
                 InputManager.P1_XButtonTopAction += XAttackUp;
                 InputManager.P1_XButtonBottomAction += XAttackDown;
                 break;
             case PlayerEnum.PlayerTwo:
-                InputManager.P2_XButtonDownAction += XAttackNormal;
+                InputManager.p2_OnKeyPressed += P2_InputDownCheck;
+                InputManager.p2_OnKeyReleased += P2_InputUpCheck;
                 InputManager.P2_XButtonRightAction += XAttackRight;
                 InputManager.P2_XButtonLeftAction += XAttackLeft;
                 InputManager.P2_XButtonTopAction += XAttackUp;
@@ -76,21 +78,22 @@ public class MyCharacter : MonoBehaviour
                 break;
         }
     }
-
     private void OnDisable()
     {
         // Remove Input
         switch (playerEnum)
         {
             case PlayerEnum.PlayerOne:
-                InputManager.P1_XButtonDownAction -= XAttackNormal;
+                InputManager.p1_OnKeyPressed -= P1_InputDownCheck;
+                InputManager.p1_OnKeyReleased -= P1_InputUpCheck;
                 InputManager.P1_XButtonRightAction -= XAttackRight;
                 InputManager.P1_XButtonLeftAction -= XAttackLeft;
                 InputManager.P1_XButtonTopAction -= XAttackUp;
                 InputManager.P1_XButtonBottomAction -= XAttackDown;
                 break;
             case PlayerEnum.PlayerTwo:
-                InputManager.P2_XButtonDownAction -= XAttackNormal;
+                InputManager.p2_OnKeyPressed -= P2_InputDownCheck;
+                InputManager.p2_OnKeyReleased -= P2_InputUpCheck;
                 InputManager.P2_XButtonRightAction -= XAttackRight;
                 InputManager.P2_XButtonLeftAction -= XAttackLeft;
                 InputManager.P2_XButtonTopAction -= XAttackUp;
@@ -102,6 +105,34 @@ public class MyCharacter : MonoBehaviour
                 break;
         }
     }
+
+    #region InputCheck
+    void P1_InputDownCheck(KeyCode keyCode)
+    {
+        if(keyCode == KeyCode.Joystick1Button2)
+        {
+            if (XAttackNormalAction != null)
+                XAttackNormalAction();
+        }
+    }
+    void P1_InputUpCheck(KeyCode keyCode)
+    {
+
+    }
+
+    void P2_InputDownCheck(KeyCode keyCode)
+    {
+        if (keyCode == KeyCode.Joystick1Button2)
+        {
+            if (XAttackNormalAction != null)
+                XAttackNormalAction();
+        }
+    }
+    void P2_InputUpCheck(KeyCode keyCode)
+    {
+
+    }
+    #endregion
 
     void Awake()
     {
@@ -173,8 +204,6 @@ public class MyCharacter : MonoBehaviour
             Respawn();
         }
     }
-
-    
     
     IEnumerator DisabledTimeInAir(float disabledTime)
     {
@@ -185,13 +214,7 @@ public class MyCharacter : MonoBehaviour
     //////////////////////////////////////////////////
     ////////////////       Attacks      //////////////
     //////////////////////////////////////////////////
-
-    void XAttackNormal()
-    {
-        if(XAttackNormalAction != null)
-            XAttackNormalAction();
-    }
-
+    
     void XAttackRight()
     {
         if (XAttackRightAction != null)
