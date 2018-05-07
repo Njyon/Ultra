@@ -4790,7 +4790,9 @@ MonoBehaviour:
   inAirSpeed: 5
   jumpVelocity: 12
   fallSpeed: 2
+  maxFallVelocity: 0
   maxJumps: 3
+  jumpState: 0
   maxDashes: 2
   dashLength: 5
   dashTime: 1
@@ -4807,6 +4809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9487e8971e1ab0640bc8c7961700852e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  p_JumpOnGround: {fileID: 0}
   playerEnum: 0
   canGetDamaged: 1
   isDisabled: 0
@@ -4814,7 +4817,7 @@ MonoBehaviour:
   enemy: {fileID: 0}
   disabledTime: 1
   XNormalHitBox: 0
-  XHitNormalStunTime: 0
+  XHitNormalStunTime: 1
   lol: {fileID: 1646915763002504, guid: 40485be533a17f9498ba214ffeb76494, type: 2}
 --- !u!136 &136439231409751026
 CapsuleCollider:

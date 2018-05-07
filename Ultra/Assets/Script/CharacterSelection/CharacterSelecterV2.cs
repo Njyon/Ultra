@@ -130,7 +130,7 @@ public class CharacterSelecterV2 : MonoBehaviour
     void Awake()
     {
 
-#region Set befor Play
+    #region Set befor Play
         playerOne.characters = new GameObject[amountOfPlayableCharacters];
         playerTwo.characters = new GameObject[amountOfPlayableCharacters];
 
@@ -139,7 +139,7 @@ public class CharacterSelecterV2 : MonoBehaviour
 
 #endregion
 
-#region Set Character Array
+    #region Set Character Array
         playerOne.characters[0] = p1Keeram;
         playerOne.characters[1] = p1Nav;
 
@@ -148,7 +148,7 @@ public class CharacterSelecterV2 : MonoBehaviour
 
 #endregion
 
-#region Check befor Playing
+    #region Check befor Playing
         if (p1Keeram == null || p2Keeram == null)
         {
             Debug.Log("<color=red>Not Enough Characters in CharacterSelecter</color> ");
@@ -162,16 +162,16 @@ public class CharacterSelecterV2 : MonoBehaviour
         }
 #endregion
         
-#region Getter Stuff
+    #region Getter Stuff
         GameObject PlayerInfoManagerObj = GameObject.Find("PlayerInfoManager");
         playerInfoManager = PlayerInfoManagerObj.GetComponent<PlayerInfoManager>();
 
         playerOne.characterPosition = playerOne.characters[playerOne.slotIndex].transform.position;
         playerTwo.characterPosition = playerTwo.characters[playerTwo.slotIndex].transform.position;
 
-        #endregion
+    #endregion
 
-        #region Setter Stuff
+    #region Setter Stuff
 
         #endregion
 

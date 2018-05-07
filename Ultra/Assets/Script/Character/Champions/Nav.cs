@@ -6,10 +6,13 @@ public class Nav : MyCharacter
 {
     public float XHitNormalStunTime;
     public GameObject lol;
+    Ability[] abilities = new Ability[10];
 
     private void Start()
     {
+        DefineAbilities();
         XAttackNormalAction += LightAttack;
+        XAttackRightAction += LightAttackRight;
     }
 
     private void OnDisable()
@@ -17,15 +20,52 @@ public class Nav : MyCharacter
         XAttackNormalAction -= LightAttack;
     }
 
+    void DefineAbilities()
+    {
+        abilities[0] = new Ability(
+            "Light Attack",
+            "A Light Attack in view Direktion, its fast and does some Damage",
+            0.5f,
+            0.2f,
+            0.3f,
+            false
+            );
+
+        abilities[0].onAbilityStart = () => 
+        {
+            Debug.Log("Start");
+        };
+        abilities[0].onAbilityEnd = () => 
+        {
+            Debug.Log("End");
+        };
+        abilities[0].onAbilityCancel = () => 
+        {
+            Debug.Log("Canel");
+        };
+        abilities[0].onAnimationEvent = () => 
+        {
+            Debug.Log("AnimationEvent");
+        };
+        abilities[0].onAbilityReady = () => 
+        {
+            Debug.Log("Ready");
+        };
+    }
+
+    void Update()
+    {
+        abilities[0].Update();
+    }
+
     void LightAttack()
     {
-        Instantiate(lol, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 2, gameObject.transform.position.z), gameObject.transform.rotation);
-        Debug.Log(gameObject.name + " : Xhit");
-        if (XNormalHitBox)
-        {
-            Stun(XHitNormalStunTime);
-            enemy.GetComponent<MyCharacter>().Damage(50);
-            Invoke("Kick", XHitNormalStunTime);
-        }
+        Debug.Log("X");
+        abilities[0].Activate();
+    }
+
+    void LightAttackRight()
+    {
+        abilities[0].Cancel();
     }
 }
