@@ -32,13 +32,11 @@ public class Movement : MonoBehaviour
 
     // Jump
     public float jumpVelocity;
-    [Range(0, 10)]
-    public float fallSpeed;
-    [Range(5, 30)]
-    public float maxFallVelocity;
     int jumps = 0;
-    [Header("How much Jumps in a Row")]
-    public int maxJumps;
+    [Range(0, 10)] public float fallSpeed;
+    [Range(5, 30)] public float maxFallVelocity;
+    [Header("How much Jumps in a Row")] public int maxJumps;
+    [HideInInspector] public JumpState jumpState = JumpState.OnGround;
 
     //Dash
     [Header("Dash")]
@@ -59,6 +57,11 @@ public class Movement : MonoBehaviour
     bool isOnWallRight = false;
     bool isOnWallLeft = false;
 
+                            //       Delegates       //
+
+    public delegate void JumpDelegate(JumpState jumpState);
+    public JumpDelegate JumpDelegateAction;
+
     void Awake()
     {
         rb = this.gameObject.GetComponent<Rigidbody>();
@@ -72,9 +75,7 @@ public class Movement : MonoBehaviour
     {
         if (myCharacter == null)
             return;
-
-        Debug.Log(rb.velocity.y);
-
+        
         Idle();
         Falling();
         Dash();
@@ -416,6 +417,8 @@ public class Movement : MonoBehaviour
                 this.isOnWallRight = false;
                 this.isFalling = false;
                 this.canDash = true;
+                jumpState = JumpState.OnGround;
+
                 if (jumps > 0)
                     ResetJumps();
                 if (currentDashes > 0)
@@ -621,6 +624,7 @@ public class Movement : MonoBehaviour
                 this.rb.velocity = Vector3.up * jumpVelocity + Vector3.right * jumpVelocity;
                 jumps++;
             }
+            jumpState = JumpState.OnWallLeft;
             LookRight();
             StartCoroutine(JumpCoolDown());
             StartCoroutine(ForceDownDelay());
@@ -637,16 +641,20 @@ public class Movement : MonoBehaviour
                 this.rb.velocity = Vector3.up * jumpVelocity + Vector3.left * jumpVelocity;
                 jumps++;
             }
+            jumpState = JumpState.OnWallRight;
             LookLeft();
             StartCoroutine(JumpCoolDown());
             StartCoroutine(ForceDownDelay());
         }
         else if (jumps < maxJumps)
         {
+            if (isFalling)
+                jumpState = JumpState.InAir;
             this.rb.velocity = new Vector3(rb.velocity.x, jumpVelocity, 0);
             jumps++;
             StartCoroutine(ForceDownDelay());
         }
+        JumpDelegateAction(jumpState);
         this.isFalling = true;
     }
 
