@@ -214,6 +214,7 @@ MonoBehaviour:
   inAirSpeed: 5
   jumpVelocity: 10
   fallSpeed: 2
+  maxFallVelocity: 0
   maxJumps: 3
   maxDashes: 2
   dashLength: 5
@@ -235,5 +236,8 @@ MonoBehaviour:
   canGetDamaged: 1
   isDisabled: 0
   isStunned: 0
+  enemy: {fileID: 0}
   disabledTime: 0
-  xHit: {fileID: 0}
+  XNormalHitBox: 0
+  XHitNormalStunTime: 0
+  lol: {fileID: 1539067981596278}
