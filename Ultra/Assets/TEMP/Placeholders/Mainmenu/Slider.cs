@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Events;
 
 public class Slider : MonoBehaviour {
 
@@ -11,164 +12,238 @@ public class Slider : MonoBehaviour {
 
     public float minValueX;
     public float maxValueX;
-
     public string mixerParameter;
 
-    public AudioMixer aMixer;
 
-        //--Private--//
+    public UnityEvent ButtonPressEventX;
+    public UnityEvent ButtonPressEventY;
 
-    private bool inTrigger = false;
 
-    private float currentMixerVol;
-    private float minAudio = -80.0f;
-    private float maxAudio = 20.0f;
-    private float incrementX = 1.0f;
-    private float currentAudio;
+    //--Private--//
+
+    GameObject playerChar;
+
+    float posX;
 
     #endregion
 
     //-------------------------START - UPDATE--------------------------------//
 
-    // Use this for initialization
-    void Start ()
+
+    private void Awake()
     {
-        SetPos();
+        if (ButtonPressEventX == null)
+            ButtonPressEventX = new UnityEvent();
+
+        if (ButtonPressEventY == null)
+            ButtonPressEventY = new UnityEvent();
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    private void Start()
     {
-        Activated();
+        
+        
+        posX = this.transform.position.x;
     }
+
+
 
 
     //------------------------ON-TRIGGER--------------------------//
 
     private void OnTriggerEnter(Collider other)
     {
-        
+
         if (other.gameObject.tag == "Player")
         {
-            inTrigger = true;
+            playerChar = other.gameObject;
+
+            MyCharacter collidingPlayer = other.gameObject.GetComponent<MyCharacter>();
+            switch (collidingPlayer.playerEnum)
+            {
+                case PlayerEnum.PlayerOne:
+                    AssigneInputP1();
+                    break;
+                case PlayerEnum.PlayerTwo:
+                    AssigneInputP2();
+                    break;
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
+
         if (other.gameObject.tag == "Player")
         {
-            inTrigger = false;
-        }     
+            MyCharacter collidingPlayer = other.gameObject.GetComponent<MyCharacter>();
+            switch (collidingPlayer.playerEnum)
+            {
+                case PlayerEnum.PlayerOne:
+                    RemoveInputP1();
+                    break;
+                case PlayerEnum.PlayerTwo:
+                    RemoveInputP2();
+                    break;
+            }
+        }
+
+    }
+
+    // -------------------INPUT -----------------------------------//
+
+    void AssigneInputP1()
+    {
+        InputManager.p1_OnKeyPressed += P1_CheckInputDown;
+    }
+
+    void AssigneInputP2()
+    {
+        InputManager.p2_OnKeyPressed += P2_CheckInputDown;
+    }
+
+    void RemoveInputP1()
+    {
+        InputManager.p1_OnKeyPressed -= P1_CheckInputDown;
+    }
+
+    void RemoveInputP2()
+    {
+        InputManager.p2_OnKeyPressed -= P2_CheckInputDown;
+    }
+
+    // ---------Input Functions -----------------------//
+
+    void P1_CheckInputDown(KeyCode keyCode)
+    {
+        if (keyCode == KeyCode.Joystick1Button2)
+            OnButtonDownX();
+
+        if (keyCode == KeyCode.Joystick1Button3)
+            OnButtonDownY();
+    }
+
+    void P2_CheckInputDown(KeyCode keyCode)
+    {
+        if (keyCode == KeyCode.Joystick2Button2)
+            OnButtonDownX();
+
+        if (keyCode == KeyCode.Joystick1Button3)
+            OnButtonDownY();
+    }
+
+    void OnButtonDownX()
+    {
+        ButtonPressEventX.Invoke();
+        ChangeSliderVolume(1.0f);
+    }
+
+    void OnButtonDownY()
+    {
+        ButtonPressEventY.Invoke();
+        ChangeSliderVolume(2.0f);
+    }
+
+    // -------------------OLD FUNCTIONS---------------------------------//
+
+    void ChangeSliderVolume(float incrementVal)
+    {
+        MainMenu mainMenu = GameObject.Find("EventSystem").GetComponent<MainMenu>();
+
+        if (playerChar.transform.position.x - posX < posX)
+        {
+            //increase
+            this.transform.position += Vector3.right * incrementVal;
+            mainMenu.ChangeVolume(true, incrementVal * 10, mixerParameter);
+            Debug.Log("TRUE");
+
+            if(posX > maxValueX)
+            {
+                posX = maxValueX;
+            }
+
+        }
+        else if (playerChar.transform.position.x - posX > posX)
+        {
+            //decrease
+            this.transform.position += Vector3.left * incrementVal;
+            mainMenu.ChangeVolume(false, -incrementVal * 10, mixerParameter);
+            Debug.Log("posX: " + posX + " playerPos: " + playerChar.transform.position.x);
+
+            if(posX < minValueX)
+            {
+                posX = minValueX;
+            }
+        }
+
+        this.transform.position = new Vector3(posX, this.transform.position.y, this.transform.position.z);
     }
 
 
-    // -------------------FUNCTIONS---------------------------------//
+    #region Old Functions
+    //private void Activated()
+    //{
+
+    //    if (inTrigger == true)
+    //    {
+    //        if (Input.GetButtonDown("P1_YButton") )
+    //        {
+    //            //Increase
+    //            if (this.gameObject.transform.position.x < maxValueX)
+    //            {
+    //                this.transform.position += Vector3.right * incrementX;
+    //                ChangeVolume(true);
+    //            }
+    //        }
+    //        else if(Input.GetButtonDown("P1_XButton"))
+    //        {
+    //            //Decrease
+    //            if (this.gameObject.transform.position.x > minValueX)
+    //            {
+    //                this.transform.position += Vector3.left * incrementX;
+    //                ChangeVolume(false);
+    //            }
+    //        }
 
 
-    private void Activated()
-    {
+    //    }
 
-        if (inTrigger == true)
-        {
-            if (Input.GetButtonDown("P1_YButton") )
-            {
-                //Increase
-                if (this.gameObject.transform.position.x < maxValueX)
-                {
-                    this.transform.position += Vector3.right * incrementX;
-                    ChangeVolume(true);
-                }
-            }
-            else if(Input.GetButtonDown("P1_XButton"))
-            {
-                //Decrease
-                if (this.gameObject.transform.position.x > minValueX)
-                {
-                    this.transform.position += Vector3.left * incrementX;
-                    ChangeVolume(false);
-                }
-            }
+    //} 
 
-            
-        }
+    //private void ChangeVolume(bool add)
+    //{
+    //    currentAudio = Mathf.Round(currentAudio * 10f) / 10f;
 
-    } 
+    //    float incrementer = ((minValueX - maxValueX) / (minAudio - maxAudio)) * 100;
 
-    private void ChangeVolume(bool add)
-    {
-        currentAudio = Mathf.Round(currentAudio * 10f) / 10f;                               //Rounds to a whole
+    //    if (add == true)
+    //    {
+    //        //Increase
+    //        currentAudio = currentAudio + incrementer;
 
-        float incrementer = ((minValueX - maxValueX) / (minAudio - maxAudio)) * 100;        // calculates incrementation steps 
+    //        if (currentAudio > maxAudio)
+    //        {
+    //            currentAudio = maxAudio;
+    //        }
 
-        if (add == true)
-        {
-            //Increase
-            currentAudio = currentAudio + incrementer;
+    //    }
+    //    else if (add == false)
+    //    {
+    //        //Decrease
+    //        currentAudio = currentAudio - incrementer;
 
-            if (currentAudio > maxAudio)
-            {
-                currentAudio = maxAudio;
-            }
+    //        if (currentAudio < minAudio)
+    //        {
+    //            currentAudio = minAudio;
+    //        }
+    //    }
 
-        }
-        else if (add == false)
-        {
-            //Decrease
-            currentAudio = currentAudio - incrementer;
+    //    currentMixerVol = currentAudio;
+    //    aMixer.SetFloat(mixerParameter, currentMixerVol);
+    //}
 
-            if (currentAudio < minAudio)
-            {
-                currentAudio = minAudio;
-            }
-        }
-
-        currentMixerVol = currentAudio;
-        aMixer.SetFloat(mixerParameter, currentMixerVol);
-    }
-
-    private void SetPos()
-    {
-        aMixer.GetFloat(mixerParameter, out currentMixerVol);
-        currentAudio = currentMixerVol;
-
-        float currentX = this.transform.position.x;
-
-        //Don't know why i need this....but i do
-        float currentY = transform.position.y;
-        float currentZ = transform.position.z;
-
-
-        //get distance of start point of slider and current position
-        Vector3 minPos = new Vector3(minValueX, currentY, currentZ);
-        Vector3 currPos = new Vector3(currentX, currentY, currentZ);
-        float dist = Vector3.Distance(minPos, currPos);
-
-        //get distance of start point of volume and current volume
-        Vector3 minPosAudio = new Vector3(minAudio, currentY, currentZ);
-        Vector3 currPosAudio = new Vector3(currentAudio, currentY, currentZ);
-        float distAudio = Vector3.Distance(minPosAudio, currPosAudio);
-
-
-
-        float newCurrentX = (distAudio / 10); 
-
-        while(dist != newCurrentX)
-        {
-            if(dist < newCurrentX)
-            {
-                currentX += 1.0f;
-                dist += 1.0f;
-            }
-            else if(dist > newCurrentX)
-            {
-                currentX -= 1.0f;
-                dist -= 1.0f;
-            }
-        }
-
-        transform.position = new Vector3(currentX, currentY, currentZ);
-    }
+    
+    #endregion Old Functions
 }
 
 
