@@ -12,6 +12,7 @@ public class MyCharacter : MonoBehaviour
     [HideInInspector] public bool isDisabled = false;
     [HideInInspector] public bool isStunned = false;
     [HideInInspector] public GameObject enemy;
+    [HideInInspector] public MyCharacter enemyCharacter;
     public float disabledTime;
 
     Rigidbody rb;
@@ -25,7 +26,7 @@ public class MyCharacter : MonoBehaviour
 
     //////////// Collision ///////////
 
-    [HideInInspector] public bool XNormalHitBox = false;
+    [HideInInspector] public bool xNormalHitBox = false;
 
     //////////// Menu ///////////
 
@@ -164,6 +165,7 @@ public class MyCharacter : MonoBehaviour
                 break;
         }
     }
+
     #endregion
 
     void Awake()
@@ -196,11 +198,28 @@ public class MyCharacter : MonoBehaviour
     /// <param name="time"></param>
     public void Stun(float time)
     {
-        if(XNormalHitBox)
-            enemy.GetComponent<MyCharacter>().Stun(time);
+        if(xNormalHitBox)
+            enemyCharacter.Stun(time);
         movement.Stun(time);
     }
-
+    /// <summary>
+    /// Stunes Character till EndStun() & Stunes Enemy if in reach
+    /// </summary>
+    public void Stun()
+    {
+        if (xNormalHitBox)
+            enemyCharacter.Stun();
+        movement.Stun();
+    }
+    /// <summary>
+    /// End the Stun from the Player and Enemy if "isStunned"
+    /// </summary>
+    public void EndStun()
+    {
+        if (enemyCharacter.isStunned)
+            enemyCharacter.EndStun();
+        movement.EndStun();
+    }
     /// <summary>
     /// Does Damaged to the Player
     /// </summary>
@@ -209,7 +228,6 @@ public class MyCharacter : MonoBehaviour
     {
         percent += damage;
     }
-
     /// <summary>
     /// Kick The Player away from the "EnemyPos"
     /// </summary>
@@ -225,7 +243,7 @@ public class MyCharacter : MonoBehaviour
     //      Private      //
     void Respawn()
     {
-        
+
     }
 
     void Dead()
