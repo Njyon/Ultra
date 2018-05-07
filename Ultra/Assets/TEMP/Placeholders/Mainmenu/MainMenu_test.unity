@@ -978,6 +978,16 @@ Prefab:
       propertyPath: m_Name
       value: MasterSlider
       objectReference: {fileID: 0}
+    - target: {fileID: 65232852534989268, guid: 40485be533a17f9498ba214ffeb76494,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 54965269772080030, guid: 40485be533a17f9498ba214ffeb76494,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 40485be533a17f9498ba214ffeb76494, type: 2}
   m_IsPrefabParent: 0
@@ -1008,10 +1018,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6499d0e519c8abd4fbc0d46fabc5400f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugCharacter: {fileID: 1539067981596278, guid: 433e5e64458f2d14eab23020cc93755f,
+  debugCharacter: {fileID: 1392969457632022, guid: dfa3a8f76437c454facd0ada62b5d513,
     type: 2}
   spawnLocation: {fileID: 543039077}
-  playerEnum: 1
+  playerEnum: 2
 --- !u!4 &748146766
 Transform:
   m_ObjectHideFlags: 0

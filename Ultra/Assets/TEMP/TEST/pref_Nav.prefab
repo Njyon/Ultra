@@ -2398,6 +2398,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4455809253418994}
   - component: {fileID: 65206171298049306}
+  - component: {fileID: 114204667399223658}
   m_Layer: 8
   m_Name: xHitCollider
   m_TagString: Untagged
@@ -4774,6 +4775,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114204667399223658
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1985098802299536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b48efab059d33f84b952ff8f312d1e25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionEnum: 0
+  player: {fileID: 1392969457632022}
 --- !u!114 &114532094157897230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4816,10 +4830,12 @@ MonoBehaviour:
   isDisabled: 0
   isStunned: 0
   enemy: {fileID: 0}
+  enemyCharacter: {fileID: 0}
   disabledTime: 1
-  XNormalHitBox: 0
+  xNormalHitBox: 0
+  hasSlider: 0
+  slider: {fileID: 0}
   XHitNormalStunTime: 1
-  lol: {fileID: 1646915763002504, guid: 40485be533a17f9498ba214ffeb76494, type: 2}
 --- !u!136 &136439231409751026
 CapsuleCollider:
   m_ObjectHideFlags: 1

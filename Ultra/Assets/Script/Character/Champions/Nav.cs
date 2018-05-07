@@ -44,7 +44,15 @@ public class Nav : MyCharacter
         };
         abilities[0].onAbilityUpdate = () => 
         {
-            Debug.Log("TriggerAttack");
+            if (xNormalHitBox && !abilities[0].hitObject)
+            {
+                abilities[0].hitObject = true;
+            }
+            else if (hasSlider && !abilities[0].hitObject)
+            {
+                abilities[0].hitObject = true;
+                slider.GetComponent<Slider>().SliderChange(this.transform);
+            }
         };
         abilities[0].onAbilityReady = () => 
         {

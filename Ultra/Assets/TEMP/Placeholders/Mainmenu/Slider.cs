@@ -14,15 +14,14 @@ public class Slider : MonoBehaviour {
     public float maxValueX;
     public string mixerParameter;
 
-
     public UnityEvent ButtonPressEventX;
     public UnityEvent ButtonPressEventY;
 
-
     //--Private--//
+    
+    //GameObject playerChar;
 
-    GameObject playerChar;
-
+    float incrementVal = 1.0f;
     float posX;
 
     #endregion
@@ -56,7 +55,7 @@ public class Slider : MonoBehaviour {
 
         if (other.gameObject.tag == "Player")
         {
-            playerChar = other.gameObject;
+            //playerChar = other.gameObject;
 
             MyCharacter collidingPlayer = other.gameObject.GetComponent<MyCharacter>();
             switch (collidingPlayer.playerEnum)
@@ -135,48 +134,78 @@ public class Slider : MonoBehaviour {
     void OnButtonDownX()
     {
         ButtonPressEventX.Invoke();
-        ChangeSliderVolume(1.0f);
+
+        //ChangeSliderVolume(1.0f);
     }
 
     void OnButtonDownY()
     {
         ButtonPressEventY.Invoke();
-        ChangeSliderVolume(2.0f);
+        //ChangeSliderVolume(2.0f);
     }
 
     // -------------------OLD FUNCTIONS---------------------------------//
 
-    void ChangeSliderVolume(float incrementVal)
+    //void ChangeSliderVolume(float incrementVal)
+    //{
+    //    MainMenu mainMenu = GameObject.Find("EventSystem").GetComponent<MainMenu>();
+
+    //    if (playerChar.transform.position.x - posX < posX)
+    //    {
+    //        //increase
+    //        this.transform.position += Vector3.right * incrementVal;
+    //        mainMenu.ChangeVolume(true, incrementVal * 10, mixerParameter);
+    //        Debug.Log("TRUE");
+
+    //        if(posX > maxValueX)
+    //        {
+    //            posX = maxValueX;
+    //        }
+
+    //    }
+    //    else if (playerChar.transform.position.x - posX > posX)
+    //    {
+    //        //decrease
+    //        this.transform.position += Vector3.left * incrementVal;
+    //        mainMenu.ChangeVolume(false, -incrementVal * 10, mixerParameter);
+    //        Debug.Log("posX: " + posX + " playerPos: " + playerChar.transform.position.x);
+
+    //        if(posX < minValueX)
+    //        {
+    //            posX = minValueX;
+    //        }
+    //    }
+
+    //    this.transform.position = new Vector3(posX, this.transform.position.y, this.transform.position.z);
+    //}
+
+
+
+    public void SliderChange(Transform transform)
     {
-        MainMenu mainMenu = GameObject.Find("EventSystem").GetComponent<MainMenu>();
 
-        if (playerChar.transform.position.x - posX < posX)
+        if(transform.position.x - this.transform.position.x < this.transform.position.x)
         {
-            //increase
-            this.transform.position += Vector3.right * incrementVal;
-            mainMenu.ChangeVolume(true, incrementVal * 10, mixerParameter);
-            Debug.Log("TRUE");
+            //Increase
+            this.transform.position = new Vector3(this.transform.position.x + incrementVal, this.transform.position.y, 0);
+                
+                //Vector3.right * incrementVal;
 
-            if(posX > maxValueX)
-            {
-                posX = maxValueX;
-            }
-
+            if (this.transform.position.x > maxValueX)
+                this.transform.position = new Vector3(maxValueX, this.transform.position.y, this.transform.position.z);
         }
-        else if (playerChar.transform.position.x - posX > posX)
+        else if (transform.position.x - this.transform.position.x > this.transform.position.x)
         {
             //decrease
-            this.transform.position += Vector3.left * incrementVal;
-            mainMenu.ChangeVolume(false, -incrementVal * 10, mixerParameter);
-            Debug.Log("posX: " + posX + " playerPos: " + playerChar.transform.position.x);
+            this.transform.position = new Vector3(this.transform.position.x - incrementVal, this.transform.position.y, 0);
 
-            if(posX < minValueX)
-            {
-                posX = minValueX;
-            }
+            if (this.transform.position.x < minValueX)
+                this.transform.position = new Vector3(minValueX, this.transform.position.y, this.transform.position.z);
         }
 
-        this.transform.position = new Vector3(posX, this.transform.position.y, this.transform.position.z);
+        //this.transform.position = new Vector3(posX, this.transform.position.y, 0);
+
+        Debug.Log("posX: " + this.transform.position.x + " playerPos: " + transform.position.x);
     }
 
 

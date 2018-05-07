@@ -10,14 +10,15 @@ public class AbilityEvent
     public Action onAbilityEnd;
     public Action onAbilityReady;
     public Action onAbilityUpdate;
-    
+    public bool hitObject = false;
+
     AbilityState state = AbilityState.EventReady;
     float startTimeStamp;
     float timetillActiveHelper;
     float activeTimeHelper;
     float cooldownTimeHelper;
     bool timerActive = false;
-
+   
     float timeTillActive;
     float activeTime;
     float cooldownTime;
@@ -88,6 +89,7 @@ public class AbilityEvent
             if(cooldownTimeHelper <= 0)
             {
                 state = AbilityState.EventReady;
+                hitObject = false;
             }
         }
     }
