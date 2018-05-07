@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class MyCharacter : MonoBehaviour
 {
+    [Header("JumpParticle")]
+    public GameObject p_JumpOnGround;
+
     [HideInInspector] public PlayerEnum playerEnum = PlayerEnum.NotAssigned;
     [HideInInspector] public bool canGetDamaged = true;
     [HideInInspector] public bool isDisabled = false;
@@ -52,6 +55,9 @@ public class MyCharacter : MonoBehaviour
         movement = gameObject.GetComponent<Movement>();
         movement.AssigneInput();
         rb = GetComponent<Rigidbody>();
+
+        // Movement Delegates Sub
+        movement.JumpDelegateAction += JumpCheck;
 
         // Input
         switch(playerEnum)
@@ -122,7 +128,7 @@ public class MyCharacter : MonoBehaviour
 
     void P2_InputDownCheck(KeyCode keyCode)
     {
-        if (keyCode == KeyCode.Joystick1Button2)
+        if (keyCode == KeyCode.Joystick2Button2)
         {
             if (XAttackNormalAction != null)
                 XAttackNormalAction();
@@ -131,6 +137,27 @@ public class MyCharacter : MonoBehaviour
     void P2_InputUpCheck(KeyCode keyCode)
     {
 
+    }
+    #endregion
+
+    #region Delegate Check
+    void JumpCheck(JumpState jumpState)
+    {
+        switch (jumpState)
+        {
+            case JumpState.InAir:
+
+                break;
+            case JumpState.OnGround:
+                Instantiate(p_JumpOnGround, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0), this.transform.rotation);
+                break;
+            case JumpState.OnWallLeft:
+
+                break;
+            case JumpState.OnWallRight:
+
+                break;
+        }
     }
     #endregion
 
