@@ -23,10 +23,10 @@ GameObject:
   - component: {fileID: 23030233379537164}
   - component: {fileID: 54965269772080030}
   - component: {fileID: 65232852534989268}
-  - component: {fileID: 114071961414070950}
+  - component: {fileID: 114215242251920718}
   m_Layer: 0
   m_Name: prefab_sliderKnob
-  m_TagString: Untagged
+  m_TagString: ScrollButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38,8 +38,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1646915763002504}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -5, y: 0.43, z: 0}
-  m_LocalScale: {x: 1, y: 2.3000028, z: 1}
+  m_LocalPosition: {x: 0, y: 1.89, z: 0.5}
+  m_LocalScale: {x: 1, y: 2.300011, z: 1.0000005}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -112,7 +112,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0000001, y: 2.0000005, z: 1.0000005}
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940699}
---- !u!114 &114071961414070950
+--- !u!114 &114215242251920718
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -120,6 +120,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1646915763002504}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf09e9fae8f04fc40b9e77afa6ee0be6, type: 3}
+  m_Script: {fileID: 11500000, guid: 1489e34605f185340a07a9c1156ea73f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minValueX: -5
+  maxValueX: 5
+  mixerParameter: master
+  ButtonPressEventX:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  ButtonPressEventY:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null

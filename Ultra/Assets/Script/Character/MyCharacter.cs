@@ -27,6 +27,11 @@ public class MyCharacter : MonoBehaviour
 
     [HideInInspector] public bool XNormalHitBox = false;
 
+    //////////// Menu ///////////
+
+    [HideInInspector] public bool hasSlider = false;
+    [HideInInspector] public GameObject slider;
+
     //////////// AttackDeleagtes ///////////
 
     #region X Attack 
