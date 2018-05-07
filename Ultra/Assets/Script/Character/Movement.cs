@@ -14,6 +14,7 @@ public class Movement : MonoBehaviour
     bool fallStraight = true;
     bool forcingDown = false;
     bool forceDownEnabled = true;
+    bool isStunned = false;
     float currentTurntime = 0;
     bool isIdling = true;
     Vector3 lastPos;
@@ -177,10 +178,36 @@ public class Movement : MonoBehaviour
     /// <param name="time"></param>
     public void Stun(float time)
     {
-        canMove = false;
-        rb.useGravity = false;
-        rb.velocity = Vector3.zero;
-        Invoke("EndStun", time);
+        if (!isStunned)
+        {
+            isStunned = true;
+            canMove = false;
+            rb.useGravity = false;
+            rb.velocity = Vector3.zero;
+            Invoke("EndStun", time);
+        }
+    }
+    /// <summary>
+    /// Stuns Player Till EndStun()
+    /// </summary>
+    public void Stun()
+    {
+        if(!isStunned)
+        {
+            isStunned = true;
+            canMove = false;
+            rb.useGravity = false;
+            rb.velocity = Vector3.zero;
+        }
+    }
+    /// <summary>
+    /// Ends the Stun Effect from the Player
+    /// </summary>
+    public void EndStun()
+    {
+        isStunned = false;
+        canMove = true;
+        rb.useGravity = true;
     }
 
 
@@ -432,13 +459,7 @@ public class Movement : MonoBehaviour
             isFalling = true;
         }
     }
-
-    void EndStun()
-    {
-        canMove = true;
-        rb.useGravity = true;
-    }
-
+    
     void FallStraight()
     {
         fallStraight = true;

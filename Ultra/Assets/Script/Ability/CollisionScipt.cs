@@ -19,11 +19,13 @@ public class CollisionScipt : MonoBehaviour
         {
             if (myCharacter.enemy == null)
                 myCharacter.enemy = other.gameObject;
+            if (myCharacter.enemyCharacter == null)
+                myCharacter.enemyCharacter = other.gameObject.GetComponent<MyCharacter>();
 
             switch(collisionEnum)
             {
                 case CollisionEnum.XHitNormal:
-                    myCharacter.XNormalHitBox = true;
+                    myCharacter.xNormalHitBox = true;
                     break;
             }
         }
@@ -36,7 +38,7 @@ public class CollisionScipt : MonoBehaviour
             switch (collisionEnum)
             {
                 case CollisionEnum.XHitNormal:
-                    myCharacter.XNormalHitBox = false;
+                    myCharacter.xNormalHitBox = false;
                     break;
             }
         }
