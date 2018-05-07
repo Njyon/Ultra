@@ -5,7 +5,7 @@ using UnityEngine;
 public class MyCharacter : MonoBehaviour
 {
     [Header("JumpParticle")]
-    public ParticleSystem p_JumpOnGround;
+    public GameObject p_JumpOnGround;
 
     [HideInInspector] public PlayerEnum playerEnum = PlayerEnum.NotAssigned;
     [HideInInspector] public bool canGetDamaged = true;
@@ -149,7 +149,7 @@ public class MyCharacter : MonoBehaviour
 
                 break;
             case JumpState.OnGround:
-                p_JumpOnGround.Play();
+                Instantiate(p_JumpOnGround, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0), this.transform.rotation);
                 break;
             case JumpState.OnWallLeft:
 

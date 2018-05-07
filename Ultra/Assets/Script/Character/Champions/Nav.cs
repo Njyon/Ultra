@@ -5,7 +5,6 @@ using UnityEngine;
 public class Nav : MyCharacter
 {
     public float XHitNormalStunTime;
-    public GameObject lol;
     Ability[] abilities = new Ability[10];
 
     private void Start()
@@ -43,9 +42,9 @@ public class Nav : MyCharacter
         {
             Debug.Log("Canel");
         };
-        abilities[0].onAnimationEvent = () => 
+        abilities[0].onAbilityUpdate = () => 
         {
-            Debug.Log("AnimationEvent");
+            Debug.Log("TriggerAttack");
         };
         abilities[0].onAbilityReady = () => 
         {

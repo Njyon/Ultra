@@ -9,7 +9,7 @@ public class AbilityEvent
     public Action onAbilityCancel;
     public Action onAbilityEnd;
     public Action onAbilityReady;
-    public Action onAnimationEvent;
+    public Action onAbilityUpdate;
     
     AbilityState state = AbilityState.EventReady;
     float startTimeStamp;
@@ -48,7 +48,7 @@ public class AbilityEvent
             activeTimeHelper = activeTime;
             timerActive = true;
             state = AbilityState.EventActive;
-            onAnimationEvent();
+            onAbilityStart();
         }
     }
 
@@ -69,11 +69,11 @@ public class AbilityEvent
             if(timetillActiveHelper <= 0)
             {
                 timerActive = false;
-                onAbilityStart();
             }
         }
         else if(IsActive())
         {
+            onAbilityUpdate();
             activeTimeHelper -= Time.deltaTime;
             if(activeTimeHelper <= 0)
             {
