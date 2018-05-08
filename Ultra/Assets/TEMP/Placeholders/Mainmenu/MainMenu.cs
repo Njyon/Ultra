@@ -44,6 +44,7 @@ public class MainMenu : MonoBehaviour {
     float minAudio = -80.0f;
     float maxAudio = 20.0f;
     float currentAudio;
+    string mixerParameter;
 
     [HideInInspector] public Resolution[] resolutions;
 
@@ -135,16 +136,22 @@ public class MainMenu : MonoBehaviour {
 
     public void VolumeIncrementBase()
     {
-
+        ChangeVolume(true, 1.0f);
     }
 
     public void VolumeIncrementSpecial()
     {
-
+        ChangeVolume(true, 2.0f);
     }
 
-    public void ChangeVolume(bool add, float incrementX, string mixerParameter)
+    public void ChangeVolume(bool add, float incrementX)
     {
+        Slider slider = GetComponent<Slider>();
+        mixerParameter = slider.mixerParameter;
+
+        Debug.Log(mixerParameter);
+
+        currentAudio = Mathf.Round(currentAudio * 10f) / 10f;
         //incrementX = (maxAudio - minAudio) / 10;
 
         if (add == true)

@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 65186613895383134}
   - component: {fileID: 23420570516446394}
   m_Layer: 0
-  m_Name: prefab_resolutionSelection
+  m_Name: pref_resolutionSelection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -278,7 +278,7 @@ Animator:
   m_GameObject: {fileID: 1962650169650404}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5c54e0aeac204f948907ec845b9143c5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -295,7 +295,7 @@ Animator:
   m_GameObject: {fileID: 1899820033922064}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5c54e0aeac204f948907ec845b9143c5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -332,7 +332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ad44a359216cca428405566fa81537e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onHoverColor: {r: 1, g: 0.39705884, b: 0.39705884, a: 0}
+  onHoverColor: {r: 0.39705884, g: 1, b: 0.7006085, a: 0}
   activationColor: {r: 0.375, g: 0.8189655, b: 1, a: 0}
   ActivationEvent:
     m_PersistentCalls:

@@ -22,7 +22,7 @@ public class Slider : MonoBehaviour {
     //GameObject playerChar;
 
     float incrementVal = 1.0f;
-    float posX;
+    
 
     #endregion
 
@@ -38,16 +38,6 @@ public class Slider : MonoBehaviour {
             ButtonPressEventY = new UnityEvent();
     }
 
-    private void Start()
-    {
-        
-        
-        posX = this.transform.position.x;
-    }
-
-
-
-
     //------------------------ON-TRIGGER--------------------------//
 
     private void OnTriggerEnter(Collider other)
@@ -55,7 +45,6 @@ public class Slider : MonoBehaviour {
 
         if (other.gameObject.tag == "Player")
         {
-            //playerChar = other.gameObject;
 
             MyCharacter collidingPlayer = other.gameObject.GetComponent<MyCharacter>();
             switch (collidingPlayer.playerEnum)
@@ -134,14 +123,11 @@ public class Slider : MonoBehaviour {
     void OnButtonDownX()
     {
         ButtonPressEventX.Invoke();
-
-        //ChangeSliderVolume(1.0f);
     }
 
     void OnButtonDownY()
     {
         ButtonPressEventY.Invoke();
-        //ChangeSliderVolume(2.0f);
     }
 
     // -------------------OLD FUNCTIONS---------------------------------//
@@ -183,29 +169,35 @@ public class Slider : MonoBehaviour {
 
     public void SliderChange(Transform transform)
     {
+        float sliderPosX = this.transform.position.x;
 
-        if(transform.position.x - this.transform.position.x < this.transform.position.x)
+        if (transform.position.x - sliderPosX < sliderPosX)
         {
             //Increase
-            this.transform.position = new Vector3(this.transform.position.x + incrementVal, this.transform.position.y, 0);
-                
-                //Vector3.right * incrementVal;
-
-            if (this.transform.position.x > maxValueX)
+            
+            this.transform.position = new Vector3(sliderPosX + 1.0f, this.transform.position.y, 0);
+            Debug.Log("+");
+            if (sliderPosX > maxValueX)
+            {
                 this.transform.position = new Vector3(maxValueX, this.transform.position.y, this.transform.position.z);
+            }
         }
-        else if (transform.position.x - this.transform.position.x > this.transform.position.x)
+        else if (transform.position.x - sliderPosX > sliderPosX)
         {
             //decrease
-            this.transform.position = new Vector3(this.transform.position.x - incrementVal, this.transform.position.y, 0);
-
-            if (this.transform.position.x < minValueX)
+            this.transform.position = new Vector3(sliderPosX - 1.0f, this.transform.position.y, 0);
+            Debug.Log("-");
+            if (sliderPosX < minValueX)
+            {
                 this.transform.position = new Vector3(minValueX, this.transform.position.y, this.transform.position.z);
+            }
+        }
+        else
+        {
+            return;
         }
 
-        //this.transform.position = new Vector3(posX, this.transform.position.y, 0);
-
-        Debug.Log("posX: " + this.transform.position.x + " playerPos: " + transform.position.x);
+        Debug.Log("sliderPosX: " + this.transform.position.x + " playerPosX: " + transform.position.x);
     }
 
 
@@ -213,66 +205,102 @@ public class Slider : MonoBehaviour {
     //private void Activated()
     //{
 
-    //    if (inTrigger == true)
-    //    {
-    //        if (Input.GetButtonDown("P1_YButton") )
-    //        {
-    //            //Increase
-    //            if (this.gameObject.transform.position.x < maxValueX)
-    //            {
-    //                this.transform.position += Vector3.right * incrementX;
-    //                ChangeVolume(true);
-    //            }
-    //        }
-    //        else if(Input.GetButtonDown("P1_XButton"))
-    //        {
-    //            //Decrease
-    //            if (this.gameObject.transform.position.x > minValueX)
-    //            {
-    //                this.transform.position += Vector3.left * incrementX;
-    //                ChangeVolume(false);
-    //            }
-    //        }
+
+//            if (transform.position.x - this.transform.position.x<posX)
+//        {
+//            //Increase
+            
+//            this.transform.position = new Vector3(posX + incrementVal, this.transform.position.y, 0);
+//    Debug.Log("+");
+//            if (posX > maxValueX)
+//            {
+//                this.transform.position = new Vector3(maxValueX, this.transform.position.y, this.transform.position.z);
+//}
+//        }
+//        else if (transform.position.x - this.transform.position.x > posX)
+//        {
+//    //decrease
+//    this.transform.position = new Vector3(posX - incrementVal, this.transform.position.y, 0);
+//    Debug.Log("-");
+//    if (posX < minValueX)
+//    {
+//        this.transform.position = new Vector3(minValueX, this.transform.position.y, this.transform.position.z);
+//    }
+//}
+//        else
+//        {
+//    return;
+//}
 
 
-    //    }
 
-    //} 
 
-    //private void ChangeVolume(bool add)
-    //{
-    //    currentAudio = Mathf.Round(currentAudio * 10f) / 10f;
 
-    //    float incrementer = ((minValueX - maxValueX) / (minAudio - maxAudio)) * 100;
 
-    //    if (add == true)
-    //    {
-    //        //Increase
-    //        currentAudio = currentAudio + incrementer;
 
-    //        if (currentAudio > maxAudio)
-    //        {
-    //            currentAudio = maxAudio;
-    //        }
 
-    //    }
-    //    else if (add == false)
-    //    {
-    //        //Decrease
-    //        currentAudio = currentAudio - incrementer;
 
-    //        if (currentAudio < minAudio)
-    //        {
-    //            currentAudio = minAudio;
-    //        }
-    //    }
 
-    //    currentMixerVol = currentAudio;
-    //    aMixer.SetFloat(mixerParameter, currentMixerVol);
-    //}
+//    if (inTrigger == true)
+//    {
+//        if (Input.GetButtonDown("P1_YButton") )
+//        {
+//            //Increase
+//            if (this.gameObject.transform.position.x < maxValueX)
+//            {
+//                this.transform.position += Vector3.right * incrementX;
+//                ChangeVolume(true);
+//            }
+//        }
+//        else if(Input.GetButtonDown("P1_XButton"))
+//        {
+//            //Decrease
+//            if (this.gameObject.transform.position.x > minValueX)
+//            {
+//                this.transform.position += Vector3.left * incrementX;
+//                ChangeVolume(false);
+//            }
+//        }
 
-    
-    #endregion Old Functions
+
+//    }
+
+//} 
+
+//private void ChangeVolume(bool add)
+//{
+//    currentAudio = Mathf.Round(currentAudio * 10f) / 10f;
+
+//    float incrementer = ((minValueX - maxValueX) / (minAudio - maxAudio)) * 100;
+
+//    if (add == true)
+//    {
+//        //Increase
+//        currentAudio = currentAudio + incrementer;
+
+//        if (currentAudio > maxAudio)
+//        {
+//            currentAudio = maxAudio;
+//        }
+
+//    }
+//    else if (add == false)
+//    {
+//        //Decrease
+//        currentAudio = currentAudio - incrementer;
+
+//        if (currentAudio < minAudio)
+//        {
+//            currentAudio = minAudio;
+//        }
+//    }
+
+//    currentMixerVol = currentAudio;
+//    aMixer.SetFloat(mixerParameter, currentMixerVol);
+//}
+
+
+#endregion Old Functions
 }
 
 
