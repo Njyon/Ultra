@@ -43,12 +43,12 @@ public class AbilityEvent
 
     public void Activate()
     {
-        if(!IsActive() || !IsCooling())
+        if(!IsActive() && !IsCooling())
         {
+            state = AbilityState.EventActive;
             timetillActiveHelper = timeTillActive;
             activeTimeHelper = activeTime;
             timerActive = true;
-            state = AbilityState.EventActive;
             onAbilityStart();
         }
     }

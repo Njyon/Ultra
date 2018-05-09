@@ -26,8 +26,8 @@ public class Movement : MonoBehaviour
     [Header("Movement")]
     public float movementSpeed;
     public float inAirSpeed;
+    public bool isFalling = false;
     float wallDetectionLength = 0.6f;
-    bool isFalling = false;
     bool canMove = true;
     bool isNotMoving = true;
 
@@ -162,7 +162,19 @@ public class Movement : MonoBehaviour
     //////////////////////////////////////////////////
 
     //      Public      //
-
+    public void CantMove(float time)
+    {
+        canMove = false;
+        Invoke("CanMove", time);
+    }
+    public void CantMove()
+    {
+        canMove = false;
+    }
+    public void CanMove()
+    {
+        canMove = true;
+    }
     /// <summary>
     /// Resets currents Jumps to Zero
     /// </summary>
@@ -170,8 +182,6 @@ public class Movement : MonoBehaviour
     {
         jumps = 0;
     }
-
-
     /// <summary>
     /// Stunes the Player for "time"
     /// </summary>

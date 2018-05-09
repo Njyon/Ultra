@@ -56,8 +56,6 @@ public class MenuSelecter
     {
         if(!isSwitchingUp && !charakterSelected)
         {
-            Debug.Log("First: " + characters[0].name + " Second: " + characters[1].name);
-
             isSwitchingUp = true;
             characters[slotIndex].SetActive(false);
             if (slotIndex + 1 == characters.Length)                     // Math needed because Array.Lenght doesnt Start at 0

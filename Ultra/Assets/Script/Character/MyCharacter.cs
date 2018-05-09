@@ -193,32 +193,81 @@ public class MyCharacter : MonoBehaviour
 
     //      Public      // 
     /// <summary>
-    /// Stunes Character for amount of "time"
+    /// Disables a specific Character for amount of param time
+    /// </summary>
+    /// <param name="character"></param>
+    /// <param name="time"></param>
+    public void Disable(MyCharacter character, float time)
+    {
+        character.movement.CantMove(time);
+        character.isDisabled = true;
+        Invoke("EndDisable", time);
+    }
+    /// <summary>
+    /// Disable a Specific Character
+    /// </summary>
+    /// <param name="character"></param>
+    public void Disable(MyCharacter character)
+    {
+        character.movement.CantMove();
+        character.isDisabled = true;
+    }
+    /// <summary>
+    /// Disables the own Character
+    /// </summary>
+    public void Disable()
+    {
+        movement.CantMove();
+        isDisabled = true;
+    }
+    /// <summary>
+    /// Disables the own character for the amount of param time
     /// </summary>
     /// <param name="time"></param>
-    public void Stun(float time)
+    public void Disable(float time)
     {
-        if(xNormalHitBox)
-            enemyCharacter.Stun(time);
-        movement.Stun(time);
+        movement.CantMove();
+        isDisabled = true;
+        Invoke("EndDisable", time);
+    }
+    /// <summary>
+    /// Ends the disable effect a specific character
+    /// </summary>
+    /// <param name="character"></param>
+    public void EndDisable(MyCharacter character)
+    {
+        character.movement.CanMove();
+        character.isDisabled = false;
+    }
+    /// <summary>
+    /// Ends the Disable Effect on the own Character
+    /// </summary>
+    public void EndDisable()
+    {
+        movement.CanMove();
+        isDisabled = false;
+    }
+    /// <summary>
+    /// Stunes enemy for amount of "time"
+    /// </summary>
+    /// <param name="time"></param>
+    public void Stun(MyCharacter character, float time)
+    {
+        character.movement.Stun(time);
     }
     /// <summary>
     /// Stunes Character till EndStun() & Stunes Enemy if in reach
     /// </summary>
-    public void Stun()
+    public void Stun(MyCharacter character)
     {
-        if (xNormalHitBox)
-            enemyCharacter.Stun();
-        movement.Stun();
+        character.movement.Stun();
     }
     /// <summary>
     /// End the Stun from the Player and Enemy if "isStunned"
     /// </summary>
-    public void EndStun()
+    public void EndStun(MyCharacter character)
     {
-        if (enemyCharacter.isStunned)
-            enemyCharacter.EndStun();
-        movement.EndStun();
+        character.movement.EndStun();
     }
     /// <summary>
     /// Does Damaged to the Player
@@ -229,15 +278,62 @@ public class MyCharacter : MonoBehaviour
         percent += damage;
     }
     /// <summary>
-    /// Kick The Player away from the "EnemyPos"
+    /// Kick The Player away from the Vector param
+    /// Kick power depence on LifePercent
     /// </summary>
     /// <param name="enemyPos"></param>
-    public void KickAway(Vector3 enemyPos)
+    public void KickAway(MyCharacter character, Vector3 enemyPos, bool hard)
     {
-        enemyPos = new Vector3(this.transform.position.x - enemyPos.x, this.transform.position.y / 10 - enemyPos.y / 10, 0);
-        rb.AddForce(enemyPos.normalized * percent);
-        this.isDisabled = true;
-        StartCoroutine(DisabledTimeInAir(disabledTime));
+        if(MyEpsilon.Epsilon(this.transform.position.y, enemyPos.y, 1f))                                                                // Is Hight is Near
+        {
+            enemyPos = new Vector3(this.transform.position.x - enemyPos.x, 5, 0);
+        }
+        else                                                                                                                            // Position in Y is High enough
+        {
+            enemyPos = new Vector3(this.transform.position.x - enemyPos.x, this.transform.position.y / 10 - enemyPos.y / 10, 0);
+        }
+
+        if (hard)
+        {
+            if (percent <= 30)
+            {
+                rb.AddForce(enemyPos.normalized * 300);
+            }
+            else if (percent <= 90)
+            {
+                rb.AddForce(enemyPos.normalized * 600);
+            }
+            else if (percent <= 140)
+            {
+                rb.AddForce(enemyPos.normalized * 1000);
+            }
+        }
+        else
+        {
+            if (percent <= 30)
+            {
+                rb.AddForce(enemyPos.normalized * 500);
+            }
+            else if (percent <= 90)
+            {
+                rb.AddForce(enemyPos.normalized * 900);
+            }
+            else if (percent <= 140)
+            {
+                rb.AddForce(enemyPos.normalized * 1500);
+            }
+        }
+
+        
+        Disable(enemyCharacter, disabledTime);
+    }
+    /// <summary>
+    /// returns if the Character is falling or not
+    /// </summary>
+    /// <returns></returns>
+    public bool IsFalling()
+    {
+        return movement.isFalling;
     }
 
     //      Private      //
@@ -254,12 +350,6 @@ public class MyCharacter : MonoBehaviour
             Respawn();
         }
     }
-    
-    IEnumerator DisabledTimeInAir(float disabledTime)
-    {
-        yield return new WaitForSeconds(disabledTime);
-        this.isDisabled = false;
-    }
 
     //////////////////////////////////////////////////
     ////////////////       Attacks      //////////////
@@ -274,7 +364,7 @@ public class MyCharacter : MonoBehaviour
     void XAttackLeft()
     {
         if (XAttackLeftAction != null)
-            XAttackRightAction();
+            XAttackLeftAction();
     }
 
     void XAttackUp()

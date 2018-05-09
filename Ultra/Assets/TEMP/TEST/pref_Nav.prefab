@@ -2399,7 +2399,7 @@ GameObject:
   - component: {fileID: 4455809253418994}
   - component: {fileID: 65206171298049306}
   - component: {fileID: 114204667399223658}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: xHitCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4802,6 +4802,7 @@ MonoBehaviour:
   maxTurningTime: 1
   movementSpeed: 5
   inAirSpeed: 5
+  isFalling: 0
   jumpVelocity: 12
   fallSpeed: 2
   maxFallVelocity: 0
@@ -4835,7 +4836,9 @@ MonoBehaviour:
   xNormalHitBox: 0
   hasSlider: 0
   slider: {fileID: 0}
-  XHitNormalStunTime: 1
+  xHitNormalStunTime: 1
+  lightAttackDashLenght: 50
+  lightAttackDashTime: 0.5
 --- !u!136 &136439231409751026
 CapsuleCollider:
   m_ObjectHideFlags: 1
