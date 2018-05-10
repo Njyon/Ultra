@@ -15,7 +15,6 @@ public class InputManager : MonoBehaviour {
     public static P2_OnKeyPressedDelegate p2_OnKeyPressed;
     public static P2_OnKeyReleasedDelegate p2_OnKeyReleased;
     
-
     #region Player 1 Input
         #region Special
             public delegate void P1_SpecalLeft();
