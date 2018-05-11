@@ -13,7 +13,9 @@ public class Nav : MyCharacter
     public float SpecialAttackDashRange;
     public float SpecialAttackDashTime;
     public float SpecialAttackKickHight;
+    public float SpecialAttackTeleportRange;
 
+    bool usingSpecialSide = false;
     bool usingSpecial1 = false;
     bool isCharging = false;
 
@@ -28,6 +30,7 @@ public class Nav : MyCharacter
     float havyAttackChargeCounter;
     Vector3 dashDestination;
     Vector3 enemyDestination;
+    Vector3 TeleportDestination;
     Ability[] abilities = new Ability[10];
 
     private void Start()
@@ -40,6 +43,8 @@ public class Nav : MyCharacter
         XAttackDownAction += LightAttackDown;
         SpecialNormalAction += SpecialAttackNormal;
         SpecialReleaseAction += AbordSpecial;
+        SpecialRightAction += SpecialAttackRight;
+        SpecialLeftAction += SpecialAttackLeft;
     }
 
     private void OnDisable()
@@ -138,6 +143,17 @@ public class Nav : MyCharacter
            false
            );
 
+        // Y/B Havy Attack to the Sides on ground
+        abilities[8] = new Ability(
+           "Teleport Stuff",
+           "TODO :",
+           100,
+           0.2f,
+           0.5f,
+           0.3f,
+           false
+           );
+
         #endregion
 
         #region Ability's
@@ -173,7 +189,7 @@ public class Nav : MyCharacter
             else if (hasSlider && !abilities[0].hitObject)
             {
                 abilities[0].hitObject = true;
-                slider.GetComponent<Slider>().SliderChange(this.transform);
+                slider.GetComponent<Slider>().SliderChange(this.transform, true);
             }
         };
         abilities[0].onAbilityReady = () => { };
@@ -550,7 +566,7 @@ public class Nav : MyCharacter
                     LookLeft();
                     transform.position = new Vector3(enemy.transform.position.x + 1, enemy.transform.position.y, 0);
                     enemyCharacter.EndStun();
-                    enemyCharacter.Damage(abilities[7].GetDamage());
+                    enemyCharacter.Damage(abilities[7].GetDamage() * Mathf.RoundToInt(havyAttackChargeCounter));
                     enemyCharacter.KickAway(enemyCharacter, this.transform.position, true);
                 }
                 else
@@ -558,7 +574,7 @@ public class Nav : MyCharacter
                     LookRight();
                     transform.position = new Vector3(enemy.transform.position.x - 1, enemy.transform.position.y, 0);
                     enemyCharacter.EndStun();
-                    enemyCharacter.Damage(abilities[7].GetDamage());
+                    enemyCharacter.Damage(abilities[7].GetDamage() * Mathf.RoundToInt(havyAttackChargeCounter));
                     enemyCharacter.KickAway(enemyCharacter, this.transform.position, true);
                 }
             }
@@ -574,7 +590,79 @@ public class Nav : MyCharacter
         abilities[7].onAbilityReady = () => { };
 
         #endregion
+        #region Ability 8
+        abilities[8].onAbilityStart = () => 
+        {
+            RaycastHit hit;
 
+            isUsingAbility = true;
+            Disable();
+
+            if(IsLookingRight())
+            {
+                if(transform.position.x < 0)
+                {
+                    if(Physics.Raycast(this.transform.position, new Vector3(-this.transform.position.x, 0, 0), out hit, SpecialAttackTeleportRange, 9, QueryTriggerInteraction.Ignore))
+                    {
+                        TeleportDestination = hit.point;
+                    }
+                    else
+                    {
+                        TeleportDestination = new Vector3(this.transform.position.x + SpecialAttackTeleportRange, this.transform.position.y, 0);
+                    }
+                }
+                else
+                {
+                    if (Physics.Raycast(this.transform.position, new Vector3(this.transform.position.x, 0, 0), out hit, SpecialAttackTeleportRange, 9, QueryTriggerInteraction.Ignore))
+                    {
+                        TeleportDestination = hit.point;
+                    }
+                    else
+                    {
+                        TeleportDestination = new Vector3(this.transform.position.x + SpecialAttackTeleportRange, this.transform.position.y, 0);
+                    }
+                }
+            }
+            else
+            {
+                if (transform.position.x < 0)
+                {
+                    if (Physics.Raycast(this.transform.position, new Vector3(this.transform.position.x, 0, 0), out hit, SpecialAttackTeleportRange, 9, QueryTriggerInteraction.Ignore))
+                    {
+                        TeleportDestination = hit.point;
+                    }
+                    else
+                    {
+                        TeleportDestination = new Vector3(this.transform.position.x + SpecialAttackTeleportRange, this.transform.position.y, 0);
+                    }
+                }
+                else
+                {
+                    if (Physics.Raycast(this.transform.position, new Vector3(-this.transform.position.x, 0, 0), out hit, SpecialAttackTeleportRange, 9, QueryTriggerInteraction.Ignore))
+                    {
+                        TeleportDestination = hit.point;
+                    }
+                    else
+                    {
+                        TeleportDestination = new Vector3(this.transform.position.x + SpecialAttackTeleportRange, this.transform.position.y, 0);
+                    }
+                }
+            }
+        };
+        abilities[8].onAbilityUpdate = () => { };
+        abilities[8].onAbilityCancel = () => 
+        {
+            isUsingAbility = false;
+            EndDisable();
+        };
+        abilities[8].onAbilityEnd = () => 
+        {
+            isUsingAbility = false;
+            EndDisable();
+        };
+        abilities[8].onAbilityReady = () => { };
+
+        #endregion
         //abilities[2].onAbilityStart = () => { };
         //abilities[2].onAbilityUpdate = () => { };
         //abilities[2].onAbilityCancel = () => { };
@@ -593,6 +681,7 @@ public class Nav : MyCharacter
         abilities[5].Update();
         abilities[6].Update();
         abilities[7].Update();
+        abilities[8].Update();
 
         if (isCharging)
             havyAttackChargeCounter += 0.5f * Time.deltaTime;
@@ -674,6 +763,11 @@ public class Nav : MyCharacter
             isCharging = false;
             abilities[7].Activate();
         }
+        else if(isUsingAbility && isCharging && usingSpecialSide)
+        {
+            isCharging = false;
+            abilities[8].Activate();
+        }
     }
     void SpecialAttackNormal()
     {
@@ -683,6 +777,31 @@ public class Nav : MyCharacter
             isUsingAbility = true;
             isCharging = true;
             havyAttackChargeCounter = 1;
+            Disable();
+        }
+    }
+    void SpecialAttackRight()
+    {
+        if (!isUsingAbility && !IsFalling() && !usingSpecialSide)
+        {
+            usingSpecialSide = true;
+            isUsingAbility = true;
+            isCharging = true;
+            havyAttackChargeCounter = 1;
+            LookRight();
+            Disable();
+        }
+    }
+    void SpecialAttackLeft()
+    {
+        if (!isUsingAbility && !IsFalling() && !usingSpecialSide)
+        {
+            usingSpecialSide = true;
+            isUsingAbility = true;
+            isCharging = true;
+            havyAttackChargeCounter = 1;
+            LookLeft();
+            Disable();
         }
     }
 }

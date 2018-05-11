@@ -160,14 +160,13 @@ public class MyCharacter : MonoBehaviour
         }
         if(keyCode == KeyCode.Joystick1Button1 || keyCode == KeyCode.Joystick1Button3)
         {
-            keyLock = keyCode;
             if (SpecialNormalAction != null)
                 SpecialNormalAction();
         }
     }
     void P1_InputUpCheck(KeyCode keyCode)
     {
-        if(keyCode == keyLock)
+        if (keyCode == KeyCode.Joystick1Button1 || keyCode == KeyCode.Joystick1Button3)
         {
             if (SpecialReleaseAction != null)
                 SpecialReleaseAction();
@@ -191,7 +190,7 @@ public class MyCharacter : MonoBehaviour
     }
     void P2_InputUpCheck(KeyCode keyCode)
     {
-        if (keyCode == keyLock)
+        if (keyCode == KeyCode.Joystick2Button1 || keyCode == KeyCode.Joystick2Button3)
         {
             if (SpecialReleaseAction != null)
                 SpecialReleaseAction();
