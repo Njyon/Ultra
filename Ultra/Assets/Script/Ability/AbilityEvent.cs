@@ -53,6 +53,15 @@ public class AbilityEvent
         }
     }
 
+    public void End()
+    {
+        if(IsActive())
+        {
+            state = AbilityState.EventCoolingdown;
+            onAbilityEnd();
+        }
+    }
+
     public void Cancel()
     {
         if(IsActive())

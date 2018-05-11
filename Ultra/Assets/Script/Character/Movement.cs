@@ -8,7 +8,7 @@ public class Movement : MonoBehaviour
     MyCharacter myCharacter;
     Rigidbody rb;
     PlayerEnum playerEnum = PlayerEnum.NotAssigned;
-    bool lookToTheRight;
+    [HideInInspector] public bool lookToTheRight;
     bool isTurningRight = false;
     bool isTurningLeft = false;
     bool fallStraight = true;
@@ -26,7 +26,7 @@ public class Movement : MonoBehaviour
     [Header("Movement")]
     public float movementSpeed;
     public float inAirSpeed;
-    public bool isFalling = false;
+    [HideInInspector] public bool isFalling = false;
     float wallDetectionLength = 0.6f;
     bool canMove = true;
     bool isNotMoving = true;
@@ -446,7 +446,7 @@ public class Movement : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(this.gameObject.transform.position, new Vector3(0, -this.transform.position.y, 0), out hit, 2, 9, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(this.gameObject.transform.position, new Vector3(0, -this.transform.position.y, 0), out hit, 1, 9, QueryTriggerInteraction.Ignore))
         {
             if(isFalling)
             {

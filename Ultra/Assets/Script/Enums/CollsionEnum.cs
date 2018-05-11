@@ -6,5 +6,6 @@ public enum CollisionEnum
 {
     XHitNormal,
     XHitSide,
-    XHitUp
+    XHitUp,
+    XGitDown
 };

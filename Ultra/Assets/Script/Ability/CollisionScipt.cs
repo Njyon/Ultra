@@ -28,6 +28,12 @@ public class CollisionScipt : MonoBehaviour
                 case CollisionEnum.XHitNormal:
                     myCharacter.xNormalHitBox = true;
                     break;
+                case CollisionEnum.XHitUp:
+                    myCharacter.xUpHitBox = true;
+                    break;
+                case CollisionEnum.XGitDown:
+                    myCharacter.xDownHitBox = true;
+                    break;
             }
         }
         else if (other.tag == "ScrollButton")
@@ -45,6 +51,12 @@ public class CollisionScipt : MonoBehaviour
             {
                 case CollisionEnum.XHitNormal:
                     myCharacter.xNormalHitBox = false;
+                    break;
+                case CollisionEnum.XHitUp:
+                    myCharacter.xUpHitBox = false;
+                    break;
+                case CollisionEnum.XGitDown:
+                    myCharacter.xDownHitBox = false;
                     break;
             }
         }
