@@ -219,6 +219,20 @@ public class Movement : MonoBehaviour
         canMove = true;
         rb.useGravity = true;
     }
+    /// <summary>
+    /// Lets Character Look to the Right imidetly
+    /// </summary>
+    public void LookRightNow()
+    {
+        transform.rotation = new Quaternion(0, 0, 0, 1);
+    }
+    /// <summary>
+    /// Lets Character Look to the Left imidetly
+    /// </summary>
+    public void LookLeftNow()
+    {
+        transform.rotation = new Quaternion(0, 1, 0, 0);
+    }
 
 
     //      Private     //
@@ -478,7 +492,8 @@ public class Movement : MonoBehaviour
 
     void ForceDown()
     {
-        forcingDown = true;
+        if(isFalling)
+            forcingDown = true;
     }
 
     void LookUp()

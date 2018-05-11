@@ -4815,9 +4815,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 065ca2ba2f9d99d4a82029ef3e158dc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lookToTheRight: 0
   maxTurningTime: 1
   movementSpeed: 5
   inAirSpeed: 5
+  isFalling: 0
   jumpVelocity: 12
   fallSpeed: 2
   maxFallVelocity: 10
@@ -4839,6 +4841,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bca3a5fedbcc484691ba92da24fd651, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  potenz: 1.55
+  basisWert: 30
+  xFactor: 1
+  gesamtFactor: 1
+  UpDivider: 1
+  startForce: 30
+  startForceUp: 100
   p_JumpOnGround: {fileID: 1824503055644040, guid: 8c52b1740bbfa374aaa82afd8ee247b6,
     type: 2}
   playerEnum: 0
@@ -4849,6 +4858,8 @@ MonoBehaviour:
   enemyCharacter: {fileID: 0}
   disabledTime: 1
   xNormalHitBox: 0
+  xUpHitBox: 0
+  xDownHitBox: 0
   hasSlider: 0
   slider: {fileID: 0}
   XHitNormalStunTime: 1

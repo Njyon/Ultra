@@ -9,6 +9,9 @@ public class MyCharacter : MonoBehaviour
     public float basisWert;
     public float xFactor;
     public float gesamtFactor;
+    public float UpDivider;
+    public float startForce;
+    public float startForceUp;
 
     [Header("JumpParticle")]
     public GameObject p_JumpOnGround;
@@ -28,7 +31,8 @@ public class MyCharacter : MonoBehaviour
 
     float dmgMultiplier = 1.5f;
     float percent = 0;
-    
+
+    KeyCode keyLock;
 
     //////////// Collision ///////////
 
@@ -154,15 +158,16 @@ public class MyCharacter : MonoBehaviour
             if (XAttackNormalAction != null)
                 XAttackNormalAction();
         }
-        if(keyCode == KeyCode.Joystick1Button1 && keyCode == KeyCode.Joystick1Button3)
+        if(keyCode == KeyCode.Joystick1Button1 || keyCode == KeyCode.Joystick1Button3)
         {
+            keyLock = keyCode;
             if (SpecialNormalAction != null)
                 SpecialNormalAction();
         }
     }
     void P1_InputUpCheck(KeyCode keyCode)
     {
-        if(keyCode == KeyCode.Joystick1Button1 && keyCode == KeyCode.Joystick1Button3)
+        if(keyCode == keyLock)
         {
             if (SpecialReleaseAction != null)
                 SpecialReleaseAction();
@@ -177,15 +182,16 @@ public class MyCharacter : MonoBehaviour
                 XAttackNormalAction();
         }
 
-        if (keyCode == KeyCode.Joystick2Button1 && keyCode == KeyCode.Joystick2Button3)
+        if (keyCode == KeyCode.Joystick2Button1 || keyCode == KeyCode.Joystick2Button3)
         {
+            keyLock = keyCode;
             if (SpecialNormalAction != null)
                 SpecialNormalAction();
         }
     }
     void P2_InputUpCheck(KeyCode keyCode)
     {
-        if(keyCode == KeyCode.Joystick2Button1 && keyCode == KeyCode.Joystick2Button3)
+        if (keyCode == keyLock)
         {
             if (SpecialReleaseAction != null)
                 SpecialReleaseAction();
@@ -361,22 +367,24 @@ public class MyCharacter : MonoBehaviour
         {
             if (hard)
             {
-                rb.AddForce(new Vector3(Mathf.Pow(Mathf.Sqrt(30 * percent), potenz) * xFactor, hight, 0) * gesamtFactor);
+                rb.AddForce(new Vector3(-Mathf.Pow(Mathf.Sqrt(basisWert * percent), potenz) * xFactor, hight, 0) * gesamtFactor);
+                Debug.Log("LOL");
             }
             else
             {
-                rb.AddForce(new Vector3(Mathf.Pow(Mathf.Sqrt(30 * percent), potenz), hight, 0));
+                rb.AddForce(new Vector3(-Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), hight, 0));
             }
         }
         else                                            // Direction = Left
         {
             if (hard)
             {
-                rb.AddForce(new Vector3(-Mathf.Pow(Mathf.Sqrt(30 * percent), potenz) * xFactor, hight, 0) * gesamtFactor);
+                rb.AddForce(new Vector3(Mathf.Pow(Mathf.Sqrt(basisWert * percent), potenz) * xFactor, hight, 0) * gesamtFactor);
+                Debug.Log("LOL");
             }
             else
             {
-                rb.AddForce(new Vector3(-Mathf.Pow(Mathf.Sqrt(30 * percent), potenz), hight, 0));
+                rb.AddForce(new Vector3(Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), hight, 0));
             }
         }
         Disable(character, disabledTime);
@@ -398,22 +406,22 @@ public class MyCharacter : MonoBehaviour
         {
             if (hard)
             {
-                rb.AddForce(new Vector3(direction, Mathf.Pow(Mathf.Sqrt(30 * percent), potenz) * xFactor, 0) * gesamtFactor);
+                rb.AddForce(new Vector3(-direction, Mathf.Pow(Mathf.Sqrt(basisWert * percent), potenz) * xFactor, 0) * gesamtFactor);
             }
             else
             {
-                rb.AddForce(new Vector3(direction, Mathf.Pow(Mathf.Sqrt(30 * percent), potenz), 0));
+                rb.AddForce(new Vector3(-direction, Mathf.Pow(Mathf.Sqrt(basisWert * percent), potenz) / UpDivider + startForceUp, 0));
             }
         }
         else                                    // Direction = Left
         {
             if (hard)
             {
-                rb.AddForce(new Vector3(-direction, Mathf.Pow(Mathf.Sqrt(30 * percent), potenz) * xFactor, 0) * gesamtFactor);
+                rb.AddForce(new Vector3(direction, Mathf.Pow(Mathf.Sqrt(basisWert * percent), potenz) * xFactor, 0) * gesamtFactor);
             }
             else
             {
-                rb.AddForce(new Vector3(-direction, Mathf.Pow(Mathf.Sqrt(30 * percent), potenz), 0));
+                rb.AddForce(new Vector3(direction, Mathf.Pow(Mathf.Sqrt(basisWert * percent), potenz) / UpDivider + startForceUp, 0));
             }
         }
         Disable(character, disabledTime);
@@ -434,22 +442,22 @@ public class MyCharacter : MonoBehaviour
         {
             if (hard)
             {
-                rb.AddForce(new Vector3(direction, -Mathf.Pow(Mathf.Sqrt(30 * percent), potenz) * xFactor, 0) * gesamtFactor);
+                rb.AddForce(new Vector3(-direction, -Mathf.Pow(Mathf.Sqrt(30 * percent), potenz) * xFactor, 0) * gesamtFactor);
             }
             else
             {
-                rb.AddForce(new Vector3(direction, -Mathf.Pow(Mathf.Sqrt(30 * percent), potenz), 0));
+                rb.AddForce(new Vector3(-direction, -Mathf.Pow(Mathf.Sqrt(30 * percent), potenz), 0));
             }
         }
         else                                // Direction = Left
         {
             if (hard)
             {
-                rb.AddForce(new Vector3(-direction, -Mathf.Pow(Mathf.Sqrt(30 * percent), potenz) * xFactor, 0) * gesamtFactor);
+                rb.AddForce(new Vector3(direction, -Mathf.Pow(Mathf.Sqrt(30 * percent), potenz) * xFactor, 0) * gesamtFactor);
             }
             else
             {
-                rb.AddForce(new Vector3(-direction, -Mathf.Pow(Mathf.Sqrt(30 * percent), potenz), 0));
+                rb.AddForce(new Vector3(direction, -Mathf.Pow(Mathf.Sqrt(30 * percent), potenz), 0));
             }
         }
         Disable(character, disabledTime);
@@ -469,6 +477,20 @@ public class MyCharacter : MonoBehaviour
     public bool IsLookingRight()
     {
         return movement.lookToTheRight;
+    }
+    /// <summary>
+    /// Lets the Character Look to the Right emiditly
+    /// </summary>
+    public void LookRight()
+    {
+        movement.LookRightNow();
+    }
+    /// <summary>
+    /// Lets the Character Look to the Left emiditly
+    /// </summary>
+    public void LookLeft()
+    {
+        movement.LookLeftNow();
     }
 
     //      Private      //
