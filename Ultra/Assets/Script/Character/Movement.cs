@@ -26,7 +26,7 @@ public class Movement : MonoBehaviour
     [Header("Movement")]
     public float movementSpeed;
     public float inAirSpeed;
-    public bool isFalling = false;
+    [HideInInspector] public bool isFalling = false;
     float wallDetectionLength = 0.6f;
     bool canMove = true;
     bool isNotMoving = true;

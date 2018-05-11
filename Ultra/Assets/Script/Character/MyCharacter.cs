@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class MyCharacter : MonoBehaviour
 {
+    [Header("Math Stuff")]
+    public float potenz;
+    public float basisWert;
+    public float xFactor;
+    public float gesamtFactor;
+
     [Header("JumpParticle")]
     public GameObject p_JumpOnGround;
 
@@ -61,6 +67,9 @@ public class MyCharacter : MonoBehaviour
     public SpecialUp SpecialUpAction;
     public delegate void SpecialDown();
     public SpecialDown SpecialDownAction;
+
+    public delegate void SpecialRelease();
+    public SpecialRelease SpecialReleaseAction;
     #endregion
 
     //////////////////////////////////////////////////
@@ -153,7 +162,11 @@ public class MyCharacter : MonoBehaviour
     }
     void P1_InputUpCheck(KeyCode keyCode)
     {
-
+        if(keyCode == KeyCode.Joystick1Button1 && keyCode == KeyCode.Joystick1Button3)
+        {
+            if (SpecialReleaseAction != null)
+                SpecialReleaseAction();
+        }
     }
 
     void P2_InputDownCheck(KeyCode keyCode)
@@ -172,7 +185,11 @@ public class MyCharacter : MonoBehaviour
     }
     void P2_InputUpCheck(KeyCode keyCode)
     {
-
+        if(keyCode == KeyCode.Joystick2Button1 && keyCode == KeyCode.Joystick2Button3)
+        {
+            if (SpecialReleaseAction != null)
+                SpecialReleaseAction();
+        }
     }
     #endregion
 
@@ -337,16 +354,30 @@ public class MyCharacter : MonoBehaviour
         }
         else                                                                                                                            // Position in Y is High enough
         {
-            enemyPos = new Vector3(this.transform.position.x - enemyPos.x, this.transform.position.y / 10 - enemyPos.y / 10, 0);
+            enemyPos = new Vector3(this.transform.position.x - enemyPos.x, this.transform.position.y - enemyPos.y, 0);
         }
 
-        if (hard)
+        if (enemyPos.x < 0)                             // Direction = right
         {
-            rb.AddForce(new Vector3(Mathf.Sqrt(enemyPos.normalized.x * 15 * percent) * 70, hight, 0));
+            if (hard)
+            {
+                rb.AddForce(new Vector3(Mathf.Pow(Mathf.Sqrt(30 * percent), potenz) * xFactor, hight, 0) * gesamtFactor);
+            }
+            else
+            {
+                rb.AddForce(new Vector3(Mathf.Pow(Mathf.Sqrt(30 * percent), potenz), hight, 0));
+            }
         }
-        else
+        else                                            // Direction = Left
         {
-            rb.AddForce(new Vector3(Mathf.Sqrt(enemyPos.normalized.x * 10 * percent) * 70, hight, 0));
+            if (hard)
+            {
+                rb.AddForce(new Vector3(-Mathf.Pow(Mathf.Sqrt(30 * percent), potenz) * xFactor, hight, 0) * gesamtFactor);
+            }
+            else
+            {
+                rb.AddForce(new Vector3(-Mathf.Pow(Mathf.Sqrt(30 * percent), potenz), hight, 0));
+            }
         }
         Disable(character, disabledTime);
     }
@@ -358,15 +389,32 @@ public class MyCharacter : MonoBehaviour
     /// <param name="hard"></param>
     public void KickUp(MyCharacter character, Vector3 enemyPos, bool hard)
     {
-        Debug.Log(Mathf.Sqrt(enemyPos.normalized.x * 10 * percent));
+        Debug.Log (Mathf.Pow(Mathf.Sqrt(30 * percent), potenz));
         float direction = 300;
-        if (hard)
+
+        enemyPos = new Vector3(this.transform.position.x - enemyPos.x, this.transform.position.y - enemyPos.y, 0);
+
+        if (enemyPos.x < 0)                         // Direction = Right
         {
-            rb.AddForce(new Vector3(direction, Mathf.Sqrt(enemyPos.normalized.x * 15 * percent) * 70, 0));
+            if (hard)
+            {
+                rb.AddForce(new Vector3(direction, Mathf.Pow(Mathf.Sqrt(30 * percent), potenz) * xFactor, 0) * gesamtFactor);
+            }
+            else
+            {
+                rb.AddForce(new Vector3(direction, Mathf.Pow(Mathf.Sqrt(30 * percent), potenz), 0));
+            }
         }
-        else
+        else                                    // Direction = Left
         {
-            rb.AddForce(new Vector3(direction, Mathf.Sqrt(enemyPos.normalized.x * 10 * percent) * 70, 0));
+            if (hard)
+            {
+                rb.AddForce(new Vector3(-direction, Mathf.Pow(Mathf.Sqrt(30 * percent), potenz) * xFactor, 0) * gesamtFactor);
+            }
+            else
+            {
+                rb.AddForce(new Vector3(-direction, Mathf.Pow(Mathf.Sqrt(30 * percent), potenz), 0));
+            }
         }
         Disable(character, disabledTime);
     }
@@ -380,13 +428,29 @@ public class MyCharacter : MonoBehaviour
     {
         Debug.Log(Mathf.Sqrt(enemyPos.normalized.x * 10 * percent));
         float direction = 300;
-        if (hard)
+        enemyPos = new Vector3(this.transform.position.x - enemyPos.x, this.transform.position.y - enemyPos.y, 0);
+
+        if (enemyPos.x < 0)                 // Direction = Right
         {
-            rb.AddForce(new Vector3(direction, -Mathf.Sqrt(enemyPos.normalized.x * 15 * percent) * 70, 0));
+            if (hard)
+            {
+                rb.AddForce(new Vector3(direction, -Mathf.Pow(Mathf.Sqrt(30 * percent), potenz) * xFactor, 0) * gesamtFactor);
+            }
+            else
+            {
+                rb.AddForce(new Vector3(direction, -Mathf.Pow(Mathf.Sqrt(30 * percent), potenz), 0));
+            }
         }
-        else
+        else                                // Direction = Left
         {
-            rb.AddForce(new Vector3(direction, -Mathf.Sqrt(enemyPos.normalized.x * 10 * percent) * 70, 0));
+            if (hard)
+            {
+                rb.AddForce(new Vector3(-direction, -Mathf.Pow(Mathf.Sqrt(30 * percent), potenz) * xFactor, 0) * gesamtFactor);
+            }
+            else
+            {
+                rb.AddForce(new Vector3(-direction, -Mathf.Pow(Mathf.Sqrt(30 * percent), potenz), 0));
+            }
         }
         Disable(character, disabledTime);
     }
