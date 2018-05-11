@@ -7,55 +7,34 @@ using UnityEngine.Audio;
 
 public class MainMenu : MonoBehaviour {
 
-    //----------------------LIST-----------------------//
-
-    private Buttons buttonsScript;
-
-    private GameObject[] buttons;
-    private GameObject textObj;
-    private Text text;
-    private Resolution currentRes;
-
-    public bool inTrigger;
-
-    private Color resetCol;
-    private Material origMat;
-
-    private Color resetCol1;
-    private Material origMat1;
-
-    private Animator anim;
-
-    private int index = 0;
-
-    GameObject buttonOn;
-    GameObject buttonHit;
-
-    //______Slider_________//
-
+    //Slider
     public AudioMixer aMixer;
 
     GameObject sfxSlider;
     GameObject musicSlider;
     GameObject masterSlider;
+    Slider slider;
+    bool increase;
 
-    float incrementX = 1.0f;
+    //float incrementX = 1.0f;
     float currentMixerVol;
     float minAudio = -80.0f;
     float maxAudio = 20.0f;
     float currentAudio;
     string mixerParameter;
 
+    //Resolution
     [HideInInspector] public Resolution[] resolutions;
+    private Resolution currentRes;
+    private GameObject textObj;
+    private Text text;
+    private int index = 0;
 
 
-    //----------------START UPDATE------------------------//
 
-    private void Awake()
-    {
-
-    }
-
+    ////////////////////////////////////////////////////////
+    //////////////          Start          ////////////////
+    //////////////////////////////////////////////////////
 
     void Start()
     {
@@ -69,18 +48,22 @@ public class MainMenu : MonoBehaviour {
         SetDefaultSliderPos("sfx", sfxSlider);
         SetDefaultSliderPos("music", musicSlider);
         SetDefaultSliderPos("master", masterSlider);
-
         #endregion
 
+
+        increase = slider.increase;
+
         #region Resolution
+
         GetResolution();
         SetResolution();
         #endregion
 
     }
 
-    //----------------Functions-----------------------//
-
+    ////////////////////////////////////////////////////////
+    ////////////          Functions          //////////////
+    //////////////////////////////////////////////////////
 
 
     #region Resolution
@@ -89,7 +72,9 @@ public class MainMenu : MonoBehaviour {
         Resolution currentScreen = Screen.currentResolution;
         string s_width = currentScreen.width.ToString();
         string s_height = currentScreen.height.ToString();
+
         textObj = GameObject.Find("ResolutionText");
+
         text = textObj.GetComponent<Text>();
         text.text = s_width + " x " + s_height;
         resolutions = Screen.resolutions;
@@ -134,27 +119,25 @@ public class MainMenu : MonoBehaviour {
 
     #region Audio Sliders
 
-    public void VolumeIncrementBase()
+    public void VolumeIncrementBase(string mixerParameter)
     {
-        ChangeVolume(true, 1.0f);
+        ChangeVolume(10.0f, mixerParameter);
     }
 
-    public void VolumeIncrementSpecial()
+    public void VolumeIncrementSpecial(string mixerParameter)
     {
-        ChangeVolume(true, 2.0f);
+        ChangeVolume(20.0f, mixerParameter);
     }
 
-    public void ChangeVolume(bool add, float incrementX)
+    public void ChangeVolume(float incrementX, string mixerParameter)
     {
-        Slider slider = GetComponent<Slider>();
-        mixerParameter = slider.mixerParameter;
+        
 
         Debug.Log(mixerParameter);
 
         currentAudio = Mathf.Round(currentAudio * 10f) / 10f;
-        //incrementX = (maxAudio - minAudio) / 10;
 
-        if (add == true)
+        if (increase == true)
         {
             currentAudio = currentAudio + incrementX;
 
@@ -163,7 +146,7 @@ public class MainMenu : MonoBehaviour {
                 currentAudio = maxAudio;
             }
         }
-        else if (add == false)
+        else if (increase == false)
         {
             currentAudio = currentAudio - incrementX;
 
@@ -172,54 +155,52 @@ public class MainMenu : MonoBehaviour {
                 currentAudio = minAudio;
             }
         }
-
         currentMixerVol = currentAudio;
         aMixer.SetFloat(mixerParameter, currentMixerVol);
-        Debug.Log("currentslidervol: " + +currentMixerVol);
     }
 
 
 
     private void SetDefaultSliderPos(string mixerParameter, GameObject currentSlider)
     {
+        if (currentSlider == null)
+            return;
+
         aMixer.GetFloat(mixerParameter, out currentMixerVol);
         currentAudio = currentMixerVol;
 
         float currentX = currentSlider.transform.position.x;
-        float currentY = currentSlider.transform.position.y;
-        float currentZ = currentSlider.transform.position.z;
+        float minValueX = currentSlider.transform.position.x - 5;
 
-        float minValueX = currentX - 5;
-
-        Vector3 minPos = new Vector3(minValueX, currentY, currentZ);
-        Vector3 currPos = new Vector3(currentX, currentY, currentZ);
-        float dist = Vector3.Distance(minPos, currPos);
-
-        Vector3 minPosAudio = new Vector3(minAudio, currentY, currentZ);
-        Vector3 currPosAudio = new Vector3(currentAudio, currentY, currentZ);
-        float distAudio = Vector3.Distance(minPosAudio, currPosAudio);
+        float distSlider = DistanceCalc(minValueX, currentX, currentSlider);
+        float distAudio = DistanceCalc(minAudio, currentAudio, currentSlider);
 
         float newCurrentX = (distAudio / 10);
 
-        while (dist != newCurrentX)
+        if (distSlider != newCurrentX)
         {
-            if (dist < newCurrentX)
+            if (distSlider < newCurrentX)
             {
-                currentX += 1.0f;
-                dist += 1.0f;
+                currentX += newCurrentX - distSlider;
             }
-            else if (dist > newCurrentX)
+            else if (distSlider > newCurrentX)
             {
-                currentX -= 1.0f;
-                dist -= 1.0f;
+                currentX -= distSlider - newCurrentX;
             }
         }
-
-        currentSlider.transform.position = new Vector3(currentX, currentY, currentZ);
-
-
+        currentSlider.transform.position = new Vector3(currentX, currentSlider.transform.position.y, currentSlider.transform.position.z);
     }
 
+
+    float DistanceCalc(float min, float current, GameObject currentObj)
+    {
+        Vector3 minPosSlider = new Vector3(min, 0, 0);
+        Vector3 currPosSlider = new Vector3(current, 0, 0);
+        float distance = Vector3.Distance(minPosSlider, currPosSlider);
+
+
+        return distance;
+    }
     #endregion
 
 }
