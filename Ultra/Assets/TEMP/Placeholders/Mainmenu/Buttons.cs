@@ -6,7 +6,6 @@ using UnityEngine.Events;
 public class Buttons : MonoBehaviour {
 
     int triggerCounter = 0;
-    MainMenu mainMenu;
     Material material;
     Color resetCol;
 
@@ -15,6 +14,11 @@ public class Buttons : MonoBehaviour {
     public Color activationColor;
     public UnityEvent ActivationEvent;
 
+
+
+    ////////////////////////////////////////////////////////
+    ///////////         Awake - Start         /////////////
+    //////////////////////////////////////////////////////
 
     void Awake()
     {
@@ -26,16 +30,19 @@ public class Buttons : MonoBehaviour {
     {
         material = gameObject.GetComponent<Renderer>().material;
         resetCol = material.color;
-
-        mainMenu = GameObject.Find("EventSystem").GetComponent<MainMenu>();
     }
+
+
+    ////////////////////////////////////////////////////////
+    ////////////          On-Trigger         //////////////
+    //////////////////////////////////////////////////////
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
             MyCharacter collidingPlayer = other.gameObject.GetComponent<MyCharacter>();
-            switch(collidingPlayer.playerEnum)
+            switch (collidingPlayer.playerEnum)
             {
                 case PlayerEnum.PlayerOne:
                     AssigneInputP1();
@@ -74,7 +81,9 @@ public class Buttons : MonoBehaviour {
         }
     }
 
-    //----------------Input--------------------//
+    ////////////////////////////////////////////////////////
+    ////////////            Input            //////////////
+    //////////////////////////////////////////////////////
 
     void AssigneInputP1()
     {
@@ -95,8 +104,10 @@ public class Buttons : MonoBehaviour {
     {
         InputManager.p2_OnKeyPressed -= P2_CheckInputDown;
     }
-
-    //----------------Functions--------------------//
+    
+    ////////////////////////////////////////////////////////
+    ////////////          Functions          //////////////
+    //////////////////////////////////////////////////////
 
     void P1_CheckInputDown(KeyCode keyCode)
     {

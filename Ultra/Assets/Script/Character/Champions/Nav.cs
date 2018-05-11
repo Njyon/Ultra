@@ -4,14 +4,30 @@ using UnityEngine;
 
 public class Nav : MyCharacter
 {
+    [Header("Light Attack Stuff")]
     public float xHitNormalStunTime;
     public float lightAttackDashLenght;
     public float lightAttackDashTime;
 
+    [Header("Special Attack Stuff")]
+    public float SpecialAttackDashRange;
+    public float SpecialAttackDashTime;
+    public float SpecialAttackKickHight;
+
+    bool usingSpecial1 = false;
+    bool isCharging = false;
+
+    bool enemyKickingUp = false;
     bool isUsingAbility = false;
+    float currentSpecialAttackDashTime;
     float currentLightAttackDashTime;
+    float currentEnemyTravelTime;
+    float SpecialAttackJourneyLenght;
+    float enemyKickUpJourneyDistance;
     float lightAttackJourneyLenght;
+    float havyAttackChargeCounter;
     Vector3 dashDestination;
+    Vector3 enemyDestination;
     Ability[] abilities = new Ability[10];
 
     private void Start()
@@ -22,6 +38,8 @@ public class Nav : MyCharacter
         XAttackLeftAction += LightAttackLeft;
         XAttackUpAction += LightAttackUp;
         XAttackDownAction += LightAttackDown;
+        SpecialNormalAction += SpecialAttackNormal;
+        SpecialReleaseAction += AbordSpecial;
     }
 
     private void OnDisable()
@@ -113,9 +131,9 @@ public class Nav : MyCharacter
         abilities[7] = new Ability(
            "Teleport Stuff",
            "TODO :",
-           20,
+           100,
            0.2f,
-           2f,
+           0.5f,
            0.3f,
            false
            );
@@ -330,7 +348,7 @@ public class Nav : MyCharacter
             {
                 abilities[4].Cancel();
             }
-            else if(!abilities[4].hitObject)
+            else if(xUpHitBox && !abilities[4].hitObject)
             {
                 abilities[4].hitObject = true;
                 enemyCharacter.Damage(abilities[4].GetDamage());
@@ -422,14 +440,100 @@ public class Nav : MyCharacter
 
         // Havy Attacks (Y/B)
         #region Ability 7
-        abilities[7].onAbilityStart = () => 
+        abilities[7].onAbilityStart = () =>
         {
+            RaycastHit hit;
+
             isUsingAbility = true;
             Disable();
-        };
-        abilities[7].onAbilityUpdate = () => 
-        {
 
+            // Checking where the player is looking and if there are obsticles in his way for a Dash
+            if (IsLookingRight()) 
+            {
+                if (this.transform.position.x < 0)
+                {
+                    if (Physics.Raycast(this.transform.position, new Vector3(-this.transform.position.x, 0, 0), out hit, SpecialAttackDashRange, 9, QueryTriggerInteraction.Ignore))
+                    {
+                        dashDestination = hit.point;
+                    }
+                    else
+                    {
+                        dashDestination = new Vector3(this.transform.position.x + SpecialAttackDashRange, this.transform.position.y, 0);
+                    }
+                }
+                else
+                {
+                    if (Physics.Raycast(this.transform.position, new Vector3(this.transform.position.x, 0, 0), out hit, SpecialAttackDashRange, 9, QueryTriggerInteraction.Ignore))
+                    {
+                        dashDestination = hit.point;
+                    }
+                    else
+                    {
+                        dashDestination = new Vector3(this.transform.position.x + SpecialAttackDashRange, this.transform.position.y, 0);
+                    }
+                }
+            }
+            else
+            {
+                if (this.transform.position.x < 0)
+                {
+                    if (Physics.Raycast(this.transform.position, new Vector3(this.transform.position.x, 0, 0), out hit, SpecialAttackDashRange, 9, QueryTriggerInteraction.Ignore))
+                    {
+                        dashDestination = hit.point;
+                    }
+                    else
+                    {
+                        dashDestination = new Vector3(this.transform.position.x + SpecialAttackDashRange, this.transform.position.y, 0);
+                    }
+                }
+                else
+                {
+                    if (Physics.Raycast(this.transform.position, new Vector3(-this.transform.position.x, 0, 0), out hit, SpecialAttackDashRange, 9, QueryTriggerInteraction.Ignore))
+                    {
+                        dashDestination = hit.point;
+                    }
+                    else
+                    {
+                        dashDestination = new Vector3(this.transform.position.x + SpecialAttackDashRange, this.transform.position.y, 0);
+                    }
+                }
+            }
+            // Safing Vars for later Operations
+            SpecialAttackJourneyLenght = Vector3.Distance(this.transform.position, dashDestination);
+            currentSpecialAttackDashTime = SpecialAttackDashTime;
+        };
+        abilities[7].onAbilityUpdate = () =>
+        {
+            if (currentSpecialAttackDashTime > 0 && !abilities[7].hitObject)            // Dash to the DashDestination while he doesnt hit an enemy
+            {
+                currentSpecialAttackDashTime -= Time.deltaTime;
+                float travel = currentSpecialAttackDashTime / SpecialAttackJourneyLenght;
+                this.transform.position = Vector3.Lerp(this.transform.position, dashDestination, travel);
+            }
+            if(!abilities[7].hitObject && xNormalHitBox)                            // when a enemy is hit check how high the enym character can fly in the air
+            {
+                RaycastHit hit;
+                
+                abilities[7].hitObject = true;
+                if(Physics.Raycast(enemy.transform.position, new Vector3(0, this.transform.position.y, 0), out hit, SpecialAttackKickHight, 9, QueryTriggerInteraction.Ignore))
+                {
+                    // hit an Obsticle
+                    enemyCharacter.Stun();
+                    enemyDestination = hit.point;
+                    enemyKickUpJourneyDistance = Vector3.Distance(enemy.transform.position, enemyDestination);
+                    enemyKickingUp = true;
+                    currentEnemyTravelTime = 0.5f;
+                }
+                else
+                {
+                    // hits no Obsticle
+                    enemyCharacter.Stun();
+                    enemyDestination = new Vector3(enemy.transform.position.x, enemy.transform.position.y + SpecialAttackKickHight, 0);
+                    enemyKickUpJourneyDistance = Vector3.Distance(enemy.transform.position, enemyDestination);
+                    enemyKickingUp = true;
+                    currentEnemyTravelTime = 0.5f;
+                }
+            }
         };
         abilities[7].onAbilityCancel = () => 
         {
@@ -438,6 +542,32 @@ public class Nav : MyCharacter
         };
         abilities[7].onAbilityEnd = () => 
         {
+            if(abilities[7].hitObject)
+            {
+                // if the Player hits the enemy Teleport to him and Kick him Away
+                if(enemyCharacter.IsLookingRight())
+                {
+                    LookLeft();
+                    transform.position = new Vector3(enemy.transform.position.x + 1, enemy.transform.position.y, 0);
+                    enemyCharacter.EndStun();
+                    enemyCharacter.Damage(abilities[7].GetDamage());
+                    enemyCharacter.KickAway(enemyCharacter, this.transform.position, true);
+                }
+                else
+                {
+                    LookRight();
+                    transform.position = new Vector3(enemy.transform.position.x - 1, enemy.transform.position.y, 0);
+                    enemyCharacter.EndStun();
+                    enemyCharacter.Damage(abilities[7].GetDamage());
+                    enemyCharacter.KickAway(enemyCharacter, this.transform.position, true);
+                }
+            }
+            else
+            {
+                transform.position = new Vector3(this.transform.position.x, this.transform.position.y + SpecialAttackKickHight, 0);
+            }
+            enemyKickingUp = false;
+            usingSpecial1 = false;
             isUsingAbility = false;
             EndDisable();
         };
@@ -462,6 +592,39 @@ public class Nav : MyCharacter
         abilities[4].Update();
         abilities[5].Update();
         abilities[6].Update();
+        abilities[7].Update();
+
+        if (isCharging)
+            havyAttackChargeCounter += 0.5f * Time.deltaTime;
+
+        if(enemyKickingUp)
+        {
+            if(MoveEnemyTo(enemyDestination))
+            {
+                abilities[7].End();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Move The Enemy to a destination
+    /// </summary>
+    /// <param name="destination"></param>
+    /// <returns></returns>
+    bool MoveEnemyTo(Vector3 destination)
+    {
+        if(enemy.transform.position == destination)
+        {
+            return true;
+        }
+        else
+        {
+            currentEnemyTravelTime -= Time.deltaTime;
+            float travel = currentEnemyTravelTime / enemyKickUpJourneyDistance;
+            enemy.transform.position = Vector3.Lerp(enemy.transform.position, destination, travel);
+            return false;
+        }
+        
     }
 
     void LightAttack()
@@ -501,6 +664,25 @@ public class Nav : MyCharacter
         if (IsFalling() && !isUsingAbility)
         {
             abilities[6].Activate();
+        }
+    }
+
+    void AbordSpecial()
+    {
+        if (isUsingAbility && isCharging && usingSpecial1)
+        {
+            isCharging = false;
+            abilities[7].Activate();
+        }
+    }
+    void SpecialAttackNormal()
+    {
+        if (!isUsingAbility && !IsFalling() && !usingSpecial1)
+        {
+            usingSpecial1 = true;
+            isUsingAbility = true;
+            isCharging = true;
+            havyAttackChargeCounter = 1;
         }
     }
 }

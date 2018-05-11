@@ -26,7 +26,7 @@ public class Movement : MonoBehaviour
     [Header("Movement")]
     public float movementSpeed;
     public float inAirSpeed;
-    public bool isFalling = false;
+    [HideInInspector] public bool isFalling = false;
     float wallDetectionLength = 0.6f;
     bool canMove = true;
     bool isNotMoving = true;
@@ -218,6 +218,20 @@ public class Movement : MonoBehaviour
         isStunned = false;
         canMove = true;
         rb.useGravity = true;
+    }
+    /// <summary>
+    /// Lets Character Look to the Right imidetly
+    /// </summary>
+    public void LookRightNow()
+    {
+        transform.rotation = new Quaternion(0, 0, 0, 1);
+    }
+    /// <summary>
+    /// Lets Character Look to the Left imidetly
+    /// </summary>
+    public void LookLeftNow()
+    {
+        transform.rotation = new Quaternion(0, 1, 0, 0);
     }
 
 
@@ -478,7 +492,8 @@ public class Movement : MonoBehaviour
 
     void ForceDown()
     {
-        forcingDown = true;
+        if(isFalling)
+            forcingDown = true;
     }
 
     void LookUp()
