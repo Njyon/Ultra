@@ -13,8 +13,6 @@ public class MainMenu : MonoBehaviour {
     GameObject sfxSlider;
     GameObject musicSlider;
     GameObject masterSlider;
-    Slider slider;
-    bool increase;
 
     //float incrementX = 1.0f;
     float currentMixerVol;
@@ -51,7 +49,6 @@ public class MainMenu : MonoBehaviour {
         #endregion
 
 
-        increase = slider.increase;
 
         #region Resolution
 
@@ -119,26 +116,26 @@ public class MainMenu : MonoBehaviour {
 
     #region Audio Sliders
 
-    public void VolumeIncrementBase(string mixerParameter)
+    public void VolumeIncrementBase(GameObject currentSlider)
     {
-        ChangeVolume(10.0f, mixerParameter);
+        ChangeVolume(10.0f, currentSlider);
     }
 
-    public void VolumeIncrementSpecial(string mixerParameter)
+    public void VolumeIncrementSpecial(GameObject currentSlider)
     {
-        ChangeVolume(20.0f, mixerParameter);
+        ChangeVolume(20.0f, currentSlider);
     }
 
-    public void ChangeVolume(float incrementX, string mixerParameter)
+    public void ChangeVolume(float incrementX, GameObject currentSlider)
     {
-        
-
-        Debug.Log(mixerParameter);
-
+        Slider slider = currentSlider.gameObject.GetComponent<Slider>();
+        aMixer.GetFloat(slider.mixerParameter, out currentMixerVol);
+        currentAudio = currentMixerVol;
         currentAudio = Mathf.Round(currentAudio * 10f) / 10f;
-
-        if (increase == true)
+        Debug.Log(currentAudio + " : " + currentMixerVol);
+        if (slider.increased == true)
         {
+            
             currentAudio = currentAudio + incrementX;
 
             if (currentAudio > maxAudio)
@@ -146,7 +143,7 @@ public class MainMenu : MonoBehaviour {
                 currentAudio = maxAudio;
             }
         }
-        else if (increase == false)
+        else if (slider.increase == false)
         {
             currentAudio = currentAudio - incrementX;
 
@@ -155,8 +152,9 @@ public class MainMenu : MonoBehaviour {
                 currentAudio = minAudio;
             }
         }
+        Debug.Log(currentAudio + " : " + mixerParameter);
         currentMixerVol = currentAudio;
-        aMixer.SetFloat(mixerParameter, currentMixerVol);
+        aMixer.SetFloat(slider.mixerParameter, currentMixerVol);
     }
 
 

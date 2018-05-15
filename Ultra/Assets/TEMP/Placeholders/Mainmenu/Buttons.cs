@@ -8,6 +8,7 @@ public class Buttons : MonoBehaviour {
     int triggerCounter = 0;
     Material material;
     Color resetCol;
+    GameObject playerCol;
 
     [Header("Colors")]
     public Color onHoverColor;
@@ -28,6 +29,7 @@ public class Buttons : MonoBehaviour {
 
     void Start ()
     {
+        playerCol = GameObject.Find("pref_Nav");
         material = gameObject.GetComponent<Renderer>().material;
         resetCol = material.color;
     }
@@ -39,9 +41,11 @@ public class Buttons : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "player")
         {
-            MyCharacter collidingPlayer = other.gameObject.GetComponent<MyCharacter>();
+            CollisionScipt colPlayer = other.gameObject.GetComponent<CollisionScipt>();
+            MyCharacter collidingPlayer = colPlayer.myCharacter;
+            
             switch (collidingPlayer.playerEnum)
             {
                 case PlayerEnum.PlayerOne:
@@ -56,14 +60,21 @@ public class Buttons : MonoBehaviour {
                 OnHover();
             }
             triggerCounter++;
+
+            Debug.Log("im in");
+        }
+        else if (other.gameObject.tag != "player")
+        {
+            return;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "player")
         {
-            MyCharacter collidingPlayer = other.gameObject.GetComponent<MyCharacter>();
+            CollisionScipt colPlayer = other.gameObject.GetComponent<CollisionScipt>();
+            MyCharacter collidingPlayer = colPlayer.myCharacter;
             switch (collidingPlayer.playerEnum)
             {
                 case PlayerEnum.PlayerOne:
@@ -78,6 +89,9 @@ public class Buttons : MonoBehaviour {
             {
                 EndHover();
             }
+        }else if (other.gameObject.tag != "player")
+        {
+            return;
         }
     }
 
@@ -111,13 +125,13 @@ public class Buttons : MonoBehaviour {
 
     void P1_CheckInputDown(KeyCode keyCode)
     {
-        if (keyCode == KeyCode.Joystick1Button0)
+        if (keyCode == KeyCode.Joystick1Button2)
             OnButtonDown();
     }
 
     void P2_CheckInputDown(KeyCode keyCode)
     {
-        if (keyCode == KeyCode.Joystick2Button0)
+        if (keyCode == KeyCode.Joystick1Button2)
             OnButtonDown();
     }
 

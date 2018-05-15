@@ -17,7 +17,10 @@ public class Slider : MonoBehaviour {
 
     //--Private--//
 
-    float incrementVal = 1.0f;
+
+    //Transform playerTransform;
+    //float incrementVal = 1.0f;
+    [HideInInspector] public bool increased;
     
 
     #endregion
@@ -41,9 +44,11 @@ public class Slider : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (other.tag == "player")
         {
-            MyCharacter collidingPlayer = other.gameObject.GetComponent<MyCharacter>();
+            CollisionScipt colPlayer = other.gameObject.GetComponent<CollisionScipt>();
+            MyCharacter collidingPlayer = colPlayer.myCharacter;
             switch (collidingPlayer.playerEnum)
             {
                 case PlayerEnum.PlayerOne:
@@ -53,17 +58,25 @@ public class Slider : MonoBehaviour {
                     AssigneInputP2();
                     break;
             }
-        }else if (other == null)
-        {
-            return;
         }
+
+        if (this.transform.position.x > other.transform.position.x)
+        {
+            increased = true;
+        }
+        else if(this.transform.position.x < other.transform.position.x)
+        {
+            increased = false;
+        }
+
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "player")
         {
-            MyCharacter collidingPlayer = other.gameObject.GetComponent<MyCharacter>();
+            CollisionScipt colPlayer = other.gameObject.GetComponent<CollisionScipt>();
+            MyCharacter collidingPlayer = colPlayer.myCharacter;
             switch (collidingPlayer.playerEnum)
             {
                 case PlayerEnum.PlayerOne:
@@ -74,6 +87,7 @@ public class Slider : MonoBehaviour {
                     break;
             }
         }
+
     }
 
     ////////////////////////////////////////////////////////
@@ -124,17 +138,14 @@ public class Slider : MonoBehaviour {
 
     void OnButtonDownX()
     {
-        incrementVal = 1.0f;
+        SliderChange(1.0f);
         ButtonPressEventX.Invoke();
-        Debug.Log("x");
     }
 
     void OnButtonDownY()
     {
-        incrementVal = 2.0f;
+        SliderChange(2.0f);
         ButtonPressEventY.Invoke();
-        Debug.Log("y");
-
     }
 
     ////////////////////////////////////////////////////////
@@ -143,19 +154,10 @@ public class Slider : MonoBehaviour {
 
     #region SliderChange
 
-    public void SliderChange(Transform transform, bool pressingX)
+    public void SliderChange(float incrementVal)  //Transform transform)
     {
-        if (pressingX == true)
-        {
-            OnButtonDownX();
-        }
-        else if (pressingX == false)
-        {
-            OnButtonDownY();
-        }
 
-
-        if (this.transform.position.x > transform.position.x)
+        if (increased == true)      //this.transform.position.x > transform.position.x)
         {
             //Increase
             this.transform.position = new Vector3(this.transform.position.x + incrementVal, this.transform.position.y, 0);
@@ -165,7 +167,7 @@ public class Slider : MonoBehaviour {
                 this.transform.position = new Vector3(maxValueX, this.transform.position.y, this.transform.position.z);
             }
         }
-        else if (this.transform.position.x < transform.position.x)
+        else if (increased == false)    //this.transform.position.x < transform.position.x)
         {
             //decrease
             this.transform.position = new Vector3(this.transform.position.x - incrementVal, this.transform.position.y, 0);
@@ -175,6 +177,7 @@ public class Slider : MonoBehaviour {
                 this.transform.position = new Vector3(minValueX, this.transform.position.y, this.transform.position.z);
             }
         }
+
     }
     #endregion
 
