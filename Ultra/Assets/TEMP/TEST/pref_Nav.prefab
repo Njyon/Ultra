@@ -4982,6 +4982,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9487e8971e1ab0640bc8c7961700852e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  potenz: 1.55
+  basisWert: 30
+  xFactor: 1
+  gesamtFactor: 1
+  UpDivider: 1
+  startForce: 30
+  startForceUp: 100
   p_JumpOnGround: {fileID: 1824503055644040, guid: 8c52b1740bbfa374aaa82afd8ee247b6,
     type: 2}
   playerEnum: 0
@@ -4999,6 +5006,9 @@ MonoBehaviour:
   xHitNormalStunTime: 1
   lightAttackDashLenght: 50
   lightAttackDashTime: 0.5
+  SpecialAttackDashRange: 5
+  SpecialAttackDashTime: 0.5
+  SpecialAttackKickHight: 5
 --- !u!136 &136439231409751026
 CapsuleCollider:
   m_ObjectHideFlags: 1
