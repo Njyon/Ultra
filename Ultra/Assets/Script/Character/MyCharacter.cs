@@ -39,6 +39,8 @@ public class MyCharacter : MonoBehaviour
     [HideInInspector] public bool xNormalHitBox = false;
     [HideInInspector] public bool xUpHitBox = false;
     [HideInInspector] public bool xDownHitBox = false;
+    [HideInInspector] public bool sUpHitBox = false;
+    [HideInInspector] public bool sDownHitBox = false;
 
     //////////// Menu ///////////
 
@@ -490,6 +492,21 @@ public class MyCharacter : MonoBehaviour
     public void LookLeft()
     {
         movement.LookLeftNow();
+    }
+    /// <summary>
+    /// Let the Character Jump | WARNING: Needed for a SpecialAttack DONT USE ENYWEHERE ELSE!
+    /// </summary>
+    public void SpecialJump()
+    {
+        movement.SpecialJump();
+    }
+    /// <summary>
+    /// Let the Character Jump of the amount of param jumpforce| WARNING: Needed for a SpecialAttack DONT USE ENYWEHERE ELSE!
+    /// </summary>
+    /// <param name="jumpForce"></param>
+    public void SpecialJump(float jumpForce)
+    {
+        movement.SpecialJump(jumpForce);
     }
 
     //      Private      //

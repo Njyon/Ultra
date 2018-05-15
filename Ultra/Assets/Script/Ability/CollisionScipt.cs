@@ -31,8 +31,14 @@ public class CollisionScipt : MonoBehaviour
                 case CollisionEnum.XHitUp:
                     myCharacter.xUpHitBox = true;
                     break;
-                case CollisionEnum.XGitDown:
+                case CollisionEnum.XHitDown:
                     myCharacter.xDownHitBox = true;
+                    break;
+                case CollisionEnum.YBHitUp:
+                    myCharacter.sUpHitBox = true;
+                    break;
+                case CollisionEnum.YBHitDown:
+                    myCharacter.sDownHitBox = true;
                     break;
             }
         }
@@ -55,8 +61,14 @@ public class CollisionScipt : MonoBehaviour
                 case CollisionEnum.XHitUp:
                     myCharacter.xUpHitBox = false;
                     break;
-                case CollisionEnum.XGitDown:
+                case CollisionEnum.XHitDown:
                     myCharacter.xDownHitBox = false;
+                    break;
+                case CollisionEnum.YBHitUp:
+                    myCharacter.sUpHitBox = false;
+                    break;
+                case CollisionEnum.YBHitDown:
+                    myCharacter.sDownHitBox = false;
                     break;
             }
         }

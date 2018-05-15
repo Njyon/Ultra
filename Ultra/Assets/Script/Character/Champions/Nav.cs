@@ -14,11 +14,17 @@ public class Nav : MyCharacter
     public float SpecialAttackDashTime;
     public float SpecialAttackKickHight;
     public float SpecialAttackTeleportRange;
+    public float SpecialAttackBackTeleportRange;
+    public float SpecialAttackBackDashForwardRange;
+    public float SpecialAttackKickDown;
 
+    bool usingSpecialUp = false;
+    bool usingSpecialDown = false;
     bool usingSpecialSide = false;
-    bool usingSpecial1 = false;
+    bool usingSpecialNormal = false;
     bool isCharging = false;
 
+    bool doOnce = false;
     bool enemyKickingUp = false;
     bool isUsingAbility = false;
     float currentSpecialAttackDashTime;
@@ -31,7 +37,7 @@ public class Nav : MyCharacter
     Vector3 dashDestination;
     Vector3 enemyDestination;
     Vector3 TeleportDestination;
-    Ability[] abilities = new Ability[10];
+    Ability[] abilities = new Ability[12];
 
     private void Start()
     {
@@ -45,6 +51,8 @@ public class Nav : MyCharacter
         SpecialReleaseAction += AbordSpecial;
         SpecialRightAction += SpecialAttackRight;
         SpecialLeftAction += SpecialAttackLeft;
+        SpecialDownAction += SpecialAttackDown;
+        SpecialUpAction += SpecialAttackUp;
     }
 
     private void OnDisable()
@@ -150,6 +158,39 @@ public class Nav : MyCharacter
            100,
            0.2f,
            0.5f,
+           0.3f,
+           false
+           );
+
+        // Y/B Havy Attack Down on ground
+        abilities[9] = new Ability(
+           "Teleport & Dash Stuff",
+           "TODO :",
+           100,
+           0.2f,
+           0.5f,
+           0.3f,
+           false
+           );
+
+        // Y/B Havy Attack Up in air
+        abilities[10] = new Ability(
+           "Heavy punsh UP",
+           "TODO :",
+           100,
+           0.1f,
+           0.7f,
+           0.3f,
+           false
+           );
+
+        // Y/B Havy Attack down in air
+        abilities[11] = new Ability(
+           "Heavy punsh down",
+           "TODO :",
+           100,
+           0.1f,
+           0.7f,
            0.3f,
            false
            );
@@ -459,7 +500,7 @@ public class Nav : MyCharacter
         abilities[7].onAbilityStart = () =>
         {
             RaycastHit hit;
-
+            usingSpecialNormal = true;
             isUsingAbility = true;
             Disable();
 
@@ -499,7 +540,7 @@ public class Nav : MyCharacter
                     }
                     else
                     {
-                        dashDestination = new Vector3(this.transform.position.x + SpecialAttackDashRange, this.transform.position.y, 0);
+                        dashDestination = new Vector3(this.transform.position.x - SpecialAttackDashRange, this.transform.position.y, 0);
                     }
                 }
                 else
@@ -510,7 +551,7 @@ public class Nav : MyCharacter
                     }
                     else
                     {
-                        dashDestination = new Vector3(this.transform.position.x + SpecialAttackDashRange, this.transform.position.y, 0);
+                        dashDestination = new Vector3(this.transform.position.x - SpecialAttackDashRange, this.transform.position.y, 0);
                     }
                 }
             }
@@ -551,8 +592,10 @@ public class Nav : MyCharacter
                 }
             }
         };
-        abilities[7].onAbilityCancel = () => 
+        abilities[7].onAbilityCancel = () =>
         {
+            enemyKickingUp = false;
+            usingSpecialNormal = false;
             isUsingAbility = false;
             EndDisable();
         };
@@ -583,85 +626,352 @@ public class Nav : MyCharacter
                 transform.position = new Vector3(this.transform.position.x, this.transform.position.y + SpecialAttackKickHight, 0);
             }
             enemyKickingUp = false;
-            usingSpecial1 = false;
             isUsingAbility = false;
             EndDisable();
         };
-        abilities[7].onAbilityReady = () => { };
+        abilities[7].onAbilityReady = () => 
+        {
+            usingSpecialNormal = false;
+        };
 
         #endregion
         #region Ability 8
         abilities[8].onAbilityStart = () => 
         {
-            RaycastHit hit;
 
             isUsingAbility = true;
             Disable();
+            doOnce = false;
 
-            if(IsLookingRight())
+        };
+        abilities[8].onAbilityUpdate = () => 
+        {
+            if(!doOnce)
             {
-                if(transform.position.x < 0)
+                RaycastHit hit;
+                doOnce = true;
+
+                if (IsLookingRight())
                 {
-                    if(Physics.Raycast(this.transform.position, new Vector3(-this.transform.position.x, 0, 0), out hit, SpecialAttackTeleportRange, 9, QueryTriggerInteraction.Ignore))
+                    if (transform.position.x < 0)
                     {
-                        TeleportDestination = hit.point;
+                        if (Physics.Raycast(this.transform.position, new Vector3(-this.transform.position.x, 0, 0), out hit, SpecialAttackTeleportRange, 9, QueryTriggerInteraction.Ignore))
+                        {
+                            TeleportDestination = hit.point;
+                        }
+                        else
+                        {
+                            TeleportDestination = new Vector3(this.transform.position.x + SpecialAttackTeleportRange, this.transform.position.y, 0);
+                        }
                     }
                     else
                     {
-                        TeleportDestination = new Vector3(this.transform.position.x + SpecialAttackTeleportRange, this.transform.position.y, 0);
+                        if (Physics.Raycast(this.transform.position, new Vector3(this.transform.position.x, 0, 0), out hit, SpecialAttackTeleportRange, 9, QueryTriggerInteraction.Ignore))
+                        {
+                            TeleportDestination = hit.point;
+                        }
+                        else
+                        {
+                            TeleportDestination = new Vector3(this.transform.position.x + SpecialAttackTeleportRange, this.transform.position.y, 0);
+                        }
                     }
                 }
                 else
                 {
-                    if (Physics.Raycast(this.transform.position, new Vector3(this.transform.position.x, 0, 0), out hit, SpecialAttackTeleportRange, 9, QueryTriggerInteraction.Ignore))
+                    if (transform.position.x < 0)
                     {
-                        TeleportDestination = hit.point;
+                        if (Physics.Raycast(this.transform.position, new Vector3(this.transform.position.x, 0, 0), out hit, SpecialAttackTeleportRange, 9, QueryTriggerInteraction.Ignore))
+                        {
+                            TeleportDestination = hit.point;
+                        }
+                        else
+                        {
+                            TeleportDestination = new Vector3(this.transform.position.x - SpecialAttackTeleportRange, this.transform.position.y, 0);
+                        }
                     }
                     else
                     {
-                        TeleportDestination = new Vector3(this.transform.position.x + SpecialAttackTeleportRange, this.transform.position.y, 0);
+                        if (Physics.Raycast(this.transform.position, new Vector3(-this.transform.position.x, 0, 0), out hit, SpecialAttackTeleportRange, 9, QueryTriggerInteraction.Ignore))
+                        {
+                            TeleportDestination = hit.point;
+                        }
+                        else
+                        {
+                            TeleportDestination = new Vector3(this.transform.position.x - SpecialAttackTeleportRange, this.transform.position.y, 0);
+                        }
                     }
+                }
+                this.transform.position = TeleportDestination;
+            }
+
+            if(xNormalHitBox && !abilities[8].hitObject)
+            {
+                abilities[8].hitObject = true;
+                enemyCharacter.Damage(abilities[8].GetDamage() * Mathf.RoundToInt(havyAttackChargeCounter));
+                enemyCharacter.KickAway(enemyCharacter, this.transform.position, true);
+            }
+        };
+        abilities[8].onAbilityCancel = () =>
+        {
+            usingSpecialSide = false;
+            isUsingAbility = false;
+            EndDisable();
+        };
+        abilities[8].onAbilityEnd = () =>
+        {
+            isUsingAbility = false;
+            EndDisable();
+        };
+        abilities[8].onAbilityReady = () => 
+        {
+            usingSpecialSide = false;
+        };
+
+        #endregion
+        #region Ability 9
+        abilities[9].onAbilityStart = () => 
+        {
+            doOnce = false;
+        };
+        abilities[9].onAbilityUpdate = () => 
+        {
+            if (!doOnce)
+            {
+                RaycastHit hit;
+
+                doOnce = true;
+                // Set the Back Teleport Location
+                if (IsLookingRight())
+                {
+                    if (transform.position.x < 0)
+                    {
+                        if (Physics.Raycast(this.transform.position, new Vector3(this.transform.position.x, 0, 0), out hit, SpecialAttackBackTeleportRange, 9, QueryTriggerInteraction.Ignore))
+                        {
+                            TeleportDestination = hit.point;
+                        }
+                        else
+                        {
+                            TeleportDestination = new Vector3(this.transform.position.x - SpecialAttackBackTeleportRange, this.transform.position.y, 0);
+                        }
+                    }
+                    else
+                    {
+                        if (Physics.Raycast(this.transform.position, new Vector3(-this.transform.position.x, 0, 0), out hit, SpecialAttackBackTeleportRange, 9, QueryTriggerInteraction.Ignore))
+                        {
+                            TeleportDestination = hit.point;
+                        }
+                        else
+                        {
+                            TeleportDestination = new Vector3(this.transform.position.x - SpecialAttackBackTeleportRange, this.transform.position.y, 0);
+                        }
+                    }
+                }
+                else
+                {
+                    if (transform.position.x < 0)
+                    {
+                        if (Physics.Raycast(this.transform.position, new Vector3(-this.transform.position.x, 0, 0), out hit, SpecialAttackBackTeleportRange, 9, QueryTriggerInteraction.Ignore))
+                        {
+                            TeleportDestination = hit.point;
+                        }
+                        else
+                        {
+                            TeleportDestination = new Vector3(this.transform.position.x + SpecialAttackBackTeleportRange, this.transform.position.y, 0);
+                        }
+                    }
+                    else
+                    {
+                        if (Physics.Raycast(this.transform.position, new Vector3(this.transform.position.x, 0, 0), out hit, SpecialAttackBackTeleportRange, 9, QueryTriggerInteraction.Ignore))
+                        {
+                            TeleportDestination = hit.point;
+                        }
+                        else
+                        {
+                            TeleportDestination = new Vector3(this.transform.position.x + SpecialAttackBackTeleportRange, this.transform.position.y, 0);
+                        }
+                    }
+                }
+
+                // Set the Player to the Teleport Position
+                this.transform.position = TeleportDestination;
+                
+                // Set Dash Forward Location
+                if (IsLookingRight())
+                {
+                    if (transform.position.x < 0)
+                    {
+                        if (Physics.Raycast(this.transform.position, new Vector3(-this.transform.position.x, 0, 0), out hit, SpecialAttackBackDashForwardRange, 9, QueryTriggerInteraction.Ignore))
+                        {
+                            dashDestination = hit.point;
+                        }
+                        else
+                        {
+                            dashDestination = new Vector3(this.transform.position.x + SpecialAttackBackDashForwardRange, this.transform.position.y, 0);
+                        }
+                    }
+                    else
+                    {
+                        if (Physics.Raycast(this.transform.position, new Vector3(this.transform.position.x, 0, 0), out hit, SpecialAttackBackDashForwardRange, 9, QueryTriggerInteraction.Ignore))
+                        {
+                            dashDestination = hit.point;
+                        }
+                        else
+                        {
+                            dashDestination = new Vector3(this.transform.position.x + SpecialAttackBackDashForwardRange, this.transform.position.y, 0);
+                        }
+                    }
+                }
+                else
+                {
+                    if (this.transform.position.x < 0)
+                    {
+                        if (Physics.Raycast(this.transform.position, new Vector3(this.transform.position.x, 0, 0), out hit, SpecialAttackBackDashForwardRange, 9, QueryTriggerInteraction.Ignore))
+                        {
+                            dashDestination = hit.point;
+                        }
+                        else
+                        {
+                            dashDestination = new Vector3(this.transform.position.x - SpecialAttackBackDashForwardRange, this.transform.position.y, 0);
+                        }
+                    }
+                    else
+                    {
+                        if (Physics.Raycast(this.transform.position, new Vector3(-this.transform.position.x, 0, 0), out hit, SpecialAttackBackDashForwardRange, 9, QueryTriggerInteraction.Ignore))
+                        {
+                            dashDestination = hit.point;
+                        }
+                        else
+                        {
+                            dashDestination = new Vector3(this.transform.position.x - SpecialAttackBackDashForwardRange, this.transform.position.y, 0);
+                        }
+                    }
+                }
+
+                // Set the Distince between Character Location and the Dashdestination
+                SpecialAttackJourneyLenght = Vector3.Distance(this.transform.position, dashDestination);
+
+                // Set the dashTime back to default value
+                currentSpecialAttackDashTime = SpecialAttackDashTime;
+            }
+            // Check if hit the enemy while Dashing
+            if(!abilities[9].hitObject && xNormalHitBox)
+            {
+                abilities[9].hitObject = true;
+                enemyCharacter.Damage(abilities[9].GetDamage() * Mathf.RoundToInt(havyAttackChargeCounter));
+                enemyCharacter.KickAway(enemyCharacter, this.transform.position, true);
+                abilities[9].End();
+            }
+            // Lerp the Player Position to the DashDestination
+            else if (currentSpecialAttackDashTime > 0 && !abilities[9].hitObject)
+            {
+                currentSpecialAttackDashTime -= Time.deltaTime;
+                float travel = currentSpecialAttackDashTime / SpecialAttackJourneyLenght;
+                this.transform.position = Vector3.Lerp(this.transform.position, dashDestination, travel);
+            }
+        };
+        abilities[9].onAbilityCancel = () => 
+        {
+            isUsingAbility = false;
+            usingSpecialDown = false;
+            EndDisable();
+        };
+        abilities[9].onAbilityEnd = () => 
+        {
+            isUsingAbility = false;
+            EndDisable();
+        };
+        abilities[9].onAbilityReady = () => 
+        {
+            usingSpecialDown = false;
+        };
+        #endregion
+        #region Ability 10
+        abilities[10].onAbilityStart = () => 
+        {
+            SpecialJump();
+        };
+        abilities[10].onAbilityUpdate = () => 
+        {
+            if(sUpHitBox && !abilities[10].hitObject)
+            {
+                abilities[10].hitObject = true;
+                enemyCharacter.Damage(abilities[10].GetDamage() * Mathf.RoundToInt(havyAttackChargeCounter));
+                enemyCharacter.KickUp(enemyCharacter, this.transform.position, true);
+            }
+        };
+        abilities[10].onAbilityCancel = () =>
+        {
+            isUsingAbility = false;
+            usingSpecialUp = false;
+        };
+        abilities[10].onAbilityEnd = () => 
+        {
+            isUsingAbility = false;
+        };
+        abilities[10].onAbilityReady = () => 
+        {
+            usingSpecialUp = false;
+        };
+        #endregion
+        #region Ability 11
+        abilities[11].onAbilityStart = () => 
+        {
+            RaycastHit hit;
+            if(this.transform.position.y < 0)
+            {
+                if (Physics.Raycast(transform.position, new Vector3(0, this.transform.position.y, 0), out hit, SpecialAttackKickDown, 9, QueryTriggerInteraction.Ignore))
+                {
+                    dashDestination = hit.point;
+                }
+                else
+                {
+                    dashDestination = new Vector3(this.transform.position.x, this.transform.position.y - SpecialAttackKickDown, 0);
                 }
             }
             else
             {
-                if (transform.position.x < 0)
+                if (Physics.Raycast(transform.position, new Vector3(0, -this.transform.position.y, 0), out hit, SpecialAttackKickDown, 9, QueryTriggerInteraction.Ignore))
                 {
-                    if (Physics.Raycast(this.transform.position, new Vector3(this.transform.position.x, 0, 0), out hit, SpecialAttackTeleportRange, 9, QueryTriggerInteraction.Ignore))
-                    {
-                        TeleportDestination = hit.point;
-                    }
-                    else
-                    {
-                        TeleportDestination = new Vector3(this.transform.position.x + SpecialAttackTeleportRange, this.transform.position.y, 0);
-                    }
+                    dashDestination = hit.point;
                 }
                 else
                 {
-                    if (Physics.Raycast(this.transform.position, new Vector3(-this.transform.position.x, 0, 0), out hit, SpecialAttackTeleportRange, 9, QueryTriggerInteraction.Ignore))
-                    {
-                        TeleportDestination = hit.point;
-                    }
-                    else
-                    {
-                        TeleportDestination = new Vector3(this.transform.position.x + SpecialAttackTeleportRange, this.transform.position.y, 0);
-                    }
+                    dashDestination = new Vector3(this.transform.position.x, this.transform.position.y - SpecialAttackKickDown, 0);
                 }
             }
+            currentSpecialAttackDashTime = SpecialAttackDashTime;
+            SpecialAttackJourneyLenght = Vector3.Distance(this.transform.position, dashDestination);
         };
-        abilities[8].onAbilityUpdate = () => { };
-        abilities[8].onAbilityCancel = () => 
+        abilities[11].onAbilityUpdate = () => 
+        {
+            if (!abilities[11].hitObject && sDownHitBox)
+            {
+                abilities[11].hitObject = true;
+                enemyCharacter.Damage(abilities[11].GetDamage());
+                enemyCharacter.KickDown(enemyCharacter, this.transform.position, true);
+            }
+            else if (currentSpecialAttackDashTime > 0)
+            {
+                currentSpecialAttackDashTime -= Time.deltaTime;
+                float travel = currentSpecialAttackDashTime / SpecialAttackJourneyLenght;
+                this.transform.position = Vector3.Lerp(this.transform.position, dashDestination, travel);
+            }
+        };
+        abilities[11].onAbilityCancel = () => 
+        {
+            usingSpecialDown = false;
+            isUsingAbility = false;
+            EndDisable();
+        };
+        abilities[11].onAbilityEnd = () => 
         {
             isUsingAbility = false;
             EndDisable();
         };
-        abilities[8].onAbilityEnd = () => 
+        abilities[11].onAbilityReady = () => 
         {
-            isUsingAbility = false;
-            EndDisable();
+            usingSpecialDown = false;
         };
-        abilities[8].onAbilityReady = () => { };
-
         #endregion
         //abilities[2].onAbilityStart = () => { };
         //abilities[2].onAbilityUpdate = () => { };
@@ -673,22 +983,17 @@ public class Nav : MyCharacter
 
     void Update()
     {
-        abilities[0].Update();
-        abilities[1].Update();
-        abilities[2].Update();
-        abilities[3].Update();
-        abilities[4].Update();
-        abilities[5].Update();
-        abilities[6].Update();
-        abilities[7].Update();
-        abilities[8].Update();
+        for(int i = 0; i < abilities.Length; i++)
+        {
+            abilities[i].Update();
+        }
 
         if (isCharging)
             havyAttackChargeCounter += 0.5f * Time.deltaTime;
-
+        
         if(enemyKickingUp)
         {
-            if(MoveEnemyTo(enemyDestination))
+            if(MoveEnemyTo(enemyDestination) && usingSpecialNormal)
             {
                 abilities[7].End();
             }
@@ -758,26 +1063,40 @@ public class Nav : MyCharacter
 
     void AbordSpecial()
     {
-        if (isUsingAbility && isCharging && usingSpecial1)
+        if (!isUsingAbility || !isCharging)
+            return;
+
+        if (usingSpecialNormal)
         {
             isCharging = false;
             abilities[7].Activate();
         }
-        else if(isUsingAbility && isCharging && usingSpecialSide)
+        else if(usingSpecialSide)
         {
             isCharging = false;
             abilities[8].Activate();
         }
+        else if(usingSpecialDown)
+        {
+            isCharging = false;
+            abilities[9].Activate();
+        }
     }
     void SpecialAttackNormal()
     {
-        if (!isUsingAbility && !IsFalling() && !usingSpecial1)
+        if (!isUsingAbility && !IsFalling() && !usingSpecialNormal)
         {
-            usingSpecial1 = true;
+            usingSpecialNormal = true;
             isUsingAbility = true;
             isCharging = true;
             havyAttackChargeCounter = 1;
             Disable();
+        }
+        else if (IsFalling() && !isUsingAbility && !usingSpecialUp)
+        {
+            usingSpecialUp = true;
+            isUsingAbility = true;
+            abilities[10].Activate();
         }
     }
     void SpecialAttackRight()
@@ -791,6 +1110,12 @@ public class Nav : MyCharacter
             LookRight();
             Disable();
         }
+        else if (IsFalling() && !isUsingAbility && !usingSpecialUp)
+        {
+            usingSpecialUp = true;
+            isUsingAbility = true;
+            abilities[10].Activate();
+        }
     }
     void SpecialAttackLeft()
     {
@@ -802,6 +1127,46 @@ public class Nav : MyCharacter
             havyAttackChargeCounter = 1;
             LookLeft();
             Disable();
+        }
+        else if (IsFalling() && !isUsingAbility && !usingSpecialUp)
+        {
+            usingSpecialUp = true;
+            isUsingAbility = true;
+            abilities[10].Activate();
+        }
+    }
+    void SpecialAttackDown()
+    {
+        if (!isUsingAbility && !IsFalling() && !usingSpecialDown)
+        {
+            usingSpecialDown = true;
+            isUsingAbility = true;
+            isCharging = true;
+            havyAttackChargeCounter = 1;
+            Disable();
+        }
+        else if(IsFalling() && !isUsingAbility && !usingSpecialDown)
+        {
+            usingSpecialDown = true;
+            isUsingAbility = true;
+            abilities[11].Activate();
+        }
+    }
+    void SpecialAttackUp()
+    {
+        if (!isUsingAbility && !IsFalling() && !usingSpecialNormal)
+        {
+            usingSpecialNormal = true;
+            isUsingAbility = true;
+            isCharging = true;
+            havyAttackChargeCounter = 1;
+            Disable();  
+        }
+        else if (IsFalling() && !isUsingAbility && !usingSpecialUp)
+        {
+            usingSpecialUp = true;
+            isUsingAbility = true;
+            abilities[10].Activate();
         }
     }
 }

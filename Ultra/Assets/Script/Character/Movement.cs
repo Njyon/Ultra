@@ -233,6 +233,32 @@ public class Movement : MonoBehaviour
     {
         transform.rotation = new Quaternion(0, 1, 0, 0);
     }
+    /// <summary>
+    /// Let the Character Jump of the amount of param jumpforce| WARNING: Needed for a SpecialAttack DONT USE ENYWEHERE ELSE!
+    /// </summary>
+    /// <param name="jumpForce"></param>
+    public void SpecialJump(float jumpForce)
+    {
+        if (isFalling)
+            jumpState = JumpState.InAir;
+        this.rb.velocity = new Vector3(rb.velocity.x, jumpForce, 0);
+        StartCoroutine(ForceDownDelay());
+        JumpDelegateAction(jumpState);
+        this.isFalling = true;
+    }
+    /// <summary>
+    /// Let the Character Jump | WARNING: Needed for a SpecialAttack DONT USE ENYWEHERE ELSE!
+    /// </summary>
+    public void SpecialJump()
+    {
+        if (isFalling)
+            jumpState = JumpState.InAir;
+        this.rb.velocity = new Vector3(rb.velocity.x, jumpVelocity, 0);
+        StartCoroutine(ForceDownDelay());
+        JumpDelegateAction(jumpState);
+        this.isFalling = true;
+    }
+
 
 
     //      Private     //
