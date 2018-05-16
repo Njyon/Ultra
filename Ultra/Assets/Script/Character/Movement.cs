@@ -54,6 +54,9 @@ public class Movement : MonoBehaviour
     public float dashCoolDown;
     public float dogeTime;
 
+    [Header("Animator")]
+    [SerializeField] Animator animator;
+
     //WallSlide
     bool isOnWallRight = false;
     bool isOnWallLeft = false;
@@ -259,8 +262,6 @@ public class Movement : MonoBehaviour
         this.isFalling = true;
     }
 
-
-
     //      Private     //
     void DashCheck()
     {
@@ -307,7 +308,6 @@ public class Movement : MonoBehaviour
                 break;
         }
     }
-
     void WallSlide()
     {
         if (myCharacter.isDisabled)
@@ -352,7 +352,6 @@ public class Movement : MonoBehaviour
             currentDashes = 0;
         }
     }
-
     void FallingWallDetection()
     {
         if (myCharacter.isDisabled)
@@ -419,7 +418,6 @@ public class Movement : MonoBehaviour
             }
         }
     }
-
     void LookRight()
     {
         if (this.transform.rotation.y != 0)
@@ -431,7 +429,6 @@ public class Movement : MonoBehaviour
             this.isTurningLeft = false;
         }
     }
-
     void LookLeft()
     {
         if (this.transform.rotation.y != 180)
@@ -443,7 +440,6 @@ public class Movement : MonoBehaviour
             this.isTurningRight = false;
         }
     }
-
     void Turning()
     {
         if (this.isTurningRight)
@@ -467,7 +463,6 @@ public class Movement : MonoBehaviour
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation, new Quaternion(0, 1, 0, 0), 0.2f);
         }
     }
-
     void Idle()
     {
         if (lastPos == this.transform.position)
@@ -481,7 +476,6 @@ public class Movement : MonoBehaviour
                 isIdling = false;
         }
     }
-
     void Grounded()
     {
         RaycastHit hit;
@@ -509,19 +503,16 @@ public class Movement : MonoBehaviour
             isFalling = true;
         }
     }
-    
     void FallStraight()
     {
         fallStraight = true;
         forcingDown = false;
     }
-
     void ForceDown()
     {
         if(isFalling)
             forcingDown = true;
     }
-
     void LookUp()
     {
         forcingDown = false;
@@ -604,7 +595,6 @@ public class Movement : MonoBehaviour
             }
         }
     }
-
     void MoveLeft()
     {
         if (!this.canMove)
@@ -678,7 +668,6 @@ public class Movement : MonoBehaviour
             }
         }
     }
-
     void Jump()
     {
         if (myCharacter.isDisabled)
@@ -729,7 +718,6 @@ public class Movement : MonoBehaviour
         JumpDelegateAction(jumpState);
         this.isFalling = true;
     }
-
     void DashStanding()
     {
         if (canDash)
@@ -743,7 +731,6 @@ public class Movement : MonoBehaviour
             StartCoroutine(DogeTime(dogeTime));
         }
     }
-
     void DirectionDash(bool directionRight)
     {
         if (!canDash)
@@ -810,8 +797,6 @@ public class Movement : MonoBehaviour
             }
         }
     }
-
-    // Change Gravity for Jump Balancing!  Edit -> Project Setting -> Physics -> Gravity Y
     void Falling()
     {
         if (isDashing)
@@ -858,8 +843,7 @@ public class Movement : MonoBehaviour
             if (!isFalling)
                 this.isFalling = true;
         }
-    }
-
+    }   // Change Gravity for Jump Balancing!  Edit -> Project Setting -> Physics -> Gravity Y
     void Dash()
     {
         if (currentDashes <= maxDashes)
@@ -899,27 +883,23 @@ public class Movement : MonoBehaviour
         rb.useGravity = true;
         isDashing = false;
     }
-
     IEnumerator JumpCoolDown()
     {
         this.canMove = false;
         yield return new WaitForSeconds(0.2f);
         this.canMove = true;
     }
-
     IEnumerator DashCoolDown(float time)
     {
         yield return new WaitForSeconds(time);
         canDash = true;
     }
-
     IEnumerator DogeTime(float time)
     {
         myCharacter.canGetDamaged = false;
         yield return new WaitForSeconds(time);
         myCharacter.canGetDamaged = true;
     }
-
     IEnumerator ForceDownDelay()
     {
         forceDownEnabled = false;

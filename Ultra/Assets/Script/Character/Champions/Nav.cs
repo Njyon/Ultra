@@ -23,7 +23,6 @@ public class Nav : MyCharacter
     bool usingSpecialSide = false;
     bool usingSpecialNormal = false;
     bool isCharging = false;
-
     bool doOnce = false;
     bool enemyKickingUp = false;
     bool isUsingAbility = false;
@@ -199,7 +198,7 @@ public class Nav : MyCharacter
 
         #region Ability's
         // Normal Attacks (X)
-        #region Ability 0
+        #region Ability 0   // Normal Attack in view Direction
         abilities[0].onAbilityStart = () => 
         {
             isUsingAbility = true;
@@ -234,8 +233,8 @@ public class Nav : MyCharacter
             }
         };
         abilities[0].onAbilityReady = () => { };
-        #endregion
-        #region Ability 1
+        #endregion  
+        #region Ability 1   // Light Dash to the Right
         abilities[1].onAbilityStart = () =>
         {
             RaycastHit hit;
@@ -300,7 +299,7 @@ public class Nav : MyCharacter
         abilities[1].onAbilityReady = () => { };
 
         #endregion
-        #region Ability 2
+        #region Ability 2   // Light Dash to the Left
         abilities[2].onAbilityStart = () =>
         {
             RaycastHit hit;
@@ -365,7 +364,7 @@ public class Nav : MyCharacter
         abilities[2].onAbilityReady = () => { };
 
         #endregion
-        #region Ability 3
+        #region Ability 3   // Light UperCut
         abilities[3].onAbilityStart = () => 
         {
             isUsingAbility = true;
@@ -393,7 +392,7 @@ public class Nav : MyCharacter
         };
         abilities[3].onAbilityReady = () => { };
         #endregion
-        #region Ability 4
+        #region Ability 4   // Light UperCut in Air
         abilities[4].onAbilityStart = () => 
         {
             isUsingAbility = true;
@@ -424,7 +423,7 @@ public class Nav : MyCharacter
         };
         abilities[4].onAbilityReady = () => { };
         #endregion
-        #region Ability 5
+        #region Ability 5   // Light Attack in view Direction in air
         abilities[5].onAbilityStart = () => 
         {
             isUsingAbility = true;
@@ -466,7 +465,7 @@ public class Nav : MyCharacter
         };
         abilities[5].onAbilityReady = () => { };
         #endregion
-        #region Ability 6
+        #region Ability 6   // Light Kickdown in Air
         abilities[6].onAbilityStart = () => 
         {
             isUsingAbility = true;
@@ -496,7 +495,7 @@ public class Nav : MyCharacter
         #endregion
 
         // Havy Attacks (Y/B)
-        #region Ability 7
+        #region Ability 7   // Heavy Dash with Jump
         abilities[7].onAbilityStart = () =>
         {
             RaycastHit hit;
@@ -635,7 +634,7 @@ public class Nav : MyCharacter
         };
 
         #endregion
-        #region Ability 8
+        #region Ability 8   // Heavy Attack Teleport and Smash
         abilities[8].onAbilityStart = () => 
         {
 
@@ -728,7 +727,7 @@ public class Nav : MyCharacter
         };
 
         #endregion
-        #region Ability 9
+        #region Ability 9   // Heavy Attack back Teleport with dash in view direction
         abilities[9].onAbilityStart = () => 
         {
             doOnce = false;
@@ -885,7 +884,7 @@ public class Nav : MyCharacter
             usingSpecialDown = false;
         };
         #endregion
-        #region Ability 10
+        #region Ability 10  // Heavy Upercut in Air
         abilities[10].onAbilityStart = () => 
         {
             SpecialJump();
@@ -913,7 +912,7 @@ public class Nav : MyCharacter
             usingSpecialUp = false;
         };
         #endregion
-        #region Ability 11
+        #region Ability 11  // Heavy Downkick in Air
         abilities[11].onAbilityStart = () => 
         {
             RaycastHit hit;
@@ -973,11 +972,15 @@ public class Nav : MyCharacter
             usingSpecialDown = false;
         };
         #endregion
+
+        #region Copie
         //abilities[2].onAbilityStart = () => { };
         //abilities[2].onAbilityUpdate = () => { };
         //abilities[2].onAbilityCancel = () => { };
         //abilities[2].onAbilityEnd = () => { };
         //abilities[2].onAbilityReady = () => { };
+        #endregion
+
         #endregion
     }
 
