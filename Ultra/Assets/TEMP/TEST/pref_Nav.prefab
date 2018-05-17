@@ -1858,6 +1858,7 @@ GameObject:
   - component: {fileID: 114532094157897230}
   - component: {fileID: 136439231409751026}
   - component: {fileID: 114580614076684540}
+  - component: {fileID: 114008825772264244}
   m_Layer: 8
   m_Name: pref_Nav
   m_TagString: player
@@ -10483,6 +10484,25 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114008825772264244
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1392969457632022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96437fbf88bb03a4e80d6fbe2b7f013d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDashing: 0
+  canDash: 0
+  maxDashes: 2
+  currentDashes: 0
+  dashCoolDown: 1
+  dogeTime: 1
+  dashLength: 5
+  dashTime: 1
 --- !u!114 &114088430582882708
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10533,7 +10553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 065ca2ba2f9d99d4a82029ef3e158dc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookToTheRight: 0
+  islookingToTheRight: 0
   maxTurningTime: 1
   movementSpeed: 5
   inAirSpeed: 5

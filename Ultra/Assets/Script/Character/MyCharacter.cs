@@ -477,7 +477,7 @@ public class MyCharacter : MonoBehaviour
     /// <returns></returns>
     public bool IsLookingRight()
     {
-        return movement.lookToTheRight;
+        return movement.islookingToTheRight;
     }
     /// <summary>
     /// Lets the Character Look to the Right emiditly
