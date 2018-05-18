@@ -88,9 +88,6 @@ public class MyCharacter : MonoBehaviour
         movement.AssigneInput();
         rb = GetComponent<Rigidbody>();
 
-        // Movement Delegates Sub
-        movement.JumpDelegateAction += JumpCheck;
-
         // Input
         switch(playerEnum)
         {
@@ -200,21 +197,21 @@ public class MyCharacter : MonoBehaviour
     }
     #endregion
 
-    #region Delegate Check
-    void JumpCheck(JumpState jumpState)
+    #region Animation Check
+    void JumpCheck(EventState jumpState)
     {
         switch (jumpState)
         {
-            case JumpState.InAir:
+            case EventState.InAir:
 
                 break;
-            case JumpState.OnGround:
+            case EventState.OnGround:
                 Instantiate(p_JumpOnGround, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0), this.transform.rotation);
                 break;
-            case JumpState.OnWallLeft:
+            case EventState.OnWallLeft:
 
                 break;
-            case JumpState.OnWallRight:
+            case EventState.OnWallRight:
 
                 break;
         }

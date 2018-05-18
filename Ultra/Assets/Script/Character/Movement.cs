@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    //Components
     Turning turnclass;
     Dash dash;
+    FallComponent fallComp;
 
     // Helper
-    MyCharacter myCharacter;
-    Rigidbody rb;
-    PlayerEnum playerEnum = PlayerEnum.NotAssigned;
     [HideInInspector] public bool islookingToTheRight;
-    //bool fallStraight = true;
-    //bool forcingDown = false;
-    //bool forceDownEnabled = true;
+    bool forcingDown = false;
+    bool forceDownEnabled = true;
     bool isStunned = false;
     bool isIdling = true;
     Vector3 lastPos;
+    MyCharacter myCharacter;
+    Rigidbody rb;
+    PlayerEnum playerEnum = PlayerEnum.NotAssigned;
 
     // Movement
     [Header("Movement")]
@@ -30,11 +31,10 @@ public class Movement : MonoBehaviour
 
     // Jump
     public float jumpVelocity;
-    int jumps = 0;
+    [HideInInspector] public int jumps = 0;
     [Range(0, 10)] public float fallSpeed;
     [Range(5, 30)] public float maxFallVelocity;
     [Header("How much Jumps in a Row")] public int maxJumps;
-    [HideInInspector] public JumpState jumpState = JumpState.OnGround;
     
     [Header("Animator")]
     [SerializeField] Animator animator;
@@ -42,11 +42,6 @@ public class Movement : MonoBehaviour
     //WallSlide
     bool isOnWallRight = false;
     bool isOnWallLeft = false;
-
-                            //       Delegates       //
-
-    public delegate void JumpDelegate(JumpState jumpState);
-    public JumpDelegate JumpDelegateAction;
 
     void Awake()
     {
@@ -63,12 +58,12 @@ public class Movement : MonoBehaviour
             return;
         
         Idle();
-        Falling();
+        fallComp.Falling();
         if(dash.isDashing)
             transform.position = dash.Dashing(isFalling, transform.position);
         WallSlide();
         turnclass.IUpdate(this.transform);
-        Grounded();
+        isFalling = fallComp.Grounded();
 
         if (Input.GetKey(KeyCode.A))
             MoveLeft();
@@ -94,6 +89,7 @@ public class Movement : MonoBehaviour
         dash.playerEnum = playerEnum;
         dash.rb = rb;
         #endregion
+        fallComp = new FallComponent(forceDownEnabled, forcingDown, isOnWallLeft, isOnWallRight, isFalling, islookingToTheRight, fallSpeed, wallDetectionLength, maxFallVelocity, transform, rb, this, dash, myCharacter);
 
         switch (playerEnum)
         {
@@ -174,7 +170,7 @@ public class Movement : MonoBehaviour
         canMove = true;
     }
     /// <summary>
-    /// Resets currents Jumps to Zero
+    /// Resets currents to Zero
     /// </summary>
     public void ResetJumps()
     {
@@ -237,11 +233,8 @@ public class Movement : MonoBehaviour
     /// <param name="jumpForce"></param>
     public void SpecialJump(float jumpForce)
     {
-        if (isFalling)
-            jumpState = JumpState.InAir;
         this.rb.velocity = new Vector3(rb.velocity.x, jumpForce, 0);
         StartCoroutine(ForceDownDelay());
-        JumpDelegateAction(jumpState);
         this.isFalling = true;
     }
     /// <summary>
@@ -249,11 +242,8 @@ public class Movement : MonoBehaviour
     /// </summary>
     public void SpecialJump()
     {
-        if (isFalling)
-            jumpState = JumpState.InAir;
         this.rb.velocity = new Vector3(rb.velocity.x, jumpVelocity, 0);
         StartCoroutine(ForceDownDelay());
-        JumpDelegateAction(jumpState);
         this.isFalling = true;
     }
 
@@ -303,72 +293,6 @@ public class Movement : MonoBehaviour
             //currentDashes = 0;
         }
     }
-    void FallingWallDetection()
-    {
-        if (myCharacter.isDisabled)
-            return;
-
-        RaycastHit hit;
-
-        if (this.gameObject.transform.position.x < 0)
-        {
-            if (islookingToTheRight)
-            {
-                if (Physics.Raycast(this.gameObject.transform.position, new Vector3(-this.gameObject.transform.localPosition.x, 0, 0), out hit, this.wallDetectionLength + 0.1f, 9, QueryTriggerInteraction.Ignore))
-                {
-                    //WallSlide
-                    if (!this.isOnWallLeft && !this.isOnWallRight)
-                    {
-                        this.isOnWallRight = true;
-                        ResetJumps();
-                        rb.velocity = new Vector3(0, 0, 0);
-                    }
-                }
-            }
-            else
-            {
-                if (Physics.Raycast(this.gameObject.transform.position, new Vector3(this.gameObject.transform.localPosition.x, 0, 0), out hit, this.wallDetectionLength + 0.1f, 9, QueryTriggerInteraction.Ignore))
-                {
-                    //WallSlide
-                    if (!this.isOnWallLeft && !this.isOnWallRight)
-                    {
-                        this.isOnWallLeft = true;
-                        ResetJumps();
-                        rb.velocity = new Vector3(0, 0, 0);
-                    }
-                }
-            }
-        }
-        else
-        {
-            if (islookingToTheRight)
-            {
-                if (Physics.Raycast(this.gameObject.transform.position, new Vector3(this.gameObject.transform.localPosition.x, 0, 0), out hit, this.wallDetectionLength + 0.1f, 9, QueryTriggerInteraction.Ignore))
-                {
-                    //WallSlide
-                    if (!this.isOnWallLeft && !this.isOnWallRight)
-                    {
-                        this.isOnWallRight = true;
-                        ResetJumps();
-                        rb.velocity = new Vector3(0, 0, 0);
-                    }
-                }
-            }
-            else
-            {
-                if (Physics.Raycast(this.gameObject.transform.position, new Vector3(-this.gameObject.transform.localPosition.x, 0, 0), out hit, this.wallDetectionLength + 0.1f, 9, QueryTriggerInteraction.Ignore))
-                {
-                    //WallSlide
-                    if (!this.isOnWallLeft && !this.isOnWallRight)
-                    {
-                        this.isOnWallLeft = true;
-                        ResetJumps();
-                        rb.velocity = new Vector3(0, 0, 0);
-                    }
-                }
-            }
-        }
-    }
     void Idle()
     {
         if (lastPos == this.transform.position)
@@ -381,42 +305,15 @@ public class Movement : MonoBehaviour
             if (isIdling)
                 isIdling = false;
         }
-    //}
-    //void Grounded()
-    //{
-    //    RaycastHit hit;
-
-    //    if (Physics.Raycast(this.gameObject.transform.position, new Vector3(0, -this.transform.position.y, 0), out hit, 1, 9, QueryTriggerInteraction.Ignore))
-    //    {
-    //        if(isFalling)
-    //        {
-    //            this.isOnWallLeft = false;
-    //            this.isOnWallRight = false;
-    //            this.isFalling = false;
-    //            dash.canDash = true;
-    //            jumpState = JumpState.OnGround;
-
-    //            if (jumps > 0)
-    //                ResetJumps();
-    //            if (dash.currentDashes > 0)
-    //                dash.currentDashes = 0;
-    //            if (myCharacter.isDisabled)
-    //                myCharacter.isDisabled = false;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        isFalling = true;
-    //    }
-    //}
+    }
     void FallStraight()
     {
-        fallStraight = true;
+        fallComp.fallStraight = true;
         forcingDown = false;
     }
     void ForceDown()
     {
-        if(isFalling)
+        if (isFalling)
             forcingDown = true;
     }
     void LookUp()
@@ -434,7 +331,7 @@ public class Movement : MonoBehaviour
             return;
 
         RaycastHit hit;
-        fallStraight = false;
+        fallComp.fallStraight = false;
         forcingDown = false;
 
         turnclass.LookRight(this.transform.rotation);
@@ -507,7 +404,7 @@ public class Movement : MonoBehaviour
             return;
 
         RaycastHit hit;
-        fallStraight = false;
+        fallComp.fallStraight = false;
         forcingDown = false;
 
         turnclass.LookLeft(this.transform.rotation);
@@ -574,105 +471,52 @@ public class Movement : MonoBehaviour
             }
         }
     }
-    //void Jump()
-    //{
-    //    if (myCharacter.isDisabled)
-    //        return;
-
-    //    if (this.isOnWallLeft && this.isFalling)
-    //    {
-    //        if (this.gameObject.transform.position.x < 0)
-    //        {
-    //            this.rb.velocity = Vector3.up * jumpVelocity + Vector3.right * jumpVelocity;
-    //            jumps++;
-    //        }
-    //        else
-    //        {
-    //            this.rb.velocity = Vector3.up * jumpVelocity + Vector3.right * jumpVelocity;
-    //            jumps++;
-    //        }
-    //        jumpState = JumpState.OnWallLeft;
-    //        turnclass.LookRight(this.transform.rotation);
-    //        StartCoroutine(JumpCoolDown());
-    //        StartCoroutine(ForceDownDelay());
-    //    }
-    //    else if (this.isOnWallRight && this.isFalling)
-    //    {
-    //        if (this.gameObject.transform.position.x < 0)
-    //        {
-    //            this.rb.velocity = Vector3.up * jumpVelocity + Vector3.left * jumpVelocity;
-    //            jumps++;
-    //        }
-    //        else
-    //        {
-    //            this.rb.velocity = Vector3.up * jumpVelocity + Vector3.left * jumpVelocity;
-    //            jumps++;
-    //        }
-    //        jumpState = JumpState.OnWallRight;
-    //        turnclass.LookLeft(this.transform.rotation);
-    //        StartCoroutine(JumpCoolDown());
-    //        StartCoroutine(ForceDownDelay());
-    //    }
-    //    else if (jumps < maxJumps)
-    //    {
-    //        if (isFalling)
-    //            jumpState = JumpState.InAir;
-    //        this.rb.velocity = new Vector3(rb.velocity.x, jumpVelocity, 0);
-    //        jumps++;
-    //        StartCoroutine(ForceDownDelay());
-    //    }
-    //    JumpDelegateAction(jumpState);
-    //    this.isFalling = true;
-    //}
-
-    void Falling()
+    void Jump()
     {
-        if (dash.isDashing)
+        if (myCharacter.isDisabled)
             return;
 
-        if (this.isOnWallLeft || this.isOnWallRight)
+        if (this.isOnWallLeft && this.isFalling)
         {
-            if (myCharacter.isDisabled)
+            if (this.gameObject.transform.position.x < 0)
             {
-                this.isOnWallLeft = false;
-                this.isOnWallRight = false;
-                return;
+                this.rb.velocity = Vector3.up * jumpVelocity + Vector3.right * jumpVelocity;
+                jumps++;
             }
-            if(jumps == 0)
-                rb.velocity = Vector3.down * 2;
-        }
-        else if (isFalling && forcingDown && forceDownEnabled)
-        {
-            rb.velocity += Vector3.up * Physics.gravity.y * (fallSpeed * 2) * Time.deltaTime;
-        }
-        else if(fallStraight && isFalling)
-        {
-            if(rb.velocity.x < 0)
+            else
             {
-                rb.velocity += new Vector3(1, 0, 0);
+                this.rb.velocity = Vector3.up * jumpVelocity + Vector3.right * jumpVelocity;
+                jumps++;
             }
-            else if (rb.velocity.x > 0)
-            {
-                rb.velocity -= new Vector3(1, 0, 0);
-            }
+            turnclass.LookRight(this.transform.rotation);
+            StartCoroutine(JumpCoolDown());
+            StartCoroutine(ForceDownDelay());
         }
-        else if (rb.velocity.y < 0)
+        else if (this.isOnWallRight && this.isFalling)
         {
-            if (!isFalling)
-                isFalling = true;
-            if (rb.velocity.y > maxFallVelocity)
-                rb.velocity = new Vector3(rb.velocity.x, maxFallVelocity, 0);
+            if (this.gameObject.transform.position.x < 0)
+            {
+                this.rb.velocity = Vector3.up * jumpVelocity + Vector3.left * jumpVelocity;
+                jumps++;
+            }
+            else
+            {
+                this.rb.velocity = Vector3.up * jumpVelocity + Vector3.left * jumpVelocity;
+                jumps++;
+            }
+            turnclass.LookLeft(this.transform.rotation);
+            StartCoroutine(JumpCoolDown());
+            StartCoroutine(ForceDownDelay());
+        }
+        else if (jumps < maxJumps)
+        {
+            this.rb.velocity = new Vector3(rb.velocity.x, jumpVelocity, 0);
+            jumps++;
+            StartCoroutine(ForceDownDelay());
+        }
+        this.isFalling = true;
+    }
 
-            //rb.velocity += Vector3.up * Physics.gravity.y * (fallSpeed - 1) * Time.deltaTime;
-            FallingWallDetection();
-        }
-        else if (rb.velocity.y > 0)
-        {
-            if (!isFalling)
-                this.isFalling = true;
-        }
-    } // Change Gravity for Jump Balancing!  Edit -> Project Setting -> Physics -> Gravity Y
-    
     IEnumerator JumpCoolDown()
     {
         this.canMove = false;

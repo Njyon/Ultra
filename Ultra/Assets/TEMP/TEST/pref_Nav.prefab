@@ -10495,14 +10495,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96437fbf88bb03a4e80d6fbe2b7f013d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDashing: 0
-  canDash: 0
   maxDashes: 2
-  currentDashes: 0
   dashCoolDown: 1
-  dogeTime: 1
+  dogeTime: 0.2
   dashLength: 5
   dashTime: 1
+  isDashing: 0
+  canDash: 0
+  currentDashes: 0
+  rb: {fileID: 0}
+  myCharacter: {fileID: 0}
+  playerEnum: 0
 --- !u!114 &114088430582882708
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10554,21 +10557,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   islookingToTheRight: 0
-  maxTurningTime: 1
   movementSpeed: 5
   inAirSpeed: 5
   isFalling: 0
   jumpVelocity: 12
+  jumps: 0
   fallSpeed: 2
   maxFallVelocity: 0
   maxJumps: 3
-  jumpState: 0
-  maxDashes: 2
-  dashLength: 5
-  dashTime: 1
-  dashCoolDown: 0.7
-  dogeTime: 1
-  animator: {fileID: 95680646976290290}
+  animator: {fileID: 0}
 --- !u!114 &114580614076684540
 MonoBehaviour:
   m_ObjectHideFlags: 1

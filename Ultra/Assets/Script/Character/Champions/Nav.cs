@@ -53,7 +53,6 @@ public class Nav : MyCharacter
         SpecialDownAction += SpecialAttackDown;
         SpecialUpAction += SpecialAttackUp;
     }
-
     private void OnDisable()
     {
         XAttackNormalAction -= LightAttack;

@@ -159,13 +159,13 @@ public class Dash : MonoBehaviour
                     canDash = false;
                     if (isFalling)
                     {
-                        StartCoroutine(DogeTime(dogeTime));
+                        StartCoroutine(DogeTime(dashCoolDown));
                         StartCoroutine(DashCoolDown(dashCoolDown));
                     }
                     else
                     {
                         currentDashes = 0;
-                        StartCoroutine(DashCoolDown(0.2f));
+                        StartCoroutine(DashCoolDown(dogeTime));
                     }
                 }
 
