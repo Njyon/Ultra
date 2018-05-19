@@ -98,6 +98,7 @@ public class AbilityEvent
             if(cooldownTimeHelper <= 0)
             {
                 state = AbilityState.EventReady;
+                onAbilityReady();
                 hitObject = false;
             }
         }

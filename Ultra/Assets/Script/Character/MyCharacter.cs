@@ -39,6 +39,8 @@ public class MyCharacter : MonoBehaviour
     [HideInInspector] public bool xNormalHitBox = false;
     [HideInInspector] public bool xUpHitBox = false;
     [HideInInspector] public bool xDownHitBox = false;
+    [HideInInspector] public bool sUpHitBox = false;
+    [HideInInspector] public bool sDownHitBox = false;
 
     //////////// Menu ///////////
 
@@ -85,9 +87,6 @@ public class MyCharacter : MonoBehaviour
         movement = gameObject.GetComponent<Movement>();
         movement.AssigneInput();
         rb = GetComponent<Rigidbody>();
-
-        // Movement Delegates Sub
-        movement.JumpDelegateAction += JumpCheck;
 
         // Input
         switch(playerEnum)
@@ -198,21 +197,21 @@ public class MyCharacter : MonoBehaviour
     }
     #endregion
 
-    #region Delegate Check
-    void JumpCheck(JumpState jumpState)
+    #region Animation Check
+    void JumpCheck(EventState jumpState)
     {
         switch (jumpState)
         {
-            case JumpState.InAir:
+            case EventState.InAir:
 
                 break;
-            case JumpState.OnGround:
+            case EventState.OnGround:
                 Instantiate(p_JumpOnGround, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0), this.transform.rotation);
                 break;
-            case JumpState.OnWallLeft:
+            case EventState.OnWallLeft:
 
                 break;
-            case JumpState.OnWallRight:
+            case EventState.OnWallRight:
 
                 break;
         }
@@ -475,7 +474,7 @@ public class MyCharacter : MonoBehaviour
     /// <returns></returns>
     public bool IsLookingRight()
     {
-        return movement.lookToTheRight;
+        return movement.islookingToTheRight;
     }
     /// <summary>
     /// Lets the Character Look to the Right emiditly
@@ -490,6 +489,21 @@ public class MyCharacter : MonoBehaviour
     public void LookLeft()
     {
         movement.LookLeftNow();
+    }
+    /// <summary>
+    /// Let the Character Jump | WARNING: Needed for a SpecialAttack DONT USE ENYWEHERE ELSE!
+    /// </summary>
+    public void SpecialJump()
+    {
+        movement.SpecialJump();
+    }
+    /// <summary>
+    /// Let the Character Jump of the amount of param jumpforce| WARNING: Needed for a SpecialAttack DONT USE ENYWEHERE ELSE!
+    /// </summary>
+    /// <param name="jumpForce"></param>
+    public void SpecialJump(float jumpForce)
+    {
+        movement.SpecialJump(jumpForce);
     }
 
     //      Private      //

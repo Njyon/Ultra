@@ -1,4 +1,4 @@
-﻿public enum JumpState
+﻿public enum EventState
 {
     OnGround,
     InAir,
