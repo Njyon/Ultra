@@ -35,9 +35,6 @@ public class Movement : MonoBehaviour
     [Range(0, 10)] public float fallSpeed;
     [Range(5, 30)] public float maxFallVelocity;
     [Header("How much Jumps in a Row")] public int maxJumps;
-    
-    [Header("Animator")]
-    [SerializeField] Animator animator;
 
     //WallSlide
     bool isOnWallRight = false;
