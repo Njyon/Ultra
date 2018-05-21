@@ -32,8 +32,6 @@ public class MyCharacter : MonoBehaviour
     float dmgMultiplier = 1.5f;
     float percent = 0;
 
-    KeyCode keyLock;
-
     //////////// Collision ///////////
 
     [HideInInspector] public bool xNormalHitBox = false;
@@ -47,7 +45,10 @@ public class MyCharacter : MonoBehaviour
     [HideInInspector] public bool hasSlider = false;
     [HideInInspector] public GameObject slider;
 
-    //////////// AttackDeleagtes ///////////
+    //////////// Deleagtes ///////////
+
+    public delegate void EventDelegate(EventState eventState);
+    public EventDelegate eventDelegate;
 
     #region X Attack 
     public delegate void XHitNormal();
@@ -133,6 +134,8 @@ public class MyCharacter : MonoBehaviour
                 InputManager.P1_XButtonLeftAction -= XAttackLeft;
                 InputManager.P1_XButtonTopAction -= XAttackUp;
                 InputManager.P1_XButtonBottomAction -= XAttackDown;
+
+                eventDelegate += EventCheck;
                 break;
             case PlayerEnum.PlayerTwo:
                 InputManager.p2_OnKeyPressed -= P2_InputDownCheck;
@@ -141,6 +144,8 @@ public class MyCharacter : MonoBehaviour
                 InputManager.P2_XButtonLeftAction -= XAttackLeft;
                 InputManager.P2_XButtonTopAction -= XAttackUp;
                 InputManager.P2_XButtonBottomAction -= XAttackDown;
+
+                eventDelegate += EventCheck;
                 break;
             case PlayerEnum.NotAssigned:
             default:
@@ -182,7 +187,6 @@ public class MyCharacter : MonoBehaviour
 
         if (keyCode == KeyCode.Joystick2Button1 || keyCode == KeyCode.Joystick2Button3)
         {
-            keyLock = keyCode;
             if (SpecialNormalAction != null)
                 SpecialNormalAction();
         }
@@ -198,9 +202,9 @@ public class MyCharacter : MonoBehaviour
     #endregion
 
     #region Animation Check
-    void JumpCheck(EventState jumpState)
+    void EventCheck(EventState eventState)
     {
-        switch (jumpState)
+        switch (eventState)
         {
             case EventState.InAir:
 
