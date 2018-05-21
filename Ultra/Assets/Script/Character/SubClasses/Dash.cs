@@ -9,10 +9,12 @@ public class Dash : MonoBehaviour
     public float dashCoolDown;
     public float dogeTime;
     public float dashLength;
-    public float dashTime;
+    public float standingDogeTime;
+    public float dashSpeed;
 
     [HideInInspector] public bool isDashing = false;
     [HideInInspector] public bool canDash = true;
+    [HideInInspector] public bool canMove = true;
     [HideInInspector] public int currentDashes = 0;
     [HideInInspector] public Rigidbody rb;
     [HideInInspector] public MyCharacter myCharacter;
@@ -75,10 +77,11 @@ public class Dash : MonoBehaviour
         {
             myCharacter.canGetDamaged = false;
             canDash = false;
+            canMove = false;
             rb.velocity = Vector3.zero;
             rb.useGravity = false;
             StartCoroutine(DashCoolDown(dashCoolDown));
-            StartCoroutine(DashTime());
+            StartCoroutine(StandingDogeTime(standingDogeTime));
             StartCoroutine(DogeTime(dogeTime));
         }
     }
@@ -87,10 +90,10 @@ public class Dash : MonoBehaviour
         if (!canDash)
             return;
 
-        currentDashTime = dashTime;
+        currentDashTime = standingDogeTime;
         isDashing = true;
         RaycastHit hit;
-        StartCoroutine(DashTime());
+        StartCoroutine(StandingDogeTime(standingDogeTime));
         currentDashes++;
 
         if (directionRight)     //Right
@@ -148,7 +151,9 @@ public class Dash : MonoBehaviour
             }
         }
     }
-    public Vector3 Dashing(bool isFalling, Vector3 position)
+
+    float travel = 0;
+    public void Dashing(bool isFalling, Vector3 position)
     {
         if (currentDashes <= maxDashes)
         {
@@ -168,21 +173,29 @@ public class Dash : MonoBehaviour
                         StartCoroutine(DashCoolDown(dogeTime));
                     }
                 }
+                if (MyEpsilon.Epsilon(position.x, dashEndPoint.x, 0.5f))
+                {
+                    Debug.Log("ENd");
 
-                currentDashTime -= Time.deltaTime;
-                float travel = currentDashTime / journeyLength;
+                    rb.useGravity = true;
+                    isDashing = false;
+                    travel = 0;
 
-                return position = Vector3.Lerp(position, this.dashEndPoint, travel);
+                    return;
+                }
+
+                travel += dashSpeed * Time.deltaTime;
+
+                this.transform.position = Vector3.Lerp(position, dashEndPoint, travel);
             }
         }
-        return position;
     }
-    
-    IEnumerator DashTime()
+    IEnumerator StandingDogeTime(float time)
     {
-        yield return new WaitForSeconds(0.17f);
+        yield return new WaitForSeconds(time);
         rb.useGravity = true;
         isDashing = false;
+        canMove = true;
     }
     IEnumerator DashCoolDown(float time)
     {

@@ -60,7 +60,7 @@ public class Movement : MonoBehaviour
         Idle();
         fallComp.Falling();
         if(dash.isDashing)
-            transform.position = dash.Dashing(isFalling, transform.position);
+            dash.Dashing(isFalling, transform.position);
         WallSlide();
         turnclass.IUpdate(this.transform);
         isFalling = fallComp.Grounded();
@@ -69,6 +69,8 @@ public class Movement : MonoBehaviour
             MoveLeft();
         if (Input.GetKey(KeyCode.D))
             MoveRight();
+
+        Debug.Log(dash.isDashing);
 
         lastPos = this.transform.position;
     }
@@ -327,7 +329,7 @@ public class Movement : MonoBehaviour
 
     void MoveRight()
     {
-        if (!this.canMove)
+        if (!this.canMove || !dash.canMove)
             return;
 
         RaycastHit hit;
@@ -400,7 +402,7 @@ public class Movement : MonoBehaviour
     }
     void MoveLeft()
     {
-        if (!this.canMove)
+        if (!this.canMove || !dash.canMove)
             return;
 
         RaycastHit hit;
