@@ -10495,12 +10495,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96437fbf88bb03a4e80d6fbe2b7f013d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDashes: 100
-  dashCoolDown: 0.5
+  maxDashes: 2
+  dashCoolDown: 1
   dogeTime: 0.5
-  dashLength: 2
-  standingDogeTime: 0
-  dashSpeed: 2
+  dashLength: 3
+  standingDogeTime: 0.5
+  dashSpeed: 2.5
   isDashing: 0
   canDash: 0
   canMove: 1
@@ -10559,15 +10559,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   islookingToTheRight: 0
-  movementSpeed: 5
-  inAirSpeed: 10
+  movementSpeed: 10
+  inAirSpeed: 8
   isFalling: 0
-  jumpVelocity: 12
+  jumpVelocity: 14
   jumps: 0
-  fallSpeed: 2
-  maxFallVelocity: 0
+  fallSpeed: 1
+  maxFallVelocity: 5
   maxJumps: 3
-  animator: {fileID: 0}
 --- !u!114 &114580614076684540
 MonoBehaviour:
   m_ObjectHideFlags: 1
