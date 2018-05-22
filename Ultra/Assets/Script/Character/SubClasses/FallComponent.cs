@@ -77,6 +77,7 @@ public class FallComponent
         else if (rb.velocity.y < 0)
         {
             isFalling = true;
+            eventDelegate(EventState.Falling);
             if (rb.velocity.y > maxFallVelocity)
                 rb.velocity = new Vector3(rb.velocity.x, maxFallVelocity, 0);
 

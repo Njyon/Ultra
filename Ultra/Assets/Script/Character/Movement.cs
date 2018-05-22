@@ -58,7 +58,9 @@ public class Movement : MonoBehaviour
     {
         if (myCharacter == null && dash != null && turnclass != null)
             return;
-        
+
+        if (checkForLanding)
+            isFalling = fallComp.Grounded();
         Idle();
         fallComp.Falling();
         if(dash.isDashing)
@@ -66,9 +68,10 @@ public class Movement : MonoBehaviour
         WallSlide();
         turnclass.IUpdate(this.transform);
 
-        if(checkForLanding)
-            isFalling = fallComp.Grounded();
 
+    }
+    private void FixedUpdate()
+    {
         lastPos = this.transform.position;
     }
 
@@ -309,7 +312,10 @@ public class Movement : MonoBehaviour
         if (lastPos == this.transform.position)
         {
             if (!isIdling)
+            {
                 isIdling = true;
+                eventDelegate(EventState.Idle);
+            }
         }
         else
         {
@@ -488,8 +494,6 @@ public class Movement : MonoBehaviour
     {
         if (myCharacter.isDisabled)
             return;
-        checkForLanding = false;
-        Invoke("CheckForLandingDelay", 0.2f);
 
         if (this.isOnWallLeft && this.isFalling)
         {
@@ -536,6 +540,8 @@ public class Movement : MonoBehaviour
             }
             else
             {
+                checkForLanding = false;
+                Invoke("CheckForLandingDelay", 0.1f);
                 eventDelegate(EventState.Jump);
             }
         }

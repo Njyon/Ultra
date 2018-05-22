@@ -262,6 +262,7 @@ public class MyCharacter : MonoBehaviour
                 break;
             case EventState.JumpAir:
                 animator.SetInteger(animState, (int)EventState.JumpAir);    // Set Animation
+                Invoke("JumpAirFix", 0.1f);
                 Instantiate(ps_JumpOnGround, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0), Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y - 90, this.transform.rotation.z));  // Spawn Particle
                 break;
             case EventState.JumpOnWall:
@@ -704,5 +705,10 @@ public class MyCharacter : MonoBehaviour
     {
         if (SpecialUpAction != null)
             SpecialUpAction();
+    }
+
+    void JumpAirFix()
+    {
+        animator.SetInteger(animState, (int)EventState.Falling);    // Set Animation
     }
 }
