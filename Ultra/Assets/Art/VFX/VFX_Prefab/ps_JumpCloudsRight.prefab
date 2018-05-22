@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 4923443668640728}
   - component: {fileID: 198861300813770240}
   - component: {fileID: 199252101023601162}
+  - component: {fileID: 114999977207240810}
   m_Layer: 0
   m_Name: ps_JumpCloudsRight
   m_TagString: Untagged
@@ -72,6 +73,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &114999977207240810
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1377725971517810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4885e00a0bab9334685c623dcdb02157, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyTimer: 2
 --- !u!198 &198720348211222202
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -320,7 +333,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.7
+      scalar: 3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4908,7 +4921,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.7
+      scalar: 3
       minScalar: 1
       maxCurve:
         serializedVersion: 2

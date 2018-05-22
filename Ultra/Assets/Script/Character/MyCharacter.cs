@@ -13,9 +13,6 @@ public class MyCharacter : MonoBehaviour
     public float startForce;
     public float startForceUp;
 
-    [Header("JumpParticle")]
-    public GameObject p_JumpOnGround;
-
     [HideInInspector] public PlayerEnum playerEnum = PlayerEnum.NotAssigned;
     [HideInInspector] public bool canGetDamaged = true;
     [HideInInspector] public bool isDisabled = false;
@@ -24,6 +21,10 @@ public class MyCharacter : MonoBehaviour
     [HideInInspector] public MyCharacter enemyCharacter;
     public float disabledTime;
 
+    [Header("Animator")]
+    public Animator animator;
+    int animState;
+
     Rigidbody rb;
     Movement movement;
 
@@ -31,6 +32,24 @@ public class MyCharacter : MonoBehaviour
 
     float dmgMultiplier = 1.5f;
     float percent = 0;
+
+    //////////// Particles ////////////
+
+    [Header("JumpParticle")]
+    public GameObject ps_JumpOnGround;
+    public GameObject ps_JumpInAir;
+    public GameObject ps_Landing;
+
+    [Header("Dash")]
+    public GameObject ps_DashCloudLeft;
+    public GameObject ps_DashCloudRight;
+
+    [Header("Teleport")]
+    public GameObject ps_Teleport;
+
+    [Header("GetDamage")]
+    public GameObject ps_GetDamaged;
+    public ParticleSystem ps_Disabled;
 
     //////////// Collision ///////////
 
@@ -47,8 +66,8 @@ public class MyCharacter : MonoBehaviour
 
     //////////// Deleagtes ///////////
 
-    public delegate void EventDelegate(EventState eventState);
-    public EventDelegate eventDelegate;
+    protected delegate void EventDelegate(EventState eventState);
+    protected EventDelegate eventDelegate;
 
     #region X Attack 
     public delegate void XHitNormal();
@@ -85,6 +104,8 @@ public class MyCharacter : MonoBehaviour
 
     public void Posses()
     {
+        ps_Disabled.Stop();
+
         movement = gameObject.GetComponent<Movement>();
         movement.AssigneInput();
         rb = GetComponent<Rigidbody>();
@@ -103,6 +124,10 @@ public class MyCharacter : MonoBehaviour
                 InputManager.P1_SpecalLeftAction += SpecailAttackLeft;
                 InputManager.P1_SpecalBottomAction += SpecialAttackDown;
                 InputManager.P1_SpecalTopAction += SpecialAttackUp;
+
+                movement.eventDelegate += EventCheck;
+                eventDelegate += EventCheck;
+
                 break;
             case PlayerEnum.PlayerTwo:
                 InputManager.p2_OnKeyPressed += P2_InputDownCheck;
@@ -115,11 +140,22 @@ public class MyCharacter : MonoBehaviour
                 InputManager.P2_SpecalLeftAction += SpecailAttackLeft;
                 InputManager.P2_SpecalBottomAction += SpecialAttackDown;
                 InputManager.P2_SpecalTopAction += SpecialAttackUp;
+
+                movement.eventDelegate += EventCheck;
+                eventDelegate += EventCheck;
                 break;
             case PlayerEnum.NotAssigned:
             default:
                 Debug.Log("Coult not Assign Input");
                 break;
+        }
+        if (animator == null)
+        {
+            Debug.Log("No Animator Attached on " + gameObject.name);
+        }
+        else
+        {
+            animState = Animator.StringToHash("State");
         }
     }
     private void OnDisable()
@@ -201,28 +237,127 @@ public class MyCharacter : MonoBehaviour
     }
     #endregion
 
-    #region Animation Check
     void EventCheck(EventState eventState)
     {
         switch (eventState)
         {
-            case EventState.InAir:
+            case EventState.Respawn:
+                animator.SetInteger(animState, (int)EventState.Respawn);    // Set Animation
+                break;
+            case EventState.Idle:
+                animator.SetInteger(animState, (int)EventState.Idle);    // Set Animation
+                break;
+            case EventState.Move:
+                animator.SetInteger(animState, (int)EventState.Move);    // Set Animation
+                break;
+            case EventState.Turn:
+                animator.SetInteger(animState, (int)EventState.Turn);    // Set Animation
+                break;
+            case EventState.OnWall:
+                animator.SetInteger(animState, (int)EventState.OnWall);    // Set Animation
+                break;
+            case EventState.Jump:
+                animator.SetInteger(animState, (int)EventState.Jump);    // Set Animation
+                Instantiate(ps_JumpOnGround, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0),  Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y - 90, this.transform.rotation.z));  // Spawn Particle
+                break;
+            case EventState.JumpAir:
+                animator.SetInteger(animState, (int)EventState.JumpAir);    // Set Animation
+                Instantiate(ps_JumpOnGround, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0), Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y - 90, this.transform.rotation.z));  // Spawn Particle
+                break;
+            case EventState.JumpOnWall:
+                animator.SetInteger(animState, (int)EventState.JumpOnWall);    // Set Animation
+                break;
+            case EventState.Falling:
+                animator.SetInteger(animState, (int)EventState.Falling);    // Set Animation
+                break;
+            case EventState.Landing:
+                animator.SetInteger(animState, (int)EventState.Landing);    // Set Animation
+                Instantiate(ps_Landing, new Vector3(this.transform.position.x, this.transform.position.y - 0.7f, 0), Quaternion.Euler(this.transform.rotation.x + 90, this.transform.rotation.y, this.transform.rotation.z));  // Spawn Particle
+                break;
+            case EventState.GetDamaged:
+                animator.SetInteger(animState, (int)EventState.GetDamaged);    // Set Animation
+                Instantiate(ps_GetDamaged, new Vector3(this.transform.position.x, this.transform.position.y, 0), Quaternion.Euler(
+                        this.transform.position.x - enemy.transform.position.x,
+                        this.transform.position.y - enemy.transform.position.y,
+                        0));  // Spawn Particle
+                break;
+            case EventState.Disable:
+                animator.SetInteger(animState, (int)EventState.Disable);    // Set Animation
+                ps_Disabled.Play();     // Activate Particle Effect
+                break;
+            case EventState.Dodge:
+                animator.SetInteger(animState, (int)EventState.Dodge);    // Set Animation
+                break;
+            case EventState.Dash:
+                animator.SetInteger(animState, (int)EventState.Dash);    // Set Animation
+                if(IsLookingRight())
+                {
+                    Instantiate(ps_DashCloudRight, new Vector3(this.transform.position.x - 0.5f, this.transform.position.y - 0.5f, 0), this.transform.rotation);  // Spawn Particle
+                }
+                else
+                {
+                    Instantiate(ps_DashCloudLeft, new Vector3(this.transform.position.x - 0.5f, this.transform.position.y - 0.5f, 0), this.transform.rotation);  // Spawn Particle
+                }
+                break;
+            case EventState.Teleport:
+                animator.SetInteger(animState, (int)EventState.Teleport);    // Set Animation
+                Instantiate(ps_Teleport,new Vector3(this.transform.position.x, this.transform.position.y, 0), this.transform.rotation);  // Spawn Particle
+                break;
+            case EventState.LightHit:
+                animator.SetInteger(animState, (int)EventState.LightHit);    // Set Animation
+                break;
+            case EventState.LightHitSide:
+                animator.SetInteger(animState, (int)EventState.LightHitSide);    // Set Animation
+                break;
+            case EventState.LightHitDown:
+                animator.SetInteger(animState, (int)EventState.LightHitDown);    // Set Animation
+                break;
+            case EventState.LightHitAir:
+                animator.SetInteger(animState, (int)EventState.LightHitAir);    // Set Animation
+                break;
+            case EventState.LightHitAirSide:
+                animator.SetInteger(animState, (int)EventState.LightHitAirSide);    // Set Animation
+                break;
+            case EventState.LightHitAirDown:
+                animator.SetInteger(animState, (int)EventState.LightHitAirDown);    // Set Animation
+                break;
+            case EventState.Charge:
+                animator.SetInteger(animState, (int)EventState.Charge);    // Set Animation
+                break;
+            case EventState.ChargeSide:
+                animator.SetInteger(animState, (int)EventState.ChargeSide);    // Set Animation
+                break;
+            case EventState.ChargeDown:
+                animator.SetInteger(animState, (int)EventState.ChargeDown);    // Set Animation
+                break;
+            case EventState.SpecialUperCut:
+                animator.SetInteger(animState, (int)EventState.SpecialUperCut);    // Set Animation
+                break;
+            case EventState.Special:
+                animator.SetInteger(animState, (int)EventState.Special);    // Set Animation
+                break;
+            case EventState.SpecialSideFirstHit:
+                animator.SetInteger(animState, (int)EventState.SpecialSideFirstHit);    // Set Animation
+                break;
+            case EventState.SpecialSide:
+                animator.SetInteger(animState, (int)EventState.SpecialSide);    // Set Animation
+                break;
+            case EventState.SpecialDown:
+                animator.SetInteger(animState, (int)EventState.SpecialDown);    // Set Animation
+                break;
+            case EventState.SpecialAir:
+                animator.SetInteger(animState, (int)EventState.SpecialAir);    // Set Animation
+                break;
+            case EventState.SpecialAirDown:
+                animator.SetInteger(animState, (int)EventState.SpecialAirDown);    // Set Animation
+                break;
+            default:
+                Debug.Log("Coundnt Find State! Character: " + gameObject.name);
+                break;
 
-                break;
-            case EventState.OnGround:
-                Instantiate(p_JumpOnGround, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0), this.transform.rotation);
-                break;
-            case EventState.OnWallLeft:
-
-                break;
-            case EventState.OnWallRight:
-
-                break;
         }
     }
-
-    #endregion
-
+    
     void Awake()
     {
 

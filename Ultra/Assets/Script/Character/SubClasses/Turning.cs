@@ -7,7 +7,11 @@ public class Turning
     bool islookingToTheRight = false;
     bool isTurningRight = false;
     bool isTurningLeft = false;
-    
+
+    //Delegate
+    public delegate void EventDelegate(EventState eventState);
+    public EventDelegate eventDelegate;
+
     /// <summary>
     /// Update the class
     /// </summary>

@@ -699,7 +699,9 @@ public class Nav : MyCharacter
                         }
                     }
                 }
+                eventDelegate(EventState.Teleport);
                 this.transform.position = TeleportDestination;
+                eventDelegate(EventState.Teleport);
             }
 
             if(xNormalHitBox && !abilities[8].hitObject)

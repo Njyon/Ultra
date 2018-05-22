@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 4565560616718912}
   - component: {fileID: 198748189776220658}
   - component: {fileID: 199145998946348170}
+  - component: {fileID: 114747054676009920}
   m_Layer: 0
   m_Name: ps_LightPunch_Impact_Shockwave
   m_TagString: Untagged
@@ -72,6 +73,18 @@ Transform:
   m_Father: {fileID: 4565560616718912}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &114747054676009920
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1926702151632390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4885e00a0bab9334685c623dcdb02157, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyTimer: 2
 --- !u!198 &198748189776220658
 ParticleSystem:
   m_ObjectHideFlags: 1

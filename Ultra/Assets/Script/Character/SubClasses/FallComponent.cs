@@ -21,6 +21,10 @@ public class FallComponent
     Dash dash;
     MyCharacter myCharacter;
 
+    //Delegate
+    public delegate void EventDelegate(EventState eventState);
+    public EventDelegate eventDelegate;
+
     public FallComponent(bool forceDownEnabled, bool forcingDown, bool isOnWallLeft, bool isOnWallRight, bool isFalling, bool islookingToTheRight, float fallSpeed, float wallDetectionLength, float maxFallVelocity, Transform transform, Rigidbody rb, Movement mov, Dash dash, MyCharacter myCharacter)
     {
         this.forceDownEnabled = forceDownEnabled;
@@ -87,32 +91,35 @@ public class FallComponent
     } // Change Gravity for Jump Balancing!  Edit -> Project Setting -> Physics -> Gravity Y
     public bool Grounded()
     {
-        RaycastHit hit;
-
-        if (Physics.Raycast(transform.position, new Vector3(0, -transform.position.y, 0), out hit, 1, 9, QueryTriggerInteraction.Ignore))
+        if (!dash.isDashing)
         {
-            Debug.DrawLine(transform.position, hit.point, Color.red, 5);
-            this.isOnWallLeft = false;
-            this.isOnWallRight = false;
-            dash.canDash = true;
+            RaycastHit hit;
 
-            if (mov.jumps > 0)
-                mov.ResetJumps();
-            if (dash.currentDashes > 0)
-                dash.currentDashes = 0;
-            if (myCharacter.isDisabled)
-                myCharacter.isDisabled = false;
+            if (Physics.Raycast(transform.position, new Vector3(0, -transform.position.y, 0), out hit, 1, 9, QueryTriggerInteraction.Ignore))
+            {
+                if (isFalling)
+                    eventDelegate(EventState.Landing);
 
+                this.isOnWallLeft = false;
+                this.isOnWallRight = false;
+                dash.canDash = true;
 
-            return this.isFalling = false;
+                if (mov.jumps > 0)
+                    mov.ResetJumps();
+                if (dash.currentDashes > 0)
+                    dash.currentDashes = 0;
+                if (myCharacter.isDisabled)
+                    myCharacter.isDisabled = false;
+                
+                return this.isFalling = false;
+            }
+            else
+            {
+                return isFalling = true;
+            }
         }
-        else
-        {
-            return isFalling = true;
-        }
-
+        return true;
     }
-
     void FallingWallDetection()
     {
         if (myCharacter.isDisabled)

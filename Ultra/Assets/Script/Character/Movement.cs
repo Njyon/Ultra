@@ -15,6 +15,7 @@ public class Movement : MonoBehaviour
     bool forceDownEnabled = true;
     bool isStunned = false;
     bool isIdling = true;
+    bool checkForLanding = true;
     Vector3 lastPos;
     MyCharacter myCharacter;
     Rigidbody rb;
@@ -40,6 +41,10 @@ public class Movement : MonoBehaviour
     bool isOnWallRight = false;
     bool isOnWallLeft = false;
 
+    //Delegates
+    public delegate void EventDelegate(EventState eventState);
+    public EventDelegate eventDelegate;
+
     void Awake()
     {
         rb = this.gameObject.GetComponent<Rigidbody>();
@@ -60,14 +65,9 @@ public class Movement : MonoBehaviour
             dash.Dashing(isFalling, transform.position);
         WallSlide();
         turnclass.IUpdate(this.transform);
-        isFalling = fallComp.Grounded();
 
-        if (Input.GetKey(KeyCode.A))
-            MoveLeft();
-        if (Input.GetKey(KeyCode.D))
-            MoveRight();
-
-        Debug.Log(dash.isDashing);
+        if(checkForLanding)
+            isFalling = fallComp.Grounded();
 
         lastPos = this.transform.position;
     }
@@ -101,6 +101,10 @@ public class Movement : MonoBehaviour
                 InputManager.P1_LeftStickDownAction += ForceDown;
                 InputManager.P1_LeftStickUpAction += LookUp;
 
+                turnclass.eventDelegate += EventCheck;
+                dash.eventDelegate += EventCheck;
+                fallComp.eventDelegate += EventCheck;
+
                 InputManager.p1_OnKeyPressed += (KeyCode keyCode) =>
                 {
                     if(keyCode == KeyCode.Joystick1Button0 && canMove)
@@ -118,6 +122,10 @@ public class Movement : MonoBehaviour
                 InputManager.P2_LeftStickZeroAction += FallStraight;
                 InputManager.P2_LeftStickDownAction += ForceDown;
                 InputManager.P2_LeftStickUpAction += LookUp;
+
+                turnclass.eventDelegate += EventCheck;
+                dash.eventDelegate += EventCheck;
+                fallComp.eventDelegate += EventCheck;
 
                 InputManager.p2_OnKeyPressed += (KeyCode keyCode) =>
                 {
@@ -247,7 +255,11 @@ public class Movement : MonoBehaviour
     }
 
     //      Private     //
-   
+    void EventCheck(EventState eventState)
+    {
+        eventDelegate(eventState);
+    }
+
     void WallSlide()
     {
         if (myCharacter.isDisabled)
@@ -330,6 +342,7 @@ public class Movement : MonoBehaviour
             return;
 
         RaycastHit hit;
+        islookingToTheRight = true;
         fallComp.fallStraight = false;
         forcingDown = false;
 
@@ -405,6 +418,7 @@ public class Movement : MonoBehaviour
         RaycastHit hit;
         fallComp.fallStraight = false;
         forcingDown = false;
+        islookingToTheRight = false;
 
         turnclass.LookLeft(this.transform.rotation);
         if (this.gameObject.transform.localPosition.x < 0)          //NEGATIVE
@@ -474,6 +488,8 @@ public class Movement : MonoBehaviour
     {
         if (myCharacter.isDisabled)
             return;
+        checkForLanding = false;
+        Invoke("CheckForLandingDelay", 0.2f);
 
         if (this.isOnWallLeft && this.isFalling)
         {
@@ -490,6 +506,7 @@ public class Movement : MonoBehaviour
             turnclass.LookRight(this.transform.rotation);
             StartCoroutine(JumpCoolDown());
             StartCoroutine(ForceDownDelay());
+            eventDelegate(EventState.JumpOnWall);
         }
         else if (this.isOnWallRight && this.isFalling)
         {
@@ -506,14 +523,28 @@ public class Movement : MonoBehaviour
             turnclass.LookLeft(this.transform.rotation);
             StartCoroutine(JumpCoolDown());
             StartCoroutine(ForceDownDelay());
+            eventDelegate(EventState.JumpOnWall);
         }
         else if (jumps < maxJumps)
         {
             this.rb.velocity = new Vector3(rb.velocity.x, jumpVelocity, 0);
             jumps++;
             StartCoroutine(ForceDownDelay());
+            if(isFalling)
+            {
+                eventDelegate(EventState.JumpAir);
+            }
+            else
+            {
+                eventDelegate(EventState.Jump);
+            }
         }
         this.isFalling = true;
+    }
+
+    void CheckForLandingDelay()
+    {
+        checkForLanding = true;
     }
 
     IEnumerator JumpCoolDown()

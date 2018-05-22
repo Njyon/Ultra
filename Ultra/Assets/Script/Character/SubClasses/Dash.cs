@@ -26,6 +26,10 @@ public class Dash : MonoBehaviour
     float wallDetectionLength = 0.6f;
     Vector3 dashEndPoint;
 
+    //Delegate
+    public delegate void EventDelegate(EventState eventState);
+    public EventDelegate eventDelegate;
+
     public void DashCheck()
     {
         if (myCharacter.isDisabled)
@@ -166,17 +170,17 @@ public class Dash : MonoBehaviour
                     {
                         StartCoroutine(DogeTime(dashCoolDown));
                         StartCoroutine(DashCoolDown(dashCoolDown));
+                        eventDelegate(EventState.Dodge);
                     }
                     else
                     {
                         currentDashes = 0;
                         StartCoroutine(DashCoolDown(dogeTime));
+                        eventDelegate(EventState.Dash);
                     }
                 }
                 if (MyEpsilon.Epsilon(position.x, dashEndPoint.x, 0.5f))
                 {
-                    Debug.Log("ENd");
-
                     rb.useGravity = true;
                     isDashing = false;
                     travel = 0;
@@ -190,6 +194,7 @@ public class Dash : MonoBehaviour
             }
         }
     }
+
     IEnumerator StandingDogeTime(float time)
     {
         yield return new WaitForSeconds(time);
