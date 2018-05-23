@@ -87,6 +87,7 @@ public class Dash : MonoBehaviour
             StartCoroutine(DashCoolDown(dashCoolDown));
             StartCoroutine(StandingDogeTime(standingDogeTime));
             StartCoroutine(DogeTime(dogeTime));
+            eventDelegate(EventState.Dodge);
         }
     }
     public void DirectionDash(bool directionRight)

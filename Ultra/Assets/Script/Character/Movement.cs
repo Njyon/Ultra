@@ -56,22 +56,40 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        if (myCharacter == null && dash != null && turnclass != null)
+        if (myCharacter == null && dash == null && turnclass == null && fallComp == null)
             return;
 
-        if (checkForLanding)
-            isFalling = fallComp.Grounded();
-        Idle();
         fallComp.Falling();
         if(dash.isDashing)
             dash.Dashing(isFalling, transform.position);
         WallSlide();
         turnclass.IUpdate(this.transform);
 
+    }
+    private void LateUpdate()
+    {
+        if (myCharacter == null && dash == null && turnclass == null && fallComp == null)
+            return;
+
+
+        if (checkForLanding)
+            isFalling = fallComp.Grounded();
 
     }
     private void FixedUpdate()
     {
+        if (myCharacter == null && dash == null && turnclass == null && fallComp == null)
+            return;
+
+        if (!myCharacter.isDisabled)
+        {
+            Idle();
+        }
+        else
+        {
+            isIdling = false;
+        }
+        Debug.Log(myCharacter.isDisabled);
         lastPos = this.transform.position;
     }
 
@@ -285,7 +303,8 @@ public class Movement : MonoBehaviour
                     this.isOnWallRight = false;
                 }
             }
-            //currentDashes = 0;
+            dash.currentDashes = 0;
+            eventDelegate(EventState.OnWall);
         }
         else if (this.isOnWallLeft)
         {
@@ -304,7 +323,8 @@ public class Movement : MonoBehaviour
                     this.isOnWallLeft = false;
                 }
             }
-            //currentDashes = 0;
+            dash.currentDashes = 0;
+            eventDelegate(EventState.OnWall);
         }
     }
     void Idle()
@@ -315,6 +335,7 @@ public class Movement : MonoBehaviour
             {
                 isIdling = true;
                 eventDelegate(EventState.Idle);
+                Debug.Log("JZ");
             }
         }
         else
@@ -351,7 +372,7 @@ public class Movement : MonoBehaviour
         islookingToTheRight = true;
         fallComp.fallStraight = false;
         forcingDown = false;
-
+        
         turnclass.LookRight(this.transform.rotation);
         if (this.gameObject.transform.localPosition.x < 0)              //NEGATIVE
         {
@@ -381,6 +402,7 @@ public class Movement : MonoBehaviour
                 else
                 {
                     this.gameObject.transform.position += Vector3.right * this.movementSpeed * Time.deltaTime;
+                    eventDelegate(EventState.Move);
                 }
             }
         }
@@ -412,6 +434,7 @@ public class Movement : MonoBehaviour
                 else
                 {
                     this.gameObject.transform.position += Vector3.right * this.movementSpeed * Time.deltaTime;
+                    eventDelegate(EventState.Move);
                 }
             }
         }
@@ -455,6 +478,7 @@ public class Movement : MonoBehaviour
                 else
                 {
                     this.gameObject.transform.position += Vector3.left * movementSpeed * Time.deltaTime;
+                    eventDelegate(EventState.Move);
                 }
             }
         }
@@ -486,6 +510,7 @@ public class Movement : MonoBehaviour
                 else
                 {
                     this.gameObject.transform.position += Vector3.left * movementSpeed * Time.deltaTime;
+                    eventDelegate(EventState.Move);
                 }
             }
         }
@@ -510,6 +535,7 @@ public class Movement : MonoBehaviour
             turnclass.LookRight(this.transform.rotation);
             StartCoroutine(JumpCoolDown());
             StartCoroutine(ForceDownDelay());
+            isOnWallLeft = false;
             eventDelegate(EventState.JumpOnWall);
         }
         else if (this.isOnWallRight && this.isFalling)
@@ -527,6 +553,7 @@ public class Movement : MonoBehaviour
             turnclass.LookLeft(this.transform.rotation);
             StartCoroutine(JumpCoolDown());
             StartCoroutine(ForceDownDelay());
+            isOnWallRight = false;
             eventDelegate(EventState.JumpOnWall);
         }
         else if (jumps < maxJumps)

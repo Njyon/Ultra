@@ -237,6 +237,11 @@ public class MyCharacter : MonoBehaviour
     }
     #endregion
 
+    void Falling()
+    {
+        animator.SetInteger(animState, (int)EventState.Falling);    // Set Animation
+    }
+
     void EventCheck(EventState eventState)
     {
         switch (eventState)
@@ -258,11 +263,14 @@ public class MyCharacter : MonoBehaviour
                 break;
             case EventState.Jump:
                 animator.SetInteger(animState, (int)EventState.Jump);    // Set Animation
+                CancelInvoke();
+                Invoke("Falling", 0.3f);
                 Instantiate(ps_JumpOnGround, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0),  Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y - 90, this.transform.rotation.z));  // Spawn Particle
                 break;
             case EventState.JumpAir:
                 animator.SetInteger(animState, (int)EventState.JumpAir);    // Set Animation
-                Invoke("JumpAirFix", 0.1f);
+                CancelInvoke();
+                Invoke("Falling", 0.3f);
                 Instantiate(ps_JumpOnGround, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0), Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y - 90, this.transform.rotation.z));  // Spawn Particle
                 break;
             case EventState.JumpOnWall:
@@ -305,6 +313,7 @@ public class MyCharacter : MonoBehaviour
                 Instantiate(ps_Teleport,new Vector3(this.transform.position.x, this.transform.position.y, 0), this.transform.rotation);  // Spawn Particle
                 break;
             case EventState.LightHit:
+                Debug.Log("MAN");
                 animator.SetInteger(animState, (int)EventState.LightHit);    // Set Animation
                 break;
             case EventState.LightHitSide:
@@ -705,10 +714,5 @@ public class MyCharacter : MonoBehaviour
     {
         if (SpecialUpAction != null)
             SpecialUpAction();
-    }
-
-    void JumpAirFix()
-    {
-        animator.SetInteger(animState, (int)EventState.Falling);    // Set Animation
     }
 }

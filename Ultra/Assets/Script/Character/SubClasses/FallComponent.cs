@@ -92,13 +92,13 @@ public class FallComponent
     } // Change Gravity for Jump Balancing!  Edit -> Project Setting -> Physics -> Gravity Y
     public bool Grounded()
     {
-        if (!dash.isDashing)
+        if (!dash.isDashing && !myCharacter.isDisabled)
         {
             RaycastHit hit;
 
             if (Physics.Raycast(transform.position, new Vector3(0, -transform.position.y, 0), out hit, 1, 9, QueryTriggerInteraction.Ignore))
             {
-                if (isFalling)
+                if (isFalling && rb.velocity.y <= 0)
                     eventDelegate(EventState.Landing);
 
                 this.isOnWallLeft = false;
@@ -109,8 +109,8 @@ public class FallComponent
                     mov.ResetJumps();
                 if (dash.currentDashes > 0)
                     dash.currentDashes = 0;
-                if (myCharacter.isDisabled)
-                    myCharacter.isDisabled = false;
+
+                myCharacter.isDisabled = false;
                 
                 return this.isFalling = false;
             }

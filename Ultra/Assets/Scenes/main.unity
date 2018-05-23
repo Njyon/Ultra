@@ -156,7 +156,7 @@ Prefab:
         type: 2}
       propertyPath: animator
       value: 
-      objectReference: {fileID: 1243889985}
+      objectReference: {fileID: 0}
     - target: {fileID: 1539067981596278, guid: caf6f3f19c80d4c46913c87baac21770, type: 2}
       propertyPath: m_Name
       value: p2_pref_Keeram
@@ -595,11 +595,6 @@ Transform:
 --- !u!1 &1243889984 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1392969457632022, guid: dfa3a8f76437c454facd0ada62b5d513,
-    type: 2}
-  m_PrefabInternal: {fileID: 1243889982}
---- !u!95 &1243889985 stripped
-Animator:
-  m_PrefabParentObject: {fileID: 95680646976290290, guid: dfa3a8f76437c454facd0ada62b5d513,
     type: 2}
   m_PrefabInternal: {fileID: 1243889982}
 --- !u!1 &1437000465 stripped
