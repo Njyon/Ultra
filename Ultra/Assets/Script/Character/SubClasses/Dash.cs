@@ -87,7 +87,9 @@ public class Dash : MonoBehaviour
             StartCoroutine(DashCoolDown(dashCoolDown));
             StartCoroutine(StandingDogeTime(standingDogeTime));
             StartCoroutine(DogeTime(dogeTime));
-            eventDelegate(EventState.Dodge);
+
+            if (eventDelegate != null)
+                eventDelegate(EventState.Dodge);
         }
     }
     public void DirectionDash(bool directionRight)
@@ -171,13 +173,17 @@ public class Dash : MonoBehaviour
                     {
                         StartCoroutine(DogeTime(dashCoolDown));
                         StartCoroutine(DashCoolDown(dashCoolDown));
-                        eventDelegate(EventState.Dodge);
+
+                        if (eventDelegate != null)
+                            eventDelegate(EventState.Dodge);
                     }
                     else
                     {
                         currentDashes = 0;
                         StartCoroutine(DashCoolDown(dogeTime));
-                        eventDelegate(EventState.Dash);
+
+                        if (eventDelegate != null)
+                            eventDelegate(EventState.Dash);
                     }
                 }
                 if (MyEpsilon.Epsilon(position.x, dashEndPoint.x, 0.5f))

@@ -77,7 +77,9 @@ public class FallComponent
         else if (rb.velocity.y < 0)
         {
             isFalling = true;
-            eventDelegate(EventState.Falling);
+
+            if (eventDelegate != null)
+                eventDelegate(EventState.Falling);
             if (rb.velocity.y > maxFallVelocity)
                 rb.velocity = new Vector3(rb.velocity.x, maxFallVelocity, 0);
 
@@ -99,7 +101,8 @@ public class FallComponent
             if (Physics.Raycast(transform.position, new Vector3(0, -transform.position.y, 0), out hit, 1, 9, QueryTriggerInteraction.Ignore))
             {
                 if (isFalling && rb.velocity.y <= 0)
-                    eventDelegate(EventState.Landing);
+                    if(eventDelegate != null)
+                        eventDelegate(EventState.Landing);
 
                 this.isOnWallLeft = false;
                 this.isOnWallRight = false;

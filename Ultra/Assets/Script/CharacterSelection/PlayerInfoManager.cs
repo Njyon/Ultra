@@ -14,10 +14,9 @@ public class PlayerInfoManager : MonoBehaviour
         playerID = "PlayerTwo",
         character = Characters.None
     };
-    
+
     void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
     }
-  
 }

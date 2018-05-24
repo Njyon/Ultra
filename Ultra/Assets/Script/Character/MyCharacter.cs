@@ -31,7 +31,10 @@ public class MyCharacter : MonoBehaviour
     int lifes = 3;
 
     float dmgMultiplier = 1.5f;
-    float percent = 0;
+    int percent = 0;
+
+    Vector3 spawnPos;
+    InGameUI ui;
 
     //////////// Particles ////////////
 
@@ -68,6 +71,9 @@ public class MyCharacter : MonoBehaviour
 
     protected delegate void EventDelegate(EventState eventState);
     protected EventDelegate eventDelegate;
+
+    public delegate void EndGame();
+    public static EndGame endGameAction;
 
     #region X Attack 
     public delegate void XHitNormal();
@@ -109,6 +115,7 @@ public class MyCharacter : MonoBehaviour
         movement = gameObject.GetComponent<Movement>();
         movement.AssigneInput();
         rb = GetComponent<Rigidbody>();
+        rb.useGravity = true;
 
         // Input
         switch(playerEnum)
@@ -149,16 +156,9 @@ public class MyCharacter : MonoBehaviour
                 Debug.Log("Coult not Assign Input");
                 break;
         }
-        if (animator == null)
-        {
-            Debug.Log("No Animator Attached on " + gameObject.name);
-        }
-        else
-        {
-            animState = Animator.StringToHash("State");
-        }
+        Check();
     }
-    private void OnDisable()
+    public void DePosses()
     {
         // Remove Input
         switch (playerEnum)
@@ -170,8 +170,15 @@ public class MyCharacter : MonoBehaviour
                 InputManager.P1_XButtonLeftAction -= XAttackLeft;
                 InputManager.P1_XButtonTopAction -= XAttackUp;
                 InputManager.P1_XButtonBottomAction -= XAttackDown;
+                InputManager.P1_SpecalRightAction -= SpecailAttackRight;
+                InputManager.P1_SpecalLeftAction -= SpecailAttackLeft;
+                InputManager.P1_SpecalBottomAction -= SpecialAttackDown;
+                InputManager.P1_SpecalTopAction -= SpecialAttackUp;
 
-                eventDelegate += EventCheck;
+                movement.eventDelegate -= EventCheck;
+                eventDelegate -= EventCheck;
+
+                movement.RemoveInput();
                 break;
             case PlayerEnum.PlayerTwo:
                 InputManager.p2_OnKeyPressed -= P2_InputDownCheck;
@@ -180,16 +187,43 @@ public class MyCharacter : MonoBehaviour
                 InputManager.P2_XButtonLeftAction -= XAttackLeft;
                 InputManager.P2_XButtonTopAction -= XAttackUp;
                 InputManager.P2_XButtonBottomAction -= XAttackDown;
+                InputManager.P2_SpecalRightAction -= SpecailAttackRight;
+                InputManager.P2_SpecalLeftAction -= SpecailAttackLeft;
+                InputManager.P2_SpecalBottomAction -= SpecialAttackDown;
+                InputManager.P2_SpecalTopAction -= SpecialAttackUp;
 
-                eventDelegate += EventCheck;
+                movement.eventDelegate -= EventCheck;
+                eventDelegate -= EventCheck;
+
+                movement.RemoveInput();
                 break;
             case PlayerEnum.NotAssigned:
             default:
-                Debug.Log("Coult not Remove Input");
+                Debug.Log("Coult not Assign Input");
                 break;
         }
+        Destroy(this);
     }
-
+    
+    void Check()
+    {
+        if (animator == null)
+        {
+            Debug.Log("No Animator Attached on " + gameObject.name);
+        }
+        else
+        {
+            animState = Animator.StringToHash("State");
+        }
+        if (ui == null)
+        {
+            Debug.Log("No UI Element Found");
+        }
+        else
+        {
+            UpdateUI();
+        }
+    }
     #region InputCheck
     void P1_InputDownCheck(KeyCode keyCode)
     {
@@ -370,7 +404,7 @@ public class MyCharacter : MonoBehaviour
     
     void Awake()
     {
-
+        spawnPos = transform.position;
     }
 
     void Start()
@@ -490,6 +524,7 @@ public class MyCharacter : MonoBehaviour
     public void Damage(int damage)
     {
         percent += damage;
+        UpdateUI();
     }
     /// <summary>
     /// Kick The Player away from the Vector param
@@ -654,26 +689,52 @@ public class MyCharacter : MonoBehaviour
     {
         movement.SpecialJump(jumpForce);
     }
-
-    //      Private      //
-    void Respawn()
+    /// <summary>
+    /// Respawns Player
+    /// </summary>
+    public void Respawn()
     {
-
-    }
-
-    void Dead()
-    {
-        if(lifes > 0)
+        movement.ResetValues();
+        percent = 0;
+        transform.position = spawnPos;
+        if(lifes > 1)
         {
             lifes--;
-            Respawn();
+        }
+        else if(lifes <= 1)
+        {
+            if(endGameAction != null)
+                endGameAction();
+        }
+        UpdateUI();
+    }
+    /// <summary>
+    /// Sets the UI with the param
+    /// </summary>
+    /// <param name="ui"></param>
+    public void SetUI(InGameUI ui)
+    {
+        this.ui = ui;
+    }
+
+    //      Private      //
+
+    /// <summary>
+    /// Updates all Changes to the UI
+    /// </summary>
+    void UpdateUI()
+    {
+        if (ui != null)
+        {
+            ui.ChangeProzent(percent);
+            ui.ChangeLife(lifes);
         }
     }
 
     //////////////////////////////////////////////////
     ////////////////       Attacks      //////////////
     //////////////////////////////////////////////////
-    
+
     void XAttackRight()
     {
         if (XAttackRightAction != null)

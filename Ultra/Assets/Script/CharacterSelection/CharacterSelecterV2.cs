@@ -19,6 +19,9 @@ public class CharacterSelecterV2 : MonoBehaviour
     public GameObject p1Nav;
     public GameObject p2Nav;
 
+    [Header("PlayerInfoManager")]
+    [SerializeField] private GameObject playerInfoManagerObj;
+
     //Player Slots
     MenuSelecter playerOne = new MenuSelecter();
     MenuSelecter playerTwo = new MenuSelecter();
@@ -51,7 +54,7 @@ public class CharacterSelecterV2 : MonoBehaviour
     /// <summary>
     /// UnSubscribe from Delegate
     /// </summary>
-    void OnDisable()
+    void RemoveInput()
     {
         InputManager.p1_OnKeyPressed -= P1_InputDownCheck;
         InputManager.p2_OnKeyPressed -= P2_InputDownCheck;
@@ -71,6 +74,7 @@ public class CharacterSelecterV2 : MonoBehaviour
         playerTwo.SwitchDownAction -= P2SwitchDown;
     }
     #endregion
+
     #region Check Input
     void P1_InputDownCheck(KeyCode keyCode)
     {
@@ -122,6 +126,7 @@ public class CharacterSelecterV2 : MonoBehaviour
             playerInfoManager.playerOne.character = playerOne.characterEnum;
             playerInfoManager.playerTwo.character = playerTwo.characterEnum;
 
+            RemoveInput();
             StartGame();
             
         }
@@ -129,7 +134,17 @@ public class CharacterSelecterV2 : MonoBehaviour
 
     void Awake()
     {
-
+        if(playerInfoManagerObj == null)
+        {
+            Debug.Log("Missing PlayerInfoManager Prefab " + gameObject.name);
+        }
+        else
+        {
+            if(GameObject.Find("PlayerInfoManager(Clone)") == null)
+            {
+                Instantiate(playerInfoManagerObj, Vector3.zero, Quaternion.identity);
+            }
+        }
     #region Set befor Play
         playerOne.characters = new GameObject[amountOfPlayableCharacters];
         playerTwo.characters = new GameObject[amountOfPlayableCharacters];
@@ -163,8 +178,7 @@ public class CharacterSelecterV2 : MonoBehaviour
 #endregion
         
     #region Getter Stuff
-        GameObject PlayerInfoManagerObj = GameObject.Find("PlayerInfoManager");
-        playerInfoManager = PlayerInfoManagerObj.GetComponent<PlayerInfoManager>();
+        playerInfoManager = playerInfoManagerObj.GetComponent<PlayerInfoManager>();
 
         playerOne.characterPosition = playerOne.characters[playerOne.slotIndex].transform.position;
         playerTwo.characterPosition = playerTwo.characters[playerTwo.slotIndex].transform.position;
@@ -188,7 +202,6 @@ public class CharacterSelecterV2 : MonoBehaviour
     {
         StartCoroutine(LoadNewScene());
     }
-
     IEnumerator LoadNewScene()
     {
         yield return new WaitForSeconds(0.1f);

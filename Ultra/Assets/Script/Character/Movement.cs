@@ -89,7 +89,6 @@ public class Movement : MonoBehaviour
         {
             isIdling = false;
         }
-        Debug.Log(myCharacter.isDisabled);
         lastPos = this.transform.position;
     }
 
@@ -126,13 +125,8 @@ public class Movement : MonoBehaviour
                 dash.eventDelegate += EventCheck;
                 fallComp.eventDelegate += EventCheck;
 
-                InputManager.p1_OnKeyPressed += (KeyCode keyCode) =>
-                {
-                    if(keyCode == KeyCode.Joystick1Button0 && canMove)
-                    {
-                        Jump();
-                    }
-                };
+
+                InputManager.p1_OnKeyPressed += P1_CheckInputDown;
 
                 break;
             case PlayerEnum.PlayerTwo:
@@ -148,13 +142,7 @@ public class Movement : MonoBehaviour
                 dash.eventDelegate += EventCheck;
                 fallComp.eventDelegate += EventCheck;
 
-                InputManager.p2_OnKeyPressed += (KeyCode keyCode) =>
-                {
-                    if (keyCode == KeyCode.Joystick2Button0 && canMove)
-                    {
-                        Jump();
-                    }
-                };
+                InputManager.p2_OnKeyPressed += P2_CheckInputDown;
 
                 break;
             case PlayerEnum.NotAssigned:
@@ -163,19 +151,68 @@ public class Movement : MonoBehaviour
                 break;
         }
     }
-    void RemoveInput()
+    public void RemoveInput()
     {
         switch (playerEnum)
         {
             case PlayerEnum.PlayerOne:
+                InputManager.P1_LeftStickRightAction -= MoveRight;
+                InputManager.P1_LeftStickLeftAction -= MoveLeft;
+                InputManager.P1_LeftTriggerDownAction -= dash.DashCheck;
+                InputManager.P1_RightTiggerDownAction -= dash.DashCheck;
+                InputManager.P1_LeftStickZeroAction -= FallStraight;
+                InputManager.P1_LeftStickDownAction -= ForceDown;
+                InputManager.P1_LeftStickUpAction -= LookUp;
 
+                turnclass.eventDelegate -= EventCheck;
+                dash.eventDelegate -= EventCheck;
+                fallComp.eventDelegate -= EventCheck;
+
+
+                InputManager.p1_OnKeyPressed -= P1_CheckInputDown;
                 break;
             case PlayerEnum.PlayerTwo:
+                InputManager.P2_LeftStickRightAction -= MoveRight;
+                InputManager.P2_LeftStickLeftAction -= MoveLeft;
+                InputManager.P2_LeftTriggerDownAction -= dash.DashCheck;
+                InputManager.P2_RightTiggerDownAction -= dash.DashCheck;
+                InputManager.P2_LeftStickZeroAction -= FallStraight;
+                InputManager.P2_LeftStickDownAction -= ForceDown;
+                InputManager.P2_LeftStickUpAction -= LookUp;
 
+                turnclass.eventDelegate -= EventCheck;
+                dash.eventDelegate -= EventCheck;
+                fallComp.eventDelegate -= EventCheck;
+
+                InputManager.p2_OnKeyPressed -= P2_CheckInputDown;
                 break;
             case PlayerEnum.NotAssigned:
                 Debug.Log("<color=red> MovementClass cant Find the PlayerEnum </color>");
                 break;
+        }
+    }
+
+    void P1_CheckInputUp(KeyCode keyCode)
+    {
+        
+    }
+    void P1_CheckInputDown(KeyCode keyCode)
+    {
+        if (keyCode == KeyCode.Joystick1Button0 && canMove)
+        {
+            Jump();
+        }
+    }
+
+    void P2_CheckInputUp(KeyCode keyCode)
+    {
+
+    }
+    void P2_CheckInputDown(KeyCode keyCode)
+    {
+        if (keyCode == KeyCode.Joystick2Button0 && canMove)
+        {
+            Jump();
         }
     }
 
@@ -274,6 +311,17 @@ public class Movement : MonoBehaviour
         StartCoroutine(ForceDownDelay());
         this.isFalling = true;
     }
+    /// <summary>
+    /// Resets movement Values
+    /// </summary>
+    public void ResetValues()
+    {
+        jumps = 0;
+        dash.currentDashes = 0;
+        isOnWallLeft = false;
+        isOnWallRight = false;
+        rb.velocity = Vector3.zero;
+    }
 
     //      Private     //
     void EventCheck(EventState eventState)
@@ -335,7 +383,6 @@ public class Movement : MonoBehaviour
             {
                 isIdling = true;
                 eventDelegate(EventState.Idle);
-                Debug.Log("JZ");
             }
         }
         else
