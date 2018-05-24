@@ -87,6 +87,11 @@ public class OneVsOneGameMode : MonoBehaviour
                     PlayerOne.GetComponent<MyCharacter>().SetUI(playerOneUI);
                     PlayerOne.GetComponent<MyCharacter>().Posses();
                     sCam.AddPlayer(PlayerOne);
+
+                    Renderer[] rend = PlayerOne.GetComponentsInChildren<Renderer>();
+                    rend[1].material = new Material(rend[1].material);
+                    rend[1].material.SetColor("_EmissionColor", Color.red);
+                    rend[1].material.color = Color.red;
                 }
                 else
                 {
@@ -98,6 +103,7 @@ public class OneVsOneGameMode : MonoBehaviour
 
                     Renderer[] rend = PlayerTwo.GetComponentsInChildren<Renderer>();
                     rend[1].material = new Material(rend[1].material);
+                    rend[1].material.SetColor("_EmissionColor", Color.cyan);
                     rend[1].material.color = Color.cyan;
                 }
 

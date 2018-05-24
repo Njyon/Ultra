@@ -7770,7 +7770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   islookingToTheRight: 0
-  movementSpeed: 10
+  movementSpeed: 6
   inAirSpeed: 8
   isFalling: 0
   jumpVelocity: 14
@@ -7829,11 +7829,11 @@ MonoBehaviour:
   lightAttackDashLenght: 50
   lightAttackDashTime: 0.5
   SpecialAttackDashRange: 5
-  SpecialAttackDashTime: 0.5
+  SpecialAttackDashTime: 1
   SpecialAttackKickHight: 5
   SpecialAttackTeleportRange: 5
   SpecialAttackBackTeleportRange: 5
-  SpecialAttackBackDashForwardRange: 5
+  SpecialAttackBackDashForwardRange: 10
   SpecialAttackKickDown: 5
 --- !u!114 &114770776167732670
 MonoBehaviour:

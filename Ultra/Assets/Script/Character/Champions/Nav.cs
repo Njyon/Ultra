@@ -319,7 +319,7 @@ public class Nav : MyCharacter
                 }
                 else
                 {
-                    dashDestination = new Vector3(this.transform.position.x + lightAttackDashLenght, this.transform.position.y, 0);
+                    dashDestination = new Vector3(this.transform.position.x - lightAttackDashLenght, this.transform.position.y, 0);
                 }
             }
             else
@@ -330,7 +330,7 @@ public class Nav : MyCharacter
                 }
                 else
                 {
-                    dashDestination = new Vector3(this.transform.position.x + lightAttackDashLenght, this.transform.position.y, 0);
+                    dashDestination = new Vector3(this.transform.position.x - lightAttackDashLenght, this.transform.position.y, 0);
                 }
             }
             lightAttackJourneyLenght = Vector3.Distance(this.transform.position, dashDestination);

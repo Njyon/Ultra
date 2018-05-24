@@ -347,7 +347,6 @@ public class MyCharacter : MonoBehaviour
                 Instantiate(ps_Teleport,new Vector3(this.transform.position.x, this.transform.position.y, 0), this.transform.rotation);  // Spawn Particle
                 break;
             case EventState.LightHit:
-                Debug.Log("MAN");
                 animator.SetInteger(animState, (int)EventState.LightHit);    // Set Animation
                 break;
             case EventState.LightHitSide:
@@ -533,8 +532,6 @@ public class MyCharacter : MonoBehaviour
     /// <param name="enemyPos"></param>
     public void KickAway(MyCharacter character, Vector3 enemyPos, bool hard)
     {
-        Debug.Log(percent);
-
         float hight = 300;
         if(MyEpsilon.Epsilon(this.transform.position.y, enemyPos.y, 1f))                                                                // Is Hight is Near
         {
@@ -550,7 +547,6 @@ public class MyCharacter : MonoBehaviour
             if (hard)
             {
                 rb.AddForce(new Vector3(-Mathf.Pow(Mathf.Sqrt(basisWert * percent), potenz) * xFactor, hight, 0) * gesamtFactor);
-                Debug.Log("LOL");
             }
             else
             {
