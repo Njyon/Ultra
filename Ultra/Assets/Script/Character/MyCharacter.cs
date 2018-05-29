@@ -646,7 +646,7 @@ public class MyCharacter : MonoBehaviour
     /// <returns></returns>
     public bool IsFalling()
     {
-        return movement.isFalling;
+        return movement.IsFalling();
     }
     /// <summary>
     /// Returns Look direction (True == Right | False == Left)

@@ -5,12 +5,12 @@ using UnityEngine;
 public class FallComponent
 {
     public bool fallStraight = true;
+    public bool isOnWallLeft = false;
+    public bool isOnWallRight = false;
+    public bool isFalling = true;
 
     bool forceDownEnabled;
     bool forcingDown;
-    bool isOnWallLeft;
-    bool isOnWallRight;
-    bool isFalling;
     bool islookingToTheRight;
     float wallDetectionLength;
     float fallSpeed;
@@ -25,13 +25,10 @@ public class FallComponent
     public delegate void EventDelegate(EventState eventState);
     public EventDelegate eventDelegate;
 
-    public FallComponent(bool forceDownEnabled, bool forcingDown, bool isOnWallLeft, bool isOnWallRight, bool isFalling, bool islookingToTheRight, float fallSpeed, float wallDetectionLength, float maxFallVelocity, Transform transform, Rigidbody rb, Movement mov, Dash dash, MyCharacter myCharacter)
+    public FallComponent(bool forceDownEnabled, bool forcingDown, bool islookingToTheRight, float fallSpeed, float wallDetectionLength, float maxFallVelocity, Transform transform, Rigidbody rb, Movement mov, Dash dash, MyCharacter myCharacter)
     {
         this.forceDownEnabled = forceDownEnabled;
         this.forcingDown = forcingDown;
-        this.isOnWallLeft = isOnWallLeft;
-        this.isOnWallRight = isOnWallRight;
-        this.isFalling = isFalling;
         this.islookingToTheRight = islookingToTheRight;
         this.mov = mov;
         this.fallSpeed = fallSpeed;
@@ -43,12 +40,17 @@ public class FallComponent
         this.myCharacter = myCharacter;
     }
 
+    public void MyDebug()
+    {
+        Debug.Log(isFalling);
+    }
+
     public void Falling()
     {
-        if (dash.isDashing)
+        if (dash.isDashing || !isFalling)
             return;
 
-        if (this.isOnWallLeft || this.isOnWallRight)
+        if (isOnWallLeft || isOnWallRight)
         {
             if (myCharacter.isDisabled)
             {
@@ -56,8 +58,8 @@ public class FallComponent
                 this.isOnWallRight = false;
                 return;
             }
-            if (mov.jumps == 0)
-                rb.velocity = Vector3.down * 2;
+            FallingWallDetection();
+            rb.velocity = Vector3.down * 2;
         }
         else if (isFalling && forcingDown && forceDownEnabled)
         {
@@ -89,16 +91,14 @@ public class FallComponent
         else if (rb.velocity.y > 0)
         {
             if (!isFalling)
-                this.isFalling = true;
+                isFalling = true;
         }
     } // Change Gravity for Jump Balancing!  Edit -> Project Setting -> Physics -> Gravity Y
     public bool Grounded()
     {
         if (!dash.isDashing && !myCharacter.isDisabled)
         {
-            RaycastHit hit;
-
-            if (Physics.Raycast(transform.position, new Vector3(0, -transform.position.y, 0), out hit, 1, 9, QueryTriggerInteraction.Ignore))
+            if (MyRayCast.RayCastHitDown(transform.position, 1))
             {
                 if (isFalling && rb.velocity.y <= 0)
                     if(eventDelegate != null)
@@ -126,67 +126,41 @@ public class FallComponent
     }
     void FallingWallDetection()
     {
-        if (myCharacter.isDisabled)
+        if (myCharacter.isDisabled && !isFalling && !mov.CanMove())
             return;
 
-        RaycastHit hit;
-
-        if (this.transform.position.x < 0)
+        if(islookingToTheRight)
         {
-            if (islookingToTheRight)
+            if (MyRayCast.RayCastHitRight(transform.position, wallDetectionLength))
             {
-                if (Physics.Raycast(this.transform.position, new Vector3(-this.transform.localPosition.x, 0, 0), out hit, this.wallDetectionLength + 0.1f, 9, QueryTriggerInteraction.Ignore))
+                //WallSlide
+                if (!isOnWallLeft && !isOnWallRight)
                 {
-                    //WallSlide
-                    if (!this.isOnWallLeft && !this.isOnWallRight)
-                    {
-                        this.isOnWallRight = true;
-                        mov.ResetJumps();
-                        rb.velocity = new Vector3(0, 0, 0);
-                    }
+                    isOnWallRight = true;
+                    mov.ResetJumps();
                 }
             }
             else
             {
-                if (Physics.Raycast(this.transform.position, new Vector3(this.transform.localPosition.x, 0, 0), out hit, this.wallDetectionLength + 0.1f, 9, QueryTriggerInteraction.Ignore))
-                {
-                    //WallSlide
-                    if (!this.isOnWallLeft && !this.isOnWallRight)
-                    {
-                        this.isOnWallLeft = true;
-                        mov.ResetJumps();
-                        rb.velocity = new Vector3(0, 0, 0);
-                    }
-                }
-            }
+                isOnWallRight = false;
+                isOnWallLeft = false;
+            } 
         }
         else
         {
-            if (islookingToTheRight)
+            if (MyRayCast.RayCastHitLeft(transform.position, wallDetectionLength))
             {
-                if (Physics.Raycast(this.transform.position, new Vector3(this.transform.localPosition.x, 0, 0), out hit, this.wallDetectionLength + 0.1f, 9, QueryTriggerInteraction.Ignore))
+                //WallSlide
+                if (!isOnWallLeft && !isOnWallRight)
                 {
-                    //WallSlide
-                    if (!this.isOnWallLeft && !this.isOnWallRight)
-                    {
-                        this.isOnWallRight = true;
-                        mov.ResetJumps();
-                        rb.velocity = new Vector3(0, 0, 0);
-                    }
+                    isOnWallLeft = true;
+                    mov.ResetJumps();
                 }
             }
             else
             {
-                if (Physics.Raycast(this.transform.position, new Vector3(-this.transform.localPosition.x, 0, 0), out hit, this.wallDetectionLength + 0.1f, 9, QueryTriggerInteraction.Ignore))
-                {
-                    //WallSlide
-                    if (!this.isOnWallLeft && !this.isOnWallRight)
-                    {
-                        this.isOnWallLeft = true;
-                        mov.ResetJumps();
-                        rb.velocity = new Vector3(0, 0, 0);
-                    }
-                }
+                isOnWallRight = false;
+                isOnWallLeft = false;
             }
         }
     }
