@@ -11,6 +11,7 @@ public class MenuSelecter
     public Characters characterEnum = Characters.None;
     public bool isSwitchingUp = false;
     public bool isSwitchingDown = false;
+
     #region Delegates
     public delegate void SwitchUp();
     public SwitchUp SwitchUpAction;
@@ -64,7 +65,8 @@ public class MenuSelecter
             }
             slotIndex++;
             characters[slotIndex].SetActive(true);
-            SwitchUpAction();
+            if(SwitchUpAction != null)
+                SwitchUpAction();
         }
     }
 
@@ -83,7 +85,8 @@ public class MenuSelecter
             }
             slotIndex--;
             characters[slotIndex].SetActive(true);
-            SwitchDownAction();
+            if (SwitchDownAction != null)
+                SwitchDownAction();
         }
     }
 }

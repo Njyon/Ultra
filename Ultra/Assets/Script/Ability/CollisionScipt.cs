@@ -17,7 +17,6 @@ public class CollisionScipt : MonoBehaviour
     {
         if(other.tag == "player" && !other.isTrigger)
         {
-            Debug.Log(other.name);
             if (myCharacter.enemy == null)
                 myCharacter.enemy = other.gameObject;
             if (myCharacter.enemyCharacter == null)

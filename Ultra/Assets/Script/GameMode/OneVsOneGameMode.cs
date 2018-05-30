@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OneVsOneGameMode : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class OneVsOneGameMode : MonoBehaviour
         SpawnLocationP2 = GameObject.Find("Spawn P2");
 
         //Get the GameObject with player Data
-        playerInfoManagerObj = GameObject.Find("PlayerInfoManager");
+        playerInfoManagerObj = GameObject.Find("PlayerInfoManager(Clone)");
         if(playerInfoManagerObj == null)
         {
             Debug.Log("<color=red> Player Info Manager GameObject Not Found </color>");
@@ -37,9 +38,9 @@ public class OneVsOneGameMode : MonoBehaviour
         }
 
         //PlayerOne
-        Initiate(playerInfoManager.playerOne.character, true);
+        Initiate(Characters.Nav, true);
         //PlayerTwo
-        Initiate(playerInfoManager.playerTwo.character, false);
+        Initiate(Characters.Nav, false);
     }
 
     //Spawn both Player
@@ -49,7 +50,11 @@ public class OneVsOneGameMode : MonoBehaviour
         {
             Debug.Log("<color=red> Characters not Assigned to GameMode </color>");
         }
+        InGameUI playerOneUI = GameObject.Find("PlayerOneUI").GetComponent<InGameUI>();
+        InGameUI playerTwoUI = GameObject.Find("PlayerTwoUI").GetComponent<InGameUI>();
 
+        GameObject camera = GameObject.Find("Main Camera");
+        SuperCam sCam = camera.GetComponent<SuperCam>();
         switch (character)
         {
             case Characters.Keeram:
@@ -57,13 +62,21 @@ public class OneVsOneGameMode : MonoBehaviour
                 {
                     PlayerOne = Instantiate(keeram, SpawnLocationP1.transform.position, SpawnLocationP1.transform.rotation);
                     PlayerOne.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerOne;
+                    PlayerOne.GetComponent<MyCharacter>().SetUI(playerOneUI);
                     PlayerOne.GetComponent<MyCharacter>().Posses();
+                    sCam.AddPlayer(PlayerOne);
                 }
                 else
                 {
                     PlayerTwo = Instantiate(keeram, SpawnLocationP2.transform.position, SpawnLocationP2.transform.rotation);
                     PlayerTwo.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerTwo;
+                    PlayerTwo.GetComponent<MyCharacter>().SetUI(playerTwoUI);
                     PlayerTwo.GetComponent<MyCharacter>().Posses();
+                    sCam.AddPlayer(PlayerTwo);
+
+                    //Renderer[] rend = PlayerTwo.GetComponentsInChildren<Renderer>();
+                    //rend[1].material = new Material(Shader.Find("Standard"));
+                    //rend[1].material.color = Color.magenta;
                 }
                 break;
             case Characters.Nav:
@@ -71,13 +84,27 @@ public class OneVsOneGameMode : MonoBehaviour
                 {
                     PlayerOne = Instantiate(nav, SpawnLocationP1.transform.position, SpawnLocationP1.transform.rotation);
                     PlayerOne.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerOne;
+                    PlayerOne.GetComponent<MyCharacter>().SetUI(playerOneUI);
                     PlayerOne.GetComponent<MyCharacter>().Posses();
+                    sCam.AddPlayer(PlayerOne);
+
+                    Renderer[] rend = PlayerOne.GetComponentsInChildren<Renderer>();
+                    rend[1].material = new Material(rend[1].material);
+                    rend[1].material.SetColor("_EmissionColor", Color.red);
+                    rend[1].material.color = Color.red;
                 }
                 else
                 {
                     PlayerTwo = Instantiate(nav, SpawnLocationP2.transform.position, SpawnLocationP2.transform.rotation);
                     PlayerTwo.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerTwo;
+                    PlayerTwo.GetComponent<MyCharacter>().SetUI(playerTwoUI);
                     PlayerTwo.GetComponent<MyCharacter>().Posses();
+                    sCam.AddPlayer(PlayerTwo);
+
+                    Renderer[] rend = PlayerTwo.GetComponentsInChildren<Renderer>();
+                    rend[1].material = new Material(rend[1].material);
+                    rend[1].material.SetColor("_EmissionColor", Color.cyan);
+                    rend[1].material.color = Color.cyan;
                 }
 
                 break;
@@ -93,5 +120,14 @@ public class OneVsOneGameMode : MonoBehaviour
                 }
                 break;
         }
+
+        MyCharacter.endGameAction += EndGame;
+    }
+
+    void EndGame()
+    {
+        PlayerOne.GetComponent<MyCharacter>().DePosses();
+        PlayerTwo.GetComponent<MyCharacter>().DePosses();
+        SceneManager.LoadScene(0);
     }
 }

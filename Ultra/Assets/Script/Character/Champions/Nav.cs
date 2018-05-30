@@ -78,7 +78,7 @@ public class Nav : MyCharacter
             "A Light Attack that lefts u dash to the Right (On ground)",
             10,
             0.2f,
-            1f,
+            0.5f,
             0.2f,
             false
             );
@@ -89,7 +89,7 @@ public class Nav : MyCharacter
             "A Light Attack that lefts u dash to the Right (On ground)",
             10,
             0.2f,
-            1f,
+            0.5f,
             0.2f,
             false
             );
@@ -201,7 +201,10 @@ public class Nav : MyCharacter
         abilities[0].onAbilityStart = () => 
         {
             isUsingAbility = true;
-            Disable(this);
+            Disable();
+
+            if (eventDelegate != null)
+                eventDelegate(EventState.LightHit);
         };
         abilities[0].onAbilityEnd = () => 
         {
@@ -242,6 +245,8 @@ public class Nav : MyCharacter
             currentLightAttackDashTime = lightAttackDashTime;
             Disable();
 
+            eventDelegate(EventState.LightHitSide);
+
             if (this.transform.position.x < 0)
             {
                 if (Physics.Raycast(this.transform.position, new Vector3(-this.transform.position.x, 0, 0), out hit, lightAttackDashLenght, 9, QueryTriggerInteraction.Ignore))
@@ -266,23 +271,19 @@ public class Nav : MyCharacter
             }
             lightAttackJourneyLenght = Vector3.Distance(this.transform.position, dashDestination);
         };
-        abilities[1].onAbilityUpdate = () => 
+        abilities[1].onAbilityUpdate = () =>
         {
-            if (!IsFalling())
-            {
-                currentLightAttackDashTime -= Time.deltaTime;
-                float travel = currentLightAttackDashTime / lightAttackJourneyLenght;
-                this.transform.position = Vector3.Lerp(this.transform.position, dashDestination, travel);
-            }
-            else
-            {
-                abilities[1].Cancel();
-            }
+
+            currentLightAttackDashTime -= Time.deltaTime;
+            float travel = currentLightAttackDashTime / lightAttackJourneyLenght;
+            this.transform.position = Vector3.Lerp(this.transform.position, dashDestination, travel);
+        
             if(xNormalHitBox && !abilities[1].hitObject)
             {
                 abilities[1].hitObject = true;
                 enemyCharacter.Damage(abilities[1].GetDamage());
                 enemyCharacter.KickAway(enemyCharacter, this.transform.position, false);
+                abilities[1].End();
             }
         };
         abilities[1].onAbilityCancel = () => 
@@ -307,6 +308,9 @@ public class Nav : MyCharacter
             currentLightAttackDashTime = lightAttackDashTime;
             Disable();
 
+            if (eventDelegate != null)
+                eventDelegate(EventState.LightHitSide);
+
             if (this.transform.position.x < 0)
             {
                 if (Physics.Raycast(this.transform.position, new Vector3(this.transform.position.x, 0, 0), out hit, lightAttackDashLenght, 9, QueryTriggerInteraction.Ignore))
@@ -315,7 +319,7 @@ public class Nav : MyCharacter
                 }
                 else
                 {
-                    dashDestination = new Vector3(this.transform.position.x + lightAttackDashLenght, this.transform.position.y, 0);
+                    dashDestination = new Vector3(this.transform.position.x - lightAttackDashLenght, this.transform.position.y, 0);
                 }
             }
             else
@@ -326,28 +330,24 @@ public class Nav : MyCharacter
                 }
                 else
                 {
-                    dashDestination = new Vector3(this.transform.position.x + lightAttackDashLenght, this.transform.position.y, 0);
+                    dashDestination = new Vector3(this.transform.position.x - lightAttackDashLenght, this.transform.position.y, 0);
                 }
             }
             lightAttackJourneyLenght = Vector3.Distance(this.transform.position, dashDestination);
         };
         abilities[2].onAbilityUpdate = () =>
         {
-            if (!IsFalling())
-            {
-                currentLightAttackDashTime -= Time.deltaTime;
-                float travel = currentLightAttackDashTime / lightAttackJourneyLenght;
-                this.transform.position = Vector3.Lerp(this.transform.position, dashDestination, travel);
-            }
-            else
-            {
-                abilities[2].Cancel();
-            }
+
+            currentLightAttackDashTime -= Time.deltaTime;
+            float travel = currentLightAttackDashTime / lightAttackJourneyLenght;
+            this.transform.position = Vector3.Lerp(this.transform.position, dashDestination, travel);
+        
             if (xNormalHitBox && !abilities[2].hitObject)
             {
                 abilities[2].hitObject = true;
                 enemyCharacter.Damage(abilities[2].GetDamage());
                 enemyCharacter.KickAway(enemyCharacter, this.transform.position, false);
+                abilities[2].End();
             }
         };
         abilities[2].onAbilityCancel = () =>
@@ -605,7 +605,11 @@ public class Nav : MyCharacter
                 if(enemyCharacter.IsLookingRight())
                 {
                     LookLeft();
+                    if (eventDelegate != null)
+                        eventDelegate(EventState.Teleport);
                     transform.position = new Vector3(enemy.transform.position.x + 1, enemy.transform.position.y, 0);
+                    if (eventDelegate != null)
+                        eventDelegate(EventState.Teleport);
                     enemyCharacter.EndStun();
                     enemyCharacter.Damage(abilities[7].GetDamage() * Mathf.RoundToInt(havyAttackChargeCounter));
                     enemyCharacter.KickAway(enemyCharacter, this.transform.position, true);
@@ -613,7 +617,11 @@ public class Nav : MyCharacter
                 else
                 {
                     LookRight();
+                    if (eventDelegate != null)
+                        eventDelegate(EventState.Teleport);
                     transform.position = new Vector3(enemy.transform.position.x - 1, enemy.transform.position.y, 0);
+                    if (eventDelegate != null)
+                        eventDelegate(EventState.Teleport);
                     enemyCharacter.EndStun();
                     enemyCharacter.Damage(abilities[7].GetDamage() * Mathf.RoundToInt(havyAttackChargeCounter));
                     enemyCharacter.KickAway(enemyCharacter, this.transform.position, true);
@@ -621,7 +629,11 @@ public class Nav : MyCharacter
             }
             else
             {
+                if (eventDelegate != null)
+                    eventDelegate(EventState.Teleport);
                 transform.position = new Vector3(this.transform.position.x, this.transform.position.y + SpecialAttackKickHight, 0);
+                if (eventDelegate != null)
+                    eventDelegate(EventState.Teleport);
             }
             enemyKickingUp = false;
             isUsingAbility = false;
@@ -699,7 +711,11 @@ public class Nav : MyCharacter
                         }
                     }
                 }
+                if (eventDelegate != null)
+                    eventDelegate(EventState.Teleport);
                 this.transform.position = TeleportDestination;
+                if (eventDelegate != null)
+                    eventDelegate(EventState.Teleport);
             }
 
             if(xNormalHitBox && !abilities[8].hitObject)
@@ -729,7 +745,69 @@ public class Nav : MyCharacter
         #region Ability 9   // Heavy Attack back Teleport with dash in view direction
         abilities[9].onAbilityStart = () => 
         {
+            RaycastHit hit;
+
             doOnce = false;
+
+            // Set the Back Teleport Location
+            if (IsLookingRight())
+            {
+                if (transform.position.x < 0)
+                {
+                    if (Physics.Raycast(this.transform.position, new Vector3(this.transform.position.x, 0, 0), out hit, SpecialAttackBackTeleportRange, 9, QueryTriggerInteraction.Ignore))
+                    {
+                        TeleportDestination = hit.point;
+                    }
+                    else
+                    {
+                        TeleportDestination = new Vector3(this.transform.position.x - SpecialAttackBackTeleportRange, this.transform.position.y, 0);
+                    }
+                }
+                else
+                {
+                    if (Physics.Raycast(this.transform.position, new Vector3(-this.transform.position.x, 0, 0), out hit, SpecialAttackBackTeleportRange, 9, QueryTriggerInteraction.Ignore))
+                    {
+                        TeleportDestination = hit.point;
+                    }
+                    else
+                    {
+                        TeleportDestination = new Vector3(this.transform.position.x - SpecialAttackBackTeleportRange, this.transform.position.y, 0);
+                    }
+                }
+            }
+            else
+            {
+                if (transform.position.x < 0)
+                {
+                    if (Physics.Raycast(this.transform.position, new Vector3(-this.transform.position.x, 0, 0), out hit, SpecialAttackBackTeleportRange, 9, QueryTriggerInteraction.Ignore))
+                    {
+                        TeleportDestination = hit.point;
+                    }
+                    else
+                    {
+                        TeleportDestination = new Vector3(this.transform.position.x + SpecialAttackBackTeleportRange, this.transform.position.y, 0);
+                    }
+                }
+                else
+                {
+                    if (Physics.Raycast(this.transform.position, new Vector3(this.transform.position.x, 0, 0), out hit, SpecialAttackBackTeleportRange, 9, QueryTriggerInteraction.Ignore))
+                    {
+                        TeleportDestination = hit.point;
+                    }
+                    else
+                    {
+                        TeleportDestination = new Vector3(this.transform.position.x + SpecialAttackBackTeleportRange, this.transform.position.y, 0);
+                    }
+                }
+            }
+
+            // Set the Player to the Teleport Position
+            if (eventDelegate != null)
+                eventDelegate(EventState.Teleport);
+            this.transform.position = TeleportDestination;
+            if (eventDelegate != null)
+                eventDelegate(EventState.Teleport);
+
         };
         abilities[9].onAbilityUpdate = () => 
         {
@@ -738,61 +816,7 @@ public class Nav : MyCharacter
                 RaycastHit hit;
 
                 doOnce = true;
-                // Set the Back Teleport Location
-                if (IsLookingRight())
-                {
-                    if (transform.position.x < 0)
-                    {
-                        if (Physics.Raycast(this.transform.position, new Vector3(this.transform.position.x, 0, 0), out hit, SpecialAttackBackTeleportRange, 9, QueryTriggerInteraction.Ignore))
-                        {
-                            TeleportDestination = hit.point;
-                        }
-                        else
-                        {
-                            TeleportDestination = new Vector3(this.transform.position.x - SpecialAttackBackTeleportRange, this.transform.position.y, 0);
-                        }
-                    }
-                    else
-                    {
-                        if (Physics.Raycast(this.transform.position, new Vector3(-this.transform.position.x, 0, 0), out hit, SpecialAttackBackTeleportRange, 9, QueryTriggerInteraction.Ignore))
-                        {
-                            TeleportDestination = hit.point;
-                        }
-                        else
-                        {
-                            TeleportDestination = new Vector3(this.transform.position.x - SpecialAttackBackTeleportRange, this.transform.position.y, 0);
-                        }
-                    }
-                }
-                else
-                {
-                    if (transform.position.x < 0)
-                    {
-                        if (Physics.Raycast(this.transform.position, new Vector3(-this.transform.position.x, 0, 0), out hit, SpecialAttackBackTeleportRange, 9, QueryTriggerInteraction.Ignore))
-                        {
-                            TeleportDestination = hit.point;
-                        }
-                        else
-                        {
-                            TeleportDestination = new Vector3(this.transform.position.x + SpecialAttackBackTeleportRange, this.transform.position.y, 0);
-                        }
-                    }
-                    else
-                    {
-                        if (Physics.Raycast(this.transform.position, new Vector3(this.transform.position.x, 0, 0), out hit, SpecialAttackBackTeleportRange, 9, QueryTriggerInteraction.Ignore))
-                        {
-                            TeleportDestination = hit.point;
-                        }
-                        else
-                        {
-                            TeleportDestination = new Vector3(this.transform.position.x + SpecialAttackBackTeleportRange, this.transform.position.y, 0);
-                        }
-                    }
-                }
-
-                // Set the Player to the Teleport Position
-                this.transform.position = TeleportDestination;
-                
+               
                 // Set Dash Forward Location
                 if (IsLookingRight())
                 {

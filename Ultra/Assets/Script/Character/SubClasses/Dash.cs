@@ -9,20 +9,24 @@ public class Dash : MonoBehaviour
     public float dashCoolDown;
     public float dogeTime;
     public float dashLength;
-    public float dashTime;
+    public float standingDogeTime;
+    public float dashSpeed;
+    public AnimationCurve dashCurve;
 
     [HideInInspector] public bool isDashing = false;
     [HideInInspector] public bool canDash = true;
+    [HideInInspector] public bool canMove = true;
     [HideInInspector] public int currentDashes = 0;
     [HideInInspector] public Rigidbody rb;
     [HideInInspector] public MyCharacter myCharacter;
     [HideInInspector] public PlayerEnum playerEnum;
 
-    float currentDashTime;
-    float journeyLength;
-    float dashWallDistance = 0.6f;
-    float wallDetectionLength = 0.6f;
+    Vector3 dashStartPoint;
     Vector3 dashEndPoint;
+
+    //Delegate
+    public delegate void EventDelegate(EventState eventState);
+    public EventDelegate eventDelegate;
 
     public void DashCheck()
     {
@@ -75,80 +79,40 @@ public class Dash : MonoBehaviour
         {
             myCharacter.canGetDamaged = false;
             canDash = false;
+            canMove = false;
             rb.velocity = Vector3.zero;
             rb.useGravity = false;
             StartCoroutine(DashCoolDown(dashCoolDown));
-            StartCoroutine(DashTime());
+            StartCoroutine(StandingDogeTime(standingDogeTime));
             StartCoroutine(DogeTime(dogeTime));
+
+            if (eventDelegate != null)
+                eventDelegate(EventState.Dodge);
         }
     }
     public void DirectionDash(bool directionRight)
     {
         if (!canDash)
             return;
-
-        currentDashTime = dashTime;
+        
         isDashing = true;
-        RaycastHit hit;
-        StartCoroutine(DashTime());
+        //StartCoroutine(StandingDogeTime(standingDogeTime));
         currentDashes++;
 
-        if (directionRight)     //Right
+        if(directionRight)
         {
-            if (this.gameObject.transform.localPosition.x < 0)
-            {
-                if (Physics.Raycast(this.gameObject.transform.position, new Vector3(-this.gameObject.transform.localPosition.x, 0, 0), out hit, dashLength, 9, QueryTriggerInteraction.Ignore))            //WALLHIT
-                {
-                    dashEndPoint = new Vector3(hit.point.x - wallDetectionLength, hit.point.y, hit.point.z);
-                }
-                else            //NO WALL
-                {
-                    dashEndPoint = new Vector3(this.gameObject.transform.localPosition.x + dashLength, this.gameObject.transform.localPosition.y, this.gameObject.transform.localPosition.z);
-                }
-                journeyLength = Vector3.Distance(this.gameObject.transform.localPosition, dashEndPoint);
-            }
-            else
-            {
-                if (Physics.Raycast(this.gameObject.transform.position, new Vector3(this.gameObject.transform.localPosition.x, 0, 0), out hit, dashLength, 9, QueryTriggerInteraction.Ignore))             //WALLHIT
-                {
-                    dashEndPoint = new Vector3(hit.point.x - wallDetectionLength, hit.point.y, hit.point.z);
-                }
-                else                // NO WALL
-                {
-                    dashEndPoint = new Vector3(this.gameObject.transform.localPosition.x + dashLength, this.gameObject.transform.localPosition.y, this.gameObject.transform.localPosition.z);
-                }
-                journeyLength = Vector3.Distance(this.gameObject.transform.localPosition, dashEndPoint);
-            }
+            dashEndPoint = MyRayCast.RaycastRight(transform.position, dashLength);
+            dashStartPoint = transform.position;
         }
-        else                //Left
+        else
         {
-            if (this.gameObject.transform.localPosition.x < 0)
-            {
-                if (Physics.Raycast(this.gameObject.transform.position, new Vector3(this.gameObject.transform.localPosition.x, 0, 0), out hit, dashLength, 9, QueryTriggerInteraction.Ignore))         //WALLHIT
-                {
-                    dashEndPoint = new Vector3(hit.point.x + wallDetectionLength, hit.point.y, hit.point.z);
-                }
-                else                        // NO WALL
-                {
-                    dashEndPoint = new Vector3(this.gameObject.transform.localPosition.x - dashLength, this.gameObject.transform.localPosition.y, this.gameObject.transform.localPosition.z);
-                }
-                journeyLength = Vector3.Distance(this.gameObject.transform.localPosition, dashEndPoint);
-            }
-            else
-            {
-                if (Physics.Raycast(this.gameObject.transform.position, new Vector3(-this.gameObject.transform.localPosition.x, 0, 0), out hit, dashLength, 9, QueryTriggerInteraction.Ignore))        //WALLHIT
-                {
-                    dashEndPoint = new Vector3(hit.point.x + wallDetectionLength, hit.point.y, hit.point.z);
-                }
-                else                        // NO WALL
-                {
-                    dashEndPoint = new Vector3(this.gameObject.transform.localPosition.x - dashLength, this.gameObject.transform.localPosition.y, this.gameObject.transform.localPosition.z);
-                }
-                journeyLength = Vector3.Distance(this.gameObject.transform.localPosition, dashEndPoint);
-            }
+            dashEndPoint = MyRayCast.RaycastLeft(transform.position, dashLength);
+            dashStartPoint = transform.position;
         }
     }
-    public Vector3 Dashing(bool isFalling, Vector3 position)
+
+    float travel = 0;
+    public void Dashing(bool isFalling)
     {
         if (currentDashes <= maxDashes)
         {
@@ -159,30 +123,42 @@ public class Dash : MonoBehaviour
                     canDash = false;
                     if (isFalling)
                     {
-                        StartCoroutine(DogeTime(dashCoolDown));
-                        StartCoroutine(DashCoolDown(dashCoolDown));
+                        //StartCoroutine(DogeTime(dashCoolDown));
+                        //StartCoroutine(DashCoolDown(dashCoolDown));
+
+                        if (eventDelegate != null)
+                            eventDelegate(EventState.Dodge);
                     }
                     else
                     {
                         currentDashes = 0;
-                        StartCoroutine(DashCoolDown(dogeTime));
+                        //StartCoroutine(DashCoolDown(dogeTime));
+
+                        if (eventDelegate != null)
+                            eventDelegate(EventState.Dash);
                     }
                 }
-
-                currentDashTime -= Time.deltaTime;
-                float travel = currentDashTime / journeyLength;
-
-                return position = Vector3.Lerp(position, this.dashEndPoint, travel);
+                if (MyEpsilon.Epsilon(transform.position.x, dashEndPoint.x, 0.5f))
+                {
+                    rb.useGravity = true;
+                    isDashing = false;
+                    travel = 0;
+                    
+                    return;
+                }
+                travel += dashSpeed * Time.deltaTime;
+                float curvePercent = dashCurve.Evaluate(travel);
+                this.transform.position = Vector3.LerpUnclamped(dashStartPoint, dashEndPoint, curvePercent);
             }
         }
-        return position;
     }
-    
-    IEnumerator DashTime()
+
+    IEnumerator StandingDogeTime(float time)
     {
-        yield return new WaitForSeconds(0.17f);
+        yield return new WaitForSeconds(time);
         rb.useGravity = true;
         isDashing = false;
+        canMove = true;
     }
     IEnumerator DashCoolDown(float time)
     {
