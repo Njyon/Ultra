@@ -140,6 +140,7 @@ public class Slider : MonoBehaviour {
     {
         SliderChange(1.0f);
         ButtonPressEventX.Invoke();
+       
     }
 
     void OnButtonDownY()
@@ -180,75 +181,7 @@ public class Slider : MonoBehaviour {
 
     }
     #endregion
-
-    #region Old Functions
-    //private void Activated()
-    //{
-
-
-    //            if (transform.position.x - this.transform.position.x<posX)
-    //        {
-    //            //Increase
-
-    //            this.transform.position = new Vector3(posX + incrementVal, this.transform.position.y, 0);
-    //    Debug.Log("+");
-    //            if (posX > maxValueX)
-    //            {
-    //                this.transform.position = new Vector3(maxValueX, this.transform.position.y, this.transform.position.z);
-    //}
-    //        }
-    //        else if (transform.position.x - this.transform.position.x > posX)
-    //        {
-    //    //decrease
-    //    this.transform.position = new Vector3(posX - incrementVal, this.transform.position.y, 0);
-    //    Debug.Log("-");
-    //    if (posX < minValueX)
-    //    {
-    //        this.transform.position = new Vector3(minValueX, this.transform.position.y, this.transform.position.z);
-    //    }
-    //}
-    //        else
-    //        {
-    //    return;
-    //}
-
-
-    //} 
-
-    //private void ChangeVolume(bool add)
-    //{
-    //    currentAudio = Mathf.Round(currentAudio * 10f) / 10f;
-
-    //    float incrementer = ((minValueX - maxValueX) / (minAudio - maxAudio)) * 100;
-
-    //    if (add == true)
-    //    {
-    //        //Increase
-    //        currentAudio = currentAudio + incrementer;
-
-    //        if (currentAudio > maxAudio)
-    //        {
-    //            currentAudio = maxAudio;
-    //        }
-
-    //    }
-    //    else if (add == false)
-    //    {
-    //        //Decrease
-    //        currentAudio = currentAudio - incrementer;
-
-    //        if (currentAudio < minAudio)
-    //        {
-    //            currentAudio = minAudio;
-    //        }
-    //    }
-
-    //    currentMixerVol = currentAudio;
-    //    aMixer.SetFloat(mixerParameter, currentMixerVol);
-    //}
-
-
-    #endregion Old Functions
+    
 }
 
 

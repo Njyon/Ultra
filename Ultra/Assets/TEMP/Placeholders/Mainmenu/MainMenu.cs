@@ -61,7 +61,30 @@ public class MainMenu : MonoBehaviour {
     ////////////////////////////////////////////////////////
     ////////////          Functions          //////////////
     //////////////////////////////////////////////////////
+    #region Quality Settings
+    
+    void GetQuality()
+    {
+        //maybe not needed. Get all aspects that need to be changed
+    }
 
+    void SetQuality()
+    {
+        //eg:   QualityUltra();
+    }
+
+    void QualityUltra()
+    {
+
+    }
+
+    void QualityHigh()
+    {
+
+    }
+
+    
+    #endregion
 
     #region Resolution
     public void GetResolution()

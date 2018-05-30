@@ -8,7 +8,6 @@ public class Buttons : MonoBehaviour {
     int triggerCounter = 0;
     Material material;
     Color resetCol;
-    GameObject playerCol;
 
     [Header("Colors")]
     public Color onHoverColor;
@@ -29,8 +28,7 @@ public class Buttons : MonoBehaviour {
 
     void Start ()
     {
-        playerCol = GameObject.Find("pref_Nav");
-        material = gameObject.GetComponent<Renderer>().material;
+        material = this.gameObject.GetComponent<Renderer>().material;
         resetCol = material.color;
     }
 
@@ -60,8 +58,6 @@ public class Buttons : MonoBehaviour {
                 OnHover();
             }
             triggerCounter++;
-
-            Debug.Log("im in");
         }
         else if (other.gameObject.tag != "player")
         {
@@ -99,6 +95,7 @@ public class Buttons : MonoBehaviour {
     ////////////            Input            //////////////
     //////////////////////////////////////////////////////
 
+    #region Assign Input
     void AssigneInputP1()
     {
         InputManager.p1_OnKeyPressed += P1_CheckInputDown;
@@ -118,7 +115,8 @@ public class Buttons : MonoBehaviour {
     {
         InputManager.p2_OnKeyPressed -= P2_CheckInputDown;
     }
-    
+    #endregion
+
     ////////////////////////////////////////////////////////
     ////////////          Functions          //////////////
     //////////////////////////////////////////////////////
