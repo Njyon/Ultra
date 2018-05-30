@@ -255,8 +255,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.480261, y: 1, z: 6.367693}
-  m_Center: {x: 0.05713559, y: 0, z: -2.6838465}
+  m_Size: {x: 1.480261, y: 2.1157732, z: 7.838953}
+  m_Center: {x: 0.05713559, y: -0.5578866, z: -3.4194765}
 --- !u!65 &65735459334338586
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -267,8 +267,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.3415958, y: 1, z: 6.3935146}
-  m_Center: {x: -0.057003506, y: 0, z: -2.6967573}
+  m_Size: {x: 1.3415958, y: 2.1193552, z: 7.733746}
+  m_Center: {x: -0.057003506, y: -0.5596776, z: -3.366873}
 --- !u!95 &95075894258458284
 Animator:
   serializedVersion: 3
@@ -314,11 +314,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ad44a359216cca428405566fa81537e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onHoverColor: {r: 1, g: 0.39705884, b: 0.39705884, a: 0}
+  onHoverColor: {r: 0, g: 1, b: 0.13103461, a: 0}
   activationColor: {r: 0.375, g: 0.8189655, b: 1, a: 0}
   ActivationEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: ResIndexDecrease
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114363573827973266
@@ -336,6 +347,17 @@ MonoBehaviour:
   activationColor: {r: 0.375, g: 0.8189655, b: 1, a: 0}
   ActivationEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: ResIndexIncrease
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
