@@ -1466,7 +1466,6 @@ GameObject:
   - component: {fileID: 54525834856652716}
   - component: {fileID: 136439231409751026}
   - component: {fileID: 114580614076684540}
-  - component: {fileID: 114153790403052430}
   - component: {fileID: 114532094157897230}
   - component: {fileID: 114008825772264244}
   m_Layer: 8
@@ -7757,83 +7756,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collisionEnum: 4
   player: {fileID: 1392969457632022}
---- !u!114 &114153790403052430
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1392969457632022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49d62a236e4633f4c8af235184aeaad8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  potenz: 1.55
-  basisWert: 30
-  xFactor: 1
-  gesamtFactor: 1
-  UpDivider: 1
-  startForce: 30
-  startForceUp: 100
-  playerEnum: 0
-  canGetDamaged: 1
-  isDisabled: 0
-  isStunned: 0
-  enemy: {fileID: 0}
-  enemyCharacter: {fileID: 0}
-  disabledTime: 1
-  animator: {fileID: 95797245075637454}
-  ps_JumpOnGround: {fileID: 1377725971517810, guid: 94db14a13420c49469c920cffe171523,
-    type: 2}
-  ps_JumpInAir: {fileID: 1377725971517810, guid: 94db14a13420c49469c920cffe171523,
-    type: 2}
-  ps_Landing: {fileID: 1110817026786226, guid: f6dab85f4044c764b921b7acb08bcc41, type: 2}
-  ps_DashCloudLeft: {fileID: 1464113392381458, guid: 11ee794ec964ce74a9a8f18f775be193,
-    type: 2}
-  ps_DashCloudRight: {fileID: 1065210385180006, guid: a88013fd3c292284fad0de38788eb80e,
-    type: 2}
-  ps_Teleport: {fileID: 1357307924837436, guid: 56f9e4c04a73e2e43a6f172cae13e2f0,
-    type: 2}
-  ps_GetDamaged: {fileID: 1926702151632390, guid: cb19a31facf23154baad1ba04a129c16,
-    type: 2}
-  ps_Disabled: {fileID: 198769989575872116}
-  xNormalHitBox: 0
-  xUpHitBox: 0
-  xDownHitBox: 0
-  sUpHitBox: 0
-  sDownHitBox: 0
-  hasSlider: 0
-  slider: {fileID: 0}
-  damage: 10
-  dashSpeed: 3
-  attackLength: 7
-  timeTillAtackStarts: 0
-  attackTime: 2
-  coolDownTime: 1
-  curve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &114183731822233600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7886,7 +7808,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1392969457632022}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9487e8971e1ab0640bc8c7961700852e, type: 3}
   m_Name: 
