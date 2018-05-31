@@ -56,8 +56,7 @@ public class Movement : MonoBehaviour
 
 
         fallComp.Falling();
-        if(dash.isDashing)
-            dash.Dashing(fallComp.isFalling);
+        dash.Dashing(fallComp.isFalling);
         WallSlide();
         turnclass.IUpdate(this.transform);
         MyRayCast.RaycastUp(transform.position, 10);

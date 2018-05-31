@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PlayerInfoManager : MonoBehaviour
 {
-    public PlayerInfo playerOne = new PlayerInfo()
+    public static PlayerInfo playerOne = new PlayerInfo()
     {
         playerID = "PlayerOne",
         character = Characters.None
     };
-    public PlayerInfo playerTwo = new PlayerInfo()
+    public static PlayerInfo playerTwo = new PlayerInfo()
     {
         playerID = "PlayerTwo",
         character = Characters.None

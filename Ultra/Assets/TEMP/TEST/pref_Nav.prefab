@@ -7707,11 +7707,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDashes: 2
-  dashCoolDown: 1
-  dogeTime: 2
   dashLength: 7
-  standingDogeTime: 2
   dashSpeed: 3
+  dodgeNoDmgTime: 0.5
+  dodgeCoolDown: 1
+  dashCoolDown: 0.5
   dashCurve:
     serializedVersion: 2
     m_Curve:
@@ -7799,7 +7799,7 @@ MonoBehaviour:
   jumpVelocity: 14
   jumps: 0
   fallSpeed: 3
-  maxFallVelocity: 5
+  maxFallVelocity: 7.8
   maxJumps: 3
 --- !u!114 &114580614076684540
 MonoBehaviour:

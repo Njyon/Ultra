@@ -123,8 +123,8 @@ public class CharacterSelecterV2 : MonoBehaviour
 
             gameStarting = true;
 
-            playerInfoManager.playerOne.character = playerOne.characterEnum;
-            playerInfoManager.playerTwo.character = playerTwo.characterEnum;
+            PlayerInfoManager.playerOne.character = playerOne.characterEnum;
+            PlayerInfoManager.playerTwo.character = playerTwo.characterEnum;
 
             RemoveInput();
             StartGame();
@@ -152,7 +152,7 @@ public class CharacterSelecterV2 : MonoBehaviour
         playerOne.characterPosition = p1Keeram.transform.position;
         playerTwo.characterPosition = p2Keeram.transform.position;
 
-#endregion
+    #endregion
 
     #region Set Character Array
         playerOne.characters[0] = p1Keeram;
@@ -175,7 +175,7 @@ public class CharacterSelecterV2 : MonoBehaviour
                 Debug.Log("<color=red>Not Enough Characters in CharacterSelecter Array</color> ");
             }
         }
-#endregion
+    #endregion
         
     #region Getter Stuff
         playerInfoManager = playerInfoManagerObj.GetComponent<PlayerInfoManager>();
@@ -197,6 +197,7 @@ public class CharacterSelecterV2 : MonoBehaviour
                 playerTwo.characters[i].SetActive(false);
         }
     }
+
     #region Load Next Scene
     void StartGame()
     {

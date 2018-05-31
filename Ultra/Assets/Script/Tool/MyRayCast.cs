@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MyRayCast 
+public class MyRayCast
 {
+    static float head = 0.5f;
+    static float feed = 0.5f;
+
     /// <summary>
     /// Returns a position to the right from Camera Perspective
     /// </summary>
@@ -18,7 +21,7 @@ public class MyRayCast
         if (charPosition.x < 0)
         {
             // Cast a Ray at the feed and Check for an Obsticle
-            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - 0.5f, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - feed, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
                 // if an Obsticle hit return hit point + offest as Destination
                 return new Vector3(hit.point.x, hit.point.y + 0.5f, 0);
@@ -26,10 +29,19 @@ public class MyRayCast
             else
             {
                 // Cast a Ray at the head and Check for an Obsticle
-                if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y + 0.5f, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+                if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y + head, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
                 {
                     // if an Obsticle hit return hit point - offest as Destination
                     return new Vector3(hit.point.x, hit.point.y - 0.5f, 0);
+                }
+                else
+                {
+                    // Check the Middle of the body for an Obsticle
+                    if (Physics.Raycast(charPosition, new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+                    {
+                        // if an Obsticle hit return hit point - offest as Destination
+                        return hit.point;
+                    }
                 }
                 // if no Obsticle found return Destination, Position + Lenght
                 return new Vector3(charPosition.x + length, charPosition.y, 0);
@@ -38,7 +50,7 @@ public class MyRayCast
         else
         {
             // Cast a Ray at the feed and Check for an Obsticle
-            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - 0.5f, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - feed, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
                 // if an Obsticle hit return hit point + offest as Destination
                 return new Vector3(hit.point.x, hit.point.y + 0.5f, 0);
@@ -46,10 +58,19 @@ public class MyRayCast
             else
             {
                 // Cast a Ray at the head and Check for an Obsticle
-                if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y + 0.5f, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+                if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y + head, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
                 {
                     // if an Obsticle hit return hit point - offest as Destination
                     return new Vector3(hit.point.x, hit.point.y - 0.5f, 0);
+                }
+                else
+                {
+                    // Check the Middle of the body for an Obsticle
+                    if (Physics.Raycast(charPosition, new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+                    {
+                        // if an Obsticle hit return hit point - offest as Destination
+                        return hit.point;
+                    }
                 }
                 // if no Obsticle found return Destination, Position + Lenght
                 return new Vector3(charPosition.x + length, charPosition.y, 0);
@@ -70,7 +91,7 @@ public class MyRayCast
         if (charPosition.x < 0)
         {
             // Cast a Ray at the feed and Check for an Obsticle
-            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - 0.5f, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - feed, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
                 // if an Obsticle hit return hit point + offest as Destination
                 return new Vector3(hit.point.x, hit.point.y + 0.5f, 0);
@@ -78,10 +99,19 @@ public class MyRayCast
             else
             {
                 // Cast a Ray at the head and Check for an Obsticle
-                if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y + 0.5f, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+                if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y + head, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
                 {
                     // if an Obsticle hit return hit point - offest as Destination
                     return new Vector3(hit.point.x, hit.point.y - 0.5f, 0);
+                }
+                else
+                {
+                    // Cast a Ray at the Middle of the Body and check for an Obsticle
+                    if (Physics.Raycast(charPosition, new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+                    {
+                        // if an Obsticle hit return hit point - offest as Destination
+                        return hit.point;
+                    }
                 }
                 // if no Obsticle found return Destination, Position + Lenght
                 return new Vector3(charPosition.x - length, charPosition.y, 0);
@@ -90,7 +120,7 @@ public class MyRayCast
         else
         {
             // Cast a Ray at the feed and Check for an Obsticle
-            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - 0.5f, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - feed, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
                 // if an Obsticle hit return hit point + offest as Destination
                 return new Vector3(hit.point.x, hit.point.y + 0.5f, 0);
@@ -98,10 +128,19 @@ public class MyRayCast
             else
             {
                 // Cast a Ray at the head and Check for an Obsticle
-                if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y + 0.5f, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+                if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y + head, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
                 {
                     // if an Obsticle hit return hit point - offest as Destination
                     return new Vector3(hit.point.x, hit.point.y - 0.5f, 0);
+                }
+                else
+                {
+                    // Cast a Ray at the Middle of the Body and check for an Obsticle
+                    if (Physics.Raycast(charPosition, new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+                    {
+                        // if an Obsticle hit return hit point - offest as Destination
+                        return hit.point;
+                    }
                 }
                 // if no Obsticle found return Destination, Position + Lenght
                 return new Vector3(charPosition.x - length, charPosition.y, 0);
@@ -201,40 +240,34 @@ public class MyRayCast
         // Check if the Character is under or above 0
         if (charPosition.x < 0)
         {
-            // Cast a Ray at the feed and Check for an Obsticle
-            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - 0.5f, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+            // Cast a Ray at the feed, Middle and Head and Check for an Obsticle
+            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - feed, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore) ||
+                Physics.Raycast(new Vector3(charPosition.x, charPosition.y + head, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore) ||
+                Physics.Raycast(new Vector3(charPosition.x, charPosition.y, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore)
+                )
             {
                 // if an Obsticle hit return true
                 return true;
             }
             else
             {
-                // Cast a Ray at the head and Check for an Obsticle
-                if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y + 0.5f, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
-                {
-                    // if an Obsticle hit true
-                    return true;
-                }
                 // if no Obsticle found return false
                 return false;
             }
         }
         else
         {
-            // Cast a Ray at the feed and Check for an Obsticle
-            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - 0.5f, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+            // Cast a Ray at the feed, Middle and Head and Check for an Obsticle
+            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - feed, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore) ||
+                Physics.Raycast(new Vector3(charPosition.x, charPosition.y + head, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore) ||
+                Physics.Raycast(new Vector3(charPosition.x, charPosition.y, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore)
+                )
             {
                 // if an Obsticle hit return true
                 return true;
             }
             else
             {
-                // Cast a Ray at the head and Check for an Obsticle
-                if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y + 0.5f, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
-                {
-                    // if an Obsticle hit return true
-                    return true;
-                }
                 // if no Obsticle found return false
                 return false;
             }
@@ -252,40 +285,34 @@ public class MyRayCast
         // Check if the Character is under or above 0
         if (charPosition.x < 0)
         {
-            // Cast a Ray at the feed and Check for an Obsticle
-            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - 0.5f, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+            // Cast a Ray at the feed, Middle and Head and Check for an Obsticle
+            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - feed, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore) ||
+                Physics.Raycast(new Vector3(charPosition.x, charPosition.y + head, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore) ||
+                Physics.Raycast(new Vector3(charPosition.x, charPosition.y, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore)
+                )
             {
                 // if an Obsticle hit return true
                 return true;
             }
             else
             {
-                // Cast a Ray at the head and Check for an Obsticle
-                if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y + 0.5f, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
-                {
-                    // if an Obsticle hit true
-                    return true;
-                }
                 // if no Obsticle found return false
                 return false;
             }
         }
         else
         {
-            // Cast a Ray at the feed and Check for an Obsticle
-            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - 0.5f, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+            // Cast a Ray at the feed, Middle and Head and Check for an Obsticle
+            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - feed, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore) ||
+                Physics.Raycast(new Vector3(charPosition.x, charPosition.y + head, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore) ||
+                Physics.Raycast(new Vector3(charPosition.x, charPosition.y, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore)
+                )
             {
                 // if an Obsticle hit return true
                 return true;
             }
             else
             {
-                // Cast a Ray at the head and Check for an Obsticle
-                if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y + 0.5f, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
-                {
-                    // if an Obsticle hit return true
-                    return true;
-                }
                 // if no Obsticle found return false
                 return false;
             }
@@ -378,19 +405,16 @@ public class MyRayCast
         if (charPosition.x < 0)
         {
             // Cast a Ray at the feed and Check for an Obsticle
-            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - 0.5f, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - feed, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore) ||
+                Physics.Raycast(new Vector3(charPosition.x, charPosition.y + head, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore) ||
+                Physics.Raycast(new Vector3(charPosition.x, charPosition.y, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore)
+                )
             {
                 // if an Obsticle hit return true
                 return true;
             }
             else
             {
-                // Cast a Ray at the head and Check for an Obsticle
-                if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y + 0.5f, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
-                {
-                    // if an Obsticle hit true
-                    return true;
-                }
                 // if no Obsticle found return false
                 return false;
             }
@@ -398,19 +422,16 @@ public class MyRayCast
         else
         {
             // Cast a Ray at the feed and Check for an Obsticle
-            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - 0.5f, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - feed, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore) ||
+                Physics.Raycast(new Vector3(charPosition.x, charPosition.y + head, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore) ||
+                Physics.Raycast(new Vector3(charPosition.x, charPosition.y, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore)
+                )
             {
                 // if an Obsticle hit return true
                 return true;
             }
             else
             {
-                // Cast a Ray at the head and Check for an Obsticle
-                if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y + 0.5f, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
-                {
-                    // if an Obsticle hit return true
-                    return true;
-                }
                 // if no Obsticle found return false
                 return false;
             }
@@ -429,19 +450,16 @@ public class MyRayCast
         if (charPosition.x < 0)
         {
             // Cast a Ray at the feed and Check for an Obsticle
-            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - 0.5f, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - feed, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore) ||
+                Physics.Raycast(new Vector3(charPosition.x, charPosition.y + head, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore) ||
+                Physics.Raycast(new Vector3(charPosition.x, charPosition.y, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore)
+                )
             {
                 // if an Obsticle hit return true
                 return true;
             }
             else
             {
-                // Cast a Ray at the head and Check for an Obsticle
-                if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y + 0.5f, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
-                {
-                    // if an Obsticle hit true
-                    return true;
-                }
                 // if no Obsticle found return false
                 return false;
             }
@@ -449,19 +467,16 @@ public class MyRayCast
         else
         {
             // Cast a Ray at the feed and Check for an Obsticle
-            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - 0.5f, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - feed, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore) ||
+                Physics.Raycast(new Vector3(charPosition.x, charPosition.y + head, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore) ||
+                Physics.Raycast(new Vector3(charPosition.x, charPosition.y, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore)
+                )
             {
                 // if an Obsticle hit return true
                 return true;
             }
             else
             {
-                // Cast a Ray at the head and Check for an Obsticle
-                if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y + 0.5f, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
-                {
-                    // if an Obsticle hit return true
-                    return true;
-                }
                 // if no Obsticle found return false
                 return false;
             }
@@ -542,4 +557,3 @@ public class MyRayCast
         }
     }
 }
-  

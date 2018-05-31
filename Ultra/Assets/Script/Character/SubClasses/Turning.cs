@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Turning
 {
+    public float speed = 10;
+
     bool islookingToTheRight = false;
     bool isTurningRight = false;
     bool isTurningLeft = false;
@@ -62,7 +64,7 @@ public class Turning
                 return;
             }
 
-            transform.rotation = Quaternion.Lerp(transform.rotation, new Quaternion(0, 0, 0, 1), 0.2f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, new Quaternion(0, 0, 0, 1), speed * Time.deltaTime);
         }
         else if (this.isTurningLeft)
         {
@@ -72,7 +74,7 @@ public class Turning
                 return;
             }
 
-            transform.rotation = Quaternion.Lerp(transform.rotation, new Quaternion(0, 1, 0, 0), 0.2f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, new Quaternion(0, 1, 0, 0), speed * Time.deltaTime);
         }
     }
 }

@@ -38,21 +38,21 @@ public class CharacterCreationDebugScript : MonoBehaviour
                 throw;
             }
         }
-        else
-        {
-            debugPlayer = Instantiate(debugCharacter, spawnLocation.gameObject.transform.position, spawnLocation.gameObject.transform.rotation);
-            debugPlayer.GetComponent<TestMov>().playerEnum = playerEnum;
-            debugPlayer.GetComponent<TestMov>().Posses();
-            try
-            {
-                SuperCam sCam = camera.GetComponent<SuperCam>();
-                sCam.AddPlayer(debugPlayer);
-            }
-            catch
-            {
-                Debug.Log("No SuperCam Script at Camera. Camera = Static");
-                throw;
-            }
-        }
+        //else
+        //{
+        //    debugPlayer = Instantiate(debugCharacter, spawnLocation.gameObject.transform.position, spawnLocation.gameObject.transform.rotation);
+        //    debugPlayer.GetComponent<TestMov>().playerEnum = playerEnum;
+        //    debugPlayer.GetComponent<TestMov>().Posses();
+        //    try
+        //    {S
+        //        SuperCam sCam = camera.GetComponent<SuperCam>();
+        //        sCam.AddPlayer(debugPlayer);
+        //    }
+        //    catch
+        //    {
+        //        Debug.Log("No SuperCam Script at Camera. Camera = Static");
+        //        throw;
+        //    }
+        //}
     }
 }

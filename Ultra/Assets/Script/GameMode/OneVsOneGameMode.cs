@@ -17,7 +17,7 @@ public class OneVsOneGameMode : MonoBehaviour
     [Header("Nav")]
     public GameObject nav;
     
-    void Awake()
+    void Start()
     {
         //Set SpawnLocation
         SpawnLocationP1 = GameObject.Find("Spawn P1");
@@ -38,9 +38,9 @@ public class OneVsOneGameMode : MonoBehaviour
         }
 
         //PlayerOne
-        Initiate(Characters.Nav, true);
+        Initiate(PlayerInfoManager.playerOne.character, true);
         //PlayerTwo
-        Initiate(Characters.Nav, false);
+        Initiate(PlayerInfoManager.playerTwo.character, false);
     }
 
     //Spawn both Player

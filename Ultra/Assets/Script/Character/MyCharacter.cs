@@ -26,7 +26,7 @@ public class MyCharacter : MonoBehaviour
     int animState;
 
     Rigidbody rb;
-    Movement movement;
+    protected Movement movement;
 
     int lifes = 3;
 
@@ -425,26 +425,7 @@ public class MyCharacter : MonoBehaviour
     //////////////////////////////////////////////////
 
     //      Public      // 
-    /// <summary>
-    /// Disables a specific Character for amount of param time
-    /// </summary>
-    /// <param name="character"></param>
-    /// <param name="time"></param>
-    public void Disable(MyCharacter character, float time)
-    {
-        character.movement.CantMove(time);
-        character.isDisabled = true;
-        Invoke("EndDisable", time);
-    }
-    /// <summary>
-    /// Disable a Specific Character
-    /// </summary>
-    /// <param name="character"></param>
-    public void Disable(MyCharacter character)
-    {
-        character.movement.CantMove();
-        character.isDisabled = true;
-    }
+
     /// <summary>
     /// Disables the own Character
     /// </summary>
@@ -464,36 +445,12 @@ public class MyCharacter : MonoBehaviour
         Invoke("EndDisable", time);
     }
     /// <summary>
-    /// Ends the disable effect a specific character
-    /// </summary>
-    /// <param name="character"></param>
-    public void EndDisable(MyCharacter character)
-    {
-        character.movement.CanMove();
-        character.isDisabled = false;
-    }
-    /// <summary>
     /// Ends the Disable Effect on the own Character
     /// </summary>
     public void EndDisable()
     {
-        movement.CanMove();
+        movement.CanMoveTrue();
         isDisabled = false;
-    }
-    /// <summary>
-    /// Stunes enemy for amount of "time"
-    /// </summary>
-    /// <param name="time"></param>
-    public void Stun(MyCharacter character, float time)
-    {
-        character.movement.Stun(time);
-    }
-    /// <summary>
-    /// Stunes Character till EndStun() & Stunes Enemy if in reach
-    /// </summary>
-    public void Stun(MyCharacter character)
-    {
-        character.movement.Stun();
     }
     /// <summary>
     /// Starts the Stun effect this Character
@@ -501,13 +458,6 @@ public class MyCharacter : MonoBehaviour
     public void Stun()
     {
         movement.Stun();
-    }
-    /// <summary>
-    /// End the Stun from the Player and Enemy if "isStunned"
-    /// </summary>
-    public void EndStun(MyCharacter character)
-    {
-        character.movement.EndStun();
     }
     /// <summary>
     /// End the Stun effect on this Character
@@ -558,14 +508,13 @@ public class MyCharacter : MonoBehaviour
             if (hard)
             {
                 rb.AddForce(new Vector3(Mathf.Pow(Mathf.Sqrt(basisWert * percent), potenz) * xFactor, hight, 0) * gesamtFactor);
-                Debug.Log("LOL");
             }
             else
             {
                 rb.AddForce(new Vector3(Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), hight, 0));
             }
         }
-        Disable(character, disabledTime);
+        enemyCharacter.Disable(disabledTime);
     }
     /// <summary>
     /// Kicks Player Up in the Air
@@ -602,7 +551,7 @@ public class MyCharacter : MonoBehaviour
                 rb.AddForce(new Vector3(direction, Mathf.Pow(Mathf.Sqrt(basisWert * percent), potenz) / UpDivider + startForceUp, 0));
             }
         }
-        Disable(character, disabledTime);
+        enemyCharacter.Disable(disabledTime);
     }
     /// <summary>
     /// Kick the character down to the ground
@@ -638,7 +587,7 @@ public class MyCharacter : MonoBehaviour
                 rb.AddForce(new Vector3(direction, -Mathf.Pow(Mathf.Sqrt(30 * percent), potenz), 0));
             }
         }
-        Disable(character, disabledTime);
+        enemyCharacter.Disable(disabledTime);
     }
     /// <summary>
     /// returns if the Character is falling or not

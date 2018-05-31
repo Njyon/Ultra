@@ -213,7 +213,7 @@ public class Nav : MyCharacter
                 enemyCharacter.Damage(abilities[0].GetDamage());
                 enemyCharacter.KickAway(enemyCharacter, this.transform.position, false);
             }
-            EndDisable(this);
+            EndDisable();
             isUsingAbility = false;
         };
         abilities[0].onAbilityCancel = () => 
@@ -226,7 +226,7 @@ public class Nav : MyCharacter
             if (xNormalHitBox && !abilities[0].hitObject)
             {
                 abilities[0].hitObject = true;
-                Disable(enemyCharacter);
+                enemyCharacter.Disable();
             }
             else if (hasSlider && !abilities[0].hitObject)
             {
@@ -1009,7 +1009,7 @@ public class Nav : MyCharacter
 
     void Update()
     {
-        for(int i = 0; i < abilities.Length; i++)
+        for (int i = 0; i < abilities.Length; i++)
         {
             abilities[i].Update();
         }

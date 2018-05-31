@@ -5,14 +5,18 @@ using UnityEngine;
 public class Dash : MonoBehaviour
 {
     [Header("Dash Variables")]
+    // GamePlay Vars
     public int maxDashes;
-    public float dashCoolDown;
-    public float dogeTime;
     public float dashLength;
-    public float standingDogeTime;
     public float dashSpeed;
+    // Times
+    public float dodgeNoDmgTime;
+    public float dodgeCoolDown;
+    public float dashCoolDown;
+    // Curves
     public AnimationCurve dashCurve;
 
+    // Character Vars
     [HideInInspector] public bool isDashing = false;
     [HideInInspector] public bool canDash = true;
     [HideInInspector] public bool canMove = true;
@@ -21,6 +25,7 @@ public class Dash : MonoBehaviour
     [HideInInspector] public MyCharacter myCharacter;
     [HideInInspector] public PlayerEnum playerEnum;
 
+    // Dash Vars
     Vector3 dashStartPoint;
     Vector3 dashEndPoint;
 
@@ -30,6 +35,8 @@ public class Dash : MonoBehaviour
 
     public void DashCheck()
     {
+        Debug.Log("LOL");
+
         if (myCharacter.isDisabled)
             return;
 
@@ -83,8 +90,7 @@ public class Dash : MonoBehaviour
             rb.velocity = Vector3.zero;
             rb.useGravity = false;
             StartCoroutine(DashCoolDown(dashCoolDown));
-            StartCoroutine(StandingDogeTime(standingDogeTime));
-            StartCoroutine(DogeTime(dogeTime));
+            StartCoroutine(StandingDogeTime(dodgeNoDmgTime));
 
             if (eventDelegate != null)
                 eventDelegate(EventState.Dodge);
@@ -94,12 +100,11 @@ public class Dash : MonoBehaviour
     {
         if (!canDash)
             return;
-        
+
         isDashing = true;
-        //StartCoroutine(StandingDogeTime(standingDogeTime));
         currentDashes++;
 
-        if(directionRight)
+        if (directionRight)
         {
             dashEndPoint = MyRayCast.RaycastRight(transform.position, dashLength);
             dashStartPoint = transform.position;
@@ -114,6 +119,7 @@ public class Dash : MonoBehaviour
     float travel = 0;
     public void Dashing(bool isFalling)
     {
+        Debug.Log(currentDashes);
         if (currentDashes <= maxDashes)
         {
             if (isDashing)
@@ -123,8 +129,8 @@ public class Dash : MonoBehaviour
                     canDash = false;
                     if (isFalling)
                     {
-                        //StartCoroutine(DogeTime(dashCoolDown));
-                        //StartCoroutine(DashCoolDown(dashCoolDown));
+                        StartCoroutine(DogeTime(dodgeNoDmgTime));
+                        StartCoroutine(DashCoolDown(dashCoolDown));
 
                         if (eventDelegate != null)
                             eventDelegate(EventState.Dodge);
@@ -132,7 +138,7 @@ public class Dash : MonoBehaviour
                     else
                     {
                         currentDashes = 0;
-                        //StartCoroutine(DashCoolDown(dogeTime));
+                        StartCoroutine(DashCoolDown(dashCoolDown));
 
                         if (eventDelegate != null)
                             eventDelegate(EventState.Dash);
@@ -155,7 +161,9 @@ public class Dash : MonoBehaviour
 
     IEnumerator StandingDogeTime(float time)
     {
+        myCharacter.canGetDamaged = false;
         yield return new WaitForSeconds(time);
+        myCharacter.canGetDamaged = true;
         rb.useGravity = true;
         isDashing = false;
         canMove = true;
