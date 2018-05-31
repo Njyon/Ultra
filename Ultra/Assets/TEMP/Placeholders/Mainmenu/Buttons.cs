@@ -41,23 +41,23 @@ public class Buttons : MonoBehaviour {
     {
         if (other.gameObject.tag == "player")
         {
-            CollisionScipt colPlayer = other.gameObject.GetComponent<CollisionScipt>();
-            MyCharacter collidingPlayer = colPlayer.myCharacter;
+            //CollisionScipt colPlayer = other.gameObject.GetComponent<CollisionScipt>();
+            //MyCharacter collidingPlayer = colPlayer.myCharacter;
             
-            switch (collidingPlayer.playerEnum)
-            {
-                case PlayerEnum.PlayerOne:
-                    AssigneInputP1();
-                    break;
-                case PlayerEnum.PlayerTwo:
-                    AssigneInputP2();
-                    break;
-            }
-            if(triggerCounter == 0)
-            {
-                OnHover();
-            }
-            triggerCounter++;
+            //switch (collidingPlayer.playerEnum)
+            //{
+            //    case PlayerEnum.PlayerOne:
+            //        AssigneInputP1();
+            //        break;
+            //    case PlayerEnum.PlayerTwo:
+            //        AssigneInputP2();
+            //        break;
+            //}
+            //if(triggerCounter == 0)
+            //{
+            //    OnHover();
+            //}
+            //triggerCounter++;
         }
         else if (other.gameObject.tag != "player")
         {
@@ -69,25 +69,27 @@ public class Buttons : MonoBehaviour {
     {
         if (other.gameObject.tag == "player")
         {
-            CollisionScipt colPlayer = other.gameObject.GetComponent<CollisionScipt>();
-            MyCharacter collidingPlayer = colPlayer.myCharacter;
-            switch (collidingPlayer.playerEnum)
-            {
-                case PlayerEnum.PlayerOne:
-                    RemoveInputP1();
-                    break;
-                case PlayerEnum.PlayerTwo:
-                    RemoveInputP2();
-                    break;
-            }
-            triggerCounter--;
-            if(triggerCounter == 0)
-            {
-                EndHover();
-            }
-        }else if (other.gameObject.tag != "player")
+            //CollisionScipt colPlayer = other.gameObject.GetComponent<CollisionScipt>();
+            //MyCharacter collidingPlayer = colPlayer.myCharacter;
+            //switch (collidingPlayer.playerEnum)
+            //{
+            //    case PlayerEnum.PlayerOne:
+            //        RemoveInputP1();
+            //        break;
+            //    case PlayerEnum.PlayerTwo:
+            //        RemoveInputP2();
+            //        break;
+            //}
+            //triggerCounter--;
+            //if(triggerCounter == 0)
+            //{
+            //    EndHover();
+            //}
+        }
+        else if (other.gameObject.tag != "player")
         {
             return;
+
         }
     }
 
@@ -96,69 +98,69 @@ public class Buttons : MonoBehaviour {
     //////////////////////////////////////////////////////
 
     #region Assign Input
-    void AssigneInputP1()
-    {
-        InputManager.p1_OnKeyPressed += P1_CheckInputDown;
-    }
+    //void AssigneInputP1()
+    //{
+    //    InputManager.p1_OnKeyPressed += P1_CheckInputDown;
+    //}
 
-    void AssigneInputP2()
-    {
-        InputManager.p2_OnKeyPressed += P2_CheckInputDown;
-    }
+    //void AssigneInputP2()
+    //{
+    //    InputManager.p2_OnKeyPressed += P2_CheckInputDown;
+    //}
 
-    void RemoveInputP1()
-    {
-        InputManager.p1_OnKeyPressed -= P1_CheckInputDown;
-    }
+    //void RemoveInputP1()
+    //{
+    //    InputManager.p1_OnKeyPressed -= P1_CheckInputDown;
+    //}
 
-    void RemoveInputP2() 
-    {
-        InputManager.p2_OnKeyPressed -= P2_CheckInputDown;
-    }
+    //void RemoveInputP2() 
+    //{
+    //    InputManager.p2_OnKeyPressed -= P2_CheckInputDown;
+    //}
     #endregion
 
     ////////////////////////////////////////////////////////
     ////////////          Functions          //////////////
     //////////////////////////////////////////////////////
 
-    void P1_CheckInputDown(KeyCode keyCode)
-    {
-        if (keyCode == KeyCode.Joystick1Button2)
-            OnButtonDown();
-    }
+    //void P1_CheckInputDown(KeyCode keyCode)
+    //{
+    //    if (keyCode == KeyCode.Joystick1Button2)
+    //        OnButtonDown();
+    //}
 
-    void P2_CheckInputDown(KeyCode keyCode)
-    {
-        if (keyCode == KeyCode.Joystick1Button2)
-            OnButtonDown();
-    }
+    //void P2_CheckInputDown(KeyCode keyCode)
+    //{
+    //    if (keyCode == KeyCode.Joystick1Button2)
+    //        OnButtonDown();
+    //}
 
 
-    void OnButtonDown()
-    {
-        material.color = activationColor;
-        ActivationEvent.Invoke();
-        Invoke("EndActivationEvent", 0.2f);
-    }
+    //void OnButtonDown()
+    //{
+    //    material.color = activationColor;
+    //    ActivationEvent.Invoke();
+    //    Invoke("EndActivationEvent", 0.2f);
+    //}
 
-    void OnHover()
-    {
-        ChangeColor(onHoverColor);
-    }
+    //void OnHover()
+    //{
+    //    ChangeColor(onHoverColor);
+    //}
 
-    void EndHover()
-    {
-        ChangeColor(resetCol);
-    }
+    //void EndHover()
+    //{
+    //    ChangeColor(resetCol);
+    //}
 
-    void EndActivationEvent()
-    {
-        if (triggerCounter > 0)
-            ChangeColor(onHoverColor);
-    }
+    //void EndActivationEvent()
+    //{
+    //    if (triggerCounter > 0)
+    //        ChangeColor(onHoverColor);
+    //}
 
-    void ChangeColor(Color color)
-    {
-        material.color = color;
-    }
+    //void ChangeColor(Color color)
+    //{
+    //    material.color = color;
+    //}
 }

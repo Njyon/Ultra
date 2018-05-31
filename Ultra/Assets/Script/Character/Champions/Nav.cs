@@ -228,11 +228,6 @@ public class Nav : MyCharacter
                 abilities[0].hitObject = true;
                 enemyCharacter.Disable();
             }
-            else if (hasSlider && !abilities[0].hitObject)
-            {
-                abilities[0].hitObject = true;
-                slider.GetComponent<Slider>().SliderChange(this.transform, true);
-            }
         };
         abilities[0].onAbilityReady = () => { };
         #endregion  

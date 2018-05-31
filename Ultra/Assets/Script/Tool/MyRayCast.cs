@@ -2,10 +2,71 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MyRayCast
+public static class MyRayCast
 {
     static float head = 0.5f;
     static float feed = 0.5f;
+
+    /// <summary>
+    /// returns a Position thats in front of the Character at an angle 45° Up
+    /// </summary>
+    /// <param name="charPosition"></param>
+    /// <param name="length"></param>
+    /// <returns></returns>
+    public static Vector3 RayCastRightUp(Transform charPosition, float length)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + head, 0),charPosition.right + charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
+        {
+            return new Vector3(hit.point.x, hit.point.y - head, 0);
+        }
+        else
+        {
+            if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + feed, 0), charPosition.right + charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
+            {
+                return new Vector3(hit.point.x, hit.point.y - feed, 0);
+            }
+            else
+            {
+                if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y, 0), charPosition.right + charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
+                {
+                    return hit.point;
+                }
+            }
+
+            return new Vector3(charPosition.position.x + length, charPosition.position.y + length, 0);
+        }
+    }
+    /// <summary>
+    /// returns a Position thats in front of the Character at an angle 45° Down
+    /// </summary>
+    /// <param name="charPosition"></param>
+    /// <param name="length"></param>
+    /// <returns></returns>
+    public static Vector3 RayCastRightDown(Transform charPosition, float length)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + head, 0), charPosition.right + -charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
+        {
+            return new Vector3(hit.point.x, hit.point.y - head, 0);
+        }
+        else
+        {
+            if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + feed, 0), charPosition.right + -charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
+            {
+                return new Vector3(hit.point.x, hit.point.y - feed, 0);
+            }
+            else
+            {
+                if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y, 0), charPosition.right + -charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
+                {
+                    return hit.point;
+                }
+            }
+
+            return new Vector3(charPosition.position.x + length, charPosition.position.y + length, 0);
+        }
+    }
 
     /// <summary>
     /// Returns a position to the right from Camera Perspective

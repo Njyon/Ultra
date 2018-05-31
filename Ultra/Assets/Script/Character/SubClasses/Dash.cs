@@ -35,8 +35,6 @@ public class Dash : MonoBehaviour
 
     public void DashCheck()
     {
-        Debug.Log("LOL");
-
         if (myCharacter.isDisabled)
             return;
 
@@ -119,7 +117,6 @@ public class Dash : MonoBehaviour
     float travel = 0;
     public void Dashing(bool isFalling)
     {
-        Debug.Log(currentDashes);
         if (currentDashes <= maxDashes)
         {
             if (isDashing)

@@ -47,17 +47,17 @@ public class Slider : MonoBehaviour {
 
         if (other.tag == "player")
         {
-            CollisionScipt colPlayer = other.gameObject.GetComponent<CollisionScipt>();
-            MyCharacter collidingPlayer = colPlayer.myCharacter;
-            switch (collidingPlayer.playerEnum)
-            {
-                case PlayerEnum.PlayerOne:
-                    AssigneInputP1();
-                    break;
-                case PlayerEnum.PlayerTwo:
-                    AssigneInputP2();
-                    break;
-            }
+            //CollisionScipt colPlayer = other.gameObject.GetComponent<CollisionScipt>();
+            //MyCharacter collidingPlayer = colPlayer.myCharacter;
+            //switch (collidingPlayer.playerEnum)
+            //{
+            //    case PlayerEnum.PlayerOne:
+            //        AssigneInputP1();
+            //        break;
+            //    case PlayerEnum.PlayerTwo:
+            //        AssigneInputP2();
+            //        break;
+            //}
         }
 
         if (this.transform.position.x > other.transform.position.x)
@@ -75,17 +75,17 @@ public class Slider : MonoBehaviour {
     {
         if (other.tag == "player")
         {
-            CollisionScipt colPlayer = other.gameObject.GetComponent<CollisionScipt>();
-            MyCharacter collidingPlayer = colPlayer.myCharacter;
-            switch (collidingPlayer.playerEnum)
-            {
-                case PlayerEnum.PlayerOne:
-                    RemoveInputP1();
-                    break;
-                case PlayerEnum.PlayerTwo:
-                    RemoveInputP2();
-                    break;
-            }
+            //CollisionScipt colPlayer = other.gameObject.GetComponent<CollisionScipt>();
+            //MyCharacter collidingPlayer = colPlayer.myCharacter;
+            //switch (collidingPlayer.playerEnum)
+            //{
+            //    case PlayerEnum.PlayerOne:
+            //        RemoveInputP1();
+            //        break;
+            //    case PlayerEnum.PlayerTwo:
+            //        RemoveInputP2();
+            //        break;
+            //}
         }
 
     }

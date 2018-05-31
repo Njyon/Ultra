@@ -24,7 +24,8 @@ public class Movement : MonoBehaviour
     // Movement
     [Header("Movement")]
     public float movementSpeed;
-    public float inAirSpeed;
+    public float maxInAirSpeed;
+    public float inAirAccelerate;
     float wallDetectionLength = 0.6f;
     bool canMove = true;
     bool isNotMoving = true;
@@ -420,13 +421,13 @@ public class Movement : MonoBehaviour
         {
             if (fallComp.isFalling)
             {
-                if (rb.velocity.x < inAirSpeed)
+                if (rb.velocity.x < maxInAirSpeed)
                 {
-                    rb.velocity = new Vector3(inAirSpeed, rb.velocity.y, 0);
+                    rb.velocity += Vector3.right * inAirAccelerate;   //new Vector3(inAirSpeed, rb.velocity.y, 0);
                 }
-                else if (rb.velocity.x > inAirSpeed)
+                else if (rb.velocity.x > maxInAirSpeed)
                 {
-                    rb.velocity = new Vector3(inAirSpeed, rb.velocity.y, 0);
+                    rb.velocity = new Vector3(maxInAirSpeed, rb.velocity.y, 0);
                 }
             }
             else
@@ -462,13 +463,13 @@ public class Movement : MonoBehaviour
         {
             if (fallComp.isFalling)
             {
-                if (rb.velocity.x > -inAirSpeed)
+                if (rb.velocity.x > -maxInAirSpeed)
                 {
-                    rb.velocity = new Vector3(-inAirSpeed, rb.velocity.y, 0);
+                    rb.velocity += Vector3.left * inAirAccelerate;  //new Vector3(-inAirSpeed, rb.velocity.y, 0);
                 }
-                else if (rb.velocity.x < -inAirSpeed)
+                else if (rb.velocity.x < -maxInAirSpeed)
                 {
-                    rb.velocity = new Vector3(-inAirSpeed, rb.velocity.y, 0);
+                    rb.velocity = new Vector3(-maxInAirSpeed, rb.velocity.y, 0);
                 }
             }
             else
@@ -487,12 +488,12 @@ public class Movement : MonoBehaviour
         {
             if (this.gameObject.transform.position.x < 0)
             {
-                this.rb.velocity = Vector3.up * jumpVelocity + Vector3.right * jumpVelocity;
+                this.rb.velocity = Vector3.up * jumpVelocity + Vector3.right * jumpVelocity / 1.3f;
                 jumps++;
             }
             else
             {
-                this.rb.velocity = Vector3.up * jumpVelocity + Vector3.right * jumpVelocity;
+                this.rb.velocity = Vector3.up * jumpVelocity + Vector3.right * jumpVelocity / 1.3f;
                 jumps++;
             }
             turnclass.LookRight(this.transform.rotation);

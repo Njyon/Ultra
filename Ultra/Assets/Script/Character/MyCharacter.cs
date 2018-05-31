@@ -25,7 +25,7 @@ public class MyCharacter : MonoBehaviour
     public Animator animator;
     int animState;
 
-    Rigidbody rb;
+    protected Rigidbody rb;
     protected Movement movement;
 
     int lifes = 3;
@@ -76,32 +76,32 @@ public class MyCharacter : MonoBehaviour
     public static EndGame endGameAction;
 
     #region X Attack 
-    public delegate void XHitNormal();
-    public  XHitNormal XAttackNormalAction;
-    public delegate void XHitRight();
-    public  XHitRight XAttackRightAction;
-    public delegate void XHitLeft();
-    public  XHitLeft XAttackLeftAction;
-    public delegate void XHitUp();
-    public  XHitUp XAttackUpAction;
-    public delegate void XHitDown();
-    public  XHitDown XAttackDownAction;
+    protected delegate void XHitNormal();
+    protected XHitNormal XAttackNormalAction;
+    protected delegate void XHitRight();
+    protected XHitRight XAttackRightAction;
+    protected delegate void XHitLeft();
+    protected XHitLeft XAttackLeftAction;
+    protected delegate void XHitUp();
+    protected XHitUp XAttackUpAction;
+    protected delegate void XHitDown();
+    protected XHitDown XAttackDownAction;
     #endregion
 
     #region Y/B Attack
-    public delegate void SpecialNormal();
-    public SpecialNormal SpecialNormalAction;
-    public delegate void SpecialRight();
-    public SpecialRight SpecialRightAction;
-    public delegate void SpecialLeft();
-    public SpecialLeft SpecialLeftAction;
-    public delegate void SpecialUp();
-    public SpecialUp SpecialUpAction;
-    public delegate void SpecialDown();
-    public SpecialDown SpecialDownAction;
+    protected delegate void SpecialNormal();
+    protected SpecialNormal SpecialNormalAction;
+    protected delegate void SpecialRight();
+    protected SpecialRight SpecialRightAction;
+    protected delegate void SpecialLeft();
+    protected SpecialLeft SpecialLeftAction;
+    protected delegate void SpecialUp();
+    protected SpecialUp SpecialUpAction;
+    protected delegate void SpecialDown();
+    protected SpecialDown SpecialDownAction;
 
-    public delegate void SpecialRelease();
-    public SpecialRelease SpecialReleaseAction;
+    protected delegate void SpecialRelease();
+    protected SpecialRelease SpecialReleaseAction;
     #endregion
 
     //////////////////////////////////////////////////
@@ -426,6 +426,20 @@ public class MyCharacter : MonoBehaviour
 
     //      Public      // 
 
+    /// <summary>
+    /// Lets the Character not be able to move
+    /// </summary>
+    protected void IsAttacking()
+    {
+        movement.CantMove();
+    }
+    /// <summary>
+    /// Lets the Character be able to move again
+    /// </summary>
+    protected void EndAttacking()
+    {
+        movement.CanMoveTrue();
+    }
     /// <summary>
     /// Disables the own Character
     /// </summary>
