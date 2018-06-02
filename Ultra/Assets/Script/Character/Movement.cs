@@ -60,7 +60,6 @@ public class Movement : MonoBehaviour
         dash.Dashing(fallComp.isFalling);
         WallSlide();
         turnclass.IUpdate(this.transform);
-        MyRayCast.RaycastUp(transform.position, 10);
 
     }
     private void LateUpdate()

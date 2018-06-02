@@ -75,6 +75,7 @@ public class MyCharacter : MonoBehaviour
     public delegate void EndGame();
     public static EndGame endGameAction;
 
+    // Deprecated
     #region X Attack 
     protected delegate void XHitNormal();
     protected XHitNormal XAttackNormalAction;
@@ -87,7 +88,7 @@ public class MyCharacter : MonoBehaviour
     protected delegate void XHitDown();
     protected XHitDown XAttackDownAction;
     #endregion
-
+    // Deprecated
     #region Y/B Attack
     protected delegate void SpecialNormal();
     protected SpecialNormal SpecialNormalAction;
@@ -121,12 +122,8 @@ public class MyCharacter : MonoBehaviour
         switch(playerEnum)
         {
             case PlayerEnum.PlayerOne:
-                InputManager.p1_OnKeyPressed += P1_InputDownCheck;
-                InputManager.p1_OnKeyReleased += P1_InputUpCheck;
-                InputManager.P1_XButtonRightAction += XAttackRight;
-                InputManager.P1_XButtonLeftAction += XAttackLeft;
-                InputManager.P1_XButtonTopAction += XAttackUp;
-                InputManager.P1_XButtonBottomAction += XAttackDown;
+                InputManager.p1_OnKeyPressed += InputDownCheck;
+                InputManager.p1_OnKeyReleased += InputUpCheck;
                 InputManager.P1_SpecalRightAction += SpecailAttackRight;
                 InputManager.P1_SpecalLeftAction += SpecailAttackLeft;
                 InputManager.P1_SpecalBottomAction += SpecialAttackDown;
@@ -137,12 +134,8 @@ public class MyCharacter : MonoBehaviour
 
                 break;
             case PlayerEnum.PlayerTwo:
-                InputManager.p2_OnKeyPressed += P2_InputDownCheck;
-                InputManager.p2_OnKeyReleased += P2_InputUpCheck;
-                InputManager.P2_XButtonRightAction += XAttackRight;
-                InputManager.P2_XButtonLeftAction += XAttackLeft;
-                InputManager.P2_XButtonTopAction += XAttackUp;
-                InputManager.P2_XButtonBottomAction += XAttackDown;
+                InputManager.p2_OnKeyPressed += InputDownCheck;
+                InputManager.p2_OnKeyReleased += InputUpCheck;
                 InputManager.P2_SpecalRightAction += SpecailAttackRight;
                 InputManager.P2_SpecalLeftAction += SpecailAttackLeft;
                 InputManager.P2_SpecalBottomAction += SpecialAttackDown;
@@ -164,12 +157,8 @@ public class MyCharacter : MonoBehaviour
         switch (playerEnum)
         {
             case PlayerEnum.PlayerOne:
-                InputManager.p1_OnKeyPressed -= P1_InputDownCheck;
-                InputManager.p1_OnKeyReleased -= P1_InputUpCheck;
-                InputManager.P1_XButtonRightAction -= XAttackRight;
-                InputManager.P1_XButtonLeftAction -= XAttackLeft;
-                InputManager.P1_XButtonTopAction -= XAttackUp;
-                InputManager.P1_XButtonBottomAction -= XAttackDown;
+                InputManager.p1_OnKeyPressed -= InputDownCheck;
+                InputManager.p1_OnKeyReleased -= InputUpCheck;
                 InputManager.P1_SpecalRightAction -= SpecailAttackRight;
                 InputManager.P1_SpecalLeftAction -= SpecailAttackLeft;
                 InputManager.P1_SpecalBottomAction -= SpecialAttackDown;
@@ -181,12 +170,8 @@ public class MyCharacter : MonoBehaviour
                 movement.RemoveInput();
                 break;
             case PlayerEnum.PlayerTwo:
-                InputManager.p2_OnKeyPressed -= P2_InputDownCheck;
-                InputManager.p2_OnKeyReleased -= P2_InputUpCheck;
-                InputManager.P2_XButtonRightAction -= XAttackRight;
-                InputManager.P2_XButtonLeftAction -= XAttackLeft;
-                InputManager.P2_XButtonTopAction -= XAttackUp;
-                InputManager.P2_XButtonBottomAction -= XAttackDown;
+                InputManager.p2_OnKeyPressed -= InputDownCheck;
+                InputManager.p2_OnKeyReleased -= InputUpCheck;
                 InputManager.P2_SpecalRightAction -= SpecailAttackRight;
                 InputManager.P2_SpecalLeftAction -= SpecailAttackLeft;
                 InputManager.P2_SpecalBottomAction -= SpecialAttackDown;
@@ -225,7 +210,7 @@ public class MyCharacter : MonoBehaviour
         }
     }
     #region InputCheck
-    void P1_InputDownCheck(KeyCode keyCode)
+    void InputDownCheck(KeyCode keyCode)
     {
         if(keyCode == KeyCode.Joystick1Button2)
         {
@@ -238,32 +223,9 @@ public class MyCharacter : MonoBehaviour
                 SpecialNormalAction();
         }
     }
-    void P1_InputUpCheck(KeyCode keyCode)
+    void InputUpCheck(KeyCode keyCode)
     {
         if (keyCode == KeyCode.Joystick1Button1 || keyCode == KeyCode.Joystick1Button3)
-        {
-            if (SpecialReleaseAction != null)
-                SpecialReleaseAction();
-        }
-    }
-
-    void P2_InputDownCheck(KeyCode keyCode)
-    {
-        if (keyCode == KeyCode.Joystick2Button2)
-        {
-            if (XAttackNormalAction != null)
-                XAttackNormalAction();
-        }
-
-        if (keyCode == KeyCode.Joystick2Button1 || keyCode == KeyCode.Joystick2Button3)
-        {
-            if (SpecialNormalAction != null)
-                SpecialNormalAction();
-        }
-    }
-    void P2_InputUpCheck(KeyCode keyCode)
-    {
-        if (keyCode == KeyCode.Joystick2Button1 || keyCode == KeyCode.Joystick2Button3)
         {
             if (SpecialReleaseAction != null)
                 SpecialReleaseAction();
@@ -494,7 +456,7 @@ public class MyCharacter : MonoBehaviour
     /// Kick power depence on LifePercent
     /// </summary>
     /// <param name="enemyPos"></param>
-    public void KickAway(MyCharacter character, Vector3 enemyPos, bool hard)
+    public void KickAway(Vector3 enemyPos, bool hard)
     {
         float hight = 300;
         if(MyEpsilon.Epsilon(this.transform.position.y, enemyPos.y, 1f))                                                                // Is Hight is Near
@@ -536,7 +498,7 @@ public class MyCharacter : MonoBehaviour
     /// <param name="character"></param>
     /// <param name="enemyPos"></param>
     /// <param name="hard"></param>
-    public void KickUp(MyCharacter character, Vector3 enemyPos, bool hard)
+    public void KickUp(Vector3 enemyPos, bool hard)
     {
         Debug.Log (Mathf.Pow(Mathf.Sqrt(30 * percent), potenz));
         float direction = 300;
@@ -573,7 +535,7 @@ public class MyCharacter : MonoBehaviour
     /// <param name="character"></param>
     /// <param name="enemyPos"></param>
     /// <param name="hard"></param>
-    public void KickDown(MyCharacter character, Vector3 enemyPos, bool hard)
+    public void KickDown(Vector3 enemyPos, bool hard)
     {
         Debug.Log(Mathf.Sqrt(enemyPos.normalized.x * 10 * percent));
         float direction = 300;

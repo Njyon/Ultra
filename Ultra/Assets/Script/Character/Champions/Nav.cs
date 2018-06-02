@@ -211,7 +211,7 @@ public class Nav : MyCharacter
             if (abilities[0].hitObject)
             {
                 enemyCharacter.Damage(abilities[0].GetDamage());
-                enemyCharacter.KickAway(enemyCharacter, this.transform.position, false);
+                enemyCharacter.KickAway(this.transform.position, false);
             }
             EndDisable();
             isUsingAbility = false;
@@ -277,7 +277,7 @@ public class Nav : MyCharacter
             {
                 abilities[1].hitObject = true;
                 enemyCharacter.Damage(abilities[1].GetDamage());
-                enemyCharacter.KickAway(enemyCharacter, this.transform.position, false);
+                enemyCharacter.KickAway(this.transform.position, false);
                 abilities[1].End();
             }
         };
@@ -341,7 +341,7 @@ public class Nav : MyCharacter
             {
                 abilities[2].hitObject = true;
                 enemyCharacter.Damage(abilities[2].GetDamage());
-                enemyCharacter.KickAway(enemyCharacter, this.transform.position, false);
+                enemyCharacter.KickAway(this.transform.position, false);
                 abilities[2].End();
             }
         };
@@ -371,7 +371,7 @@ public class Nav : MyCharacter
                 abilities[3].hitObject = true;
                 enemyCharacter.Disable();
                 enemyCharacter.Damage(abilities[3].GetDamage());
-                enemyCharacter.KickUp(enemyCharacter, this.transform.position, false);
+                enemyCharacter.KickUp(this.transform.position, false);
             }
         };
         abilities[3].onAbilityCancel = () => 
@@ -402,7 +402,7 @@ public class Nav : MyCharacter
             {
                 abilities[4].hitObject = true;
                 enemyCharacter.Damage(abilities[4].GetDamage());
-                enemyCharacter.KickUp(enemyCharacter, this.transform.position, false);
+                enemyCharacter.KickUp(this.transform.position, false);
             }
         };
         abilities[4].onAbilityCancel = () => 
@@ -451,7 +451,7 @@ public class Nav : MyCharacter
             if(abilities[5].hitObject)
             {
                 enemyCharacter.Damage(abilities[5].GetDamage());
-                enemyCharacter.KickAway(enemyCharacter, this.transform.position, false);
+                enemyCharacter.KickAway(this.transform.position, false);
                 enemyCharacter.EndStun();
             }
             isUsingAbility = false;
@@ -471,7 +471,7 @@ public class Nav : MyCharacter
             {
                 abilities[6].hitObject = true;
                 enemyCharacter.Damage(abilities[6].GetDamage());
-                enemyCharacter.KickDown(enemyCharacter, this.transform.position, false);
+                enemyCharacter.KickDown(this.transform.position, false);
             }
         };
         abilities[6].onAbilityCancel = () => 
@@ -607,7 +607,7 @@ public class Nav : MyCharacter
                         eventDelegate(EventState.Teleport);
                     enemyCharacter.EndStun();
                     enemyCharacter.Damage(abilities[7].GetDamage() * Mathf.RoundToInt(havyAttackChargeCounter));
-                    enemyCharacter.KickAway(enemyCharacter, this.transform.position, true);
+                    enemyCharacter.KickAway(this.transform.position, true);
                 }
                 else
                 {
@@ -619,7 +619,7 @@ public class Nav : MyCharacter
                         eventDelegate(EventState.Teleport);
                     enemyCharacter.EndStun();
                     enemyCharacter.Damage(abilities[7].GetDamage() * Mathf.RoundToInt(havyAttackChargeCounter));
-                    enemyCharacter.KickAway(enemyCharacter, this.transform.position, true);
+                    enemyCharacter.KickAway(this.transform.position, true);
                 }
             }
             else
@@ -717,7 +717,7 @@ public class Nav : MyCharacter
             {
                 abilities[8].hitObject = true;
                 enemyCharacter.Damage(abilities[8].GetDamage() * Mathf.RoundToInt(havyAttackChargeCounter));
-                enemyCharacter.KickAway(enemyCharacter, this.transform.position, true);
+                enemyCharacter.KickAway(this.transform.position, true);
             }
         };
         abilities[8].onAbilityCancel = () =>
@@ -875,7 +875,7 @@ public class Nav : MyCharacter
             {
                 abilities[9].hitObject = true;
                 enemyCharacter.Damage(abilities[9].GetDamage() * Mathf.RoundToInt(havyAttackChargeCounter));
-                enemyCharacter.KickAway(enemyCharacter, this.transform.position, true);
+                enemyCharacter.KickAway(this.transform.position, true);
                 abilities[9].End();
             }
             // Lerp the Player Position to the DashDestination
@@ -913,7 +913,7 @@ public class Nav : MyCharacter
             {
                 abilities[10].hitObject = true;
                 enemyCharacter.Damage(abilities[10].GetDamage() * Mathf.RoundToInt(havyAttackChargeCounter));
-                enemyCharacter.KickUp(enemyCharacter, this.transform.position, true);
+                enemyCharacter.KickUp(this.transform.position, true);
             }
         };
         abilities[10].onAbilityCancel = () =>
@@ -965,7 +965,7 @@ public class Nav : MyCharacter
             {
                 abilities[11].hitObject = true;
                 enemyCharacter.Damage(abilities[11].GetDamage());
-                enemyCharacter.KickDown(enemyCharacter, this.transform.position, true);
+                enemyCharacter.KickDown(this.transform.position, true);
             }
             else if (currentSpecialAttackDashTime > 0)
             {

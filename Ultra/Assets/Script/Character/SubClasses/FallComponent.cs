@@ -39,12 +39,7 @@ public class FallComponent
         this.dash = dash;
         this.myCharacter = myCharacter;
     }
-
-    public void MyDebug()
-    {
-        Debug.Log(isFalling);
-    }
-
+    
     public void Falling()
     {
         if (dash.isDashing || !isFalling)

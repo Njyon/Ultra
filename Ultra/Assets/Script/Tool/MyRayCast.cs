@@ -7,34 +7,47 @@ public static class MyRayCast
     static float head = 0.5f;
     static float feed = 0.5f;
 
+    static float AngelLength(float length)
+    {
+        float pow = Mathf.Pow(length, 2);
+        return Mathf.Sqrt(pow + pow);
+    }
+
     /// <summary>
     /// returns a Position thats in front of the Character at an angle 45° Up
     /// </summary>
     /// <param name="charPosition"></param>
     /// <param name="length"></param>
     /// <returns></returns>
-    public static Vector3 RayCastRightUp(Transform charPosition, float length)
+    public static Vector3 RayCastUpAngeled(Transform charPosition, float length, bool right)
     {
         RaycastHit hit;
-        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + head, 0),charPosition.right + charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + head, 0),charPosition.right + charPosition.up, out hit, AngelLength(length), 9, QueryTriggerInteraction.Ignore))
         {
             return new Vector3(hit.point.x, hit.point.y - head, 0);
         }
         else
         {
-            if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + feed, 0), charPosition.right + charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + feed, 0), charPosition.right + charPosition.up, out hit, AngelLength(length), 9, QueryTriggerInteraction.Ignore))
             {
                 return new Vector3(hit.point.x, hit.point.y - feed, 0);
             }
             else
             {
-                if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y, 0), charPosition.right + charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
+                if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y, 0), charPosition.right + charPosition.up, out hit, AngelLength(length), 9, QueryTriggerInteraction.Ignore))
                 {
                     return hit.point;
                 }
             }
-
-            return new Vector3(charPosition.position.x + length, charPosition.position.y + length, 0);
+            
+            if(right)
+            {
+                return new Vector3(charPosition.position.x + length, charPosition.position.y + length, 0);
+            }
+            else
+            {
+                return new Vector3(charPosition.position.x - length, charPosition.position.y + length, 0);
+            }
         }
     }
     /// <summary>
@@ -43,28 +56,35 @@ public static class MyRayCast
     /// <param name="charPosition"></param>
     /// <param name="length"></param>
     /// <returns></returns>
-    public static Vector3 RayCastRightDown(Transform charPosition, float length)
+    public static Vector3 RayCastDownAngeled(Transform charPosition, float length, bool right)
     {
         RaycastHit hit;
-        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + head, 0), charPosition.right + -charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + head, 0), charPosition.right + -charPosition.up, out hit, AngelLength(length), 9, QueryTriggerInteraction.Ignore))
         {
             return new Vector3(hit.point.x, hit.point.y - head, 0);
         }
         else
         {
-            if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + feed, 0), charPosition.right + -charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + feed, 0), charPosition.right + -charPosition.up, out hit, AngelLength(length), 9, QueryTriggerInteraction.Ignore))
             {
                 return new Vector3(hit.point.x, hit.point.y - feed, 0);
             }
             else
             {
-                if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y, 0), charPosition.right + -charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
+                if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y, 0), charPosition.right + -charPosition.up, out hit, AngelLength(length), 9, QueryTriggerInteraction.Ignore))
                 {
                     return hit.point;
                 }
             }
 
-            return new Vector3(charPosition.position.x + length, charPosition.position.y + length, 0);
+            if(right)
+            {
+                return new Vector3(charPosition.position.x + length, charPosition.position.y - length, 0);
+            }
+            else
+            {
+                return new Vector3(charPosition.position.x - length, charPosition.position.y - length, 0);
+            }
         }
     }
 
@@ -222,7 +242,7 @@ public static class MyRayCast
         if (charPosition.y < 0)
         {
             // Cast a Ray at the feed and Check for an Obsticle
-            if (Physics.Raycast(charPosition, new Vector3(0, charPosition.y, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(charPosition, new Vector3(0, -charPosition.y, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
                 // if an Obsticle hit return hit point + offest as Destination
                 return new Vector3(hit.point.x, hit.point.y, 0);
@@ -236,7 +256,7 @@ public static class MyRayCast
         else
         {
             // Cast a Ray at the feed and Check for an Obsticle
-            if (Physics.Raycast(charPosition, new Vector3(0, -charPosition.y, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(charPosition, new Vector3(0, charPosition.y, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
                 // if an Obsticle hit return hit point + offest as Destination
                 return new Vector3(hit.point.x, hit.point.y, 0);
@@ -262,7 +282,7 @@ public static class MyRayCast
         if (charPosition.y < 0)
         {
             // Cast a Ray at the feed and Check for an Obsticle
-            if (Physics.Raycast(charPosition, new Vector3(0, -charPosition.y, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(charPosition, new Vector3(0, charPosition.y, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
                 // if an Obsticle hit return hit point + offest as Destination
                 return new Vector3(hit.point.x, hit.point.y, 0);
@@ -276,7 +296,7 @@ public static class MyRayCast
         else
         {
             // Cast a Ray at the feed and Check for an Obsticle
-            if (Physics.Raycast(charPosition, new Vector3(0, charPosition.y, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(charPosition, new Vector3(0, -charPosition.y, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
                 // if an Obsticle hit return hit point + offest as Destination
                 return new Vector3(hit.point.x, hit.point.y, 0);
