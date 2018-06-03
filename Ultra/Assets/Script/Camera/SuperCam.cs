@@ -32,6 +32,13 @@ public class SuperCam : MonoBehaviour
     public void AddPlayer(GameObject player)
     {
         Players.Add(player);
+        player.GetComponent<MyCharacter>().freezCamAction += Freez;
+    }
+
+    void Freez()
+    {
+        StartCoroutine(EndFreez());
+        Time.timeScale = 0;
     }
 
     // Update is called once per frame
@@ -99,5 +106,10 @@ public class SuperCam : MonoBehaviour
 
         CameraEulerX = angle;
         CameraPosition = new Vector3(averageCenter.x, averageCenter.y, depth);
+    }
+    IEnumerator EndFreez()
+    {
+        yield return new WaitForSecondsRealtime(0.2f);
+        Time.timeScale = 1;
     }
 }

@@ -12,6 +12,8 @@ public class MyCharacter : MonoBehaviour
     public float UpDivider;
     public float startForce;
     public float startForceUp;
+    public float X;
+
 
     [HideInInspector] public PlayerEnum playerEnum = PlayerEnum.NotAssigned;
     [HideInInspector] public bool canGetDamaged = true;
@@ -54,6 +56,13 @@ public class MyCharacter : MonoBehaviour
     public GameObject ps_GetDamaged;
     public ParticleSystem ps_Disabled;
 
+    [Header("Atttack Dash")]
+    public GameObject trail;
+    public GameObject ps_Slash;
+
+    [Header("Bounce")]
+    public GameObject bounce;
+
     //////////// Collision ///////////
 
     [HideInInspector] public bool xNormalHitBox = false;
@@ -74,6 +83,9 @@ public class MyCharacter : MonoBehaviour
 
     public delegate void EndGame();
     public static EndGame endGameAction;
+
+    public delegate void FreezCam();
+    public FreezCam freezCamAction;
 
     // Deprecated
     #region X Attack 
@@ -366,6 +378,8 @@ public class MyCharacter : MonoBehaviour
     void Awake()
     {
         spawnPos = transform.position;
+        trail.SetActive(false);
+        ps_Disabled.Stop();
     }
 
     void Start()
@@ -388,6 +402,18 @@ public class MyCharacter : MonoBehaviour
 
     //      Public      // 
 
+    public void PartilceSlash()
+    {
+        if(IsLookingRight())
+        {
+            Instantiate(ps_Slash, new Vector3(transform.position.x + 0.5f, transform.position.y + 0, 0), Quaternion.Euler(0, 180, 60), transform);
+        }
+        else
+        {
+            Instantiate(ps_Slash, new Vector3(transform.position.x + 0.5f, transform.position.y + 0, 0), Quaternion.Euler(180, 0, 60), transform);
+        }
+    }
+
     /// <summary>
     /// Lets the Character not be able to move
     /// </summary>
@@ -409,6 +435,7 @@ public class MyCharacter : MonoBehaviour
     {
         movement.CantMove();
         isDisabled = true;
+        ps_Disabled.Play();
     }
     /// <summary>
     /// Disables the own character for the amount of param time
@@ -416,9 +443,13 @@ public class MyCharacter : MonoBehaviour
     /// <param name="time"></param>
     public void Disable(float time)
     {
+        if (IsInvoking())
+            CancelInvoke();
+
         movement.CantMove();
         isDisabled = true;
         Invoke("EndDisable", time);
+        ps_Disabled.Play();
     }
     /// <summary>
     /// Ends the Disable Effect on the own Character
@@ -427,6 +458,7 @@ public class MyCharacter : MonoBehaviour
     {
         movement.CanMoveTrue();
         isDisabled = false;
+        ps_Disabled.Stop();
     }
     /// <summary>
     /// Starts the Stun effect this Character
@@ -458,39 +490,56 @@ public class MyCharacter : MonoBehaviour
     /// <param name="enemyPos"></param>
     public void KickAway(Vector3 enemyPos, bool hard)
     {
-        float hight = 300;
-        if(MyEpsilon.Epsilon(this.transform.position.y, enemyPos.y, 1f))                                                                // Is Hight is Near
-        {
-            enemyPos = new Vector3(this.transform.position.x - enemyPos.x, 5, 0);
-        }
-        else                                                                                                                            // Position in Y is High enough
-        {
-            enemyPos = new Vector3(this.transform.position.x - enemyPos.x, this.transform.position.y - enemyPos.y, 0);
-        }
+        //float hight = 300;
+        //if (MyEpsilon.Epsilon(this.transform.position.y, enemyPos.y, 1f))                                                                // Is Hight is Near
+        //{
+        //    enemyPos = new Vector3(this.transform.position.x - enemyPos.x, 5, 0);
+        //}
+        //else                                                                                                                            // Position in Y is High enough
+        //{
+        //    enemyPos = new Vector3(this.transform.position.x - enemyPos.x, this.transform.position.y - enemyPos.y, 0);
+        //}
+        Instantiate(ps_GetDamaged, transform.position, Quaternion.identity);
 
         if (enemyPos.x < 0)                             // Direction = right
         {
             if (hard)
             {
-                rb.AddForce(new Vector3(-Mathf.Pow(Mathf.Sqrt(basisWert * percent), potenz) * xFactor, hight, 0) * gesamtFactor);
+                rb.AddForce(new Vector3(-Mathf.Pow(Mathf.Sqrt(basisWert * percent), potenz) * xFactor, enemyPos.y, 0) * gesamtFactor);
             }
             else
             {
-                rb.AddForce(new Vector3(-Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), hight, 0));
+                rb.AddForce(new Vector3(-Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), enemyPos.y, 0));
             }
         }
         else                                            // Direction = Left
         {
             if (hard)
             {
-                rb.AddForce(new Vector3(Mathf.Pow(Mathf.Sqrt(basisWert * percent), potenz) * xFactor, hight, 0) * gesamtFactor);
+                rb.AddForce(new Vector3(Mathf.Pow(Mathf.Sqrt(basisWert * percent), potenz) * xFactor, enemyPos.y, 0) * gesamtFactor);
             }
             else
             {
-                rb.AddForce(new Vector3(Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), hight, 0));
+                rb.AddForce(new Vector3(Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), enemyPos.y, 0));
             }
         }
-        enemyCharacter.Disable(disabledTime);
+
+        float time;
+        if(percent < 30)
+        {
+            time = 1;
+        }
+        else if (percent < 80)
+        {
+
+            time = 2;
+        }
+        else
+        {
+            time = 4;
+        }
+
+        Disable(time);
     }
     /// <summary>
     /// Kicks Player Up in the Air

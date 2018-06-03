@@ -108,7 +108,7 @@ public class FallComponent
                 if (dash.currentDashes > 0)
                     dash.currentDashes = 0;
 
-                myCharacter.isDisabled = false;
+                //myCharacter.isDisabled = false;
                 
                 return this.isFalling = false;
             }

@@ -392,22 +392,22 @@ public class InputManager : MonoBehaviour {
         }
         #endregion
         #region X Button
-        if (Input.GetKeyDown(KeyCode.Joystick1Button2) && Input.GetAxisRaw("P1_Horizontal") == 1 && Input.GetAxisRaw("P1_Vertical") == -1)
+        if (Input.GetKeyDown(KeyCode.Joystick2Button2) && Input.GetAxisRaw("P2_Horizontal") == 1 && Input.GetAxisRaw("P2_Vertical") == -1)
         {
             if (P2_XButtonDirectionAction != null)
                 P2_XButtonDirectionAction(Direction.RightUpAngel);
         }
-        else if (Input.GetKeyDown(KeyCode.Joystick1Button2) && Input.GetAxisRaw("P1_Horizontal") == 1 && Input.GetAxisRaw("P1_Vertical") == 1)
+        else if (Input.GetKeyDown(KeyCode.Joystick2Button2) && Input.GetAxisRaw("P2_Horizontal") == 1 && Input.GetAxisRaw("P2_Vertical") == 1)
         {
             if (P2_XButtonDirectionAction != null)
                 P2_XButtonDirectionAction(Direction.RightDownAngel);
         }
-        else if (Input.GetKeyDown(KeyCode.Joystick1Button2) && Input.GetAxisRaw("P1_Horizontal") == -1 && Input.GetAxisRaw("P1_Vertical") == -1)
+        else if (Input.GetKeyDown(KeyCode.Joystick2Button2) && Input.GetAxisRaw("P2_Horizontal") == -1 && Input.GetAxisRaw("P2_Vertical") == -1)
         {
             if (P2_XButtonDirectionAction != null)
                 P2_XButtonDirectionAction(Direction.LeftUpAngel);
         }
-        else if (Input.GetKeyDown(KeyCode.Joystick1Button2) && Input.GetAxisRaw("P1_Horizontal") == -1 && Input.GetAxisRaw("P1_Vertical") == 1)
+        else if (Input.GetKeyDown(KeyCode.Joystick2Button2) && Input.GetAxisRaw("P2_Horizontal") == -1 && Input.GetAxisRaw("P2_Vertical") == 1)
         {
             if (P2_XButtonDirectionAction != null)
                 P2_XButtonDirectionAction(Direction.LeftDownAngel);
