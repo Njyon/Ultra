@@ -7,6 +7,8 @@ public enum CollisionEnum
     XHitNormal,
     XHitSide,
     XHitUp,
+    XHitUpAngeld,
+    XHitDownAngeld,
     XHitDown,
     YBHitUp,
     YBHitDown

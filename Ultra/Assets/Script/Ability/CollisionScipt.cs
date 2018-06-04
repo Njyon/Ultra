@@ -39,6 +39,12 @@ public class CollisionScipt : MonoBehaviour
                 case CollisionEnum.YBHitDown:
                     myCharacter.sDownHitBox = true;
                     break;
+                case CollisionEnum.XHitUpAngeld:
+                    myCharacter.xUpHitAngeldBox = true;
+                    break;
+                case CollisionEnum.XHitDownAngeld:
+                    myCharacter.xUpHitAngeldBox = true;
+                    break;
             }
         }
         else if (other.tag == "ScrollButton")
@@ -68,6 +74,12 @@ public class CollisionScipt : MonoBehaviour
                     break;
                 case CollisionEnum.YBHitDown:
                     myCharacter.sDownHitBox = false;
+                    break;
+                case CollisionEnum.XHitUpAngeld:
+                    myCharacter.xUpHitAngeldBox = false;
+                    break;
+                case CollisionEnum.XHitDownAngeld:
+                    myCharacter.xUpHitAngeldBox = false;
                     break;
             }
         }

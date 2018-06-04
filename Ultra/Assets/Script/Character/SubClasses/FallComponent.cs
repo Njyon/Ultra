@@ -56,21 +56,21 @@ public class FallComponent
             FallingWallDetection();
             rb.velocity = Vector3.down * 2;
         }
-        else if (isFalling && forcingDown && forceDownEnabled)
-        {
-            rb.velocity += Vector3.up * Physics.gravity.y * (fallSpeed * 2) * Time.deltaTime;
-        }
-        else if (fallStraight && isFalling)
-        {
-            if (rb.velocity.x < 0)
-            {
-                rb.velocity += new Vector3(1, 0, 0);
-            }
-            else if (rb.velocity.x > 0)
-            {
-                rb.velocity -= new Vector3(1, 0, 0);
-            }
-        }
+        //else if (isFalling && forcingDown && forceDownEnabled)
+        //{
+        //    rb.velocity += Vector3.up * Physics.gravity.y * (fallSpeed * 2) * Time.deltaTime;
+        //}
+        //else if (fallStraight && isFalling)
+        //{
+        //    if (rb.velocity.x < 0)
+        //    {
+        //        rb.velocity += new Vector3(1, 0, 0);
+        //    }
+        //    else if (rb.velocity.x > 0)
+        //    {
+        //        rb.velocity -= new Vector3(1, 0, 0);
+        //    }
+        //}
         else if (rb.velocity.y < 0)
         {
             isFalling = true;
