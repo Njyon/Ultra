@@ -68,6 +68,8 @@ public class MyCharacter : MonoBehaviour
     [HideInInspector] public bool xNormalHitBox = false;
     [HideInInspector] public bool xUpHitBox = false;
     [HideInInspector] public bool xDownHitBox = false;
+    [HideInInspector] public bool xUpHitAngeldBox = false;
+    [HideInInspector] public bool xDownHitAngeldBox = false;
     [HideInInspector] public bool sUpHitBox = false;
     [HideInInspector] public bool sDownHitBox = false;
 
@@ -524,21 +526,7 @@ public class MyCharacter : MonoBehaviour
             }
         }
 
-        float time;
-        if(percent < 30)
-        {
-            time = 1;
-        }
-        else if (percent < 80)
-        {
-
-            time = 2;
-        }
-        else
-        {
-            time = 4;
-        }
-
+        float time = X * Mathf.Sqrt(percent);
         Disable(time);
     }
     /// <summary>

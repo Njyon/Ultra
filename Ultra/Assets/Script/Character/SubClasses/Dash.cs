@@ -16,6 +16,10 @@ public class Dash : MonoBehaviour
     // Curves
     public AnimationCurve dashCurve;
 
+    [SerializeField] Renderer renderer;
+    Color startColor;
+    [SerializeField] Color EndColor;
+
     // Character Vars
     [HideInInspector] public bool isDashing = false;
     [HideInInspector] public bool canDash = true;
@@ -33,50 +37,66 @@ public class Dash : MonoBehaviour
     public delegate void EventDelegate(EventState eventState);
     public EventDelegate eventDelegate;
 
+    private void Start()
+    {
+        renderer.material.SetColor("_EmissionColor", Color.cyan);
+        startColor = renderer.material.GetColor("_EmissionColor");
+    }
+
     public void DashCheck()
     {
         if (myCharacter.isDisabled)
             return;
 
-        switch (playerEnum)
-        {
-            case PlayerEnum.PlayerOne:
-                if (Input.GetAxisRaw("P1_Horizontal") == 1)
-                {
-                    //Right
-                    DirectionDash(true);
-                }
-                else if (Input.GetAxisRaw("P1_Horizontal") == -1)
-                {
-                    //Left
-                    DirectionDash(false);
-                }
-                else
-                {
-                    DashStanding();
-                }
-                break;
-            case PlayerEnum.PlayerTwo:
-                if (Input.GetAxisRaw("P2_Horizontal") == 1)
-                {
-                    //Right
-                    DirectionDash(true);
+        Dodge();
 
-                }
-                else if (Input.GetAxisRaw("P2_Horizontal") == -1)
-                {
-                    //Left
-                    DirectionDash(false);
-                }
-                else
-                {
-                    DashStanding();
-                }
-                break;
-            case PlayerEnum.NotAssigned:
-                Debug.Log("<color=red> MovementClass -> DashCheck() cant Find the PlayerEnum </color>");
-                break;
-        }
+        #region deprecated
+        //switch (playerEnum)
+        //{
+        //    case PlayerEnum.PlayerOne:
+
+        //        if (Input.GetAxisRaw("P1_Horizontal") == 1)
+        //        {
+        //            //Right
+        //            DirectionDash(true);
+        //        }
+        //        else if (Input.GetAxisRaw("P1_Horizontal") == -1)
+        //        {
+        //            //Left
+        //            DirectionDash(false);
+        //        }
+        //        else
+        //        {
+        //            DashStanding();
+        //        }
+        //        break;
+        //    case PlayerEnum.PlayerTwo:
+        //        if (Input.GetAxisRaw("P2_Horizontal") == 1)
+        //        {
+        //            //Right
+        //            DirectionDash(true);
+
+        //        }
+        //        else if (Input.GetAxisRaw("P2_Horizontal") == -1)
+        //        {
+        //            //Left
+        //            DirectionDash(false);
+        //        }
+        //        else
+        //        {
+        //            DashStanding();
+        //        }
+        //        break;
+        //    case PlayerEnum.NotAssigned:
+        //        Debug.Log("<color=red> MovementClass -> DashCheck() cant Find the PlayerEnum </color>");
+        //        break;
+        //}
+#endregion
+    }
+
+    void Dodge()
+    {
+        StartCoroutine(DogeTime(dodgeNoDmgTime));
     }
     public void DashStanding()
     {
@@ -173,7 +193,43 @@ public class Dash : MonoBehaviour
     IEnumerator DogeTime(float time)
     {
         myCharacter.canGetDamaged = false;
-        yield return new WaitForSeconds(time);
+        float elapsedTime = 0;
+        float colorTime = 0;
+        bool positive = true;
+        Color color;
+        while(elapsedTime < time)
+        {
+            if(colorTime > 1)
+            {
+                positive = false;
+            }
+            else if(colorTime < 0)
+            {
+                positive = true;
+            }
+
+            if(positive)
+            {
+                colorTime += Time.deltaTime;
+            }
+            else
+            {
+                colorTime -= Time.deltaTime;
+            }
+
+            color = Color.Lerp(startColor, EndColor, colorTime);
+            renderer.material.SetColor("_EmissionColor", color);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
         myCharacter.canGetDamaged = true;
+        while(colorTime < 1)
+        {
+            colorTime += Time.deltaTime;
+            color = Color.Lerp(EndColor, startColor, colorTime);
+            renderer.material.SetColor("_EmissionColor", color);
+            yield return null;
+        }
+        yield return null;
     }
 }

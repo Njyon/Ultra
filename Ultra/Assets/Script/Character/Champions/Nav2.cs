@@ -16,11 +16,12 @@ public class Nav2 : MyCharacter
     [SerializeField] AnimationCurve curve;
 
     GameObject lastBounceObj;
+    Direction direction;
 
     bool isUsingAbility = false;
     Vector3 dashStartPosition;
     Vector3 dashEndPosition;
-    Ability[] abilities = new Ability[5];
+    Ability abilities;
 
     private void Start()
     {
@@ -55,6 +56,10 @@ public class Nav2 : MyCharacter
 
     void DirctionCheck(Direction direction)
     {
+        if (isUsingAbility)
+            return;
+
+        this.direction = direction;
         switch (direction)
         {
             case Direction.Right:
@@ -88,54 +93,9 @@ public class Nav2 : MyCharacter
     void DefineAbilities()
     {
         #region Ability Definiton
-        // X Normal direction = Look direction
-        abilities[0] = new Ability(
+        abilities = new Ability(
             "Light Attack",
             "A Light Attack in view Direktion, its fast and does some Damage",
-            damage,
-            timeTillAtackStarts,
-            attackTime,
-            coolDownTime,
-            false
-            );
-
-        // X Up
-        abilities[1] = new Ability(
-            "Light Attack",
-            "A Light Attack in Up",
-            damage,
-            timeTillAtackStarts,
-            attackTime,
-            coolDownTime,
-            false
-            );
-
-        // X Down
-        abilities[2] = new Ability(
-            "Light Attack",
-            "A Light Attack in Down",
-            damage,
-            timeTillAtackStarts,
-            attackTime,
-            coolDownTime,
-            false
-            );
-
-        // X Down Angel
-        abilities[3] = new Ability(
-            "Light Attack",
-            "A Light Attack in Down",
-            damage,
-            timeTillAtackStarts,
-            attackTime,
-            coolDownTime,
-            false
-            );
-
-        // X Up Angel
-        abilities[4] = new Ability(
-            "Light Attack",
-            "A Light Attack in Down",
             damage,
             timeTillAtackStarts,
             attackTime,
@@ -146,318 +106,164 @@ public class Nav2 : MyCharacter
 
         #region Ability's
 
-        #region Ability Normal Dash
+        #region Ability X
         // Standert "X" Attack with left, right or without direction Input
-        abilities[0].onAbilityStart = () => 
+        abilities.onAbilityStart = () => 
         {
             isUsingAbility = true;
             IsAttacking();
 
             trail.SetActive(true);
             
-            // Find dash End and Start point
-            if (IsLookingRight())
+            switch(direction)
             {
-                dashEndPosition = MyRayCast.RaycastRight(transform.position, attackLength);
-                dashStartPosition = transform.position;
+                case Direction.Right:
+                case Direction.Left:
+                    // Find dash End and Start point
+                    if (IsLookingRight())
+                    {
+                        dashEndPosition = MyRayCast.RaycastRight(transform.position, attackLength);
+                        dashStartPosition = transform.position;
+                    }
+                    else
+                    {
+                        dashEndPosition = MyRayCast.RaycastLeft(transform.position, attackLength);
+                        dashStartPosition = transform.position;
+                    }
+                    break;
+                case Direction.Up:
+                    // Find dash End and Start point
+                    dashEndPosition = MyRayCast.RaycastUp(transform.position, attackLength);
+                    dashStartPosition = transform.position;
+                    break;
+                case Direction.Down:
+                    // Find dash End and Start point
+                    dashEndPosition = MyRayCast.RaycastDown(transform.position, attackLength);
+                    dashStartPosition = transform.position;
+                    break;
+                case Direction.RightDownAngel:
+                case Direction.LeftDownAngel:
+                    // Find dash End and Start point
+                    dashEndPosition = MyRayCast.RayCastDownAngeled(transform, attackLength, IsLookingRight());
+                    dashStartPosition = transform.position;
+                    break;
+                case Direction.RightUpAngel:
+                case Direction.LeftUpAngel:
+                    // Find dash End and Start point
+                    dashEndPosition = MyRayCast.RayCastUpAngeled(transform, attackLength, IsLookingRight());
+                    dashStartPosition = transform.position;
+                    break;
             }
-            else
-            {
-                dashEndPosition = MyRayCast.RaycastLeft(transform.position, attackLength);
-                dashStartPosition = transform.position;
-            }
+
+            Debug.Log(Vector3.Distance(dashStartPosition, dashEndPosition));
 
             PartilceSlash();
             eventDelegate(EventState.LightHit);
             rb.useGravity = false;
         };
-        abilities[0].onAbilityUpdate = () => 
+        abilities.onAbilityUpdate = () =>
         {
             // Dash Ends without Hit
-            if (MyEpsilon.Epsilon(transform.position.x, dashEndPosition.x, 0.5f))
+            switch (direction)
             {
-                abilities[0].End();
-                return;
+                case Direction.Right:
+                case Direction.Left:
+                    if (MyEpsilon.Epsilon(transform.position.x, dashEndPosition.x, 0.5f))
+                    {
+                        abilities.End();
+                        return;
+                    }
+                    break;
+                case Direction.Down:
+                case Direction.Up:
+                    if (MyEpsilon.Epsilon(transform.position.y, dashEndPosition.y, 0.5f))
+                    {
+                        abilities.End();
+                        return;
+                    }
+                    break;
+                case Direction.RightDownAngel:
+                case Direction.RightUpAngel:
+                case Direction.LeftUpAngel:
+                case Direction.LeftDownAngel:
+                    if (MyEpsilon.Epsilon(transform.position.x, dashEndPosition.x, 0.5f) && MyEpsilon.Epsilon(transform.position.y, dashEndPosition.y, 0.5f))
+                    {
+                        abilities.End();
+                        return;
+                    }
+                    break;
             }
             // Dash Ends with hitting the enemy 
-            if(!abilities[0].hitObject && xNormalHitBox)
+            if(!abilities.hitObject)
             {
-                abilities[0].hitObject = true;
-                enemyCharacter.Damage(abilities[0].GetDamage());
-                enemyCharacter.KickAway(transform.position, false);
-
-                freezCamAction();
-                abilities[0].End();
-                return;
+                switch(direction)
+                {
+                    case Direction.Right:
+                    case Direction.Left:
+                        if(xNormalHitBox)
+                        {
+                            DoDamage();
+                            return;
+                        }
+                        break;
+                    case Direction.Up:
+                        if(xUpHitBox)
+                        {
+                            DoDamage();
+                            return;
+                        }
+                        break;
+                    case Direction.Down:
+                        if(xDownHitBox)
+                        {
+                            DoDamage();
+                            return;
+                        }
+                        break;
+                    case Direction.RightDownAngel:
+                    case Direction.LeftDownAngel:
+                        if (xDownHitAngeldBox)
+                        {
+                            DoDamage();
+                            return;
+                        }
+                        break;
+                    case Direction.RightUpAngel:
+                    case Direction.LeftUpAngel:
+                        if (xUpHitAngeldBox)
+                        {
+                            DoDamage();
+                            return;
+                        }
+                        break;
+                }
             }
             // Lerp the Dash
             travel += dashSpeed * Time.deltaTime;
             float curvePercent = curve.Evaluate(travel);
             this.transform.position = Vector3.LerpUnclamped(dashStartPosition, dashEndPosition, curvePercent);
         };
-        abilities[0].onAbilityCancel = () =>
+        abilities.onAbilityCancel = () =>
         {
             trail.SetActive(false);
 
+            rb.velocity = Vector3.zero;
             rb.useGravity = true;
             EndAttacking();
             isUsingAbility = false;
             travel = 0;
         };
-        abilities[0].onAbilityEnd = () =>
+        abilities.onAbilityEnd = () =>
         {
             trail.SetActive(false);
 
+            rb.velocity = Vector3.zero;
             rb.useGravity = true;
             EndAttacking();
             isUsingAbility = false;
             travel = 0;
         };
-        abilities[0].onAbilityReady = () => { };
-        #endregion
-        #region Ability Up Dash
-        // "X" Attack Up
-        abilities[1].onAbilityStart = () =>
-        {
-            isUsingAbility = true;
-            IsAttacking();
-
-            // Find dash End and Start point
-            dashEndPosition = MyRayCast.RaycastUp(transform.position, attackLength);
-            dashStartPosition = transform.position;
-
-            trail.SetActive(true);
-
-            PartilceSlash();
-            eventDelegate(EventState.LightHit);
-            rb.useGravity = false;
-        };
-        abilities[1].onAbilityUpdate = () =>
-        {
-            // Dash Ends without Hit
-            if (MyEpsilon.Epsilon(transform.position.y, dashEndPosition.y, 0.5f))
-            {
-                abilities[1].End();
-                return;
-            }
-            // Dash Ends with hitting the enemy 
-            if (!abilities[1].hitObject && xNormalHitBox)
-            {
-                abilities[1].hitObject = true;
-                enemyCharacter.Damage(abilities[1].GetDamage());
-                enemyCharacter.KickAway(transform.position, false);
-
-                freezCamAction();
-                abilities[1].End();
-                return;
-            }
-            // Lerp the Dash
-            travel += dashSpeed * Time.deltaTime;
-            float curvePercent = curve.Evaluate(travel);
-            this.transform.position = Vector3.LerpUnclamped(dashStartPosition, dashEndPosition, curvePercent);
-        };
-        abilities[1].onAbilityCancel = () =>
-        {
-            trail.SetActive(false);
-
-            rb.useGravity = true;
-            EndAttacking();
-            isUsingAbility = false;
-            travel = 0;
-        };
-        abilities[1].onAbilityEnd = () =>
-        {
-            trail.SetActive(false);
-
-            rb.useGravity = true;
-            EndAttacking();
-            isUsingAbility = false;
-            travel = 0;
-        };
-        abilities[1].onAbilityReady = () => { };
-        #endregion
-        #region Ability Down Dash
-        // "X" Attack Up
-        abilities[2].onAbilityStart = () =>
-        {
-            isUsingAbility = true;
-            IsAttacking();
-
-            // Find dash End and Start point
-            dashEndPosition = MyRayCast.RaycastDown(transform.position, attackLength);
-            dashStartPosition = transform.position;
-
-            trail.SetActive(true);
-
-            PartilceSlash();
-            eventDelegate(EventState.LightHit);
-            rb.useGravity = false;
-        };
-        abilities[2].onAbilityUpdate = () =>
-        {
-            // Dash Ends without Hit
-            if (MyEpsilon.Epsilon(transform.position.y, dashEndPosition.y, 0.5f))
-            {
-                abilities[2].End();
-                return;
-            }
-            // Dash Ends with hitting the enemy 
-            if (!abilities[2].hitObject && xNormalHitBox)
-            {
-                abilities[2].hitObject = true;
-                enemyCharacter.Damage(abilities[2].GetDamage());
-                enemyCharacter.KickAway(transform.position, false);
-
-                freezCamAction();
-                abilities[2].End();
-                return;
-            }
-            // Lerp the Dash
-            travel += dashSpeed * Time.deltaTime;
-            float curvePercent = curve.Evaluate(travel);
-            this.transform.position = Vector3.LerpUnclamped(dashStartPosition, dashEndPosition, curvePercent);
-        };
-        abilities[2].onAbilityCancel = () =>
-        {
-            trail.SetActive(false);
-
-            rb.useGravity = true;
-            EndAttacking();
-            isUsingAbility = false;
-            travel = 0;
-        };
-        abilities[2].onAbilityEnd = () =>
-        {
-            trail.SetActive(false);
-
-            rb.useGravity = true;
-            EndAttacking();
-            isUsingAbility = false;
-            travel = 0;
-        };
-        abilities[2].onAbilityReady = () => { };
-        #endregion
-        #region Ability Down Angeled
-        // "X" Attack down Angeld in View Direction
-        abilities[3].onAbilityStart = () =>
-        {
-            isUsingAbility = true;
-            IsAttacking();
-
-            // Find dash End and Start point
-            dashEndPosition = MyRayCast.RayCastDownAngeled(transform, attackLength, IsLookingRight());
-            dashStartPosition = transform.position;
-
-            trail.SetActive(true);
-
-            PartilceSlash();
-            eventDelegate(EventState.LightHit);
-            rb.useGravity = false;
-        };
-        abilities[3].onAbilityUpdate = () =>
-        {
-            // Dash Ends without Hit
-            if (MyEpsilon.Epsilon(transform.position.x, dashEndPosition.x, 0.5f))
-            {
-                abilities[3].End();
-                return;
-            }
-            // Dash Ends with hitting the enemy 
-            if (!abilities[3].hitObject && xNormalHitBox)
-            {
-                abilities[3].hitObject = true;
-                enemyCharacter.Damage(abilities[3].GetDamage());
-                enemyCharacter.KickAway(transform.position, false);
-
-                freezCamAction();
-                abilities[3].End();
-                return;
-            }
-            // Lerp the Dash
-            travel += dashSpeed * Time.deltaTime;
-            float curvePercent = curve.Evaluate(travel);
-            this.transform.position = Vector3.LerpUnclamped(dashStartPosition, dashEndPosition, curvePercent);
-        };
-        abilities[3].onAbilityCancel = () =>
-        {
-            trail.SetActive(false);
-
-            rb.useGravity = true;
-            EndAttacking();
-            isUsingAbility = false;
-            travel = 0;
-        };
-        abilities[3].onAbilityEnd = () =>
-        {
-            trail.SetActive(false);
-
-            rb.useGravity = true;
-            EndAttacking();
-            isUsingAbility = false;
-            travel = 0;
-        };
-        abilities[3].onAbilityReady = () => { };
-        #endregion
-        #region Ability Up Angeled
-        // "X" Attack Up Angeld in View Direction
-        abilities[4].onAbilityStart = () =>
-        {
-            isUsingAbility = true;
-            IsAttacking();
-
-            // Find dash End and Start point
-            dashEndPosition = MyRayCast.RayCastUpAngeled(transform, attackLength, IsLookingRight());
-            dashStartPosition = transform.position;
-
-            trail.SetActive(true);
-
-            PartilceSlash();
-            eventDelegate(EventState.LightHit);
-            rb.useGravity = false;
-        };
-        abilities[4].onAbilityUpdate = () =>
-        {
-            // Dash Ends without Hit
-            if (MyEpsilon.Epsilon(transform.position.x, dashEndPosition.x, 0.5f))
-            {
-                abilities[4].End();
-                return;
-            }
-            // Dash Ends with hitting the enemy 
-            if (!abilities[4].hitObject && xNormalHitBox)
-            {
-                abilities[4].hitObject = true;
-                enemyCharacter.Damage(abilities[4].GetDamage());
-                enemyCharacter.KickAway(transform.position, false);
-
-                freezCamAction();
-                abilities[4].End();
-                return;
-            }
-            // Lerp the Dash
-            travel += dashSpeed * Time.deltaTime;
-            float curvePercent = curve.Evaluate(travel);
-            this.transform.position = Vector3.LerpUnclamped(dashStartPosition, dashEndPosition, curvePercent);
-        };
-        abilities[4].onAbilityCancel = () =>
-        {
-            trail.SetActive(false);
-
-            rb.useGravity = true;
-            EndAttacking();
-            isUsingAbility = false;
-            travel = 0;
-        };
-        abilities[4].onAbilityEnd = () =>
-        {
-            trail.SetActive(false);
-
-            rb.useGravity = true;
-            EndAttacking();
-            isUsingAbility = false;
-            travel = 0;
-        };
-        abilities[4].onAbilityReady = () => { };
+        abilities.onAbilityReady = () => { };
         #endregion
 
         #region Copie
@@ -471,13 +277,22 @@ public class Nav2 : MyCharacter
         #endregion
     }
 
+    void DoDamage()
+    {
+        abilities.hitObject = true;
+        enemyCharacter.Damage(abilities.GetDamage());
+        enemyCharacter.KickAway(transform.position, false);
+        
+        freezCamAction();
+        abilities.End();
+    }
     void Update()
     {
         if (isDisabled)
         {
             // Bounce Ray
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, new Vector3(rb.velocity.x, rb.velocity.y, 0), out hit, 2, 9, QueryTriggerInteraction.Ignore))
+            if (MyRayCast.RayCastInDirection(transform.position, new Vector3(rb.velocity.x, rb.velocity.y, 0), out hit, 2))
             {
                 // End Bounce
                 if (lastBounceObj == hit.transform.gameObject)
@@ -500,12 +315,7 @@ public class Nav2 : MyCharacter
                 EndDisable();
             }
         }
-
-        // Update each ability every frame
-        for (int i = 0; i < abilities.Length; i++)
-        {
-            abilities[i].Update();
-        }
+        abilities.Update();
     }
 
     
@@ -513,7 +323,7 @@ public class Nav2 : MyCharacter
     {
         if (IsFalling() && !isUsingAbility && !isDisabled)
         {
-            abilities[0].Activate();
+            abilities.Activate();
         }
     }
     void LightAttackRight()
@@ -521,7 +331,7 @@ public class Nav2 : MyCharacter
         if (IsFalling() && !isUsingAbility && !isDisabled)
         {
             LookRight();
-            abilities[0].Activate();
+            abilities.Activate();
         }
     }
     void LightAttackLeft()
@@ -529,25 +339,25 @@ public class Nav2 : MyCharacter
         if (IsFalling() && !isUsingAbility && !isDisabled)
         {
             LookLeft();
-            abilities[0].Activate();
+            abilities.Activate();
         }
     }
     void LightAttackUp()
     {
         if (!isUsingAbility && IsFalling() && !isDisabled)
-            abilities[1].Activate();
+            abilities.Activate();
     }
     void LightAttackDown()
     {
         if (IsFalling() && !isUsingAbility && !isDisabled)
-            abilities[2].Activate();
+            abilities.Activate();
     }
     void LightAttackRightUp()
     {
         if (IsFalling() && !isUsingAbility && !isDisabled)
         {
             LookRight();
-            abilities[4].Activate();
+            abilities.Activate();
         }
     }
     void LightAttackRightDown()
@@ -555,7 +365,7 @@ public class Nav2 : MyCharacter
         if (IsFalling() && !isUsingAbility && !isDisabled)
         {
             LookRight();
-            abilities[3].Activate();
+            abilities.Activate();
         }
     }
     void LightAttackLefttUp()
@@ -563,7 +373,7 @@ public class Nav2 : MyCharacter
         if (IsFalling() && !isUsingAbility && !isDisabled)
         {
             LookLeft();
-            abilities[4].Activate();
+            abilities.Activate();
         }
     }
     void LightAttackLeftDown()
@@ -571,7 +381,7 @@ public class Nav2 : MyCharacter
         if (IsFalling() && !isUsingAbility && !isDisabled)
         {
             LookLeft();
-            abilities[3].Activate();
+            abilities.Activate();
         }
     }
 }

@@ -2327,7 +2327,7 @@ GameObject:
   - component: {fileID: 65295816204102150}
   - component: {fileID: 114298274454613744}
   m_Layer: 2
-  m_Name: SpecialHitUpCollider
+  m_Name: XHitUpAngeldCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4404,13 +4404,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1614292055463416}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.08, y: 0.96000004, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -0.38268343, w: 0.92387956}
+  m_LocalPosition: {x: 0.59, y: 0.98, z: 0}
   m_LocalScale: {x: 1.9126438, y: 0.36981, z: 1}
   m_Children: []
   m_Father: {fileID: 4127292380663748}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
 --- !u!4 &4119555584127444
 Transform:
   m_ObjectHideFlags: 1
@@ -5431,13 +5431,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1709496395792200}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.01, y: -1.04, z: 0}
-  m_LocalScale: {x: 1.7948989, y: 0.36981, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
+  m_LocalPosition: {x: 0.6, y: -0.76, z: 0}
+  m_LocalScale: {x: 1.6163806, y: 0.36981, z: 1}
   m_Children: []
   m_Father: {fileID: 4127292380663748}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
 --- !u!4 &4353166336051194
 Transform:
   m_ObjectHideFlags: 1
@@ -7908,6 +7908,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  renderer: {fileID: 137167389940605586}
+  EndColor: {r: 1, g: 1, b: 1, a: 1}
   isDashing: 0
   canDash: 0
   canMove: 1
@@ -7933,7 +7935,7 @@ MonoBehaviour:
   UpDivider: 1
   startForce: 30
   startForceUp: 100
-  X: 0
+  X: 0.2
   playerEnum: 0
   canGetDamaged: 1
   isDisabled: 0
@@ -7961,6 +7963,8 @@ MonoBehaviour:
   xNormalHitBox: 0
   xUpHitBox: 0
   xDownHitBox: 0
+  xUpHitAngeldBox: 0
+  xDownHitAngeldBox: 0
   sUpHitBox: 0
   sDownHitBox: 0
   hasSlider: 0
@@ -8006,7 +8010,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48efab059d33f84b952ff8f312d1e25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisionEnum: 4
+  collisionEnum: 3
   player: {fileID: 1705125410865688}
 --- !u!114 &114461466151851852
 MonoBehaviour:
@@ -8065,7 +8069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48efab059d33f84b952ff8f312d1e25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisionEnum: 5
+  collisionEnum: 4
   player: {fileID: 1705125410865688}
 --- !u!136 &136502791406690800
 CapsuleCollider:

@@ -13,6 +13,55 @@ public static class MyRayCast
         return Mathf.Sqrt(pow + pow);
     }
 
+    public static bool RayCastInDirection(Vector3 position, Vector3 direction, out RaycastHit hit, float length)
+    {
+        RaycastHit coreHit;
+        RaycastHit headHit;
+        RaycastHit feedHit;
+
+        float coreDis = 100;
+        float headDis = 100;
+        float feedDis = 100;
+
+        bool didHit = false;
+
+        if (Physics.Raycast(position, direction, out coreHit, length, 9, QueryTriggerInteraction.Ignore))
+        {
+            coreDis = Vector3.Distance(position, coreHit.point);
+            didHit = true;
+        }
+        if (Physics.Raycast(new Vector3(position.x, position.y + head, 0), direction, out headHit, length, 9, QueryTriggerInteraction.Ignore))
+        {
+            headDis = Vector3.Distance(new Vector3(position.x, position.y + head, 0), coreHit.point);
+            didHit = true;
+        }
+        if (Physics.Raycast(new Vector3(position.x, position.y - feed, 0), direction, out feedHit, length, 9, QueryTriggerInteraction.Ignore))
+        {
+            feedDis = Vector3.Distance(new Vector3(position.x, position.y - feed, 0), coreHit.point);
+            didHit = true;
+        }
+
+
+        if (coreDis < headDis && coreDis < feedDis)
+        {
+            hit = coreHit;
+        }
+        else if(headDis < coreDis && headDis < feedDis)
+        {
+            hit = headHit;
+        }
+        else if(feedDis < coreDis && feedDis < headDis)
+        {
+            hit = feedHit;
+        }
+        else
+        {
+            hit = new RaycastHit();
+        }
+
+        return didHit;          
+    }
+
     /// <summary>
     /// returns a Position thats in front of the Character at an angle 45° Up
     /// </summary>

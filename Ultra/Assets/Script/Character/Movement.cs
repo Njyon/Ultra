@@ -120,7 +120,7 @@ public class Movement : MonoBehaviour
                 fallComp.eventDelegate += EventCheck;
 
 
-                InputManager.p1_OnKeyPressed += P1_CheckInputDown;
+                InputManager.p1_OnKeyPressed += CheckInputDown;
 
                 break;
             case PlayerEnum.PlayerTwo:
@@ -136,7 +136,7 @@ public class Movement : MonoBehaviour
                 dash.eventDelegate += EventCheck;
                 fallComp.eventDelegate += EventCheck;
 
-                InputManager.p2_OnKeyPressed += P2_CheckInputDown;
+                InputManager.p2_OnKeyPressed += CheckInputDown;
 
                 break;
             case PlayerEnum.NotAssigned:
@@ -163,7 +163,7 @@ public class Movement : MonoBehaviour
                 fallComp.eventDelegate -= EventCheck;
 
 
-                InputManager.p1_OnKeyPressed -= P1_CheckInputDown;
+                InputManager.p1_OnKeyPressed -= CheckInputDown;
                 break;
             case PlayerEnum.PlayerTwo:
                 InputManager.P2_LeftStickRightAction -= MoveRight;
@@ -178,7 +178,7 @@ public class Movement : MonoBehaviour
                 dash.eventDelegate -= EventCheck;
                 fallComp.eventDelegate -= EventCheck;
 
-                InputManager.p2_OnKeyPressed -= P2_CheckInputDown;
+                InputManager.p2_OnKeyPressed -= CheckInputDown;
                 break;
             case PlayerEnum.NotAssigned:
                 Debug.Log("<color=red> MovementClass cant Find the PlayerEnum </color>");
@@ -186,27 +186,16 @@ public class Movement : MonoBehaviour
         }
     }
 
-    void P1_CheckInputUp(KeyCode keyCode)
+    void CheckInputUp(KeyCode keyCode)
     {
         
     }
-    void P1_CheckInputDown(KeyCode keyCode)
+    void CheckInputDown(KeyCode keyCode)
     {
-        if (keyCode == KeyCode.Joystick1Button0 && canMove)
+        if (keyCode == KeyCode.Joystick1Button0 || keyCode == KeyCode.Joystick2Button0)
         {
-            Jump();
-        }
-    }
-
-    void P2_CheckInputUp(KeyCode keyCode)
-    {
-
-    }
-    void P2_CheckInputDown(KeyCode keyCode)
-    {
-        if (keyCode == KeyCode.Joystick2Button0 && canMove)
-        {
-            Jump();
+            if(canMove)
+                Jump();
         }
     }
 
@@ -215,6 +204,7 @@ public class Movement : MonoBehaviour
     //////////////////////////////////////////////////
 
     //      Public      //
+
     public bool CanMove()
     {
         return canMove;
