@@ -71,19 +71,19 @@ public static class MyRayCast
     public static Vector3 RayCastUpAngeled(Transform charPosition, float length, bool right)
     {
         RaycastHit hit;
-        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + head, 0),charPosition.right + charPosition.up, out hit, AngelLength(length), 9, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + head, 0),charPosition.right + charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
         {
             return new Vector3(hit.point.x, hit.point.y - head, 0);
         }
         else
         {
-            if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + feed, 0), charPosition.right + charPosition.up, out hit, AngelLength(length), 9, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + feed, 0), charPosition.right + charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
                 return new Vector3(hit.point.x, hit.point.y - feed, 0);
             }
             else
             {
-                if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y, 0), charPosition.right + charPosition.up, out hit, AngelLength(length), 9, QueryTriggerInteraction.Ignore))
+                if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y, 0), charPosition.right + charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
                 {
                     return hit.point;
                 }
@@ -91,11 +91,15 @@ public static class MyRayCast
             
             if(right)
             {
-                return new Vector3(charPosition.position.x + length, charPosition.position.y + length, 0);
+                float a = length * Mathf.Cos(45);
+                float b = Mathf.Sqrt(Mathf.Pow(length, 2) - Mathf.Pow(a, 2));
+                return new Vector3(charPosition.position.x + b, charPosition.position.y + a, 0);
             }
             else
             {
-                return new Vector3(charPosition.position.x - length, charPosition.position.y + length, 0);
+                float a = length * Mathf.Cos(45);
+                float b = Mathf.Sqrt(Mathf.Pow(length, 2) - Mathf.Pow(a, 2));
+                return new Vector3(charPosition.position.x - b, charPosition.position.y + a, 0);
             }
         }
     }
@@ -108,19 +112,19 @@ public static class MyRayCast
     public static Vector3 RayCastDownAngeled(Transform charPosition, float length, bool right)
     {
         RaycastHit hit;
-        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + head, 0), charPosition.right + -charPosition.up, out hit, AngelLength(length), 9, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + head, 0), charPosition.right + -charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
         {
             return new Vector3(hit.point.x, hit.point.y - head, 0);
         }
         else
         {
-            if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + feed, 0), charPosition.right + -charPosition.up, out hit, AngelLength(length), 9, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + feed, 0), charPosition.right + -charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
                 return new Vector3(hit.point.x, hit.point.y - feed, 0);
             }
             else
             {
-                if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y, 0), charPosition.right + -charPosition.up, out hit, AngelLength(length), 9, QueryTriggerInteraction.Ignore))
+                if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y, 0), charPosition.right + -charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
                 {
                     return hit.point;
                 }
@@ -128,11 +132,15 @@ public static class MyRayCast
 
             if(right)
             {
-                return new Vector3(charPosition.position.x + length, charPosition.position.y - length, 0);
+                float a = length * Mathf.Cos(45);
+                float b = Mathf.Sqrt(Mathf.Pow(length, 2) - Mathf.Pow(a, 2));
+                return new Vector3(charPosition.position.x + b, charPosition.position.y - a, 0);
             }
             else
             {
-                return new Vector3(charPosition.position.x - length, charPosition.position.y - length, 0);
+                float a = length * Mathf.Cos(45);
+                float b = Mathf.Sqrt(Mathf.Pow(length, 2) - Mathf.Pow(a, 2));
+                return new Vector3(charPosition.position.x - b, charPosition.position.y - a, 0);
             }
         }
     }

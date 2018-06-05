@@ -26,7 +26,7 @@ public class SuperCam : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Players.Add(FocusLevel.gameObject);
+       Players.Add(FocusLevel.gameObject);
     }
 
     public void AddPlayer(GameObject player)
