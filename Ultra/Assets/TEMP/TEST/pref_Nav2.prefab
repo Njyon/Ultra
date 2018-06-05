@@ -877,7 +877,7 @@ GameObject:
   - component: {fileID: 33549350700002352}
   - component: {fileID: 65422176571217754}
   - component: {fileID: 114768661898730560}
-  m_Layer: 9
+  m_Layer: 2
   m_Name: XHitDownCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2739,7 +2739,7 @@ GameObject:
   - component: {fileID: 33382395420809148}
   - component: {fileID: 65339760618173972}
   - component: {fileID: 114995389455278132}
-  m_Layer: 9
+  m_Layer: 2
   m_Name: SpecialHitDownCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4017,8 +4017,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1784790917502508}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.39, y: 0.96, z: 0}
-  m_LocalScale: {x: 1.1004562, y: 0.36980644, z: 1}
+  m_LocalPosition: {x: 0.39, y: 0.974, z: 0}
+  m_LocalScale: {x: 1.5616232, y: 0.5787707, z: 1}
   m_Children: []
   m_Father: {fileID: 4127292380663748}
   m_RootOrder: 1
@@ -4406,7 +4406,7 @@ Transform:
   m_GameObject: {fileID: 1614292055463416}
   m_LocalRotation: {x: 0, y: 0, z: -0.38268343, w: 0.92387956}
   m_LocalPosition: {x: 0.59, y: 0.98, z: 0}
-  m_LocalScale: {x: 1.9126438, y: 0.36981, z: 1}
+  m_LocalScale: {x: 1.9126438, y: 0.45994785, z: 1}
   m_Children: []
   m_Father: {fileID: 4127292380663748}
   m_RootOrder: 3
@@ -4988,7 +4988,7 @@ Transform:
   m_GameObject: {fileID: 1196735989709930}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.069999, y: -1.06, z: 0}
-  m_LocalScale: {x: 0.9350366, y: 0.36981, z: 1}
+  m_LocalScale: {x: 1.5736872, y: 0.6192913, z: 1}
   m_Children: []
   m_Father: {fileID: 4127292380663748}
   m_RootOrder: 2
@@ -5433,7 +5433,7 @@ Transform:
   m_GameObject: {fileID: 1709496395792200}
   m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
   m_LocalPosition: {x: 0.6, y: -0.76, z: 0}
-  m_LocalScale: {x: 1.6163806, y: 0.36981, z: 1}
+  m_LocalScale: {x: 1.6163806, y: 0.54352695, z: 1}
   m_Children: []
   m_Father: {fileID: 4127292380663748}
   m_RootOrder: 4
@@ -8045,6 +8045,8 @@ MonoBehaviour:
   fallSpeed: 3
   maxFallVelocity: 7.8
   maxJumps: 3
+  maxVelocityX: 1000
+  maxVelocityY: 1000
 --- !u!114 &114768661898730560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8056,7 +8058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48efab059d33f84b952ff8f312d1e25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisionEnum: 3
+  collisionEnum: 5
   player: {fileID: 1705125410865688}
 --- !u!114 &114995389455278132
 MonoBehaviour:

@@ -37,6 +37,10 @@ public class Movement : MonoBehaviour
     [Range(5, 30)] public float maxFallVelocity;
     [Header("How much Jumps in a Row")] public int maxJumps;
 
+    [Header("Velocity")]
+    [SerializeField] float maxVelocityX;
+    [SerializeField] float maxVelocityY;
+
     //Delegates
     public delegate void EventDelegate(EventState eventState);
     public EventDelegate eventDelegate;
@@ -55,10 +59,11 @@ public class Movement : MonoBehaviour
         if (myCharacter == null && dash == null && turnclass == null && fallComp == null)
             return;
 
+        VelocityCheck();
 
         fallComp.Falling();
         dash.Dashing(fallComp.isFalling);
-        WallSlide();
+        //WallSlide();
         turnclass.IUpdate(this.transform);
 
     }
@@ -343,7 +348,7 @@ public class Movement : MonoBehaviour
         {
             if (!MyRayCast.RayCastHitLeft(transform.position, wallDetectionLength))
             {
-                fallComp.isOnWallRight = false;
+                fallComp.isOnWallLeft = false;
             }
             dash.currentDashes = 0;
             eventDelegate(EventState.OnWall);
@@ -379,6 +384,17 @@ public class Movement : MonoBehaviour
     {
         forcingDown = false;
     }
+    void VelocityCheck()
+    {
+        if(rb.velocity.x > maxVelocityX)
+        {
+            rb.velocity = new Vector3(maxVelocityX, rb.velocity.y, 0);
+        }
+        if(rb.velocity.y > maxVelocityY)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, maxVelocityY, 0);
+        }
+    }
 
     //////////////////////////////////////////////////
     //////////////// Movement Functions //////////////
@@ -388,6 +404,12 @@ public class Movement : MonoBehaviour
     {
         if (!this.canMove || !dash.canMove)
             return;
+
+        RaycastHit hit;
+        if (MyRayCast.RayCastHitDown(transform.position, 1, out hit))
+        {
+
+        }
 
         islookingToTheRight = true;
         fallComp.fallStraight = false;
@@ -470,6 +492,7 @@ public class Movement : MonoBehaviour
     }
     void Jump()
     {
+        Debug.Log("Right " + fallComp.isOnWallRight + " Left " + fallComp.isOnWallLeft);
         if (myCharacter.isDisabled)
             return;
 
@@ -495,12 +518,12 @@ public class Movement : MonoBehaviour
         {
             if (this.gameObject.transform.position.x < 0)
             {
-                this.rb.velocity = Vector3.up * jumpVelocity + Vector3.left * jumpVelocity;
+                this.rb.velocity = Vector3.up * jumpVelocity + Vector3.left * jumpVelocity / 1.3f;
                 jumps++;
             }
             else
             {
-                this.rb.velocity = Vector3.up * jumpVelocity + Vector3.left * jumpVelocity;
+                this.rb.velocity = Vector3.up * jumpVelocity + Vector3.left * jumpVelocity / 1.3f;
                 jumps++;
             }
             turnclass.LookLeft(this.transform.rotation);
