@@ -53,8 +53,8 @@ public class OneVsOneGameMode : MonoBehaviour
         InGameUI playerOneUI = GameObject.Find("PlayerOneUI").GetComponent<InGameUI>();
         InGameUI playerTwoUI = GameObject.Find("PlayerTwoUI").GetComponent<InGameUI>();
 
-        GameObject camera = GameObject.Find("Main Camera");
-        SuperCam sCam = camera.GetComponent<SuperCam>();
+        GameObject camera = GameObject.Find("CameraRig");
+        CameraControll sCam = camera.GetComponent<CameraControll>();
         switch (character)
         {
             case Characters.Keeram:
@@ -64,7 +64,7 @@ public class OneVsOneGameMode : MonoBehaviour
                     PlayerOne.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerOne;
                     PlayerOne.GetComponent<MyCharacter>().SetUI(playerOneUI);
                     PlayerOne.GetComponent<MyCharacter>().Posses();
-                    sCam.AddPlayer(PlayerOne);
+                    sCam.playerOne = PlayerOne;
                 }
                 else
                 {
@@ -72,7 +72,7 @@ public class OneVsOneGameMode : MonoBehaviour
                     PlayerTwo.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerTwo;
                     PlayerTwo.GetComponent<MyCharacter>().SetUI(playerTwoUI);
                     PlayerTwo.GetComponent<MyCharacter>().Posses();
-                    sCam.AddPlayer(PlayerTwo);
+                    sCam.playerTwo = PlayerTwo;
 
                     //Renderer[] rend = PlayerTwo.GetComponentsInChildren<Renderer>();
                     //rend[1].material = new Material(Shader.Find("Standard"));
@@ -86,7 +86,7 @@ public class OneVsOneGameMode : MonoBehaviour
                     PlayerOne.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerOne;
                     PlayerOne.GetComponent<MyCharacter>().SetUI(playerOneUI);
                     PlayerOne.GetComponent<MyCharacter>().Posses();
-                    sCam.AddPlayer(PlayerOne);
+                    sCam.playerOne = PlayerOne;
 
                     Renderer[] rend = PlayerOne.GetComponentsInChildren<Renderer>();
                     rend[1].material = new Material(rend[1].material);
@@ -99,7 +99,7 @@ public class OneVsOneGameMode : MonoBehaviour
                     PlayerTwo.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerTwo;
                     PlayerTwo.GetComponent<MyCharacter>().SetUI(playerTwoUI);
                     PlayerTwo.GetComponent<MyCharacter>().Posses();
-                    sCam.AddPlayer(PlayerTwo);
+                    sCam.playerTwo = PlayerTwo;
 
                     Renderer[] rend = PlayerTwo.GetComponentsInChildren<Renderer>();
                     rend[1].material = new Material(rend[1].material);

@@ -2691,6 +2691,7 @@ GameObject:
   - component: {fileID: 114220649561549674}
   - component: {fileID: 114496539314454698}
   - component: {fileID: 114203785886896028}
+  - component: {fileID: 114996467066509520}
   m_Layer: 8
   m_Name: pref_Nav2
   m_TagString: player
@@ -7944,22 +7945,7 @@ MonoBehaviour:
   enemyCharacter: {fileID: 0}
   disabledTime: 1
   animator: {fileID: 95805355571353526}
-  ps_JumpOnGround: {fileID: 1377725971517810, guid: 94db14a13420c49469c920cffe171523,
-    type: 2}
-  ps_JumpInAir: {fileID: 1377725971517810, guid: 94db14a13420c49469c920cffe171523,
-    type: 2}
-  ps_Landing: {fileID: 1110817026786226, guid: f6dab85f4044c764b921b7acb08bcc41, type: 2}
-  ps_DashCloudLeft: {fileID: 1464113392381458, guid: 11ee794ec964ce74a9a8f18f775be193,
-    type: 2}
-  ps_DashCloudRight: {fileID: 1065210385180006, guid: a88013fd3c292284fad0de38788eb80e,
-    type: 2}
-  ps_Teleport: {fileID: 1357307924837436, guid: 56f9e4c04a73e2e43a6f172cae13e2f0,
-    type: 2}
-  ps_GetDamaged: {fileID: 100004, guid: f95ff734540a0d749be6571b6cb5b37f, type: 2}
-  ps_Disabled: {fileID: 198217432906260196}
-  trail: {fileID: 1222390778073308}
-  ps_Slash: {fileID: 1044487307734990, guid: fbfaa595268798c48b345bb7280d4566, type: 2}
-  bounce: {fileID: 1040608886635896, guid: a97415c6b57076f41a6621a7b51d63a3, type: 2}
+  pD: {fileID: 114996467066509520}
   xNormalHitBox: 0
   xUpHitBox: 0
   xDownHitBox: 0
@@ -8040,6 +8026,7 @@ MonoBehaviour:
   movementSpeed: 8
   maxInAirSpeed: 8
   inAirAccelerate: 1
+  maxWalkAngel: 70
   jumpVelocity: 14
   jumps: 0
   fallSpeed: 3
@@ -8073,6 +8060,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collisionEnum: 4
   player: {fileID: 1705125410865688}
+--- !u!114 &114996467066509520
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1705125410865688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c02d0925d93a114bbe1a0e4fb75207c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ps_JumpOnGround: {fileID: 1824503055644040, guid: 8c52b1740bbfa374aaa82afd8ee247b6,
+    type: 2}
+  ps_JumpInAir: {fileID: 1824503055644040, guid: 8c52b1740bbfa374aaa82afd8ee247b6,
+    type: 2}
+  ps_Landing: {fileID: 1110817026786226, guid: f6dab85f4044c764b921b7acb08bcc41, type: 2}
+  ps_DashCloudLeft: {fileID: 1065210385180006, guid: a88013fd3c292284fad0de38788eb80e,
+    type: 2}
+  ps_DashCloudRight: {fileID: 1464113392381458, guid: 11ee794ec964ce74a9a8f18f775be193,
+    type: 2}
+  ps_Teleport: {fileID: 1357307924837436, guid: 56f9e4c04a73e2e43a6f172cae13e2f0,
+    type: 2}
+  ps_GetDamaged: {fileID: 100004, guid: f95ff734540a0d749be6571b6cb5b37f, type: 2}
+  ps_Disabled: {fileID: 198217432906260196}
+  trail: {fileID: 1222390778073308}
+  ps_Slash: {fileID: 1044487307734990, guid: fbfaa595268798c48b345bb7280d4566, type: 2}
+  bounce: {fileID: 1040608886635896, guid: a97415c6b57076f41a6621a7b51d63a3, type: 2}
+  attackRight: {fileID: 1360178460187616, guid: fc44116deddf78d4191258cf6fc774bf,
+    type: 2}
+  attackLeft: {fileID: 0}
 --- !u!136 &136502791406690800
 CapsuleCollider:
   m_ObjectHideFlags: 1

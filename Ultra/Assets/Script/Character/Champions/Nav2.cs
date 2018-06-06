@@ -112,7 +112,7 @@ public class Nav2 : MyCharacter
             isUsingAbility = true;
             IsAttacking();
 
-            trail.SetActive(true);
+            pD.trail.SetActive(true);
             
             switch(direction)
             {
@@ -128,6 +128,7 @@ public class Nav2 : MyCharacter
                     {
                         dashEndPosition = MyRayCast.RaycastLeft(transform.position, attackLength);
                         dashStartPosition = transform.position;
+                        Instantiate(pD.attackRight, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
                     }
                     break;
                 case Direction.Up:
@@ -242,7 +243,7 @@ public class Nav2 : MyCharacter
         };
         abilities.onAbilityCancel = () =>
         {
-            trail.SetActive(false);
+            pD.trail.SetActive(false);
 
             rb.velocity = Vector3.zero;
             rb.useGravity = true;
@@ -252,7 +253,7 @@ public class Nav2 : MyCharacter
         };
         abilities.onAbilityEnd = () =>
         {
-            trail.SetActive(false);
+            pD.trail.SetActive(false);
 
             rb.velocity = Vector3.zero;
             rb.useGravity = true;

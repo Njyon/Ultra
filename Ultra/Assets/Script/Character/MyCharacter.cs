@@ -40,30 +40,7 @@ public class MyCharacter : MonoBehaviour
 
     protected GameObject lastBounceObj;
 
-    //////////// Particles ////////////
-
-    [Header("JumpParticle")]
-    public GameObject ps_JumpOnGround;
-    public GameObject ps_JumpInAir;
-    public GameObject ps_Landing;
-
-    [Header("Dash")]
-    public GameObject ps_DashCloudLeft;
-    public GameObject ps_DashCloudRight;
-
-    [Header("Teleport")]
-    public GameObject ps_Teleport;
-
-    [Header("GetDamage")]
-    public GameObject ps_GetDamaged;
-    public ParticleSystem ps_Disabled;
-
-    [Header("Atttack Dash")]
-    public GameObject trail;
-    public GameObject ps_Slash;
-
-    [Header("Bounce")]
-    public GameObject bounce;
+    [SerializeField] protected ParticleData pD;
 
     //////////// Collision ///////////
 
@@ -127,7 +104,7 @@ public class MyCharacter : MonoBehaviour
 
     public void Posses()
     {
-        ps_Disabled.Stop();
+        pD.ps_Disabled.Stop();
 
         movement = gameObject.GetComponent<Movement>();
         movement.AssigneInput();
@@ -277,13 +254,13 @@ public class MyCharacter : MonoBehaviour
                 animator.SetInteger(animState, (int)EventState.Jump);    // Set Animation
                 CancelInvoke();
                 Invoke("Falling", 0.3f);
-                Instantiate(ps_JumpOnGround, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0),  Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y - 90, this.transform.rotation.z));  // Spawn Particle
+                Instantiate(pD.ps_JumpOnGround, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0),  Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y - 90, this.transform.rotation.z));  // Spawn Particle
                 break;
             case EventState.JumpAir:
                 animator.SetInteger(animState, (int)EventState.JumpAir);    // Set Animation
                 CancelInvoke();
                 Invoke("Falling", 0.3f);
-                Instantiate(ps_JumpOnGround, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0), Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y - 90, this.transform.rotation.z));  // Spawn Particle
+                Instantiate(pD.ps_JumpOnGround, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0), Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y - 90, this.transform.rotation.z));  // Spawn Particle
                 break;
             case EventState.JumpOnWall:
                 animator.SetInteger(animState, (int)EventState.JumpOnWall);    // Set Animation
@@ -293,18 +270,18 @@ public class MyCharacter : MonoBehaviour
                 break;
             case EventState.Landing:
                 animator.SetInteger(animState, (int)EventState.Landing);    // Set Animation
-                Instantiate(ps_Landing, new Vector3(this.transform.position.x, this.transform.position.y - 1f, 0), Quaternion.Euler(this.transform.rotation.x + 90, this.transform.rotation.y, this.transform.rotation.z));  // Spawn Particle
+                Instantiate(pD.ps_Landing, new Vector3(this.transform.position.x, this.transform.position.y - 1f, 0), Quaternion.Euler(this.transform.rotation.x + 90, this.transform.rotation.y, this.transform.rotation.z));  // Spawn Particle
                 break;
             case EventState.GetDamaged:
                 animator.SetInteger(animState, (int)EventState.GetDamaged);    // Set Animation
-                Instantiate(ps_GetDamaged, new Vector3(this.transform.position.x, this.transform.position.y, 0), Quaternion.Euler(
+                Instantiate(pD.ps_GetDamaged, new Vector3(this.transform.position.x, this.transform.position.y, 0), Quaternion.Euler(
                         this.transform.position.x - enemy.transform.position.x,
                         this.transform.position.y - enemy.transform.position.y,
                         0));  // Spawn Particle
                 break;
             case EventState.Disable:
                 animator.SetInteger(animState, (int)EventState.Disable);    // Set Animation
-                ps_Disabled.Play();     // Activate Particle Effect
+                pD.ps_Disabled.Play();     // Activate Particle Effect
                 break;
             case EventState.Dodge:
                 animator.SetInteger(animState, (int)EventState.Dodge);    // Set Animation
@@ -313,16 +290,16 @@ public class MyCharacter : MonoBehaviour
                 animator.SetInteger(animState, (int)EventState.Dash);    // Set Animation
                 if(IsLookingRight())
                 {
-                    Instantiate(ps_DashCloudRight, new Vector3(this.transform.position.x - 0.5f, this.transform.position.y - 0.5f, 0), this.transform.rotation);  // Spawn Particle
+                    Instantiate(pD.ps_DashCloudRight, new Vector3(this.transform.position.x - 0.5f, this.transform.position.y - 0.5f, 0), this.transform.rotation);  // Spawn Particle
                 }
                 else
                 {
-                    Instantiate(ps_DashCloudLeft, new Vector3(this.transform.position.x - 0.5f, this.transform.position.y - 0.5f, 0), this.transform.rotation);  // Spawn Particle
+                    Instantiate(pD.ps_DashCloudLeft, new Vector3(this.transform.position.x - 0.5f, this.transform.position.y - 0.5f, 0), this.transform.rotation);  // Spawn Particle
                 }
                 break;
             case EventState.Teleport:
                 animator.SetInteger(animState, (int)EventState.Teleport);    // Set Animation
-                Instantiate(ps_Teleport,new Vector3(this.transform.position.x, this.transform.position.y, 0), this.transform.rotation);  // Spawn Particle
+                Instantiate(pD.ps_Teleport,new Vector3(this.transform.position.x, this.transform.position.y, 0), this.transform.rotation);  // Spawn Particle
                 break;
             case EventState.LightHit:
                 animator.SetInteger(animState, (int)EventState.LightHit);    // Set Animation
@@ -382,8 +359,8 @@ public class MyCharacter : MonoBehaviour
     void Awake()
     {
         spawnPos = transform.position;
-        trail.SetActive(false);
-        ps_Disabled.Stop();
+        pD.trail.SetActive(false);
+        pD.ps_Disabled.Stop();
     }
 
     void Start()
@@ -410,11 +387,11 @@ public class MyCharacter : MonoBehaviour
     {
         if(IsLookingRight())
         {
-            Instantiate(ps_Slash, new Vector3(transform.position.x + 0.5f, transform.position.y + 0, 0), Quaternion.Euler(0, 180, 60), transform);
+            Instantiate(pD.ps_Slash, new Vector3(transform.position.x + 0.5f, transform.position.y + 0, 0), Quaternion.Euler(0, 180, 60), transform);
         }
         else
         {
-            Instantiate(ps_Slash, new Vector3(transform.position.x + 0.5f, transform.position.y + 0, 0), Quaternion.Euler(180, 0, 60), transform);
+            Instantiate(pD.ps_Slash, new Vector3(transform.position.x + 0.5f, transform.position.y + 0, 0), Quaternion.Euler(180, 0, 60), transform);
         }
     }
 
@@ -439,7 +416,7 @@ public class MyCharacter : MonoBehaviour
     {
         movement.CantMove();
         isDisabled = true;
-        ps_Disabled.Play();
+        pD.ps_Disabled.Play();
     }
     /// <summary>
     /// Disables the own character for the amount of param time
@@ -453,7 +430,7 @@ public class MyCharacter : MonoBehaviour
         movement.CantMove();
         isDisabled = true;
         Invoke("EndDisable", time);
-        ps_Disabled.Play();
+        pD.ps_Disabled.Play();
     }
     /// <summary>
     /// Ends the Disable Effect on the own Character
@@ -463,7 +440,7 @@ public class MyCharacter : MonoBehaviour
         lastBounceObj = null;
         movement.CanMoveTrue();
         isDisabled = false;
-        ps_Disabled.Stop();
+        pD.ps_Disabled.Stop();
     }
     /// <summary>
     /// Starts the Stun effect this Character
@@ -503,7 +480,7 @@ public class MyCharacter : MonoBehaviour
 
         Vector3 dir = new Vector3(this.transform.position.x - enemyPos.x, this.transform.position.y - enemyPos.y, 0);
       
-        Instantiate(ps_GetDamaged, transform.position, Quaternion.identity);
+        Instantiate(pD.ps_GetDamaged, transform.position, Quaternion.identity);
 
         if (dir.x < 0)                             // Direction = right
         {
@@ -706,7 +683,7 @@ public class MyCharacter : MonoBehaviour
                     return;
                 }
                 // Spawn Bounce Particle
-                Instantiate(bounce, hit.point, Quaternion.identity);
+                Instantiate(pD.bounce, hit.point, Quaternion.identity);
                 // New Bounce Direction
                 Vector3 direction = Vector3.Reflect(new Vector3(rb.velocity.x, rb.velocity.y, 0), new Vector3(hit.normal.x, hit.normal.y, 0));
                 Debug.DrawLine(transform.position, hit.point);
