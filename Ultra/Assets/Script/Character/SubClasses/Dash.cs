@@ -16,8 +16,8 @@ public class Dash : MonoBehaviour
     // Curves
     public AnimationCurve dashCurve;
 
-    [SerializeField] Renderer renderer;
-    Color startColor;
+    [SerializeField] Renderer rendererCloth;
+    Color startColorCloth;
     [SerializeField] Color EndColor;
 
     // Character Vars
@@ -39,8 +39,7 @@ public class Dash : MonoBehaviour
 
     private void Start()
     {
-        renderer.material.SetColor("_EmissionColor", Color.cyan);
-        startColor = renderer.material.GetColor("_EmissionColor");
+        startColorCloth = rendererCloth.material.GetColor("_EmissionColor");
     }
 
     public void DashCheck()
@@ -196,7 +195,7 @@ public class Dash : MonoBehaviour
         float elapsedTime = 0;
         float colorTime = 0;
         bool positive = true;
-        Color color;
+        Color colorCloth;
         while(elapsedTime < time)
         {
             if(colorTime > 1)
@@ -217,17 +216,21 @@ public class Dash : MonoBehaviour
                 colorTime -= Time.deltaTime;
             }
 
-            color = Color.Lerp(startColor, EndColor, colorTime);
-            renderer.material.SetColor("_EmissionColor", color);
+            colorCloth = Color.Lerp(startColorCloth, EndColor, colorTime);
+            rendererCloth.material.SetColor("_EmissionColor", colorCloth);
+
             elapsedTime += Time.deltaTime;
             yield return null;
         }
         myCharacter.canGetDamaged = true;
         while(colorTime < 1)
         {
+
             colorTime += Time.deltaTime;
-            color = Color.Lerp(EndColor, startColor, colorTime);
-            renderer.material.SetColor("_EmissionColor", color);
+
+            colorCloth = Color.Lerp(EndColor, startColorCloth , colorTime);
+            rendererCloth.material.SetColor("_EmissionColor", colorCloth);
+
             yield return null;
         }
         yield return null;

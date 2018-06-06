@@ -7736,6 +7736,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  rendererCloth: {fileID: 137084192840093164}
+  EndColor: {r: 1, g: 1, b: 1, a: 1}
   isDashing: 0
   canDash: 0
   canMove: 1
@@ -7797,11 +7799,14 @@ MonoBehaviour:
   movementSpeed: 8
   maxInAirSpeed: 8
   inAirAccelerate: 1
+  maxWalkAngel: 0
   jumpVelocity: 14
   jumps: 0
   fallSpeed: 3
   maxFallVelocity: 7.8
   maxJumps: 3
+  maxVelocityX: 0
+  maxVelocityY: 0
 --- !u!114 &114580614076684540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7820,6 +7825,7 @@ MonoBehaviour:
   UpDivider: 1
   startForce: 30
   startForceUp: 100
+  X: 0
   playerEnum: 0
   canGetDamaged: 1
   isDisabled: 0
@@ -7828,23 +7834,12 @@ MonoBehaviour:
   enemyCharacter: {fileID: 0}
   disabledTime: 1
   animator: {fileID: 95797245075637454}
-  ps_JumpOnGround: {fileID: 1377725971517810, guid: 94db14a13420c49469c920cffe171523,
-    type: 2}
-  ps_JumpInAir: {fileID: 1377725971517810, guid: 94db14a13420c49469c920cffe171523,
-    type: 2}
-  ps_Landing: {fileID: 1110817026786226, guid: f6dab85f4044c764b921b7acb08bcc41, type: 2}
-  ps_DashCloudLeft: {fileID: 1464113392381458, guid: 11ee794ec964ce74a9a8f18f775be193,
-    type: 2}
-  ps_DashCloudRight: {fileID: 1065210385180006, guid: a88013fd3c292284fad0de38788eb80e,
-    type: 2}
-  ps_Teleport: {fileID: 1357307924837436, guid: 56f9e4c04a73e2e43a6f172cae13e2f0,
-    type: 2}
-  ps_GetDamaged: {fileID: 1926702151632390, guid: cb19a31facf23154baad1ba04a129c16,
-    type: 2}
-  ps_Disabled: {fileID: 198769989575872116}
+  pD: {fileID: 0}
   xNormalHitBox: 0
   xUpHitBox: 0
   xDownHitBox: 0
+  xUpHitAngeldBox: 0
+  xDownHitAngeldBox: 0
   sUpHitBox: 0
   sDownHitBox: 0
   hasSlider: 0

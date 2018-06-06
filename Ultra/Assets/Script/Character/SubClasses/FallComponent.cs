@@ -93,7 +93,7 @@ public class FallComponent
     {
         if (!dash.isDashing && !myCharacter.isDisabled)
         {
-            if (MyRayCast.RayCastHitDown(transform.position, 1))
+            if (MyRayCast.RayCastHitDown(transform.position, 0.8f))
             {
                 if (isFalling && rb.velocity.y <= 0)
                     if(eventDelegate != null)
@@ -109,15 +109,56 @@ public class FallComponent
                     dash.currentDashes = 0;
 
                 //myCharacter.isDisabled = false;
-                
+
+                float winkel = 0;
+                float vL = 0;
+                float uL = 0;
+                Vector3 u = Vector3.zero;
+                Vector3 v = new Vector3(0, 1, 0);
+                Vector3 dir = Vector3.zero;
+                RaycastHit hit;
+                // Cast a Ray to find the Normal
+                if (MyRayCast.RayCastHitDown(transform.position, 1.5f, out hit))
+                {
+                    // switch x & y from the normal to get the direction
+                    // inventier X from dir to get the right Direction
+                    dir = new Vector3(hit.normal.y * -1, hit.normal.x, 0);
+                    u = new Vector3(hit.normal.y * -1, hit.normal.x, 0);
+                }
+                // Get the Dot product from the direction and the gound ( Ground always (0,1,0))
+                float dot = Vector3.Dot(u, v);
+
+                // Get Lenght from u and v
+                uL = Mathf.Sqrt(Mathf.Pow(u.x, 2) + Mathf.Pow(u.y, 2) + 0);
+                vL = Mathf.Sqrt(Mathf.Pow(v.x, 2) + Mathf.Pow(v.y, 2) + 0);
+
+                // Get the Angle (Angle between two Vectors (u & v))
+                winkel = Mathf.Acos(dot / (uL * vL));
+                // winkel = amount between 0 and Pi
+                // Change winkel to an amount between 0 and 360
+                winkel = winkel * 180 / Mathf.PI;
+                // flip the winkel 90°
+                winkel -= 90;
+                // change winkel above 90° so the result is the same on each side
+                if (winkel > 90)
+                {
+                    winkel = 180 - winkel;
+                }
+
+                if(winkel < 70)
+                {
+                    rb.velocity = Vector3.zero; // Deactive Velocity
+                }
+
                 return this.isFalling = false;
             }
             else
             {
                 return isFalling = true;
             }
+
         }
-        return true;
+        return false;
     }
     void FallingWallDetection()
     {

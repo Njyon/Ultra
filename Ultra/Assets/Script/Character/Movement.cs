@@ -60,8 +60,6 @@ public class Movement : MonoBehaviour
         if (myCharacter == null && dash == null && turnclass == null && fallComp == null)
             return;
 
-        Debug.Log(fallComp.isFalling);
-
         VelocityCheck();
 
         fallComp.Falling();
@@ -359,7 +357,8 @@ public class Movement : MonoBehaviour
     }
     void Idle()
     {
-        if (lastPos == this.transform.position)
+        
+        if (MyEpsilon.Epsilon(lastPos.x, transform.position.x, 0.01f) && MyEpsilon.Epsilon(lastPos.y, transform.position.y, 0.01f))
         {
             if (!isIdling)
             {
@@ -475,8 +474,6 @@ public class Movement : MonoBehaviour
                     winkel = 180 - winkel;
                 }
 
-                rb.velocity = Vector3.zero; // Deactive Velocity (Change That!)
-
                 // if the angel is to hight, dont move forward
                 if (Mathf.Abs(winkel) < maxWalkAngel)
                 {
@@ -557,8 +554,6 @@ public class Movement : MonoBehaviour
                 {
                     winkel = 180 - winkel;
                 }
-
-                rb.velocity = Vector3.zero; // Deactive Velocity (Change That!)
 
                 // if the angel is to hight, dont move forward
                 if (Mathf.Abs(winkel) < maxWalkAngel)
