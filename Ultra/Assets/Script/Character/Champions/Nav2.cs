@@ -15,7 +15,6 @@ public class Nav2 : MyCharacter
     [Header("Dash Curve")]
     [SerializeField] AnimationCurve curve;
 
-    GameObject lastBounceObj;
     Direction direction;
 
     bool isUsingAbility = false;
@@ -155,8 +154,6 @@ public class Nav2 : MyCharacter
                     break;
             }
 
-            Debug.Log(Vector3.Distance(dashStartPosition, dashEndPosition));
-
             PartilceSlash();
             eventDelegate(EventState.LightHit);
             rb.useGravity = false;
@@ -288,33 +285,7 @@ public class Nav2 : MyCharacter
     }
     void Update()
     {
-        if (isDisabled)
-        {
-            // Bounce Ray
-            RaycastHit hit;
-            if (MyRayCast.RayCastInDirection(transform.position, new Vector3(rb.velocity.x, rb.velocity.y, 0), out hit, 2))
-            {
-                // End Bounce
-                if (lastBounceObj == hit.transform.gameObject)
-                {
-                    lastBounceObj = null;
-                    EndDisable();
-                    return;
-                }
-                // Spawn Bounce Particle
-                Instantiate(bounce, hit.point, Quaternion.identity);
-                // New Bounce Direction
-                Vector3 direction = Vector3.Reflect(new Vector3(rb.velocity.x, rb.velocity.y, 0), new Vector3(hit.normal.x, hit.normal.y, 0));
-                Debug.DrawLine(transform.position, hit.point);
-                rb.velocity = direction;
-                // Safe Obj to Check at the next bounce if the Obj is the Same
-                lastBounceObj = hit.transform.gameObject;
-            }
-            else if (MyEpsilon.Epsilon(rb.velocity.x, 0, 1) && MyEpsilon.Epsilon(rb.velocity.y, 0, 1))
-            {
-                EndDisable();
-            }
-        }
+        Bounce();
         abilities.Update();
     }
 

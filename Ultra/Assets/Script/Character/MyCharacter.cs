@@ -38,6 +38,8 @@ public class MyCharacter : MonoBehaviour
     Vector3 spawnPos;
     InGameUI ui;
 
+    protected GameObject lastBounceObj;
+
     //////////// Particles ////////////
 
     [Header("JumpParticle")]
@@ -291,7 +293,7 @@ public class MyCharacter : MonoBehaviour
                 break;
             case EventState.Landing:
                 animator.SetInteger(animState, (int)EventState.Landing);    // Set Animation
-                Instantiate(ps_Landing, new Vector3(this.transform.position.x, this.transform.position.y - 0.7f, 0), Quaternion.Euler(this.transform.rotation.x + 90, this.transform.rotation.y, this.transform.rotation.z));  // Spawn Particle
+                Instantiate(ps_Landing, new Vector3(this.transform.position.x, this.transform.position.y - 1f, 0), Quaternion.Euler(this.transform.rotation.x + 90, this.transform.rotation.y, this.transform.rotation.z));  // Spawn Particle
                 break;
             case EventState.GetDamaged:
                 animator.SetInteger(animState, (int)EventState.GetDamaged);    // Set Animation
@@ -395,7 +397,7 @@ public class MyCharacter : MonoBehaviour
 
     void Update()
     {
-
+        //Bounce();
 	}
 
     //////////////////////////////////////////////////
@@ -458,6 +460,7 @@ public class MyCharacter : MonoBehaviour
     /// </summary>
     public void EndDisable()
     {
+        lastBounceObj = null;
         movement.CanMoveTrue();
         isDisabled = false;
         ps_Disabled.Stop();
@@ -497,32 +500,43 @@ public class MyCharacter : MonoBehaviour
         //{
         //    enemyPos = new Vector3(this.transform.position.x - enemyPos.x, 5, 0);
         //}
-        //else                                                                                                                            // Position in Y is High enough
-        //{
-        //    enemyPos = new Vector3(this.transform.position.x - enemyPos.x, this.transform.position.y - enemyPos.y, 0);
-        //}
+
+        Vector3 dir = new Vector3(this.transform.position.x - enemyPos.x, this.transform.position.y - enemyPos.y, 0);
+      
         Instantiate(ps_GetDamaged, transform.position, Quaternion.identity);
 
-        if (enemyPos.x < 0)                             // Direction = right
+        if (dir.x < 0)                             // Direction = right
         {
+            // Deprecated
             if (hard)
             {
                 rb.AddForce(new Vector3(-Mathf.Pow(Mathf.Sqrt(basisWert * percent), potenz) * xFactor, enemyPos.y, 0) * gesamtFactor);
             }
             else
             {
-                rb.AddForce(new Vector3(-Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), enemyPos.y, 0));
+                rb.AddForce(new Vector3(-Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), dir.y, 0));
             }
         }
         else                                            // Direction = Left
         {
+            // Deprecated
             if (hard)
             {
                 rb.AddForce(new Vector3(Mathf.Pow(Mathf.Sqrt(basisWert * percent), potenz) * xFactor, enemyPos.y, 0) * gesamtFactor);
             }
             else
             {
-                rb.AddForce(new Vector3(Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), enemyPos.y, 0));
+                rb.AddForce(new Vector3(Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), dir.y, 0));
+            }
+        }
+
+        Debug.DrawLine(transform.position, dir, Color.red, 5);
+        if (!IsFalling())
+        {
+            RaycastHit hit;
+            if(MyRayCast.RayCastInDirection(transform.position, -dir, out hit, 2))
+            {
+
             }
         }
 
@@ -676,6 +690,36 @@ public class MyCharacter : MonoBehaviour
     }
 
     //      Private      //
+     protected void Bounce()
+    {
+        if (isDisabled)
+        {
+            // Bounce Ray
+            RaycastHit hit;
+            if (MyRayCast.RayCastInDirection(transform.position, new Vector3(rb.velocity.x, rb.velocity.y, 0), out hit, 2))
+            {
+                // End Bounce
+                if (lastBounceObj != null && lastBounceObj == hit.transform.gameObject)
+                {
+                    lastBounceObj = null;
+                    EndDisable();
+                    return;
+                }
+                // Spawn Bounce Particle
+                Instantiate(bounce, hit.point, Quaternion.identity);
+                // New Bounce Direction
+                Vector3 direction = Vector3.Reflect(new Vector3(rb.velocity.x, rb.velocity.y, 0), new Vector3(hit.normal.x, hit.normal.y, 0));
+                Debug.DrawLine(transform.position, hit.point);
+                rb.velocity = direction;
+                // Safe Obj to Check at the next bounce if the Obj is the Same
+                lastBounceObj = hit.transform.gameObject;
+            }
+            else if (MyEpsilon.Epsilon(rb.velocity.x, 0, 1) && MyEpsilon.Epsilon(rb.velocity.y, 0, 1))
+            {
+                EndDisable();
+            }
+        }
+    }
 
     /// <summary>
     /// Updates all Changes to the UI

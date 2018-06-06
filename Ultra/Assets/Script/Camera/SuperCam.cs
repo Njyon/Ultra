@@ -37,8 +37,8 @@ public class SuperCam : MonoBehaviour
 
     void Freez()
     {
-        StartCoroutine(EndFreez());
-        Time.timeScale = 0;
+        //StartCoroutine(EndFreez());
+        //Time.timeScale = 0;
     }
 
     // Update is called once per frame
