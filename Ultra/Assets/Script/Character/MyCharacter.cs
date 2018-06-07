@@ -254,13 +254,13 @@ public class MyCharacter : MonoBehaviour
                 animator.SetInteger(animState, (int)EventState.Jump);    // Set Animation
                 CancelInvoke();
                 Invoke("Falling", 0.3f);
-                Instantiate(pD.ps_JumpOnGround, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0),  Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y - 90, this.transform.rotation.z));  // Spawn Particle
+                Instantiate(pD.ps_JumpOnGround, new Vector3(this.transform.position.x, this.transform.position.y + 1f, 0),  Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y - 90, this.transform.rotation.z));  // Spawn Particle
                 break;
             case EventState.JumpAir:
                 animator.SetInteger(animState, (int)EventState.JumpAir);    // Set Animation
                 CancelInvoke();
                 Invoke("Falling", 0.3f);
-                Instantiate(pD.ps_JumpOnGround, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0), Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y - 90, this.transform.rotation.z));  // Spawn Particle
+                Instantiate(pD.ps_JumpInAir, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0), Quaternion.identity);  // Spawn Particle
                 break;
             case EventState.JumpOnWall:
                 animator.SetInteger(animState, (int)EventState.JumpOnWall);    // Set Animation
@@ -274,10 +274,7 @@ public class MyCharacter : MonoBehaviour
                 break;
             case EventState.GetDamaged:
                 animator.SetInteger(animState, (int)EventState.GetDamaged);    // Set Animation
-                Instantiate(pD.ps_GetDamaged, new Vector3(this.transform.position.x, this.transform.position.y, 0), Quaternion.Euler(
-                        this.transform.position.x - enemy.transform.position.x,
-                        this.transform.position.y - enemy.transform.position.y,
-                        0));  // Spawn Particle
+                Instantiate(pD.ps_GetDamaged, new Vector3(this.transform.position.x, this.transform.position.y, 3), Quaternion.identity);  // Spawn Particle
                 break;
             case EventState.Disable:
                 animator.SetInteger(animState, (int)EventState.Disable);    // Set Animation
@@ -472,6 +469,7 @@ public class MyCharacter : MonoBehaviour
     /// <param name="enemyPos"></param>
     public void KickAway(Vector3 enemyPos, bool hard)
     {
+
         //float hight = 300;
         //if (MyEpsilon.Epsilon(this.transform.position.y, enemyPos.y, 1f))                                                                // Is Hight is Near
         //{

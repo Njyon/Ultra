@@ -123,23 +123,26 @@ public class Nav2 : MyCharacter
                     {
                         dashEndPosition = MyRayCast.RaycastRight(transform.position, attackLength);
                         dashStartPosition = transform.position;
+                        Instantiate(pD.attackRight, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
                     }
                     else
                     {
                         dashEndPosition = MyRayCast.RaycastLeft(transform.position, attackLength);
                         dashStartPosition = transform.position;
-                        Instantiate(pD.attackRight, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
+                        Instantiate(pD.attackLeft, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
                     }
                     break;
                 case Direction.Up:
                     // Find dash End and Start point
                     dashEndPosition = MyRayCast.RaycastUp(transform.position, attackLength);
                     dashStartPosition = transform.position;
+                    Instantiate(pD.attackUp, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
                     break;
                 case Direction.Down:
                     // Find dash End and Start point
                     dashEndPosition = MyRayCast.RaycastDown(transform.position, attackLength);
                     dashStartPosition = transform.position;
+                    Instantiate(pD.attackDown, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
                     break;
                 case Direction.RightDownAngel:
                 case Direction.LeftDownAngel:
@@ -277,8 +280,15 @@ public class Nav2 : MyCharacter
 
     void DoDamage()
     {
+        // if enemy is dogding dont attack
+        if (!enemyCharacter.canGetDamaged)
+            return;
+
         abilities.hitObject = true;
-        enemyCharacter.Damage(abilities.GetDamage());
+        if (!isDisabled)
+        {
+            enemyCharacter.Damage(abilities.GetDamage());
+        }
         enemyCharacter.KickAway(transform.position, false);
         
         freezCamAction();

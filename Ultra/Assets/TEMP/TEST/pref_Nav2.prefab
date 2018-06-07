@@ -8071,9 +8071,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c02d0925d93a114bbe1a0e4fb75207c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ps_JumpOnGround: {fileID: 1824503055644040, guid: 8c52b1740bbfa374aaa82afd8ee247b6,
+  ps_JumpOnGround: {fileID: 1086724584705532, guid: fa849b006d6e6f34ea21b0c4c371723a,
     type: 2}
-  ps_JumpInAir: {fileID: 1824503055644040, guid: 8c52b1740bbfa374aaa82afd8ee247b6,
+  ps_JumpInAir: {fileID: 1585372822843934, guid: 585da979d7cb34c4ca85bf4232dd9792,
     type: 2}
   ps_Landing: {fileID: 1110817026786226, guid: f6dab85f4044c764b921b7acb08bcc41, type: 2}
   ps_DashCloudLeft: {fileID: 1065210385180006, guid: a88013fd3c292284fad0de38788eb80e,
@@ -8082,14 +8082,17 @@ MonoBehaviour:
     type: 2}
   ps_Teleport: {fileID: 1357307924837436, guid: 56f9e4c04a73e2e43a6f172cae13e2f0,
     type: 2}
-  ps_GetDamaged: {fileID: 100004, guid: f95ff734540a0d749be6571b6cb5b37f, type: 2}
+  ps_GetDamaged: {fileID: 1785680940346368, guid: 2513ccabb55f2b2418594920856472a5,
+    type: 2}
   ps_Disabled: {fileID: 198217432906260196}
   trail: {fileID: 1222390778073308}
   ps_Slash: {fileID: 1044487307734990, guid: fbfaa595268798c48b345bb7280d4566, type: 2}
   bounce: {fileID: 1040608886635896, guid: a97415c6b57076f41a6621a7b51d63a3, type: 2}
-  attackRight: {fileID: 1360178460187616, guid: fc44116deddf78d4191258cf6fc774bf,
+  attackRight: {fileID: 1863562142751078, guid: d24c9bff0d62310429bcabc181e12f78,
     type: 2}
-  attackLeft: {fileID: 0}
+  attackLeft: {fileID: 1360178460187616, guid: fc44116deddf78d4191258cf6fc774bf, type: 2}
+  attackUp: {fileID: 1934716526379544, guid: 25b58e373138c2745826872258da4d24, type: 2}
+  attackDown: {fileID: 1654914327417982, guid: 3f5bda101a2e202449d28c8e16cbed91, type: 2}
 --- !u!136 &136502791406690800
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -8118,7 +8121,7 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: c94d66b67dff2f94cb3adca3e4ba0031, type: 2}
+  - {fileID: 2100000, guid: 18cc3ebf16fc74c419daec415ca20efb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8249,7 +8252,7 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 6270bff60f273364eb63d8acf67107ea, type: 2}
+  - {fileID: 2100000, guid: 77780ff19fb7d454e9dc17a0687fa230, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

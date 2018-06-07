@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class OneVsOneGameMode : MonoBehaviour
 {
@@ -13,9 +14,14 @@ public class OneVsOneGameMode : MonoBehaviour
     GameObject PlayerTwo;
 
     [Header("Keeram")]
-    public GameObject keeram;
+    [SerializeField] GameObject keeram;
     [Header("Nav")]
-    public GameObject nav;
+    [SerializeField] GameObject nav;
+    
+    Text timer;
+
+    [Header("Timer")]
+    [SerializeField] float time;
     
     void Start()
     {
@@ -36,6 +42,23 @@ public class OneVsOneGameMode : MonoBehaviour
         {
             Debug.Log("<color=red> Player Info Manager Script Not Found </color>");
         }
+        // find Timer and get the Text Component
+        try
+        {
+            timer = GameObject.Find("Timer").GetComponent<Text>();
+        }
+        catch
+        {
+            Debug.Log("No Timer Found");
+        }
+        if(timer == null)
+        {
+            Debug.Log("<color=red> No Timer Found! </color>");
+        }
+        else
+        {
+            timer.text = time.ToString();
+        }
 
         //PlayerOne
         Initiate(PlayerInfoManager.playerOne.character, true);
@@ -50,8 +73,8 @@ public class OneVsOneGameMode : MonoBehaviour
         {
             Debug.Log("<color=red> Characters not Assigned to GameMode </color>");
         }
-        InGameUI playerOneUI = GameObject.Find("PlayerOneUI").GetComponent<InGameUI>();
-        InGameUI playerTwoUI = GameObject.Find("PlayerTwoUI").GetComponent<InGameUI>();
+        //InGameUI playerOneUI = GameObject.Find("PlayerOneUI").GetComponent<InGameUI>();
+        //InGameUI playerTwoUI = GameObject.Find("PlayerTwoUI").GetComponent<InGameUI>();
 
         GameObject camera = GameObject.Find("CameraRig");
         CameraControll sCam = camera.GetComponent<CameraControll>();
@@ -62,7 +85,7 @@ public class OneVsOneGameMode : MonoBehaviour
                 {
                     PlayerOne = Instantiate(keeram, SpawnLocationP1.transform.position, SpawnLocationP1.transform.rotation);
                     PlayerOne.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerOne;
-                    PlayerOne.GetComponent<MyCharacter>().SetUI(playerOneUI);
+                    //PlayerOne.GetComponent<MyCharacter>().SetUI(playerOneUI);
                     PlayerOne.GetComponent<MyCharacter>().Posses();
                     sCam.playerOne = PlayerOne;
                 }
@@ -70,7 +93,7 @@ public class OneVsOneGameMode : MonoBehaviour
                 {
                     PlayerTwo = Instantiate(keeram, SpawnLocationP2.transform.position, SpawnLocationP2.transform.rotation);
                     PlayerTwo.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerTwo;
-                    PlayerTwo.GetComponent<MyCharacter>().SetUI(playerTwoUI);
+                    //PlayerTwo.GetComponent<MyCharacter>().SetUI(playerTwoUI);
                     PlayerTwo.GetComponent<MyCharacter>().Posses();
                     sCam.playerTwo = PlayerTwo;
 
@@ -84,7 +107,7 @@ public class OneVsOneGameMode : MonoBehaviour
                 {
                     PlayerOne = Instantiate(nav, SpawnLocationP1.transform.position, SpawnLocationP1.transform.rotation);
                     PlayerOne.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerOne;
-                    PlayerOne.GetComponent<MyCharacter>().SetUI(playerOneUI);
+                    //PlayerOne.GetComponent<MyCharacter>().SetUI(playerOneUI);
                     PlayerOne.GetComponent<MyCharacter>().Posses();
                     sCam.playerOne = PlayerOne;
 
@@ -97,7 +120,7 @@ public class OneVsOneGameMode : MonoBehaviour
                 {
                     PlayerTwo = Instantiate(nav, SpawnLocationP2.transform.position, SpawnLocationP2.transform.rotation);
                     PlayerTwo.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerTwo;
-                    PlayerTwo.GetComponent<MyCharacter>().SetUI(playerTwoUI);
+                    //PlayerTwo.GetComponent<MyCharacter>().SetUI(playerTwoUI);
                     PlayerTwo.GetComponent<MyCharacter>().Posses();
                     sCam.playerTwo = PlayerTwo;
 
@@ -123,11 +146,31 @@ public class OneVsOneGameMode : MonoBehaviour
 
         MyCharacter.endGameAction += EndGame;
     }
-
+    // End game and transition to next scene
     void EndGame()
     {
         PlayerOne.GetComponent<MyCharacter>().DePosses();
         PlayerTwo.GetComponent<MyCharacter>().DePosses();
         SceneManager.LoadScene(0);
+    }
+
+    void Update()
+    {
+        if(timer != null)
+        {
+            time -= Time.deltaTime;
+
+            string minutes = ((int)time / 60).ToString();
+            string second = ((int)time % 60).ToString();
+
+            timer.text = minutes + ":" + second;
+
+            if(time - Time.deltaTime <= 0)
+            {
+                // Todo: Pause Game or End animation etc
+                timer.text = "0:00";
+                EndGame();
+            }
+        }
     }
 }
