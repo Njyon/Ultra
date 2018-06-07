@@ -6,10 +6,10 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: ver6
+  m_Name: MAT_platform6
   m_Shader: {fileID: 4800000, guid: 9c6ece3d5ef8bb84db19471daaf6c788, type: 3}
-  m_ShaderKeywords: _EMISSION _NORMALMAP
-  m_LightmapFlags: 5
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -19,7 +19,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 439b02c2219285449aff67d90a2778c4, type: 3}
+        m_Texture: {fileID: 2800000, guid: eb51eb9450ff6884890ff52644c02c21, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -35,11 +35,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: 6baee56ac796f7246b0aa25d464473d6, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 53262b4f092456345b5ad57bba672f62, type: 3}
+        m_Texture: {fileID: 2800000, guid: 54c1dfcc0ffbdb34a95773bd3d255e77, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -47,7 +47,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 2800000, guid: 21b27fe852da385478478a154994602e, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
@@ -62,8 +62,8 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _LightSmoothness: 1
-    - _LightThreshold: 0.59
+    - _LightSmoothness: 0.41
+    - _LightThreshold: 0.45
     - _MKEditorShowDetailBehavior: 0
     - _MKEditorShowDissolveBehavior: 0
     - _MKEditorShowLightBehavior: 1
@@ -72,7 +72,7 @@ Material:
     - _MKEditorShowReflectionBehavior: 0
     - _MKEditorShowRenderBehavior: 0
     - _MKEditorShowRimBehavior: 0
-    - _MKEditorShowShadowBehavior: 1
+    - _MKEditorShowShadowBehavior: 0
     - _MKEditorShowSketchBehavior: 0
     - _MKEditorShowSpecularBehavior: 0
     - _MKEditorShowTranslucentBehavior: 0
@@ -95,8 +95,8 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HighlightColor: {r: 1, g: 0.93628824, b: 0.45490193, a: 1}
-    - _OutlineColor: {r: 0.11864409, g: 0.12457628, b: 0.35, a: 1}
+    - _HighlightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 0.07785365, g: 0.16543902, b: 0.266, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ShadowColor: {r: 0.05662921, g: 0.060404494, b: 0.168, a: 1}
+    - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 0.5}
