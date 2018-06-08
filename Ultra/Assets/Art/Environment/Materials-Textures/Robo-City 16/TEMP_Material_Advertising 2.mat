@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: TEMP_Material_Advertising
+  m_Name: TEMP_Material_Advertising 2
   m_Shader: {fileID: 4800000, guid: 9c6ece3d5ef8bb84db19471daaf6c788, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
@@ -72,7 +72,7 @@ Material:
     - _MKEditorShowDissolveBehavior: 0
     - _MKEditorShowLightBehavior: 1
     - _MKEditorShowMainBehavior: 1
-    - _MKEditorShowOutlineBehavior: 0
+    - _MKEditorShowOutlineBehavior: 1
     - _MKEditorShowReflectionBehavior: 0
     - _MKEditorShowRenderBehavior: 0
     - _MKEditorShowRimBehavior: 0
@@ -83,7 +83,7 @@ Material:
     - _Metallic: 0.1
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OutlineSize: 0.1
+    - _OutlineSize: 0.02
     - _Parallax: 0.02
     - _RimIntensity: 0.5
     - _RimSize: 1.5
