@@ -13,8 +13,7 @@ public class MyCharacter : MonoBehaviour
     public float startForce;
     public float startForceUp;
     public float X;
-
-
+    
     [HideInInspector] public PlayerEnum playerEnum = PlayerEnum.NotAssigned;
     [HideInInspector] public bool canGetDamaged = true;
     [HideInInspector] public bool isDisabled = false;
@@ -31,8 +30,7 @@ public class MyCharacter : MonoBehaviour
     protected Movement movement;
 
     int lifes = 3;
-
-    float dmgMultiplier = 1.5f;
+    
     int percent = 0;
 
     Vector3 spawnPos;
@@ -41,6 +39,11 @@ public class MyCharacter : MonoBehaviour
     protected GameObject lastBounceObj;
 
     [SerializeField] protected ParticleData pD;
+
+    [HideInInspector] public int hitCounter = 0;
+    [HideInInspector] public int combo = 0;
+    [HideInInspector] public int multiplier = 1;
+    [HideInInspector] public int score = 0;
 
     //////////// Collision ///////////
 
@@ -199,10 +202,15 @@ public class MyCharacter : MonoBehaviour
         }
         else
         {
-            UpdateUI();
+            UIStart();
         }
     }
-    #region InputCheck
+
+    #region InputCheck#
+    /// <summary>
+    /// Deprecated
+    /// </summary>
+    /// <param name="keyCode"></param>
     void InputDownCheck(KeyCode keyCode)
     {
         if(keyCode == KeyCode.Joystick1Button2)
@@ -216,6 +224,10 @@ public class MyCharacter : MonoBehaviour
                 SpecialNormalAction();
         }
     }
+    /// <summary>
+    /// Deprecated
+    /// </summary>
+    /// <param name="keyCode"></param>
     void InputUpCheck(KeyCode keyCode)
     {
         if (keyCode == KeyCode.Joystick1Button1 || keyCode == KeyCode.Joystick1Button3)
@@ -411,8 +423,13 @@ public class MyCharacter : MonoBehaviour
     /// </summary>
     public void Disable()
     {
+        // SHow the Combo Counter
+        enemyCharacter.ui.ShowCombo();
+        // Disable movement for the Character
         movement.CantMove();
+        // Set the disable state to true
         isDisabled = true;
+        // Play the Disables Particle Effect
         pD.ps_Disabled.Play();
     }
     /// <summary>
@@ -421,12 +438,19 @@ public class MyCharacter : MonoBehaviour
     /// <param name="time"></param>
     public void Disable(float time)
     {
+        // Cancel all Invokes if player gets disabled again and restart the time below
         if (IsInvoking())
             CancelInvoke();
 
+        // SHow the Combo Counter
+        enemyCharacter.ui.ShowCombo();
+        // Disable movement
         movement.CantMove();
+        // Set the disable state to true
         isDisabled = true;
+        // Invoke the EndDisable() after param:"time"
         Invoke("EndDisable", time);
+        // Start the Disabled Particle Effect
         pD.ps_Disabled.Play();
     }
     /// <summary>
@@ -434,9 +458,15 @@ public class MyCharacter : MonoBehaviour
     /// </summary>
     public void EndDisable()
     {
+        // End the Enemy Combo
+        enemyCharacter.EndCombo();
+        // Remove the last Bounce Object
         lastBounceObj = null;
+        // get the Player the Control of the Player back
         movement.CanMoveTrue();
+        // Set the Disable State to false
         isDisabled = false;
+        // Stop the Disable Particle Effect
         pD.ps_Disabled.Stop();
     }
     /// <summary>
@@ -460,7 +490,6 @@ public class MyCharacter : MonoBehaviour
     public void Damage(int damage)
     {
         percent += damage;
-        UpdateUI();
     }
     /// <summary>
     /// Kick The Player away from the Vector param
@@ -637,6 +666,91 @@ public class MyCharacter : MonoBehaviour
         movement.SpecialJump(jumpForce);
     }
     /// <summary>
+    /// Sets the UI with the param
+    /// </summary>
+    /// <param name="ui"></param>
+    public void SetUI(InGameUI ui)
+    {
+        this.ui = ui;
+    }
+    /// <summary>
+    /// Change Combo to new comboState
+    /// </summary>
+    /// <param name="comboState"></param>
+    public void Combo(ComboState comboState)
+    {
+        switch(comboState)
+        {
+            case ComboState.Bounce:
+                // Count Combo Up
+                combo++;
+                // Update Combo
+                ui.UpdateCombo(combo);
+                break;
+
+            case ComboState.BounceSpecial:
+                // Count Combo Up
+                combo++;
+                // Multiplie the Multiplier
+                multiplier *= 5;
+                // Update Combo
+                ui.UpdateCombo(combo);
+                // Update Multiplier
+                ui.UpdateMultiplier(multiplier);
+                break;
+
+            case ComboState.Dodge:
+                // Add Dodge Points to Score
+                score += 1000;
+                // Update Score
+                ui.UpdateScore(score);
+                break;
+
+            case ComboState.Hit:
+                // Count Combo Up
+                combo++;
+                // Count HitCounter Up
+                hitCounter++;
+                // Update Combo
+                ui.UpdateCombo(combo);
+                break;
+
+            case ComboState.HitStrak:
+                // Count Combo Up
+                combo++;
+                // Count HitCounter Up
+                hitCounter++;
+                // Update Combo
+                ui.UpdateCombo(combo);
+                // Update Combo Multiplier
+                ui.UpdateMultiplier(multiplier);
+                break;
+        }
+        // Update Combo
+    }
+    /// <summary>
+    /// Ends the Combo and add the Points to the Score
+    /// </summary>
+    public void EndCombo()
+    {
+        // Calc new Score
+        combo = hitCounter * combo;
+        score += combo * multiplier;
+
+        // Update the new Score
+        ui.UpdateScore(score);
+
+        // Reset the Combo vars back to Start
+        ResetComboValues();
+
+        // Hidde Combo Counter
+        ui.HiddeCombo();
+
+    }
+
+    #region Deprecated
+    /*
+    /// <summary>
     /// Respawns Player
     /// </summary>
     public void Respawn()
@@ -655,17 +769,14 @@ public class MyCharacter : MonoBehaviour
         }
         UpdateUI();
     }
-    /// <summary>
-    /// Sets the UI with the param
-    /// </summary>
-    /// <param name="ui"></param>
-    public void SetUI(InGameUI ui)
-    {
-        this.ui = ui;
-    }
+    */
+    #endregion
 
     //      Private      //
-     protected void Bounce()
+    /// <summary>
+    /// Let the Character Reflect from Objects (Bounce)
+    /// </summary>
+    protected void Bounce()
     {
         if (isDisabled)
         {
@@ -676,10 +787,14 @@ public class MyCharacter : MonoBehaviour
                 // End Bounce
                 if (lastBounceObj != null && lastBounceObj == hit.transform.gameObject)
                 {
-                    lastBounceObj = null;
                     EndDisable();
                     return;
                 }
+
+                // ToDo: Check if the Character Bounced against some thing Special 
+
+                // Count enemy Combo Up
+                enemyCharacter.Combo(ComboState.Bounce);
                 // Spawn Bounce Particle
                 Instantiate(pD.bounce, hit.point, Quaternion.identity);
                 // New Bounce Direction
@@ -695,16 +810,30 @@ public class MyCharacter : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    ///  Resets the Combo Vars
+    /// </summary>
+    void ResetComboValues()
+    {
+        // XOR Vars to reset them to 0
+        // Just 4 fun, heared it should be faster than var = 0
+        combo = combo ^ combo;
+        combo = combo ^ combo;
+        multiplier = 1;
+        hitCounter = hitCounter ^ hitCounter;
+    }
 
     /// <summary>
     /// Updates all Changes to the UI
     /// </summary>
-    void UpdateUI()
+    void UIStart()
     {
         if (ui != null)
         {
-            ui.ChangeProzent(percent);
-            ui.ChangeLife(lifes);
+            ui.UpdateScore(score);
+            ui.UpdateMultiplier(multiplier);
+            ui.UpdateCombo(combo);
+            ui.HiddeCombo();
         }
     }
 

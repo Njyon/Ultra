@@ -566,7 +566,6 @@ public class Movement : MonoBehaviour
     }
     void Jump()
     {
-        Debug.Log("Right " + fallComp.isOnWallRight + " Left " + fallComp.isOnWallLeft);
         if (myCharacter.isDisabled)
             return;
 

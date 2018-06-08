@@ -73,8 +73,18 @@ public class OneVsOneGameMode : MonoBehaviour
         {
             Debug.Log("<color=red> Characters not Assigned to GameMode </color>");
         }
-        //InGameUI playerOneUI = GameObject.Find("PlayerOneUI").GetComponent<InGameUI>();
-        //InGameUI playerTwoUI = GameObject.Find("PlayerTwoUI").GetComponent<InGameUI>();
+        InGameUI playerOneUI = new InGameUI();
+        InGameUI playerTwoUI = new InGameUI();
+
+        try
+        {
+            playerOneUI = GameObject.Find("PlayerOnePannel").GetComponent<InGameUI>();
+            playerTwoUI = GameObject.Find("PlayerTwoPannel").GetComponent<InGameUI>();
+        }
+        catch
+        {
+            Debug.Log("No UI Pannels Found!");
+        }
 
         GameObject camera = GameObject.Find("CameraRig");
         CameraControll sCam = camera.GetComponent<CameraControll>();
@@ -85,7 +95,7 @@ public class OneVsOneGameMode : MonoBehaviour
                 {
                     PlayerOne = Instantiate(keeram, SpawnLocationP1.transform.position, SpawnLocationP1.transform.rotation);
                     PlayerOne.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerOne;
-                    //PlayerOne.GetComponent<MyCharacter>().SetUI(playerOneUI);
+                    PlayerOne.GetComponent<MyCharacter>().SetUI(playerOneUI);
                     PlayerOne.GetComponent<MyCharacter>().Posses();
                     sCam.playerOne = PlayerOne;
                 }
@@ -93,7 +103,7 @@ public class OneVsOneGameMode : MonoBehaviour
                 {
                     PlayerTwo = Instantiate(keeram, SpawnLocationP2.transform.position, SpawnLocationP2.transform.rotation);
                     PlayerTwo.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerTwo;
-                    //PlayerTwo.GetComponent<MyCharacter>().SetUI(playerTwoUI);
+                    PlayerTwo.GetComponent<MyCharacter>().SetUI(playerTwoUI);
                     PlayerTwo.GetComponent<MyCharacter>().Posses();
                     sCam.playerTwo = PlayerTwo;
 
@@ -107,7 +117,7 @@ public class OneVsOneGameMode : MonoBehaviour
                 {
                     PlayerOne = Instantiate(nav, SpawnLocationP1.transform.position, SpawnLocationP1.transform.rotation);
                     PlayerOne.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerOne;
-                    //PlayerOne.GetComponent<MyCharacter>().SetUI(playerOneUI);
+                    PlayerOne.GetComponent<MyCharacter>().SetUI(playerOneUI);
                     PlayerOne.GetComponent<MyCharacter>().Posses();
                     sCam.playerOne = PlayerOne;
 
@@ -120,7 +130,7 @@ public class OneVsOneGameMode : MonoBehaviour
                 {
                     PlayerTwo = Instantiate(nav, SpawnLocationP2.transform.position, SpawnLocationP2.transform.rotation);
                     PlayerTwo.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerTwo;
-                    //PlayerTwo.GetComponent<MyCharacter>().SetUI(playerTwoUI);
+                    PlayerTwo.GetComponent<MyCharacter>().SetUI(playerTwoUI);
                     PlayerTwo.GetComponent<MyCharacter>().Posses();
                     sCam.playerTwo = PlayerTwo;
 

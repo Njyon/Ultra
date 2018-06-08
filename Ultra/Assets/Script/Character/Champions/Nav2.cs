@@ -53,6 +53,10 @@ public class Nav2 : MyCharacter
         }
     }
 
+    /// <summary>
+    /// Check the Input in witch direction the player should dash
+    /// </summary>
+    /// <param name="direction"></param>
     void DirctionCheck(Direction direction)
     {
         if (isUsingAbility)
@@ -89,6 +93,9 @@ public class Nav2 : MyCharacter
     }
     
     float travel = 0;
+    /// <summary>
+    /// Define all Abilitys
+    /// </summary>
     void DefineAbilities()
     {
         #region Ability Definiton
@@ -277,23 +284,45 @@ public class Nav2 : MyCharacter
 
         #endregion
     }
-
+    /// <summary>
+    /// Damage the enemy and Kick him away if he is not dodging
+    /// </summary>
     void DoDamage()
     {
+        // Hitted the enemy
+        abilities.hitObject = true;
+
         // if enemy is dogding dont attack
         if (!enemyCharacter.canGetDamaged)
+        {
+            enemyCharacter.Combo(ComboState.Dodge);
             return;
+        }
 
-        abilities.hitObject = true;
         if (!isDisabled)
         {
+            // Count up the enemy Perzent (Damaged Amount)
             enemyCharacter.Damage(abilities.GetDamage());
+            // Kick the Enemy away from you
+            enemyCharacter.KickAway(transform.position, false);
+
+            // Update the Combo
+            Combo(ComboState.Hit);
         }
-        enemyCharacter.KickAway(transform.position, false);
-        
-        freezCamAction();
+        else
+        {
+            // Kick the Enemy away from you
+            enemyCharacter.KickAway(transform.position, false);
+            // Update the Combo
+            Combo(ComboState.HitStrak);
+        }
+
+        // Freez the Cam // in the Moment deactive
+        //freezCamAction();
+        // End the Dash
         abilities.End();
     }
+
     void Update()
     {
         Bounce();

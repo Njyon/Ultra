@@ -5,15 +5,50 @@ using UnityEngine.UI;
 
 public class InGameUI : MonoBehaviour
 {
-    [SerializeField] Text life;
-    [SerializeField] Text prozent;
+    [SerializeField] Text combo;
+    [SerializeField] Text score;
+    [SerializeField] Text multiplier;
 
-    public void ChangeProzent(int prozent)
+    //[SerializeField] Animation comboAnim;
+
+    /// <summary>
+    /// UpdateScore
+    /// </summary>
+    /// <param name="score"></param>
+    public void UpdateScore(int score)
     {
-        this.prozent.text = prozent.ToString() + "%";
+        this.score.text = "Score: " + score.ToString();
     }
-    public void ChangeLife(int life)
+    /// <summary>
+    /// Update Combo
+    /// </summary>
+    /// <param name="combo"></param>
+    public void UpdateCombo(int combo)
     {
-        this.life.text = "Life: " + life.ToString();
+        this.combo.text = combo.ToString() + "x";
+    }
+    /// <summary>
+    /// Update Multiplier
+    /// </summary>
+    /// <param name="combo"></param>
+    public void UpdateMultiplier(int multiplier)
+    {
+        this.multiplier.text = multiplier.ToString();
+    }
+    /// <summary>
+    /// Make ComboCounter Visible
+    /// </summary>
+    public void ShowCombo()
+    {
+        combo.color = new Color(Color.white.r, Color.white.g, Color.white.b, 1);
+        multiplier.color = new Color(Color.white.r, Color.white.g, Color.white.b, 1);
+    }
+    /// <summary>
+    /// Make ComboCounter InVisible
+    /// </summary>
+    public void HiddeCombo()
+    {
+        combo.color = new Color(Color.white.r, Color.white.g, Color.white.b, 0);
+        multiplier.color = new Color(Color.white.r, Color.white.g, Color.white.b, 0);
     }
 }
