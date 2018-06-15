@@ -109,8 +109,8 @@ public class OneVsOneGameMode : MonoBehaviour
             Debug.Log("No UI Pannels Found!");
         }
 
-        GameObject camera = GameObject.Find("CameraRig");
-        CameraControll sCam = camera.GetComponent<CameraControll>();
+        GameObject camera = GameObject.Find("Main Camera");
+        MultiTargetCamera sCam = camera.GetComponent<MultiTargetCamera>();
         switch (character)
         {
             case Characters.Keeram:
@@ -120,7 +120,7 @@ public class OneVsOneGameMode : MonoBehaviour
                     PlayerOne.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerOne;
                     PlayerOne.GetComponent<MyCharacter>().SetUI(playerOneUI);
                     PlayerOne.GetComponent<MyCharacter>().Posses();
-                    sCam.playerOne = PlayerOne;
+                    sCam.AddTarget(PlayerOne.transform);
                 }
                 else
                 {
@@ -128,7 +128,7 @@ public class OneVsOneGameMode : MonoBehaviour
                     PlayerTwo.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerTwo;
                     PlayerTwo.GetComponent<MyCharacter>().SetUI(playerTwoUI);
                     PlayerTwo.GetComponent<MyCharacter>().Posses();
-                    sCam.playerTwo = PlayerTwo;
+                    sCam.AddTarget(PlayerTwo.transform);
 
                     //Renderer[] rend = PlayerTwo.GetComponentsInChildren<Renderer>();
                     //rend[1].material = new Material(Shader.Find("Standard"));
@@ -145,7 +145,7 @@ public class OneVsOneGameMode : MonoBehaviour
                     PlayerOne.GetComponent<MyCharacter>().dodgeAction += DodgeCounter;
                     PlayerOne.GetComponent<MyCharacter>().bounceAction += BounceCounter;
                     PlayerOne.GetComponent<MyCharacter>().Posses();
-                    sCam.playerOne = PlayerOne;
+                    sCam.AddTarget(PlayerOne.transform);
 
 
                     Renderer[] rend = PlayerOne.GetComponentsInChildren<Renderer>();
@@ -162,7 +162,7 @@ public class OneVsOneGameMode : MonoBehaviour
                     PlayerTwo.GetComponent<MyCharacter>().dodgeAction += DodgeCounter;
                     PlayerTwo.GetComponent<MyCharacter>().bounceAction += BounceCounter;
                     PlayerTwo.GetComponent<MyCharacter>().Posses();
-                    sCam.playerTwo = PlayerTwo;
+                    sCam.AddTarget(PlayerTwo.transform);
 
                     Renderer[] rend = PlayerTwo.GetComponentsInChildren<Renderer>();
                     rend[1].material = new Material(rend[1].material);
@@ -189,10 +189,23 @@ public class OneVsOneGameMode : MonoBehaviour
     // End game and transition to next scene
     void EndGame()
     {
+        // End Combo from both Players
         PlayerOne.GetComponent<MyCharacter>().EndCombo();
-        PlayerOne.GetComponent<MyCharacter>().DePosses();
         PlayerTwo.GetComponent<MyCharacter>().EndCombo();
+
+        // Desubscribe both player from the Score counter events
+        PlayerOne.GetComponent<MyCharacter>().playerDataAction -= DataCounter;
+        PlayerOne.GetComponent<MyCharacter>().dodgeAction -= DodgeCounter;
+        PlayerOne.GetComponent<MyCharacter>().bounceAction -= BounceCounter;
+        PlayerTwo.GetComponent<MyCharacter>().playerDataAction -= DataCounter;
+        PlayerTwo.GetComponent<MyCharacter>().dodgeAction -= DodgeCounter;
+        PlayerTwo.GetComponent<MyCharacter>().bounceAction -= BounceCounter;
+        
+        //Deposses both player and Desubsribe them so from events
+        PlayerOne.GetComponent<MyCharacter>().DePosses();
         PlayerTwo.GetComponent<MyCharacter>().DePosses();
+
+        // Load the Win Screen
         SceneManager.LoadScene(2);
     }
     void DataCounter(PlayerEnum pE, int combo, int multiplier, int score)

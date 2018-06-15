@@ -29,8 +29,8 @@ public class CharacterCreationDebugScript : MonoBehaviour
             debugPlayer.GetComponent<MyCharacter>().Posses();
             try
             {
-                SuperCam sCam = camera.GetComponent<SuperCam>();
-                sCam.AddPlayer(debugPlayer);
+                MultiTargetCamera cam = camera.GetComponent<MultiTargetCamera>();
+                cam.AddTarget(debugPlayer.transform);
             }
             catch
             {
