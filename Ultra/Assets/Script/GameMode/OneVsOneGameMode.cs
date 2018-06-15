@@ -18,17 +18,23 @@ public class OneVsOneGameMode : MonoBehaviour
     [Header("Nav")]
     [SerializeField] GameObject nav;
     
-    Text timer;
-
     [Header("Timer")]
     [SerializeField] float time;
-    
+    Text timer;
+
+    //[Header("PlayerData")]
+    //[SerializeField] GameObject playerDataPref;
+    //GameObject playerDataObj;
+    //PlayerDataManager playerDataManager;
+
     void Start()
     {
+        #region Spawns
         //Set SpawnLocation
         SpawnLocationP1 = GameObject.Find("Spawn P1");
         SpawnLocationP2 = GameObject.Find("Spawn P2");
-
+        #endregion
+        #region Player Info Manager
         //Get the GameObject with player Data
         playerInfoManagerObj = GameObject.Find("PlayerInfoManager(Clone)");
         if(playerInfoManagerObj == null)
@@ -42,6 +48,22 @@ public class OneVsOneGameMode : MonoBehaviour
         {
             Debug.Log("<color=red> Player Info Manager Script Not Found </color>");
         }
+        #endregion
+        #region PlayerData
+        //if (GameObject.Find("PlayerData (Clone)") == null)
+        //{
+        //    playerDataObj = Instantiate(playerDataPref, Vector3.zero, Quaternion.identity);
+        //    playerData = playerDataObj.GetComponent<PlayerData>();
+        //    playerData.ResetValues();
+        //}
+        //else
+        //{
+        //    playerDataObj = GameObject.Find("PlayerData (Clone)");
+        //    playerData = playerDataObj.GetComponent<PlayerData>();
+        //    playerData.ResetValues();
+        //}
+        #endregion
+        #region Timer
         // find Timer and get the Text Component
         try
         {
@@ -59,6 +81,7 @@ public class OneVsOneGameMode : MonoBehaviour
         {
             timer.text = time.ToString();
         }
+        #endregion
 
         //PlayerOne
         Initiate(PlayerInfoManager.playerOne.character, true);
@@ -118,12 +141,16 @@ public class OneVsOneGameMode : MonoBehaviour
                     PlayerOne = Instantiate(nav, SpawnLocationP1.transform.position, SpawnLocationP1.transform.rotation);
                     PlayerOne.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerOne;
                     PlayerOne.GetComponent<MyCharacter>().SetUI(playerOneUI);
+                    PlayerOne.GetComponent<MyCharacter>().playerDataAction += DataCounter;
+                    PlayerOne.GetComponent<MyCharacter>().dodgeAction += DodgeCounter;
+                    PlayerOne.GetComponent<MyCharacter>().bounceAction += BounceCounter;
                     PlayerOne.GetComponent<MyCharacter>().Posses();
                     sCam.playerOne = PlayerOne;
 
+
                     Renderer[] rend = PlayerOne.GetComponentsInChildren<Renderer>();
                     rend[1].material = new Material(rend[1].material);
-                    rend[1].material.SetColor("_EmissionColor", Color.red);
+                    rend[1].material.SetColor("_EmissionColor", PlayerInfoManager.playerOne.color);
                     rend[1].material.color = Color.red;
                 }
                 else
@@ -131,12 +158,15 @@ public class OneVsOneGameMode : MonoBehaviour
                     PlayerTwo = Instantiate(nav, SpawnLocationP2.transform.position, SpawnLocationP2.transform.rotation);
                     PlayerTwo.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerTwo;
                     PlayerTwo.GetComponent<MyCharacter>().SetUI(playerTwoUI);
+                    PlayerTwo.GetComponent<MyCharacter>().playerDataAction += DataCounter;
+                    PlayerTwo.GetComponent<MyCharacter>().dodgeAction += DodgeCounter;
+                    PlayerTwo.GetComponent<MyCharacter>().bounceAction += BounceCounter;
                     PlayerTwo.GetComponent<MyCharacter>().Posses();
                     sCam.playerTwo = PlayerTwo;
 
                     Renderer[] rend = PlayerTwo.GetComponentsInChildren<Renderer>();
                     rend[1].material = new Material(rend[1].material);
-                    rend[1].material.SetColor("_EmissionColor", Color.cyan);
+                    rend[1].material.SetColor("_EmissionColor", PlayerInfoManager.playerTwo.color);
                     rend[1].material.color = Color.cyan;
                 }
 
@@ -159,9 +189,55 @@ public class OneVsOneGameMode : MonoBehaviour
     // End game and transition to next scene
     void EndGame()
     {
+        PlayerOne.GetComponent<MyCharacter>().EndCombo();
         PlayerOne.GetComponent<MyCharacter>().DePosses();
+        PlayerTwo.GetComponent<MyCharacter>().EndCombo();
         PlayerTwo.GetComponent<MyCharacter>().DePosses();
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(2);
+    }
+    void DataCounter(PlayerEnum pE, int combo, int multiplier, int score)
+    {
+        switch (pE)
+        {
+            case PlayerEnum.PlayerOne:
+                if (combo > PlayerDataManager.playerOne.HighestCombo)
+                    PlayerDataManager.playerOne.HighestCombo = combo;
+                if (multiplier > PlayerDataManager.playerOne.HighestMultiplier)
+                    PlayerDataManager.playerOne.HighestMultiplier = multiplier;
+                PlayerDataManager.playerOne.Score += score;
+                break;
+            case PlayerEnum.PlayerTwo:
+                if (combo > PlayerDataManager.playerTwo.HighestCombo)
+                    PlayerDataManager.playerTwo.HighestCombo = combo;
+                if (multiplier > PlayerDataManager.playerTwo.HighestMultiplier)
+                    PlayerDataManager.playerTwo.HighestMultiplier = multiplier;
+                PlayerDataManager.playerTwo.Score += score;
+                break;
+        }
+    }
+    void DodgeCounter(PlayerEnum pE)
+    {
+        switch(pE)
+        {
+            case PlayerEnum.PlayerOne:
+                PlayerDataManager.playerOne.AmountOfDodges++;
+                break;
+            case PlayerEnum.PlayerTwo:
+                PlayerDataManager.playerTwo.AmountOfDodges++;
+                break;
+        }
+    }
+    void BounceCounter(PlayerEnum pE)
+    {
+        switch (pE)
+        {
+            case PlayerEnum.PlayerOne:
+                PlayerDataManager.playerOne.Bounces++;
+                break;
+            case PlayerEnum.PlayerTwo:
+                PlayerDataManager.playerTwo.Bounces++;
+                break;
+        }
     }
 
     void Update()

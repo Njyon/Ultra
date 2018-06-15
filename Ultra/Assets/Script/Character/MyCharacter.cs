@@ -71,6 +71,15 @@ public class MyCharacter : MonoBehaviour
     public delegate void FreezCam();
     public FreezCam freezCamAction;
 
+    public delegate void PlayerDataDelegate(PlayerEnum pE, int combo, int multiplier, int score);
+    public PlayerDataDelegate playerDataAction;
+
+    public delegate void DodgeDelegate(PlayerEnum pE);
+    public DodgeDelegate dodgeAction;
+
+    public delegate void BounceDelegate(PlayerEnum pE);
+    public BounceDelegate bounceAction;
+
     // Deprecated
     #region X Attack 
     protected delegate void XHitNormal();
@@ -737,6 +746,9 @@ public class MyCharacter : MonoBehaviour
         combo = hitCounter * combo;
         score += combo * multiplier;
 
+        //Safe Data for EndScreen
+        playerDataAction(playerEnum, combo, multiplier, score);
+
         // Update the new Score
         ui.UpdateScore(score);
 
@@ -795,6 +807,8 @@ public class MyCharacter : MonoBehaviour
 
                 // Count enemy Combo Up
                 enemyCharacter.Combo(ComboState.Bounce);
+                // COunt All Bounces for the EndScreen
+                enemyCharacter.bounceAction(enemyCharacter.playerEnum);
                 // Spawn Bounce Particle
                 Instantiate(pD.bounce, hit.point, Quaternion.identity);
                 // New Bounce Direction
