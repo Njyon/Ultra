@@ -5,12 +5,16 @@ using UnityEngine;
 public class MenuSelecter
 {
     public bool charakterSelected = false;
-    public int slotIndex = 0;
+    public int slotIndex = 1;
     public GameObject[] characters;                                 // Needs to get Setted
     public Vector3 characterPosition;                               // Needs to get Setted
     public Characters characterEnum = Characters.None;
     public bool isSwitchingUp = false;
     public bool isSwitchingDown = false;
+
+    [ColorUsageAttribute(true, true)] public Color[] colors;
+    int colorIndex = 0;
+    public Renderer rend;
 
     #region Delegates
     public delegate void SwitchUp();
@@ -26,13 +30,14 @@ public class MenuSelecter
 
         charakterSelected = true;
 
-        characterEnum = (Characters)slotIndex + 1;                  // Index Need to count 1 UP because the Characters in the enum Starting at 1
-        
+        characterEnum = Characters.Nav;
+        //characterEnum = (Characters)slotIndex + 1;                  // Index Need to count 1 UP because the Characters in the enum Starting at 1
+
         // Do Stuff with p1Characters[p1SlotIndex] | Maybe Animaton Or Something 
 
         //TEST
 
-        characters[slotIndex].transform.position = new Vector3(characters[slotIndex].transform.position.x, 1, characters[slotIndex].transform.position.z);
+        characters[1].transform.position = new Vector3(characters[1].transform.position.x, 1, characters[1].transform.position.z);
     }
 
     public void UnselectSlot()
@@ -42,12 +47,49 @@ public class MenuSelecter
         {
             charakterSelected = false;
 
-            characters[slotIndex].transform.position = characterPosition;
+            characters[1].transform.position = characterPosition;
         }
         else if (!charakterSelected)
         {
             // TODO: Leave Lobby  OR Some Stuff
         }
+    }
+    
+    public void ChangeColorUp()
+    {
+        if (!isSwitchingUp && !charakterSelected)
+        {
+            isSwitchingUp = true;
+            if (colorIndex + 1 == colors.Length)
+            {
+                colorIndex = -1;
+            }
+            colorIndex++;
+            ApplyColor(colors[colorIndex]);
+            if (SwitchUpAction != null)
+                SwitchUpAction();
+        }
+    }
+
+    public void ChangeColorDown()
+    {
+        if (!isSwitchingUp && !charakterSelected)
+        {
+            isSwitchingUp = true;
+            if (colorIndex == 0)
+            {
+                colorIndex = colors.Length;
+            }
+            colorIndex--;
+            ApplyColor(colors[colorIndex]);
+            if (SwitchUpAction != null)
+                SwitchUpAction();
+        }
+    }
+
+    public void ApplyColor(Color color)
+    {
+        rend.material.SetColor("_EmissionColor", color);
     }
 
     /// <summary>
@@ -59,7 +101,7 @@ public class MenuSelecter
         {
             isSwitchingUp = true;
             characters[slotIndex].SetActive(false);
-            if (slotIndex + 1 == characters.Length)                     // Math needed because Array.Lenght doesnt Start at 0
+            if (slotIndex + 1 == characters.Length)                     // + 1 needed because Array.Lenght doesnt Start at 0
             {
                 slotIndex = -1;
             }
@@ -69,7 +111,6 @@ public class MenuSelecter
                 SwitchUpAction();
         }
     }
-
     /// <summary>
     /// Player Switch Character Selection DOWN
     /// </summary>
@@ -81,7 +122,7 @@ public class MenuSelecter
             characters[slotIndex].SetActive(false);
             if (slotIndex == 0)
             {
-                slotIndex = characters.Length;                          // No Math needed becaus Array.Length starts at 1
+                slotIndex = characters.Length;                          // No + 1 needed becaus Array.Length starts at 1
             }
             slotIndex--;
             characters[slotIndex].SetActive(true);

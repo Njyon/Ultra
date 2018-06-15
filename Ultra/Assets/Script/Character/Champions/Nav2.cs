@@ -296,6 +296,8 @@ public class Nav2 : MyCharacter
         if (!enemyCharacter.canGetDamaged)
         {
             enemyCharacter.Combo(ComboState.Dodge);
+            // Count All Dodges for the ENdScreen
+            enemyCharacter.dodgeAction(enemyCharacter.playerEnum);
             return;
         }
 

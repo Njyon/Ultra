@@ -25,12 +25,19 @@ public class CharacterSelecterV2 : MonoBehaviour
     //Player Slots
     MenuSelecter playerOne = new MenuSelecter();
     MenuSelecter playerTwo = new MenuSelecter();
-    
+
+    [Header("Colors")]
+    [ColorUsageAttribute(true, true)] public Color[] colors;
+
+    [Header("Renderer Cloth")]
+    [SerializeField] Renderer renderer1;
+    [SerializeField] Renderer renderer2;
+
     #region Subscibe & Unsubscribe from Delegates
     /// <summary>
     /// Subscribe to Delegate
     /// </summary>
-    void OnEnable()
+    public void ApplyInput()
     {
         InputManager.p1_OnKeyPressed += P1_InputDownCheck;
         InputManager.p2_OnKeyPressed += P2_InputDownCheck;
@@ -38,11 +45,11 @@ public class CharacterSelecterV2 : MonoBehaviour
         InputManager.p1_OnKeyPressed += P1_InputUpCheck;
         InputManager.p2_OnKeyPressed += P2_InputUpCheck;
 
-        InputManager.P1_LeftStickRightAction += playerOne.SwitchSlotUp;
-        InputManager.P2_LeftStickRightAction += playerTwo.SwitchSlotUp;
+        InputManager.P1_LeftStickRightAction += playerOne.ChangeColorUp;
+        InputManager.P2_LeftStickRightAction += playerTwo.ChangeColorUp;
 
-        InputManager.P1_LeftStickLeftAction += playerOne.SwitchSlotDown;
-        InputManager.P2_LeftStickLeftAction += playerTwo.SwitchSlotDown;
+        InputManager.P1_LeftStickLeftAction += playerOne.ChangeColorDown;
+        InputManager.P2_LeftStickLeftAction += playerTwo.ChangeColorDown;
 
         //Fix because The Input is an Update and gets called Every Frame
         playerOne.SwitchUpAction += P1SwitchUp;
@@ -54,7 +61,7 @@ public class CharacterSelecterV2 : MonoBehaviour
     /// <summary>
     /// UnSubscribe from Delegate
     /// </summary>
-    void RemoveInput()
+    public void RemoveInput()
     {
         InputManager.p1_OnKeyPressed -= P1_InputDownCheck;
         InputManager.p2_OnKeyPressed -= P2_InputDownCheck;
@@ -126,6 +133,9 @@ public class CharacterSelecterV2 : MonoBehaviour
             PlayerInfoManager.playerOne.character = playerOne.characterEnum;
             PlayerInfoManager.playerTwo.character = playerTwo.characterEnum;
 
+            PlayerInfoManager.playerOne.color = renderer1.material.GetColor("_EmissionColor");
+            PlayerInfoManager.playerTwo.color = renderer2.material.GetColor("_EmissionColor");
+
             RemoveInput();
             StartGame();
             
@@ -145,25 +155,21 @@ public class CharacterSelecterV2 : MonoBehaviour
                 Instantiate(playerInfoManagerObj, Vector3.zero, Quaternion.identity);
             }
         }
-    #region Set befor Play
+
         playerOne.characters = new GameObject[amountOfPlayableCharacters];
         playerTwo.characters = new GameObject[amountOfPlayableCharacters];
 
         playerOne.characterPosition = p1Keeram.transform.position;
         playerTwo.characterPosition = p2Keeram.transform.position;
-
-    #endregion
-
-    #region Set Character Array
+        
+        
         playerOne.characters[0] = p1Keeram;
         playerOne.characters[1] = p1Nav;
 
         playerTwo.characters[0] = p2Keeram;
         playerTwo.characters[1] = p2Nav;
-
-#endregion
-
-    #region Check befor Playing
+        
+        
         if (p1Keeram == null || p2Keeram == null)
         {
             Debug.Log("<color=red>Not Enough Characters in CharacterSelecter</color> ");
@@ -175,27 +181,46 @@ public class CharacterSelecterV2 : MonoBehaviour
                 Debug.Log("<color=red>Not Enough Characters in CharacterSelecter Array</color> ");
             }
         }
-    #endregion
         
-    #region Getter Stuff
         playerInfoManager = playerInfoManagerObj.GetComponent<PlayerInfoManager>();
 
         playerOne.characterPosition = playerOne.characters[playerOne.slotIndex].transform.position;
         playerTwo.characterPosition = playerTwo.characters[playerTwo.slotIndex].transform.position;
 
-    #endregion
+        playerOne.rend = renderer1;
+        playerTwo.rend = renderer2;
 
-    #region Setter Stuff
+        playerOne.colors = colors;
+        playerTwo.colors = colors;
 
-        #endregion
+        playerOne.ApplyColor(playerOne.colors[0]);
+        playerTwo.ApplyColor(playerOne.colors[0]);
 
-        for (int i = 1; i < playerOne.characters.Length; i++)
+        // Set both Character invisible
+        for (int i = 0; i < playerOne.characters.Length; i++)
         {
             if (playerOne.characters[i] != null)
                 playerOne.characters[i].SetActive(false);
             if (playerTwo.characters[i] != null)
                 playerTwo.characters[i].SetActive(false);
         }
+    }
+
+    /// <summary>
+    /// Enables Nav
+    /// </summary>
+    public void ShowNav()
+    {
+        p1Nav.SetActive(true);
+        p2Nav.SetActive(true);
+    }
+    /// <summary>
+    /// Hiddes Nav
+    /// </summary>
+    public void HiddeNav()
+    {
+        p1Nav.SetActive(false);
+        p2Nav.SetActive(false);
     }
 
     #region Load Next Scene

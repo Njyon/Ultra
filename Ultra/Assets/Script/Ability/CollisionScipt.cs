@@ -31,14 +31,12 @@ public class CollisionScipt : MonoBehaviour
                     myCharacter.xUpHitBox = true;
                     break;
                 case CollisionEnum.XHitDown:
-                    Debug.Log("Down");
                     myCharacter.xDownHitBox = true;
                     break;
                 case CollisionEnum.XHitUpAngeld:
                     myCharacter.xUpHitAngeldBox = true;
                     break;
                 case CollisionEnum.XHitDownAngeld:
-                    Debug.Log("DownAngeld");
                     myCharacter.xDownHitAngeldBox = true;
                     break;
             }
