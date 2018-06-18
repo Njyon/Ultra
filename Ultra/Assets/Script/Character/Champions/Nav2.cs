@@ -166,7 +166,7 @@ public class Nav2 : MyCharacter
             }
 
             PartilceSlash();
-            eventDelegate(EventState.LightHit);
+            eventDelegate(EventState.Slash);
             rb.useGravity = false;
         };
         abilities.onAbilityUpdate = () =>

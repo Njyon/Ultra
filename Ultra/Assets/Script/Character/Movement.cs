@@ -16,6 +16,7 @@ public class Movement : MonoBehaviour
     bool isStunned = false;
     bool isIdling = true;
     bool checkForLanding = true;
+    bool checkForIdeling = true;
     Vector3 lastPos;
     MyCharacter myCharacter;
     Rigidbody rb;
@@ -328,7 +329,19 @@ public class Movement : MonoBehaviour
     //      Private     //
     void EventCheck(EventState eventState)
     {
+        switch(eventState)
+        {
+            case EventState.Landing:
+                checkForIdeling = false;
+                Invoke("CheckIdeling", 0.2f);
+                break;
+        }
+
         eventDelegate(eventState);
+    }
+    void CheckIdeling()
+    {
+        checkForIdeling = true;
     }
 
     void WallSlide()
@@ -357,7 +370,9 @@ public class Movement : MonoBehaviour
     }
     void Idle()
     {
-        
+        if (!checkForIdeling)
+            return;
+
         if (MyEpsilon.Epsilon(lastPos.x, transform.position.x, 0.01f) && MyEpsilon.Epsilon(lastPos.y, transform.position.y, 0.01f))
         {
             if (!isIdling)
@@ -478,7 +493,7 @@ public class Movement : MonoBehaviour
                 if (Mathf.Abs(winkel) < maxWalkAngel)
                 {
                     this.gameObject.transform.position += dir * movementSpeed * Time.deltaTime;
-                    eventDelegate(EventState.Move);
+                    eventDelegate(EventState.Walking);
                 }
             }
         }
@@ -559,7 +574,7 @@ public class Movement : MonoBehaviour
                 if (Mathf.Abs(winkel) < maxWalkAngel)
                 {
                     this.gameObject.transform.position += dir * movementSpeed * Time.deltaTime;
-                    eventDelegate(EventState.Move);
+                    eventDelegate(EventState.Walking);
                 }
             }
         }
@@ -585,7 +600,7 @@ public class Movement : MonoBehaviour
             StartCoroutine(JumpCoolDown());
             StartCoroutine(ForceDownDelay());
             fallComp.isOnWallLeft = false;
-            eventDelegate(EventState.JumpOnWall);
+            eventDelegate(EventState.JumpOnGround);
         }
         else if (fallComp.isOnWallRight && fallComp.isFalling)
         {
@@ -603,7 +618,7 @@ public class Movement : MonoBehaviour
             StartCoroutine(JumpCoolDown());
             StartCoroutine(ForceDownDelay());
             fallComp.isOnWallRight = false;
-            eventDelegate(EventState.JumpOnWall);
+            eventDelegate(EventState.JumpOnGround);
         }
         else if (jumps < maxJumps)
         {
@@ -612,13 +627,13 @@ public class Movement : MonoBehaviour
             StartCoroutine(ForceDownDelay());
             if(fallComp.isFalling)
             {
-                eventDelegate(EventState.JumpAir);
+                eventDelegate(EventState.JumpInAir);
             }
             else
             {
                 checkForLanding = false;
                 Invoke("CheckForLandingDelay", 0.1f);
-                eventDelegate(EventState.Jump);
+                eventDelegate(EventState.JumpOnGround);
             }
         }
         fallComp.isFalling = true;
