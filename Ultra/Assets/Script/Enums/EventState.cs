@@ -21,4 +21,6 @@
    Parry,
    GetHit,
    isFalling,
+   ChangeDirectionLeft,
+   ChangeDirectionRight
 };

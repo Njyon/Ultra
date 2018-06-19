@@ -32,4 +32,12 @@ public class ParticleData : MonoBehaviour
     public GameObject attackLeft;
     public GameObject attackUp;
     public GameObject attackDown;
+    public GameObject attackRightUp;
+    public GameObject attackLeftUp;
+    public GameObject attackRightDown;
+    public GameObject attackLeftDown;
+
+    [Header("ChangeDirection")]
+    public GameObject turnAroundLeft;
+    public GameObject turnAroundRight;
 }

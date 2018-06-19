@@ -422,7 +422,11 @@ public class Movement : MonoBehaviour
         if (!this.canMove || !dash.canMove)
             return;
 
-        islookingToTheRight = true;
+        if(!islookingToTheRight)
+        {
+            islookingToTheRight = true;
+            eventDelegate(EventState.ChangeDirectionRight);
+        }
         fallComp.fallStraight = false;
         forcingDown = false;
         fallComp.isOnWallLeft = false;
@@ -502,10 +506,15 @@ public class Movement : MonoBehaviour
     {
         if (!this.canMove || !dash.canMove)
             return;
-        
+
+        if (islookingToTheRight)
+        {
+            islookingToTheRight = false;
+            eventDelegate(EventState.ChangeDirectionLeft);
+        }
+
         fallComp.fallStraight = false;
         forcingDown = false;
-        islookingToTheRight = false;
         fallComp.isOnWallRight = false;
 
         turnclass.LookLeft(this.transform.rotation);

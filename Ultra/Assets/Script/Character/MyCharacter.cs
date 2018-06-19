@@ -319,6 +319,12 @@ public class MyCharacter : MonoBehaviour
             case EventState.EndDisabled:
                 animator.SetBool(animDisabled, false);
                 break;
+            case EventState.ChangeDirectionLeft:
+                Instantiate(pD.turnAroundLeft, new Vector3(this.transform.position.x + 1, this.transform.position.y, this.transform.position.z), Quaternion.identity);
+                break;
+            case EventState.ChangeDirectionRight:
+                Instantiate(pD.turnAroundRight, new Vector3(this.transform.position.x - 1, this.transform.position.y, this.transform.position.z), Quaternion.identity);
+                break;
             default:
                 Debug.Log("Coundnt Find State! Character: " + gameObject.name);
                 break;

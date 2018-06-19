@@ -8097,6 +8097,18 @@ MonoBehaviour:
   attackLeft: {fileID: 1360178460187616, guid: fc44116deddf78d4191258cf6fc774bf, type: 2}
   attackUp: {fileID: 1934716526379544, guid: 25b58e373138c2745826872258da4d24, type: 2}
   attackDown: {fileID: 1654914327417982, guid: 3f5bda101a2e202449d28c8e16cbed91, type: 2}
+  attackRightUp: {fileID: 1868506158978638, guid: b0db0c1d8c708b5429b83750c36963ce,
+    type: 2}
+  attackLeftUp: {fileID: 1868506158978638, guid: 208fec42b31f67c499dd7e1764867b98,
+    type: 2}
+  attackRightDown: {fileID: 1868506158978638, guid: 62c410e0d8e220d4a8c910d9aa6d084a,
+    type: 2}
+  attackLeftDown: {fileID: 1868506158978638, guid: b34213e503618ee4388496059af01b1e,
+    type: 2}
+  turnAroundLeft: {fileID: 1856191835499908, guid: a561b2da48623bd4bb33705b0f217aa5,
+    type: 2}
+  turnAroundRight: {fileID: 1856191835499908, guid: f86dc019c5e47a34e8bb5c10c51f12ed,
+    type: 2}
 --- !u!136 &136502791406690800
 CapsuleCollider:
   m_ObjectHideFlags: 1
