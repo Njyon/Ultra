@@ -203,8 +203,8 @@ public class Nav : MyCharacter
             isUsingAbility = true;
             Disable();
 
-            if (eventDelegate != null)
-                eventDelegate(EventState.LightHit);
+            //if (eventDelegate != null)
+                //eventDelegate(EventState.LightHit);
         };
         abilities[0].onAbilityEnd = () => 
         {
@@ -240,7 +240,7 @@ public class Nav : MyCharacter
             currentLightAttackDashTime = lightAttackDashTime;
             Disable();
 
-            eventDelegate(EventState.LightHitSide);
+            //eventDelegate(EventState.LightHitSide);
 
             if (this.transform.position.x < 0)
             {
@@ -303,8 +303,8 @@ public class Nav : MyCharacter
             currentLightAttackDashTime = lightAttackDashTime;
             Disable();
 
-            if (eventDelegate != null)
-                eventDelegate(EventState.LightHitSide);
+            //if (eventDelegate != null)
+            //    eventDelegate(EventState.LightHitSide);
 
             if (this.transform.position.x < 0)
             {
@@ -600,11 +600,11 @@ public class Nav : MyCharacter
                 if(enemyCharacter.IsLookingRight())
                 {
                     LookLeft();
-                    if (eventDelegate != null)
-                        eventDelegate(EventState.Teleport);
+                    //if (eventDelegate != null)
+                    //    eventDelegate(EventState.Teleport);
                     transform.position = new Vector3(enemy.transform.position.x + 1, enemy.transform.position.y, 0);
-                    if (eventDelegate != null)
-                        eventDelegate(EventState.Teleport);
+                    //if (eventDelegate != null)
+                    //    eventDelegate(EventState.Teleport);
                     enemyCharacter.EndStun();
                     enemyCharacter.Damage(abilities[7].GetDamage() * Mathf.RoundToInt(havyAttackChargeCounter));
                     enemyCharacter.KickAway(this.transform.position, true);
@@ -612,11 +612,11 @@ public class Nav : MyCharacter
                 else
                 {
                     LookRight();
-                    if (eventDelegate != null)
-                        eventDelegate(EventState.Teleport);
+                    //if (eventDelegate != null)
+                    //    eventDelegate(EventState.Teleport);
                     transform.position = new Vector3(enemy.transform.position.x - 1, enemy.transform.position.y, 0);
-                    if (eventDelegate != null)
-                        eventDelegate(EventState.Teleport);
+                    //if (eventDelegate != null)
+                    //    eventDelegate(EventState.Teleport);
                     enemyCharacter.EndStun();
                     enemyCharacter.Damage(abilities[7].GetDamage() * Mathf.RoundToInt(havyAttackChargeCounter));
                     enemyCharacter.KickAway(this.transform.position, true);
@@ -624,11 +624,11 @@ public class Nav : MyCharacter
             }
             else
             {
-                if (eventDelegate != null)
-                    eventDelegate(EventState.Teleport);
+                //if (eventDelegate != null)
+                //    eventDelegate(EventState.Teleport);
                 transform.position = new Vector3(this.transform.position.x, this.transform.position.y + SpecialAttackKickHight, 0);
-                if (eventDelegate != null)
-                    eventDelegate(EventState.Teleport);
+                //if (eventDelegate != null)
+                //    eventDelegate(EventState.Teleport);
             }
             enemyKickingUp = false;
             isUsingAbility = false;
@@ -706,11 +706,11 @@ public class Nav : MyCharacter
                         }
                     }
                 }
-                if (eventDelegate != null)
-                    eventDelegate(EventState.Teleport);
+                //if (eventDelegate != null)
+                //    eventDelegate(EventState.Teleport);
                 this.transform.position = TeleportDestination;
-                if (eventDelegate != null)
-                    eventDelegate(EventState.Teleport);
+                //if (eventDelegate != null)
+                //    eventDelegate(EventState.Teleport);
             }
 
             if(xNormalHitBox && !abilities[8].hitObject)
@@ -797,11 +797,11 @@ public class Nav : MyCharacter
             }
 
             // Set the Player to the Teleport Position
-            if (eventDelegate != null)
-                eventDelegate(EventState.Teleport);
+            //if (eventDelegate != null)
+            //    eventDelegate(EventState.Teleport);
             this.transform.position = TeleportDestination;
-            if (eventDelegate != null)
-                eventDelegate(EventState.Teleport);
+            //if (eventDelegate != null)
+            //    eventDelegate(EventState.Teleport);
 
         };
         abilities[9].onAbilityUpdate = () => 

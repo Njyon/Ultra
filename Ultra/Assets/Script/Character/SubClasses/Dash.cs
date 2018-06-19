@@ -155,9 +155,6 @@ public class Dash : MonoBehaviour
                     {
                         currentDashes = 0;
                         StartCoroutine(DashCoolDown(dashCoolDown));
-
-                        if (eventDelegate != null)
-                            eventDelegate(EventState.Dash);
                     }
                 }
                 if (MyEpsilon.Epsilon(transform.position.x, dashEndPoint.x, 0.5f))
