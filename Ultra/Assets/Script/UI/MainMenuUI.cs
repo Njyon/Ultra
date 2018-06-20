@@ -114,7 +114,10 @@ public class MainMenuUI : MonoBehaviour
         mMD.SetHeaderGrey(true);
         mMD.SetBodyGrey(false);
 
+        mMD.SetSelectedGameObject(mMD.VideoButtons[0]);
+
         mMD.DisableHeaderButtons();
+
     }
 }
 
