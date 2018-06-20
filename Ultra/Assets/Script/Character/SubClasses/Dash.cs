@@ -16,7 +16,7 @@ public class Dash : MonoBehaviour
     // Curves
     public AnimationCurve dashCurve;
 
-    [SerializeField] Renderer rendererCloth;
+    public Renderer rendererCloth;
     Color startColorCloth;
     [SerializeField] Color EndColor;
 

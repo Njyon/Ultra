@@ -148,10 +148,10 @@ public class OneVsOneGameMode : MonoBehaviour
                     sCam.AddTarget(PlayerOne.transform);
 
 
-                    Renderer[] rend = PlayerOne.GetComponentsInChildren<Renderer>();
-                    rend[1].material = new Material(rend[1].material);
-                    rend[1].material.SetColor("_EmissionColor", PlayerInfoManager.playerOne.color);
-                    rend[1].material.color = Color.red;
+                    Renderer rend = PlayerOne.GetComponent<Dash>().rendererCloth;
+
+                    rend.material.SetColor("_EmissionColor", PlayerInfoManager.playerTwo.color);
+                    rend.material.color = PlayerInfoManager.playerTwo.color;
                 }
                 else
                 {
@@ -164,10 +164,10 @@ public class OneVsOneGameMode : MonoBehaviour
                     PlayerTwo.GetComponent<MyCharacter>().Posses();
                     sCam.AddTarget(PlayerTwo.transform);
 
-                    Renderer[] rend = PlayerTwo.GetComponentsInChildren<Renderer>();
-                    rend[1].material = new Material(rend[1].material);
-                    rend[1].material.SetColor("_EmissionColor", PlayerInfoManager.playerTwo.color);
-                    rend[1].material.color = Color.cyan;
+                    Renderer rend = PlayerTwo.GetComponent<Dash>().rendererCloth;
+
+                    rend.material.SetColor("_EmissionColor", PlayerInfoManager.playerTwo.color);
+                    rend.material.color = PlayerInfoManager.playerTwo.color;
                 }
 
                 break;

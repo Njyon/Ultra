@@ -26,11 +26,13 @@ public class MyCharacter : MonoBehaviour
     public Animator animator;
     int animIsFalling;
     int animDisabled;
+    protected int animIsHiting;
     int animGroundBlend;
     int animAirBlend;
     int animAttackBlend;
     int animJumpBlend;
 
+    protected bool isAttacking = false;
     protected Rigidbody rb;
     protected Movement movement;
 
@@ -210,9 +212,10 @@ public class MyCharacter : MonoBehaviour
         {
             animIsFalling = Animator.StringToHash("isFalling");
             animDisabled = Animator.StringToHash("isDisabled");
+            animIsHiting = Animator.StringToHash("isHiting");
             animGroundBlend = Animator.StringToHash("GroundBlend");
             animAirBlend = Animator.StringToHash("AirBlend");
-            animAttackBlend = Animator.StringToHash("AttackBlend");
+            animAttackBlend = Animator.StringToHash("DashBlend");
             animJumpBlend = Animator.StringToHash("JumpBlend");
         }
         if (ui == null)
@@ -293,8 +296,10 @@ public class MyCharacter : MonoBehaviour
                 Instantiate(pD.ps_JumpInAir, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0), Quaternion.identity);  // Spawn Particle
                 break;
             case EventState.Fall:
-                animator.SetFloat(animAirBlend, (float)FallState.Fall);
+                if (isAttacking)
+                    return;
 
+                animator.SetFloat(animAirBlend, (float)FallState.Fall);
                 break;
             case EventState.Landing:
                 animator.SetBool(animIsFalling, false);
@@ -324,6 +329,41 @@ public class MyCharacter : MonoBehaviour
                 break;
             case EventState.ChangeDirectionRight:
                 Instantiate(pD.turnAroundRight, new Vector3(this.transform.position.x - 1, this.transform.position.y, this.transform.position.z), Quaternion.identity);
+                break;
+            case EventState.AttackUp:
+                animator.SetFloat(animAirBlend, (float)FallState.Attack);
+                animator.SetFloat(animAttackBlend, (float)AttackState.AttackUp);
+                break;
+            case EventState.AttackUpAngled:
+                animator.SetFloat(animAirBlend, (float)FallState.Attack);
+                animator.SetFloat(animAttackBlend, (float)AttackState.AttackAngledUp);
+                break;
+            case EventState.AttackSide:
+                animator.SetFloat(animAirBlend, (float)FallState.Attack);
+                animator.SetFloat(animAttackBlend, (float)AttackState.AttackSide);
+                break;
+            case EventState.AttackDownAngled:
+                animator.SetFloat(animAirBlend, (float)FallState.Attack);
+                animator.SetFloat(animAttackBlend, (float)AttackState.AttackAngledDown);
+                break;
+            case EventState.AttackDown:
+                animator.SetFloat(animAirBlend, (float)FallState.Attack);
+                animator.SetFloat(animAttackBlend, (float)AttackState.AttackDown);
+                break;
+            case EventState.AttackEnd:
+                if(IsFalling())
+                {
+                    animator.SetBool(animIsFalling, true);
+                    animator.SetFloat(animAirBlend, (float)FallState.Fall);
+                }
+                else
+                {
+                    animator.SetBool(animIsFalling, false);
+                    animator.SetFloat(animGroundBlend, (float)GroundState.Idle);
+                }
+                break;
+            case EventState.AttackHit:
+                animator.SetBool(animIsHiting, true);
                 break;
             default:
                 Debug.Log("Coundnt Find State! Character: " + gameObject.name);

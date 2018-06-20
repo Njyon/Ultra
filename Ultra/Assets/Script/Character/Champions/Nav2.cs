@@ -116,6 +116,7 @@ public class Nav2 : MyCharacter
         // Standert "X" Attack with left, right or without direction Input
         abilities.onAbilityStart = () => 
         {
+            isAttacking = true;
             isUsingAbility = true;
             IsAttacking();
 
@@ -125,6 +126,8 @@ public class Nav2 : MyCharacter
             {
                 case Direction.Right:
                 case Direction.Left:
+                    eventDelegate(EventState.AttackSide);
+
                     // Find dash End and Start point
                     if (IsLookingRight())
                     {
@@ -140,12 +143,16 @@ public class Nav2 : MyCharacter
                     }
                     break;
                 case Direction.Up:
+                    eventDelegate(EventState.AttackUp);
+
                     // Find dash End and Start point
                     dashEndPosition = MyRayCast.RaycastUp(transform.position, attackLength);
                     dashStartPosition = transform.position;
                     Instantiate(pD.attackUp, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
                     break;
                 case Direction.Down:
+                    eventDelegate(EventState.AttackDown);
+
                     // Find dash End and Start point
                     dashEndPosition = MyRayCast.RaycastDown(transform.position, attackLength);
                     dashStartPosition = transform.position;
@@ -153,6 +160,8 @@ public class Nav2 : MyCharacter
                     break;
                 case Direction.RightDownAngel:
                 case Direction.LeftDownAngel:
+                    eventDelegate(EventState.AttackDownAngled);
+
                     if (IsLookingRight())
                     {
                         Instantiate(pD.attackRightDown, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
@@ -167,6 +176,8 @@ public class Nav2 : MyCharacter
                     break;
                 case Direction.RightUpAngel:
                 case Direction.LeftUpAngel:
+                    eventDelegate(EventState.AttackUpAngled);
+
                     if (IsLookingRight())
                     {
                         Instantiate(pD.attackRightUp, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
@@ -182,7 +193,6 @@ public class Nav2 : MyCharacter
             }
 
             PartilceSlash();
-            eventDelegate(EventState.Slash);
             rb.useGravity = false;
         };
         abilities.onAbilityUpdate = () =>
@@ -271,6 +281,7 @@ public class Nav2 : MyCharacter
         {
             pD.trail.SetActive(false);
 
+            isAttacking = false;
             rb.velocity = Vector3.zero;
             rb.useGravity = true;
             EndAttacking();
@@ -279,6 +290,17 @@ public class Nav2 : MyCharacter
         };
         abilities.onAbilityEnd = () =>
         {
+            isAttacking = false;
+            if (abilities.hitObject)
+            {
+                eventDelegate(EventState.AttackHit);
+                Invoke("AnimHitSwitch", 0.1f);
+            }
+            else
+            {
+                eventDelegate(EventState.AttackEnd);
+            }
+
             pD.trail.SetActive(false);
 
             rb.velocity = Vector3.zero;
@@ -300,6 +322,12 @@ public class Nav2 : MyCharacter
 
         #endregion
     }
+
+    void AnimHitSwitch()
+    {
+        animator.SetBool(animIsHiting, false);
+    }
+
     /// <summary>
     /// Damage the enemy and Kick him away if he is not dodging
     /// </summary>
