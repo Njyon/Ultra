@@ -74,7 +74,11 @@ public class MultiTargetCamera : MonoBehaviour
         Vector3 centerPoint = GetCenterPoint();
         Vector3 newPosition = centerPoint + offset;
 
-        transform.LookAt(centerPoint);
+        //Loot At Tartget Smooth
+        Quaternion rot = Quaternion.LookRotation(centerPoint - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * 6);
+        
+        //transform.LookAt(centerPoint);
 
         transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref vel, smoothTime);
     }
