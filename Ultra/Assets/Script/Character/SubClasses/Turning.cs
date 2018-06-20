@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Turning
 {
-    public float speed = 10;
+    public float speed = 15;
 
     bool islookingToTheRight = false;
     bool isTurningRight = false;

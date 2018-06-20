@@ -153,12 +153,28 @@ public class Nav2 : MyCharacter
                     break;
                 case Direction.RightDownAngel:
                 case Direction.LeftDownAngel:
+                    if (IsLookingRight())
+                    {
+                        Instantiate(pD.attackRightDown, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
+                    }
+                    else
+                    {
+                        Instantiate(pD.attackLeftDown, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
+                    }
                     // Find dash End and Start point
                     dashEndPosition = MyRayCast.RayCastDownAngeled(transform, attackLength, IsLookingRight());
                     dashStartPosition = transform.position;
                     break;
                 case Direction.RightUpAngel:
                 case Direction.LeftUpAngel:
+                    if (IsLookingRight())
+                    {
+                        Instantiate(pD.attackRightUp, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
+                    }
+                    else
+                    {
+                        Instantiate(pD.attackLeftUp, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
+                    }
                     // Find dash End and Start point
                     dashEndPosition = MyRayCast.RayCastUpAngeled(transform, attackLength, IsLookingRight());
                     dashStartPosition = transform.position;
@@ -166,7 +182,7 @@ public class Nav2 : MyCharacter
             }
 
             PartilceSlash();
-            eventDelegate(EventState.LightHit);
+            eventDelegate(EventState.Slash);
             rb.useGravity = false;
         };
         abilities.onAbilityUpdate = () =>

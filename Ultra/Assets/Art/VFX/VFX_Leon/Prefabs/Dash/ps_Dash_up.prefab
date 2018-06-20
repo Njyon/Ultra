@@ -95,7 +95,7 @@ ParticleSystem:
   lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -4683,7 +4683,7 @@ ParticleSystem:
   lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -9277,7 +9277,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 2232bd93553edf14b8fa6284eb8d2045, type: 2}
+  - {fileID: 2100000, guid: de8b7a4adefdbae4ebbfd10c7335e43e, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -9333,7 +9333,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 5334a2afc71d58a408d44f79329a24dc, type: 2}
+  - {fileID: 2100000, guid: 63bbc3c1d76866b489828cb55bd43b71, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
