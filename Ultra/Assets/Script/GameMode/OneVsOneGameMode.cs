@@ -150,8 +150,9 @@ public class OneVsOneGameMode : MonoBehaviour
 
                     Renderer rend = PlayerOne.GetComponent<Dash>().rendererCloth;
 
-                    rend.material.SetColor("_EmissionColor", PlayerInfoManager.playerTwo.color);
-                    rend.material.color = PlayerInfoManager.playerTwo.color;
+                    rend.material.SetColor("_EmissionColor", PlayerInfoManager.playerOne.color);
+                    rend.materials[1].SetColor("_EmissionColor", PlayerInfoManager.playerOne.color);
+                    rend.material.color = PlayerInfoManager.playerOne.color;
                 }
                 else
                 {
@@ -167,6 +168,7 @@ public class OneVsOneGameMode : MonoBehaviour
                     Renderer rend = PlayerTwo.GetComponent<Dash>().rendererCloth;
 
                     rend.material.SetColor("_EmissionColor", PlayerInfoManager.playerTwo.color);
+                    rend.materials[1].SetColor("_EmissionColor", PlayerInfoManager.playerTwo.color);
                     rend.material.color = PlayerInfoManager.playerTwo.color;
                 }
 
@@ -217,14 +219,14 @@ public class OneVsOneGameMode : MonoBehaviour
                     PlayerDataManager.playerOne.HighestCombo = combo;
                 if (multiplier > PlayerDataManager.playerOne.HighestMultiplier)
                     PlayerDataManager.playerOne.HighestMultiplier = multiplier;
-                PlayerDataManager.playerOne.Score += score;
+                PlayerDataManager.playerOne.Score = score;
                 break;
             case PlayerEnum.PlayerTwo:
                 if (combo > PlayerDataManager.playerTwo.HighestCombo)
                     PlayerDataManager.playerTwo.HighestCombo = combo;
                 if (multiplier > PlayerDataManager.playerTwo.HighestMultiplier)
                     PlayerDataManager.playerTwo.HighestMultiplier = multiplier;
-                PlayerDataManager.playerTwo.Score += score;
+                PlayerDataManager.playerTwo.Score = score;
                 break;
         }
     }
@@ -270,6 +272,12 @@ public class OneVsOneGameMode : MonoBehaviour
                 timer.text = "0:00";
                 EndGame();
             }
+        }
+
+        //Debug
+        if(Input.GetKeyDown(KeyCode.Backspace))
+        {
+            EndGame();
         }
     }
 }

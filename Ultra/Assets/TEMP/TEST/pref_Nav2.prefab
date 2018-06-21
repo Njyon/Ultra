@@ -9570,6 +9570,9 @@ MonoBehaviour:
   enemyCharacter: {fileID: 0}
   disabledTime: 1
   animator: {fileID: 95885822823921126}
+  dashCoolDown: 0.4
+  maxDashes: 2
+  meshController: {fileID: 1447890962482332}
   pD: {fileID: 114996467066509520}
   hitCounter: 0
   combo: 0

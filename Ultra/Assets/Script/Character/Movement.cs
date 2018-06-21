@@ -440,6 +440,8 @@ public class Movement : MonoBehaviour
             {
                 fallComp.isOnWallRight = true;
                 ResetJumps();
+                if (eventDelegate != null)
+                    eventDelegate(EventState.ResetDashes);
                 rb.velocity = new Vector3(0, 0, 0);
             }
         }
@@ -526,6 +528,8 @@ public class Movement : MonoBehaviour
             {
                 fallComp.isOnWallLeft = true;
                 ResetJumps();
+                if (eventDelegate != null)
+                    eventDelegate(EventState.ResetDashes);
                 rb.velocity = new Vector3(0, 0, 0);
             }
         }
@@ -636,7 +640,11 @@ public class Movement : MonoBehaviour
             StartCoroutine(ForceDownDelay());
             if(fallComp.isFalling)
             {
-                eventDelegate(EventState.JumpInAir);
+                if(jumps == 2)
+                    eventDelegate(EventState.JumpInAir);
+                if(jumps >= 3)
+                    eventDelegate(EventState.JumpInAir2);
+
             }
             else
             {
