@@ -105,6 +105,8 @@ public class FallComponent
 
                 if (mov.jumps > 0)
                     mov.ResetJumps();
+                if(eventDelegate != null)
+                    eventDelegate(EventState.ResetDashes);
                 if (dash.currentDashes > 0)
                     dash.currentDashes = 0;
 
@@ -177,6 +179,8 @@ public class FallComponent
                 {
                     isOnWallRight = true;
                     mov.ResetJumps();
+                    if (eventDelegate != null)
+                        eventDelegate(EventState.ResetDashes);
                 }
             }
             else
@@ -194,6 +198,8 @@ public class FallComponent
                 {
                     isOnWallLeft = true;
                     mov.ResetJumps();
+                    if (eventDelegate != null)
+                        eventDelegate(EventState.ResetDashes);
                 }
             }
             else

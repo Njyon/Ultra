@@ -116,8 +116,17 @@ public class Nav2 : MyCharacter
         // Standert "X" Attack with left, right or without direction Input
         abilities.onAbilityStart = () => 
         {
+            if (currentDashes <= maxDashes)
+                currentDashes++;
+            else
+            {
+                abilities.Cancel();
+                return;
+            }
+
             isAttacking = true;
             isUsingAbility = true;
+            StartCoroutine(DashCooldown());
             IsAttacking();
 
             pD.trail.SetActive(true);
@@ -282,10 +291,8 @@ public class Nav2 : MyCharacter
             pD.trail.SetActive(false);
 
             isAttacking = false;
-            rb.velocity = Vector3.zero;
             rb.useGravity = true;
             EndAttacking();
-            isUsingAbility = false;
             travel = 0;
         };
         abilities.onAbilityEnd = () =>
@@ -306,7 +313,6 @@ public class Nav2 : MyCharacter
             rb.velocity = Vector3.zero;
             rb.useGravity = true;
             EndAttacking();
-            isUsingAbility = false;
             travel = 0;
         };
         abilities.onAbilityReady = () => { };
@@ -345,7 +351,7 @@ public class Nav2 : MyCharacter
             return;
         }
 
-        if (!isDisabled)
+        if (!enemyCharacter.isDisabled)
         {
             // Count up the enemy Perzent (Damaged Amount)
             enemyCharacter.Damage(abilities.GetDamage());
@@ -373,6 +379,10 @@ public class Nav2 : MyCharacter
     {
         Bounce();
         abilities.Update();
+        if (Input.GetKeyDown(KeyCode.Escape))
+            UnityEditor.EditorApplication.isPaused = true;
+        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+            UnityEditor.EditorApplication.isPaused = false;
     }
 
     
@@ -440,5 +450,11 @@ public class Nav2 : MyCharacter
             LookLeft();
             abilities.Activate();
         }
+    }
+
+    IEnumerator DashCooldown()
+    {
+        yield return new WaitForSeconds(dashCoolDown);
+        isUsingAbility = false;
     }
 }

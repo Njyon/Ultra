@@ -24,5 +24,6 @@
    ChangeDirectionLeft,
    ChangeDirectionRight,
    AttackEnd,
-   AttackHit
+   AttackHit,
+   ResetDashes
 };
