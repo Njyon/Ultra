@@ -71,26 +71,32 @@ public static class MyRayCast
     /// <returns></returns>
     public static Vector3 RayCastUpAngeled(Transform charPosition, float length, bool right)
     {
-        RaycastHit hit;
-        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + head, 0),charPosition.right + charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
+        RaycastHit headHit;
+        RaycastHit coreHit;
+        RaycastHit feedHit;
+
+        bool didHit = false;
+
+        // Check if the Player would hit an obstical with his body
+        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + head, 0),charPosition.right + charPosition.up, out headHit, length + 0.5f, 9, QueryTriggerInteraction.Ignore))
         {
-            return new Vector3(hit.point.x, hit.point.y - head, 0);
+            didHit = true;
         }
-        else
+        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y - feed, 0), charPosition.right + charPosition.up, out feedHit, length + 0.5f, 9, QueryTriggerInteraction.Ignore))
         {
-            if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + feed, 0), charPosition.right + charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
-            {
-                return new Vector3(hit.point.x, hit.point.y - feed, 0);
-            }
-            else
-            {
-                if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y, 0), charPosition.right + charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
-                {
-                    return hit.point;
-                }
-            }
-            
-            if(right)
+            didHit = true;
+        }
+        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y, 0), charPosition.right + charPosition.up, out coreHit, length + 0.5f, 9, QueryTriggerInteraction.Ignore))
+        {
+            didHit = true;
+        }
+
+        Debug.Log(didHit);
+
+        // Calc the destination if no Obstical found
+        if (!didHit)
+        {
+            if (right)
             {
                 float a = length * Mathf.Cos(45);
                 float b = Mathf.Sqrt(Mathf.Pow(length, 2) - Mathf.Pow(a, 2));
@@ -103,6 +109,59 @@ public static class MyRayCast
                 return new Vector3(charPosition.position.x - b, charPosition.position.y + a, 0);
             }
         }
+        else   // Calc the destination if character collides
+        {
+            float distanceHead = Vector3.Distance(charPosition.position, headHit.point);
+            float distancecore = Vector3.Distance(charPosition.position, coreHit.point);
+            float distancefeed = Vector3.Distance(charPosition.position, feedHit.point);
+
+            // Check witch distance is the shortest
+            if(distanceHead <= distancecore && distanceHead <= distancefeed)
+            {
+                if(charPosition.position.x < headHit.point.x)
+                {
+                    return new Vector3(headHit.point.x - 0.5f, headHit.point.y - head, 0);
+                }
+                else if(charPosition.position.x > headHit.point.x)
+                {
+                    return new Vector3(headHit.point.x + 0.5f, headHit.point.y - head, 0);
+                }
+                else
+                {
+                    return new Vector3(headHit.point.x, headHit.point.y - head, 0);
+                }
+            }
+            else if(distancecore <= distanceHead && distancecore <= distancefeed)
+            {
+                if (charPosition.position.x < coreHit.point.x)
+                {
+                    return new Vector3(coreHit.point.x - 0.5f, coreHit.point.y, 0);
+                }
+                else if(charPosition.position.x > coreHit.point.x)
+                {
+                    return  new Vector3(coreHit.point.x + 0.5f, coreHit.point.y, 0);
+                }
+                else
+                {
+                    return coreHit.point;
+                }
+            }
+            else
+            {
+                if(charPosition.position.x < feedHit.point.x)
+                {
+                    return new Vector3(feedHit.point.x - 0.5f, feedHit.point.y + feed, 0);
+                }
+                else if(charPosition.position.x > feedHit.point.x)
+                {
+                    return new Vector3(feedHit.point.x + 0.5f, feedHit.point.y + feed, 0);
+                }
+                else
+                {
+                    return new Vector3(feedHit.point.x, feedHit.point.y + feed, 0);
+                }
+            }
+        } 
     }
     /// <summary>
     /// returns a Position thats in front of the Character at an angle 45° Down
@@ -112,27 +171,30 @@ public static class MyRayCast
     /// <returns></returns>
     public static Vector3 RayCastDownAngeled(Transform charPosition, float length, bool right)
     {
-        RaycastHit hit;
-        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y, 0), charPosition.right + -charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
-        {
-            return hit.point;
-        }
-        else
-        {
-            if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + feed, 0), charPosition.right + -charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
-            {
-                return new Vector3(hit.point.x, hit.point.y - feed, 0);
-            }
-            else
-            {
-                
-                if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + head, 0), charPosition.right + -charPosition.up, out hit, length, 9, QueryTriggerInteraction.Ignore))
-                {
-                    return new Vector3(hit.point.x, hit.point.y - head, 0);
-                }
-            }
+        RaycastHit headHit;
+        RaycastHit coreHit;
+        RaycastHit feedHit;
 
-            if(right)
+        bool didHit = false;
+
+        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y, 0), charPosition.right + -charPosition.up, out coreHit, length + 0.5f, 9, QueryTriggerInteraction.Ignore))
+        {
+            didHit = true;
+        }
+        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y - feed, 0), charPosition.right + -charPosition.up, out feedHit, length + 0.5f, 9, QueryTriggerInteraction.Ignore))
+        {
+            didHit = true;
+        }    
+        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + head, 0), charPosition.right + -charPosition.up, out headHit, length + 0.5f, 9, QueryTriggerInteraction.Ignore))
+        {
+            didHit = true;
+        }
+
+        Debug.Log(didHit);
+            
+        if(!didHit)
+        {
+            if (right)
             {
                 float a = length * Mathf.Cos(45);
                 float b = Mathf.Sqrt(Mathf.Pow(length, 2) - Mathf.Pow(a, 2));
@@ -143,6 +205,59 @@ public static class MyRayCast
                 float a = length * Mathf.Cos(45);
                 float b = Mathf.Sqrt(Mathf.Pow(length, 2) - Mathf.Pow(a, 2));
                 return new Vector3(charPosition.position.x - b, charPosition.position.y - a, 0);
+            }
+        }
+        else
+        {
+            float distanceHead = Vector3.Distance(charPosition.position, headHit.point);
+            float distancecore = Vector3.Distance(charPosition.position, coreHit.point);
+            float distancefeed = Vector3.Distance(charPosition.position, feedHit.point);
+
+            // Check witch distance is the shortest
+            if (distanceHead <= distancecore && distanceHead <= distancefeed)
+            {
+                if (charPosition.position.x < headHit.point.x)
+                {
+                    return new Vector3(headHit.point.x - 0.5f, headHit.point.y - head, 0);
+                }
+                else if (charPosition.position.x > headHit.point.x)
+                {
+                    return new Vector3(headHit.point.x + 0.5f, headHit.point.y - head, 0);
+                }
+                else
+                {
+                    return new Vector3(headHit.point.x, headHit.point.y - head, 0);
+                }
+            }
+            else if (distancecore <= distanceHead && distancecore <= distancefeed)
+            {
+                if (charPosition.position.x < coreHit.point.x)
+                {
+                    return new Vector3(coreHit.point.x - 0.5f, coreHit.point.y, 0);
+                }
+                else if (charPosition.position.x > coreHit.point.x)
+                {
+                    return new Vector3(coreHit.point.x + 0.5f, coreHit.point.y, 0);
+                }
+                else
+                {
+                    return coreHit.point;
+                }
+            }
+            else
+            {
+                if (charPosition.position.x < feedHit.point.x)
+                {
+                    return new Vector3(feedHit.point.x - 0.5f, feedHit.point.y + feed, 0);
+                }
+                else if (charPosition.position.x > feedHit.point.x)
+                {
+                    return new Vector3(feedHit.point.x + 0.5f, feedHit.point.y + feed, 0);
+                }
+                else
+                {
+                    return new Vector3(feedHit.point.x, feedHit.point.y + feed, 0);
+                }
             }
         }
     }
