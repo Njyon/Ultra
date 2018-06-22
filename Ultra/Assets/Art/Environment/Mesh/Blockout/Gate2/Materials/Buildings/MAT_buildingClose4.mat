@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: MAT_buildingClose2
+  m_Name: MAT_buildingClose4
   m_Shader: {fileID: 4800000, guid: 9c6ece3d5ef8bb84db19471daaf6c788, type: 3}
   m_ShaderKeywords: _EMISSION _NORMALMAP
   m_LightmapFlags: 5
@@ -62,8 +62,8 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _LightSmoothness: 1
-    - _LightThreshold: 0.873
+    - _LightSmoothness: 0.88
+    - _LightThreshold: 0.52
     - _MKEditorShowDetailBehavior: 0
     - _MKEditorShowDissolveBehavior: 0
     - _MKEditorShowLightBehavior: 1
@@ -74,18 +74,18 @@ Material:
     - _MKEditorShowRimBehavior: 1
     - _MKEditorShowShadowBehavior: 1
     - _MKEditorShowSketchBehavior: 0
-    - _MKEditorShowSpecularBehavior: 0
+    - _MKEditorShowSpecularBehavior: 1
     - _MKEditorShowTranslucentBehavior: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OutlineSize: 0.01
+    - _OutlineSize: 0.005
     - _Parallax: 0.02
     - _RimIntensity: 0.4
     - _RimSize: 1.5
     - _RimSmoothness: 0.5
-    - _ShadowIntensity: 1
-    - _Shininess: 0.275
+    - _ShadowIntensity: 0.69
+    - _Shininess: 0.05
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SpecularIntensity: 0.5
@@ -93,10 +93,10 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.07266001, g: 0.55764806, b: 0.692, a: 1}
+    - _Color: {r: 0.033842977, g: 0.30719012, b: 0.315, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HighlightColor: {r: 0.81768423, g: 0.9103814, b: 0.990566, a: 1}
-    - _OutlineColor: {r: 0.036, g: 0.20849998, b: 0.21, a: 1}
+    - _HighlightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 0.027450979, g: 0.13399321, b: 0.1764706, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ShadowColor: {r: 0.21, g: 0.18421054, b: 0.033157893, a: 1}
+    - _ShadowColor: {r: 0.16078432, g: 0.16078432, b: 0.16078432, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 0.5}
