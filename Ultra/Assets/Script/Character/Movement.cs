@@ -441,7 +441,10 @@ public class Movement : MonoBehaviour
                 fallComp.isOnWallRight = true;
                 ResetJumps();
                 if (eventDelegate != null)
+                {
                     eventDelegate(EventState.ResetDashes);
+                    eventDelegate(EventState.OnWall);
+                }
                 rb.velocity = new Vector3(0, 0, 0);
             }
         }
@@ -529,7 +532,10 @@ public class Movement : MonoBehaviour
                 fallComp.isOnWallLeft = true;
                 ResetJumps();
                 if (eventDelegate != null)
+                {
                     eventDelegate(EventState.ResetDashes);
+                    eventDelegate(EventState.OnWall);
+                }
                 rb.velocity = new Vector3(0, 0, 0);
             }
         }

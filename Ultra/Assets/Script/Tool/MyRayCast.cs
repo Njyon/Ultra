@@ -189,9 +189,7 @@ public static class MyRayCast
         {
             didHit = true;
         }
-
-        Debug.Log(didHit);
-            
+        
         if(!didHit)
         {
             if (right)

@@ -13,6 +13,10 @@ public class MyCharacter : MonoBehaviour
     public float startForce;
     public float startForceUp;
     public float X;
+
+    [Header("Renderer")]
+    public Renderer bodyRenderer;
+    public Renderer clothRenderer;
     
     [HideInInspector] public PlayerEnum playerEnum = PlayerEnum.NotAssigned;
     [HideInInspector] public bool canGetDamaged = true;
@@ -388,8 +392,8 @@ public class MyCharacter : MonoBehaviour
 
     void Start()
     {
-
-	}
+    
+    }
 
     //////////////////////////////////////////////////
     ////////////////       Update       //////////////
@@ -397,7 +401,7 @@ public class MyCharacter : MonoBehaviour
 
     void Update()
     {
-        //Bounce();
+     
 	}
 
     //////////////////////////////////////////////////
@@ -490,6 +494,9 @@ public class MyCharacter : MonoBehaviour
         // Reset Rotation and Position
         meshController.transform.localPosition = Vector3.down;
         meshController.transform.localRotation = Quaternion.identity;
+
+        //StartCoroutine(Recovery());
+        StartCoroutine(TEST());
     }
     /// <summary>
     /// Starts the Stun effect this Character
@@ -916,5 +923,161 @@ public class MyCharacter : MonoBehaviour
     {
         if (SpecialUpAction != null)
             SpecialUpAction();
+    }
+
+    IEnumerator TEST()
+    {
+        Color bodyColor = bodyRenderer.material.color;
+        Color clothColor = clothRenderer.materials[0].color;
+        Color swordColor = clothRenderer.materials[1].color;
+        
+        int emissionID = Shader.PropertyToID("_EmissionColor");
+        int colorID = Shader.PropertyToID("_Color");
+
+        Debug.Log("Start");
+
+        float time = 0;
+        float speed = 5;
+        bool up = false;
+        
+        while (true)
+        {
+            Debug.Log(up);
+            if(time > 2)
+            {
+                up = false;
+            }
+            if(time < -1)
+            {
+                up = true;
+            }
+
+            if(up)
+            {
+                time += Time.deltaTime * speed;
+            }
+            else
+            {
+                time -= Time.deltaTime * speed;
+            }
+
+            bodyRenderer.material.SetColor(colorID, Color.Lerp(bodyColor, blendColor, time));
+            clothRenderer.materials[0].SetColor(colorID, Color.Lerp(clothColor, blendColor, time));
+            clothRenderer.materials[1].SetColor(colorID, Color.Lerp(swordColor, blendColor, time));
+
+            switch (playerEnum)
+            {
+                case PlayerEnum.PlayerOne:
+                    bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, time));
+                    clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, time));
+                    clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, time));
+                    break;
+                case PlayerEnum.PlayerTwo:
+                    bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, time));
+                    clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, time));
+                    clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, time));
+                    break;
+            }
+            time += Time.deltaTime * speed;
+
+            yield return null;
+        }
+    }
+
+    [ColorUsageAttribute(false, true, 10, 10, 10, 10)] public Color blendColor;
+    IEnumerator Recovery()
+    {
+
+        Color bodyColor = bodyRenderer.material.color;
+        Color clothColor = clothRenderer.materials[0].color;
+        Color swordColor = clothRenderer.materials[1].color;
+
+
+        int emissionID = Shader.PropertyToID("_EmissionColor");
+        int colorID = Shader.PropertyToID("_Color");
+        
+
+        Debug.Log(clothRenderer.materials[0].GetColor(colorID));
+
+        float time = 0;
+        float speed = 5;
+        float speed2 = 2;
+
+        
+        while(time < 1)
+        {
+            Debug.Log(time);
+
+            bodyRenderer.material.SetColor(colorID, Color.Lerp(bodyColor, blendColor, time));
+            clothRenderer.materials[0].SetColor(colorID, Color.Lerp(clothColor, blendColor, time));
+            clothRenderer.materials[1].SetColor(colorID, Color.Lerp(swordColor, blendColor, time));
+
+            switch (playerEnum)
+            {
+                case PlayerEnum.PlayerOne:
+                    bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, time));
+                    clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, time));
+                    clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, time));
+                    break;
+                case PlayerEnum.PlayerTwo:
+                    bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, time));
+                    clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, time));
+                    clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, time));
+                    break;
+            }
+            time += Time.deltaTime * speed;
+
+            yield return null;
+        }
+        while(time > 0)
+        {
+            Debug.Log(time);
+
+            bodyRenderer.material.SetColor(colorID, Color.Lerp(bodyColor, blendColor, time));
+            clothRenderer.materials[0].SetColor(colorID, Color.Lerp(clothColor, blendColor, time));
+            clothRenderer.materials[1].SetColor(colorID, Color.Lerp(swordColor, blendColor, time));
+
+
+            switch (playerEnum)
+            {
+                case PlayerEnum.PlayerOne:
+                    bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, time));
+                    clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, time));
+                    clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, time));
+                    break;
+                case PlayerEnum.PlayerTwo:
+                    bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, time));
+                    clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, time));
+                    clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, time));
+                    break;
+            }
+
+            time -= Time.deltaTime * speed2;
+
+          yield return null;
+        }
+
+
+        bodyRenderer.material.SetColor(colorID, Color.Lerp(bodyColor, blendColor, 0));
+        clothRenderer.materials[0].SetColor(colorID, Color.Lerp(clothColor, blendColor, 0));
+        clothRenderer.materials[1].SetColor(colorID, Color.Lerp(swordColor, blendColor, 0));
+
+
+        switch (playerEnum)
+        {
+            case PlayerEnum.PlayerOne:
+                bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, 0));
+                clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, 0));
+                clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, 0));
+                break;
+            case PlayerEnum.PlayerTwo:
+                bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, 0));
+                clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, 0));
+                clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, 0));
+                break;
+        }
+                Debug.Log("End");
+
+        yield return null;
     }
 }

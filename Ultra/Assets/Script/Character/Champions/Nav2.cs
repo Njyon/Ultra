@@ -35,7 +35,7 @@ public class Nav2 : MyCharacter
                 InputManager.P2_XButtonDirectionAction += DirctionCheck;
                 break;
         }
-
+        
         XAttackNormalAction += LightAttack;
     }
     private void OnDisable()

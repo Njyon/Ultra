@@ -9554,14 +9554,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d62a236e4633f4c8af235184aeaad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  potenz: 1.2
+  potenz: 1.5
   basisWert: 30
   xFactor: 1
   gesamtFactor: 1
   UpDivider: 1
   startForce: 30
   startForceUp: 100
-  X: 0.1
+  X: 0.2
+  bodyRenderer: {fileID: 137968842811838210}
+  clothRenderer: {fileID: 137478700594574526}
   playerEnum: 0
   canGetDamaged: 1
   isDisabled: 0
@@ -9587,6 +9589,7 @@ MonoBehaviour:
   sDownHitBox: 0
   hasSlider: 0
   slider: {fileID: 0}
+  blendColor: {r: 1024, g: 1024, b: 1024, a: 1}
   damage: 10
   dashSpeed: 4
   attackLength: 5.5

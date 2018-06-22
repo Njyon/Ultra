@@ -180,7 +180,10 @@ public class FallComponent
                     isOnWallRight = true;
                     mov.ResetJumps();
                     if (eventDelegate != null)
+                    {
                         eventDelegate(EventState.ResetDashes);
+                        eventDelegate(EventState.OnWall);
+                    }
                 }
             }
             else
@@ -199,7 +202,10 @@ public class FallComponent
                     isOnWallLeft = true;
                     mov.ResetJumps();
                     if (eventDelegate != null)
+                    {
                         eventDelegate(EventState.ResetDashes);
+                        eventDelegate(EventState.OnWall);
+                    }
                 }
             }
             else
