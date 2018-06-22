@@ -14,7 +14,7 @@
    AttackUp,
    AttackUpAngled,
    AttackSide,
-   AttchDownAngled,
+   AttackDownAngled,
    AttackDown,
    Slash,
    Bounce,
@@ -22,5 +22,8 @@
    GetHit,
    isFalling,
    ChangeDirectionLeft,
-   ChangeDirectionRight
+   ChangeDirectionRight,
+   AttackEnd,
+   AttackHit,
+   ResetDashes
 };

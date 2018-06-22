@@ -26,18 +26,24 @@ public class MyCharacter : MonoBehaviour
     public Animator animator;
     int animIsFalling;
     int animDisabled;
+    protected int animIsHiting;
     int animGroundBlend;
     int animAirBlend;
     int animAttackBlend;
     int animJumpBlend;
 
+    protected bool isAttacking = false;
     protected Rigidbody rb;
     protected Movement movement;
-
-    int lifes = 3;
     
     int percent = 0;
+    [Header("Dash")]
+    [SerializeField] protected float dashCoolDown;
+    [SerializeField] protected int maxDashes;
+    protected int currentDashes = 0;
 
+    [Header("Stuff")]
+    [SerializeField] GameObject meshController;
     Vector3 spawnPos;
     InGameUI ui;
 
@@ -45,7 +51,7 @@ public class MyCharacter : MonoBehaviour
 
     [SerializeField] protected ParticleData pD;
 
-    [HideInInspector] public int hitCounter = 0;
+    [HideInInspector] public int hitCounter = 1;
     [HideInInspector] public int combo = 0;
     [HideInInspector] public int multiplier = 1;
     [HideInInspector] public int score = 0;
@@ -210,9 +216,10 @@ public class MyCharacter : MonoBehaviour
         {
             animIsFalling = Animator.StringToHash("isFalling");
             animDisabled = Animator.StringToHash("isDisabled");
+            animIsHiting = Animator.StringToHash("isHiting");
             animGroundBlend = Animator.StringToHash("GroundBlend");
             animAirBlend = Animator.StringToHash("AirBlend");
-            animAttackBlend = Animator.StringToHash("AttackBlend");
+            animAttackBlend = Animator.StringToHash("DashBlend");
             animJumpBlend = Animator.StringToHash("JumpBlend");
         }
         if (ui == null)
@@ -293,8 +300,10 @@ public class MyCharacter : MonoBehaviour
                 Instantiate(pD.ps_JumpInAir, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0), Quaternion.identity);  // Spawn Particle
                 break;
             case EventState.Fall:
-                animator.SetFloat(animAirBlend, (float)FallState.Fall);
+                if (isAttacking)
+                    return;
 
+                animator.SetFloat(animAirBlend, (float)FallState.Fall);
                 break;
             case EventState.Landing:
                 animator.SetBool(animIsFalling, false);
@@ -324,6 +333,44 @@ public class MyCharacter : MonoBehaviour
                 break;
             case EventState.ChangeDirectionRight:
                 Instantiate(pD.turnAroundRight, new Vector3(this.transform.position.x - 1, this.transform.position.y, this.transform.position.z), Quaternion.identity);
+                break;
+            case EventState.AttackUp:
+                animator.SetFloat(animAirBlend, (float)FallState.Attack);
+                animator.SetFloat(animAttackBlend, (float)AttackState.AttackUp);
+                break;
+            case EventState.AttackUpAngled:
+                animator.SetFloat(animAirBlend, (float)FallState.Attack);
+                animator.SetFloat(animAttackBlend, (float)AttackState.AttackAngledUp);
+                break;
+            case EventState.AttackSide:
+                animator.SetFloat(animAirBlend, (float)FallState.Attack);
+                animator.SetFloat(animAttackBlend, (float)AttackState.AttackSide);
+                break;
+            case EventState.AttackDownAngled:
+                animator.SetFloat(animAirBlend, (float)FallState.Attack);
+                animator.SetFloat(animAttackBlend, (float)AttackState.AttackAngledDown);
+                break;
+            case EventState.AttackDown:
+                animator.SetFloat(animAirBlend, (float)FallState.Attack);
+                animator.SetFloat(animAttackBlend, (float)AttackState.AttackDown);
+                break;
+            case EventState.AttackEnd:
+                if(IsFalling())
+                {
+                    animator.SetBool(animIsFalling, true);
+                    animator.SetFloat(animAirBlend, (float)FallState.Fall);
+                }
+                else
+                {
+                    animator.SetBool(animIsFalling, false);
+                    animator.SetFloat(animGroundBlend, (float)GroundState.Idle);
+                }
+                break;
+            case EventState.AttackHit:
+                animator.SetBool(animIsHiting, true);
+                break;
+            case EventState.ResetDashes:
+                currentDashes = 0;
                 break;
             default:
                 Debug.Log("Coundnt Find State! Character: " + gameObject.name);
@@ -421,6 +468,7 @@ public class MyCharacter : MonoBehaviour
         pD.ps_Disabled.Play();
         // Set Animations, sound etc
         EventCheck(EventState.isDisabled);
+        RotateToFlyDirection();
     }
     /// <summary>
     /// Ends the Disable Effect on the own Character
@@ -439,6 +487,9 @@ public class MyCharacter : MonoBehaviour
         pD.ps_Disabled.Stop();
         // Set Animations, sound etc
         EventCheck(EventState.EndDisabled);
+        // Reset Rotation and Position
+        meshController.transform.localPosition = Vector3.down;
+        meshController.transform.localRotation = Quaternion.identity;
     }
     /// <summary>
     /// Starts the Stun effect this Character
@@ -691,6 +742,8 @@ public class MyCharacter : MonoBehaviour
                 combo++;
                 // Count HitCounter Up
                 hitCounter++;
+                // Count Multiplier Up
+                multiplier++;
                 // Update Combo
                 ui.UpdateCombo(combo);
                 // Update Combo Multiplier
@@ -719,7 +772,6 @@ public class MyCharacter : MonoBehaviour
 
         // Hidde Combo Counter
         ui.HiddeCombo();
-
     }
 
     #region Deprecated
@@ -747,6 +799,12 @@ public class MyCharacter : MonoBehaviour
     #endregion
 
     //      Private      //
+    protected void RotateToFlyDirection()
+    {
+        Vector3 difference = rb.velocity - transform.position;
+        float rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+        meshController.transform.rotation = Quaternion.Euler(0,0, (rotationZ - 90));
+    }
     /// <summary>
     /// Let the Character Reflect from Objects (Bounce)
     /// </summary>
@@ -759,11 +817,11 @@ public class MyCharacter : MonoBehaviour
             if (MyRayCast.RayCastInDirection(transform.position, new Vector3(rb.velocity.x, rb.velocity.y, 0), out hit, 2))
             {
                 // End Bounce
-                if (lastBounceObj != null && lastBounceObj == hit.transform.gameObject)
-                {
-                    EndDisable();
-                    return;
-                }
+                //if (lastBounceObj != null && lastBounceObj == hit.transform.gameObject)
+                //{
+                //    EndDisable();
+                //    return;
+                //}
 
                 // ToDo: Check if the Character Bounced against some thing Special 
 
@@ -775,15 +833,17 @@ public class MyCharacter : MonoBehaviour
                 Instantiate(pD.bounce, hit.point, Quaternion.identity);
                 // New Bounce Direction
                 Vector3 direction = Vector3.Reflect(new Vector3(rb.velocity.x, rb.velocity.y, 0), new Vector3(hit.normal.x, hit.normal.y, 0));
-                Debug.DrawLine(transform.position, hit.point);
+                // Set Velocity to the new direction
                 rb.velocity = direction;
+                // Change Rotation to Fly direction
+                RotateToFlyDirection();
                 // Safe Obj to Check at the next bounce if the Obj is the Same
-                lastBounceObj = hit.transform.gameObject;
+                //lastBounceObj = hit.transform.gameObject;
             }
-            else if (MyEpsilon.Epsilon(rb.velocity.x, 0, 1) && MyEpsilon.Epsilon(rb.velocity.y, 0, 1))
-            {
-                EndDisable();
-            }
+            //else if (MyEpsilon.Epsilon(rb.velocity.x, 0, 1) && MyEpsilon.Epsilon(rb.velocity.y, 0, 1))
+            //{
+            //    EndDisable();
+            //}
         }
     }
     /// <summary>
@@ -794,9 +854,8 @@ public class MyCharacter : MonoBehaviour
         // XOR Vars to reset them to 0
         // Just 4 fun, heared it should be faster than var = 0
         combo = combo ^ combo;
-        combo = combo ^ combo;
         multiplier = 1;
-        hitCounter = hitCounter ^ hitCounter;
+        hitCounter = 1;
     }
 
     /// <summary>
