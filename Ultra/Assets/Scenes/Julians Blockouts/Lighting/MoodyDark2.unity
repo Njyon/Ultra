@@ -1597,7 +1597,7 @@ Prefab:
     - target: {fileID: 2300004, guid: b9828cb8483709e4ea1d829d2231fb72, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: f54b58b2b4ce51841a7532da2573898b, type: 2}
+      objectReference: {fileID: 2100000, guid: 2443f1fc61a88394496bc083c07b1b68, type: 2}
     - target: {fileID: 2300002, guid: b9828cb8483709e4ea1d829d2231fb72, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -2303,7 +2303,7 @@ Prefab:
     - target: {fileID: 2300004, guid: 72bdc6e3e61fbdd4d9b12aca994fcd4d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: f54b58b2b4ce51841a7532da2573898b, type: 2}
+      objectReference: {fileID: 2100000, guid: 2443f1fc61a88394496bc083c07b1b68, type: 2}
     - target: {fileID: 2300002, guid: 72bdc6e3e61fbdd4d9b12aca994fcd4d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -4109,7 +4109,7 @@ GameObject:
   - component: {fileID: 1127533499}
   - component: {fileID: 1127533500}
   m_Layer: 0
-  m_Name: Point Light
+  m_Name: 24
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4137,7 +4137,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
-  m_Color: {r: 1, g: 0.882479, b: 0.07058823, a: 1}
+  m_Color: {r: 1, g: 0.120535776, b: 0.07058823, a: 1}
   m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
@@ -4540,7 +4540,7 @@ GameObject:
   - component: {fileID: 1272488852}
   - component: {fileID: 1272488853}
   m_Layer: 0
-  m_Name: Point Light (2)
+  m_Name: cross
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4568,9 +4568,9 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
-  m_Color: {r: 1, g: 0.882479, b: 0.07058823, a: 1}
+  m_Color: {r: 1, g: 0.15291122, b: 0.07058823, a: 1}
   m_Intensity: 2
-  m_Range: 10
+  m_Range: 8
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -4722,7 +4722,7 @@ Prefab:
     - target: {fileID: 2300004, guid: cd51ada8071c4a74a9ba01705f3a7eaa, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: f54b58b2b4ce51841a7532da2573898b, type: 2}
+      objectReference: {fileID: 2100000, guid: 2443f1fc61a88394496bc083c07b1b68, type: 2}
     - target: {fileID: 2300002, guid: cd51ada8071c4a74a9ba01705f3a7eaa, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -5625,7 +5625,7 @@ GameObject:
   - component: {fileID: 1520391644}
   - component: {fileID: 1520391645}
   m_Layer: 0
-  m_Name: Point Light (1)
+  m_Name: pills
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5653,7 +5653,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
-  m_Color: {r: 1, g: 0.882479, b: 0.07058823, a: 1}
+  m_Color: {r: 1, g: 0.16639914, b: 0.07058823, a: 1}
   m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
