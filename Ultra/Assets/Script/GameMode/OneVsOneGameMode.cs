@@ -109,7 +109,7 @@ public class OneVsOneGameMode : MonoBehaviour
             Debug.Log("No UI Pannels Found!");
         }
 
-        GameObject camera = GameObject.Find("Main Camera");
+        GameObject camera = GameObject.Find("CamerHolder");
         MultiTargetCamera sCam = camera.GetComponent<MultiTargetCamera>();
         switch (character)
         {
@@ -144,6 +144,7 @@ public class OneVsOneGameMode : MonoBehaviour
                     PlayerOne.GetComponent<MyCharacter>().playerDataAction += DataCounter;
                     PlayerOne.GetComponent<MyCharacter>().dodgeAction += DodgeCounter;
                     PlayerOne.GetComponent<MyCharacter>().bounceAction += BounceCounter;
+                    PlayerOne.GetComponent<MyCharacter>().shakeCameraAction += sCam.Shake;
                     PlayerOne.GetComponent<MyCharacter>().Posses();
                     sCam.AddTarget(PlayerOne.transform);
 
@@ -162,6 +163,7 @@ public class OneVsOneGameMode : MonoBehaviour
                     PlayerTwo.GetComponent<MyCharacter>().playerDataAction += DataCounter;
                     PlayerTwo.GetComponent<MyCharacter>().dodgeAction += DodgeCounter;
                     PlayerTwo.GetComponent<MyCharacter>().bounceAction += BounceCounter;
+                    PlayerTwo.GetComponent<MyCharacter>().shakeCameraAction += sCam.Shake;
                     PlayerTwo.GetComponent<MyCharacter>().Posses();
                     sCam.AddTarget(PlayerTwo.transform);
 
@@ -264,7 +266,14 @@ public class OneVsOneGameMode : MonoBehaviour
             string minutes = ((int)time / 60).ToString();
             string second = ((int)time % 60).ToString();
 
-            timer.text = minutes + ":" + second;
+            if((int)time % 60 < 10)
+            {
+                timer.text = minutes + ":0" + second;
+            }
+            else
+            {
+                timer.text = minutes + ":" + second;
+            }
 
             if(time - Time.deltaTime <= 0)
             {

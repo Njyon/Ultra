@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MyCharacter : MonoBehaviour
 {
-    [Header("Math Stuff")]
+    [Header("Kick Away Vars")]
     public float potenz;
     public float basisWert;
     public float xFactor;
@@ -13,6 +13,8 @@ public class MyCharacter : MonoBehaviour
     public float startForce;
     public float startForceUp;
     public float X;
+    public float freezTimeBounce;
+    public float freezTimeHit;
 
     [Header("Renderer")]
     public Renderer bodyRenderer;
@@ -95,6 +97,9 @@ public class MyCharacter : MonoBehaviour
     public delegate void BounceDelegate(PlayerEnum pE);
     public BounceDelegate bounceAction;
 
+    public delegate void ShakeCamera();
+    public ShakeCamera shakeCameraAction;
+    
     // Deprecated
     #region X Attack 
     protected delegate void XHitNormal();
@@ -473,6 +478,9 @@ public class MyCharacter : MonoBehaviour
         // Set Animations, sound etc
         EventCheck(EventState.isDisabled);
         RotateToFlyDirection();
+
+        StartCoroutine(Blink());
+        StartCoroutine(FreezCharacter(true, freezTimeHit, false));
     }
     /// <summary>
     /// Ends the Disable Effect on the own Character
@@ -494,9 +502,7 @@ public class MyCharacter : MonoBehaviour
         // Reset Rotation and Position
         meshController.transform.localPosition = Vector3.down;
         meshController.transform.localRotation = Quaternion.identity;
-
-        //StartCoroutine(Recovery());
-        StartCoroutine(TEST());
+        
     }
     /// <summary>
     /// Starts the Stun effect this Character
@@ -547,7 +553,7 @@ public class MyCharacter : MonoBehaviour
             }
             else
             {
-                rb.AddForce(new Vector3(-Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), dir.y, 0));
+                rb.velocity = new Vector3(-Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), dir.y, 0);
             }
         }
         else                                            // Direction = Left
@@ -559,20 +565,10 @@ public class MyCharacter : MonoBehaviour
             }
             else
             {
-                rb.AddForce(new Vector3(Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), dir.y, 0));
+                rb.velocity = new Vector3(Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), dir.y, 0);
             }
         }
-
-        Debug.DrawLine(transform.position, dir, Color.red, 5);
-        if (!IsFalling())
-        {
-            RaycastHit hit;
-            if(MyRayCast.RayCastInDirection(transform.position, -dir, out hit, 2))
-            {
-
-            }
-        }
-
+        Debug.Log("Kcikaway: " + playerEnum + " " + rb.velocity);
         float time = X * Mathf.Sqrt(percent);
         Disable(time);
     }
@@ -821,7 +817,7 @@ public class MyCharacter : MonoBehaviour
         {
             // Bounce Ray
             RaycastHit hit;
-            if (MyRayCast.RayCastInDirection(transform.position, new Vector3(rb.velocity.x, rb.velocity.y, 0), out hit, 2))
+            if (MyRayCast.RayCastInDirection(transform.position, new Vector3(rb.velocity.x, rb.velocity.y, 0), out hit, 1.5f))
             {
                 // End Bounce
                 //if (lastBounceObj != null && lastBounceObj == hit.transform.gameObject)
@@ -844,8 +840,11 @@ public class MyCharacter : MonoBehaviour
                 rb.velocity = direction;
                 // Change Rotation to Fly direction
                 RotateToFlyDirection();
-                // Safe Obj to Check at the next bounce if the Obj is the Same
-                //lastBounceObj = hit.transform.gameObject;
+
+                StartCoroutine(FreezCharacter(false, freezTimeBounce, false));
+
+                if(shakeCameraAction != null)
+                    shakeCameraAction();
             }
             //else if (MyEpsilon.Epsilon(rb.velocity.x, 0, 1) && MyEpsilon.Epsilon(rb.velocity.y, 0, 1))
             //{
@@ -925,7 +924,9 @@ public class MyCharacter : MonoBehaviour
             SpecialUpAction();
     }
 
-    IEnumerator TEST()
+    [ColorUsageAttribute(false, true, 10, 10, 10, 10)] public Color blendRed;
+    [ColorUsageAttribute(false, true, 10, 10, 10, 10)] public Color blendColor;
+    IEnumerator Blink()
     {
         Color bodyColor = bodyRenderer.material.color;
         Color clothColor = clothRenderer.materials[0].color;
@@ -934,60 +935,23 @@ public class MyCharacter : MonoBehaviour
         int emissionID = Shader.PropertyToID("_EmissionColor");
         int colorID = Shader.PropertyToID("_Color");
 
-        Debug.Log("Start");
-
-        float time = 0;
-        float speed = 5;
-        bool up = false;
+        float speed = 10;
         
-        while (true)
+        while (isDisabled)
         {
-            Debug.Log(up);
-            if(time > 2)
-            {
-                up = false;
-            }
-            if(time < -1)
-            {
-                up = true;
-            }
-
-            if(up)
-            {
-                time += Time.deltaTime * speed;
-            }
-            else
-            {
-                time -= Time.deltaTime * speed;
-            }
-
-            bodyRenderer.material.SetColor(colorID, Color.Lerp(bodyColor, blendColor, time));
-            clothRenderer.materials[0].SetColor(colorID, Color.Lerp(clothColor, blendColor, time));
-            clothRenderer.materials[1].SetColor(colorID, Color.Lerp(swordColor, blendColor, time));
-
-            switch (playerEnum)
-            {
-                case PlayerEnum.PlayerOne:
-                    bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, time));
-                    clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, time));
-                    clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, time));
-                    break;
-                case PlayerEnum.PlayerTwo:
-                    bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, time));
-                    clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, time));
-                    clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, time));
-                    break;
-            }
-            time += Time.deltaTime * speed;
+            bodyRenderer.material.SetColor(colorID, Color.Lerp(bodyColor, blendRed, Mathf.PingPong(Time.time * speed, 1)));
+            clothRenderer.materials[0].SetColor(colorID, Color.Lerp(clothColor, blendRed, Mathf.PingPong(Time.time * speed, 1)));
+            clothRenderer.materials[1].SetColor(colorID, Color.Lerp(swordColor, blendRed, Mathf.PingPong(Time.time * speed, 1)));
 
             yield return null;
         }
-    }
 
-    [ColorUsageAttribute(false, true, 10, 10, 10, 10)] public Color blendColor;
+        ReturnColorToNoraml(colorID, emissionID, bodyColor, clothColor, swordColor);
+
+        StartCoroutine(Recovery());
+    }
     IEnumerator Recovery()
     {
-
         Color bodyColor = bodyRenderer.material.color;
         Color clothColor = clothRenderer.materials[0].color;
         Color swordColor = clothRenderer.materials[1].color;
@@ -996,72 +960,35 @@ public class MyCharacter : MonoBehaviour
         int emissionID = Shader.PropertyToID("_EmissionColor");
         int colorID = Shader.PropertyToID("_Color");
         
-
-        Debug.Log(clothRenderer.materials[0].GetColor(colorID));
-
-        float time = 0;
-        float speed = 5;
-        float speed2 = 2;
-
+        bodyRenderer.material.SetColor(colorID, Color.Lerp(bodyColor, blendColor, 1));
+        clothRenderer.materials[0].SetColor(colorID, Color.Lerp(clothColor, blendColor, 1));
+        clothRenderer.materials[1].SetColor(colorID, Color.Lerp(swordColor, blendColor, 1));
         
-        while(time < 1)
+
+        switch (playerEnum)
         {
-            Debug.Log(time);
-
-            bodyRenderer.material.SetColor(colorID, Color.Lerp(bodyColor, blendColor, time));
-            clothRenderer.materials[0].SetColor(colorID, Color.Lerp(clothColor, blendColor, time));
-            clothRenderer.materials[1].SetColor(colorID, Color.Lerp(swordColor, blendColor, time));
-
-            switch (playerEnum)
-            {
-                case PlayerEnum.PlayerOne:
-                    bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, time));
-                    clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, time));
-                    clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, time));
-                    break;
-                case PlayerEnum.PlayerTwo:
-                    bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, time));
-                    clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, time));
-                    clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, time));
-                    break;
-            }
-            time += Time.deltaTime * speed;
-
-            yield return null;
-        }
-        while(time > 0)
-        {
-            Debug.Log(time);
-
-            bodyRenderer.material.SetColor(colorID, Color.Lerp(bodyColor, blendColor, time));
-            clothRenderer.materials[0].SetColor(colorID, Color.Lerp(clothColor, blendColor, time));
-            clothRenderer.materials[1].SetColor(colorID, Color.Lerp(swordColor, blendColor, time));
-
-
-            switch (playerEnum)
-            {
-                case PlayerEnum.PlayerOne:
-                    bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, time));
-                    clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, time));
-                    clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, time));
-                    break;
-                case PlayerEnum.PlayerTwo:
-                    bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, time));
-                    clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, time));
-                    clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, time));
-                    break;
-            }
-
-            time -= Time.deltaTime * speed2;
-
-          yield return null;
+            case PlayerEnum.PlayerOne:
+                bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, 1));
+                clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, 1));
+                clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, 1));
+                break;
+            case PlayerEnum.PlayerTwo:
+                bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, 1));
+                clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, 1));
+                clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, 1));
+                break;
         }
 
+        yield return new WaitForSeconds(0.4f);
 
+        ReturnColorToNoraml(colorID, emissionID, bodyColor, clothColor, swordColor);
+        yield return null;
+    }
+    void ReturnColorToNoraml(int colorID, int emissionID, Color bodyColor, Color clothColor, Color swordColor)
+    {
         bodyRenderer.material.SetColor(colorID, Color.Lerp(bodyColor, blendColor, 0));
         clothRenderer.materials[0].SetColor(colorID, Color.Lerp(clothColor, blendColor, 0));
         clothRenderer.materials[1].SetColor(colorID, Color.Lerp(swordColor, blendColor, 0));
-
 
         switch (playerEnum)
         {
@@ -1076,8 +1003,46 @@ public class MyCharacter : MonoBehaviour
                 clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, 0));
                 break;
         }
-                Debug.Log("End");
+    }
 
+    protected IEnumerator FreezCharacter(bool wigle, float maxTime, bool hitting)
+    {
+        float time = 0;
+        float speed = 15;
+        Vector3 vel = this.rb.velocity;
+        Vector3 pos = this.transform.position;
+
+        Debug.Log(playerEnum + " " + vel);
+
+        if (hitting)
+            animator.speed = 0;
+
+        this.rb.velocity = Vector3.zero;
+        this.rb.useGravity = false;
+        while(time < maxTime)
+        {
+            if (wigle)
+            {
+                this.transform.position = new Vector3(pos.x + Mathf.PingPong(Time.time * speed, 1),
+                    pos.y,
+                    pos.z);
+            }
+            else
+            {
+                this.transform.position = pos;
+            }
+
+            time += Time.deltaTime;
+            yield return null;
+        }
+        this.transform.position = pos;
+
+        if(hitting)
+            animator.speed = 1;
+
+        this.rb.useGravity = true;
+        this.rb.velocity = vel;
         yield return null;
     }
 }
+

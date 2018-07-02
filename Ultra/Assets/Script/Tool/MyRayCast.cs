@@ -91,8 +91,6 @@ public static class MyRayCast
             didHit = true;
         }
 
-        Debug.Log(didHit);
-
         // Calc the destination if no Obstical found
         if (!didHit)
         {

@@ -48,6 +48,7 @@ public class AbilityEvent
             state = AbilityState.EventActive;
             timetillActiveHelper = timeTillActive;
             activeTimeHelper = activeTime;
+            cooldownTimeHelper = cooldownTime;
             timerActive = true;
             onAbilityStart();
         }
@@ -88,7 +89,6 @@ public class AbilityEvent
             if(activeTimeHelper <= 0)
             {
                 state = AbilityState.EventCoolingdown;
-                cooldownTimeHelper = cooldownTime;
                 onAbilityEnd();
             }
         }

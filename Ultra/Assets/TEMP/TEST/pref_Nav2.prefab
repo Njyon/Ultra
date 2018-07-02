@@ -9558,7 +9558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d62a236e4633f4c8af235184aeaad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  potenz: 1.5
+  potenz: 1.1
   basisWert: 30
   xFactor: 1
   gesamtFactor: 1
@@ -9566,6 +9566,8 @@ MonoBehaviour:
   startForce: 30
   startForceUp: 100
   X: 0.2
+  freezTimeBounce: 0.15
+  freezTimeHit: 0.3
   bodyRenderer: {fileID: 137968842811838210}
   clothRenderer: {fileID: 137478700594574526}
   playerEnum: 0
@@ -9593,13 +9595,14 @@ MonoBehaviour:
   sDownHitBox: 0
   hasSlider: 0
   slider: {fileID: 0}
+  blendRed: {r: 0.7490196, g: 0, b: 0, a: 0}
   blendColor: {r: 1024, g: 1024, b: 1024, a: 1}
   damage: 10
   dashSpeed: 4
   attackLength: 5.5
   timeTillAtackStarts: 0
   attackTime: 2
-  coolDownTime: 1
+  coolDownTime: 0.2
   curve:
     serializedVersion: 2
     m_Curve:

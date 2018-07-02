@@ -21,7 +21,7 @@ public class CharacterCreationDebugScript : MonoBehaviour
 
     void Initiate()
     {
-        GameObject camera = GameObject.Find("Main Camera");
+        GameObject camera = GameObject.Find("CamerHolder");
         if (!TESTMOV2)
         {
             debugPlayer = Instantiate(debugCharacter, spawnLocation.gameObject.transform.position, spawnLocation.gameObject.transform.rotation);

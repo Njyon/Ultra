@@ -311,11 +311,18 @@ public class Nav2 : MyCharacter
             pD.trail.SetActive(false);
 
             rb.velocity = Vector3.zero;
-            rb.useGravity = true;
+            rb.useGravity = false;
             EndAttacking();
             travel = 0;
+
+            Debug.Log(Time.time);
         };
-        abilities.onAbilityReady = () => { };
+        abilities.onAbilityReady = () => 
+        {
+            Debug.Log(Time.time);
+            rb.velocity = Vector3.zero;
+            rb.useGravity = true;
+        };
         #endregion
 
         #region Copie
@@ -351,6 +358,7 @@ public class Nav2 : MyCharacter
             return;
         }
 
+        StartCoroutine(FreezCharacter(false, freezTimeHit, true));
         if (!enemyCharacter.isDisabled)
         {
             // Count up the enemy Perzent (Damaged Amount)
@@ -362,7 +370,8 @@ public class Nav2 : MyCharacter
             Combo(ComboState.Hit);
         }
         else
-        {
+        {  // Count up the enemy Perzent (Damaged Amount)
+            enemyCharacter.Damage(abilities.GetDamage());
             // Kick the Enemy away from you
             enemyCharacter.KickAway(transform.position, false);
             // Update the Combo

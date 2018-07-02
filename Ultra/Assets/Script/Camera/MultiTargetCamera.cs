@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
+using System.Collections;
 
-[RequireComponent(typeof(Camera))]
 public class MultiTargetCamera : MonoBehaviour
 {
     [Header("Distance of the Camera")]
@@ -14,18 +15,16 @@ public class MultiTargetCamera : MonoBehaviour
     [SerializeField] float minZoom;
     [SerializeField] float maxZoom;
     [SerializeField] float zoomLimiter;
-    
+
+    [Header("Camera")]
+    public Camera cam;
+
     /// <summary>
     /// Gets modified by Move() -> SmoothDamp()
     /// </summary>
     Vector3 vel;
     List<Transform> targets = new List<Transform>();
-    Camera cam;
-
-    void Start()
-    {
-        cam = GetComponent<Camera>(); 
-    }
+    
     void LateUpdate()
     {
         if (targets.Count == 0)
@@ -109,4 +108,33 @@ public class MultiTargetCamera : MonoBehaviour
         targets.Add(t);
     }
 
+    public void Shake()
+    {
+        CameraShaker.Instance.ShakeOnce(0.3f, 10f, 0.1f, .3f);
+        //StartCoroutine(IShake());
+    }
+
+    IEnumerator IShake()
+    {
+        float time = 0;
+        float maxTime = 1;
+        float magnitude = 2;
+        Vector3 pos = transform.position;
+
+        while (time < maxTime)
+        {
+            float x = Random.Range(-1, 1f) * magnitude;
+            float y = Random.Range(-1, 1f) * magnitude;
+
+            transform.position = new Vector3(pos.x + x, pos.y + y, pos.z);
+
+            time += Time.deltaTime;
+
+            //CameraShaker.Instance.ShakeOnce(4f, 4f, 0.1f, 1f);
+            yield return null;
+        }
+
+        transform.position = pos;
+        yield return null;
+    }
 }
