@@ -44,6 +44,9 @@ public class AudioEvents : MonoBehaviour {
             case EventState.Fall:
                 break;
             case EventState.Landing:
+                var rand = Random.Range(0f, 1f);
+                Debug.Log(rand);
+                Fabric.EventManager.Instance.SetParameter("Landing", "LandingImpact", rand, this.gameObject);
                 Fabric.EventManager.Instance.PostEvent("Landing", this.gameObject);
                 break;
             case EventState.Dodge:
