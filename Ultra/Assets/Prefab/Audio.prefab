@@ -2626,7 +2626,7 @@ MonoBehaviour:
   _overrideFadeProperties: 0
   _fadeInTime: 0
   _fadeInCurve: 0.5
-  _fadeOutTime: 0
+  _fadeOutTime: 0.1
   _fadeOutCurve: 0.5
   _reverbZoneMix: 1
   _overrideBypassProperties: 0
@@ -4418,7 +4418,7 @@ MonoBehaviour:
   _overrideFadeProperties: 0
   _fadeInTime: 0
   _fadeInCurve: 0.5
-  _fadeOutTime: 0
+  _fadeOutTime: 0.1
   _fadeOutCurve: 0.5
   _reverbZoneMix: 1
   _overrideBypassProperties: 0
@@ -4651,7 +4651,7 @@ MonoBehaviour:
   _overrideFadeProperties: 0
   _fadeInTime: 0
   _fadeInCurve: 0.5
-  _fadeOutTime: 0
+  _fadeOutTime: 0.1
   _fadeOutCurve: 0.5
   _reverbZoneMix: 1
   _overrideBypassProperties: 0
@@ -5520,6 +5520,48 @@ MonoBehaviour:
         _curve: 0.5
         _min: 0
         _max: 1
+      - _event:
+          _eventName: 
+          _eventID: 0
+          EventAction: 1
+          parentGameObject: {fileID: 0}
+          _delay: 0
+          _delayTimer: 0
+          _eventCategory: 
+          _priority: 0
+        _component: {fileID: 114807967126000074}
+        _ignoreEventAction: 0
+        _parameterData:
+          _value: 0
+          _parameter: 0
+          _index: -1
+        _dspParameter:
+          _dspType: 0
+          _parameter: 
+          _value: 0
+          _time: 0
+          _curve: 0.5
+        _switchPresetData:
+          _sourcePreset: 
+          _targetPreset: 
+        _globalParameterData:
+          _name: 
+          _value: 0
+        _globalSwitchParameterData:
+          _name: 
+          _switch: 
+        _transitionToSnapshotData:
+          _snapshot: 
+          _timeToReach: 0
+        _eventValue: 
+        _eventParameter: 1
+        _eventScheduleParameter: 0
+        _eventParameterName: 
+        _dspType: 0
+        _timeToTarget: 0
+        _curve: 0.5
+        _min: 0
+        _max: 1
     - _delay: 0
       _probability: 100
       _postCountMax: 0
@@ -5537,6 +5579,48 @@ MonoBehaviour:
           _eventCategory: 
           _priority: 0
         _component: {fileID: 114400497303343548}
+        _ignoreEventAction: 0
+        _parameterData:
+          _value: 0
+          _parameter: 0
+          _index: -1
+        _dspParameter:
+          _dspType: 0
+          _parameter: 
+          _value: 0
+          _time: 0
+          _curve: 0.5
+        _switchPresetData:
+          _sourcePreset: 
+          _targetPreset: 
+        _globalParameterData:
+          _name: 
+          _value: 0
+        _globalSwitchParameterData:
+          _name: 
+          _switch: 
+        _transitionToSnapshotData:
+          _snapshot: 
+          _timeToReach: 0
+        _eventValue: 
+        _eventParameter: 1
+        _eventScheduleParameter: 0
+        _eventParameterName: 
+        _dspType: 0
+        _timeToTarget: 0
+        _curve: 0.5
+        _min: 0
+        _max: 1
+      - _event:
+          _eventName: 
+          _eventID: 0
+          EventAction: 1
+          parentGameObject: {fileID: 0}
+          _delay: 0
+          _delayTimer: 0
+          _eventCategory: 
+          _priority: 0
+        _component: {fileID: 114814885128060404}
         _ignoreEventAction: 0
         _parameterData:
           _value: 0
@@ -5703,12 +5787,12 @@ MonoBehaviour:
         _min: 0
         _max: 1
   profiler:
-    totalMS: 666.667
-    recordedMS: 46.99707
-    percent: 7.049557
-    msPerFrame: 0.0025720813
+    totalMS: 580.8563
+    recordedMS: 0.37384033
+    percent: 0.06436021
+    msPerFrame: 0.0021240928
     maxMsPerFrame: 0.6713867
-    msPerCall: 0.0025720813
+    msPerCall: 0.0021240928
     timesPerFrame: 1
   _eventMenuListFoldout: 1
   _eventListFoldout: 0
