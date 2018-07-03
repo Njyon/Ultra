@@ -433,10 +433,11 @@ public class Movement : MonoBehaviour
         if (!this.canMove || !dash.canMove)
             return;
 
-        if(!islookingToTheRight && !IsFalling())
+        if(!islookingToTheRight)
         {
+            if(!IsFalling())
+                eventDelegate(EventState.ChangeDirectionRight);
             islookingToTheRight = true;
-            eventDelegate(EventState.ChangeDirectionRight);
         }
         fallComp.fallStraight = false;
         forcingDown = false;
@@ -523,10 +524,12 @@ public class Movement : MonoBehaviour
         if (!this.canMove || !dash.canMove)
             return;
 
-        if (islookingToTheRight && !IsFalling())
+        if (islookingToTheRight)
         {
+            if(!IsFalling())
+                eventDelegate(EventState.ChangeDirectionLeft);
             islookingToTheRight = false;
-            eventDelegate(EventState.ChangeDirectionLeft);
+            
         }
 
         fallComp.fallStraight = false;

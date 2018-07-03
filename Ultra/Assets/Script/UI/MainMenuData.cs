@@ -7,8 +7,9 @@ public class MainMenuData : MonoBehaviour
     [Header("Pannel")]
     public GameObject main;
     public GameObject options;
+    public GameObject arenaSelect;
+    public GameObject championSelect;
     public GameObject credits;
-    public GameObject playerSelect;
 
     [Header("EventSystem")]
     public UnityEngine.EventSystems.EventSystem eventSystem;
@@ -29,9 +30,8 @@ public class MainMenuData : MonoBehaviour
     [Header("CharacterSelecter")]
     public CharacterSelecterV2 cS;
 
-    [Header("GreyPannel")]
-    public GameObject headerGreyPannel;
-    public GameObject bodyGreyPannel;
+    [Header("Camera")]
+    public MainMenuCam Camera;
 
     /// <summary>
     /// Dependend on the oP State, turn all other oP Pannel off
@@ -77,14 +77,5 @@ public class MainMenuData : MonoBehaviour
             headerButtons[i].GetComponent<Button>().enabled = false;
         }
     }
-
-    //Maybe Lerp below
-    public void SetHeaderGrey(bool state)
-    {
-        headerGreyPannel.SetActive(state);
-    }
-    public void SetBodyGrey(bool state)
-    {
-        headerGreyPannel.SetActive(state);
-    }
+    
 }

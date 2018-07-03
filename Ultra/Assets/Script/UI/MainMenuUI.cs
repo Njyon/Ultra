@@ -10,7 +10,7 @@ public class MainMenuUI : MonoBehaviour
 
     void Start()
     {
-        if (mMD.main == null || mMD.options == null || mMD.credits == null || mMD.playerSelect == null)
+        if (mMD.main == null || mMD.options == null || mMD.credits == null || mMD.championSelect == null || mMD.arenaSelect == null)
         {
             Debug.Log("Missing Pannels on " + gameObject.name);
             return;
@@ -22,7 +22,8 @@ public class MainMenuUI : MonoBehaviour
         // Deactivate all Pannels exept main
         mMD.options.SetActive(false);
         mMD.credits.SetActive(false);
-        mMD.playerSelect.SetActive(false);
+        mMD.championSelect.SetActive(false);
+        mMD.arenaSelect.SetActive(false);
     }
 
     void Update()
@@ -62,7 +63,8 @@ public class MainMenuUI : MonoBehaviour
         mMD.main.SetActive(true);
         mMD.options.SetActive(false);
         mMD.credits.SetActive(false);
-        mMD.playerSelect.SetActive(false);
+        mMD.championSelect.SetActive(false);
+        mMD.arenaSelect.SetActive(false);
 
         mMD.cS.HiddeNav();
         mMD.cS.RemoveInput();
@@ -77,10 +79,8 @@ public class MainMenuUI : MonoBehaviour
         mMD.main.SetActive(false);
         mMD.options.SetActive(true);
         mMD.credits.SetActive(false);
-        mMD.playerSelect.SetActive(false);
-
-        mMD.SetHeaderGrey(false);
-        mMD.SetBodyGrey(true);
+        mMD.championSelect.SetActive(false);
+        mMD.arenaSelect.SetActive(false);
 
         menuState = MenuState.Options;
         mMD.eventSystem.SetSelectedGameObject(mMD.buttons[(int)menuState]);
@@ -93,17 +93,23 @@ public class MainMenuUI : MonoBehaviour
         mMD.main.SetActive(false);
         mMD.options.SetActive(false);
         mMD.credits.SetActive(true);
-        mMD.playerSelect.SetActive(false);
+        mMD.championSelect.SetActive(false);
+        mMD.arenaSelect.SetActive(false);
+
+        menuState = MenuState.Credits;
     }
     /// <summary>
     /// Turn PlayerSelect pannel on and the rest off
     /// </summary>
     public void ShowPlayerSelect()
     {
-        mMD.main.SetActive(false);
+        mMD.main.SetActive(true);
         mMD.options.SetActive(false);
         mMD.credits.SetActive(false);
-        mMD.playerSelect.SetActive(true);
+        mMD.championSelect.SetActive(true);
+        mMD.arenaSelect.SetActive(false);
+
+        mMD.Camera.Play();
 
         mMD.cS.ShowNav();
         mMD.cS.ApplyInput();
@@ -111,9 +117,6 @@ public class MainMenuUI : MonoBehaviour
 
     public void OnVideoEdit()
     {
-        mMD.SetHeaderGrey(true);
-        mMD.SetBodyGrey(false);
-
         mMD.SetSelectedGameObject(mMD.VideoButtons[0]);
 
         mMD.DisableHeaderButtons();

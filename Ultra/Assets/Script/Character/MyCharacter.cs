@@ -252,6 +252,11 @@ public class MyCharacter : MonoBehaviour
         bodyColor = bodyRenderer.material.color;
         clothColor = clothRenderer.materials[0].color;
         swordColor = clothRenderer.materials[1].color;
+
+
+        spawnPos = transform.position;
+        pD.trail.SetActive(false);
+        pD.ps_Disabled.Stop();
     }
 
     #region InputCheck#
@@ -416,9 +421,6 @@ public class MyCharacter : MonoBehaviour
     
     void Awake()
     {
-        spawnPos = transform.position;
-        pD.trail.SetActive(false);
-        pD.ps_Disabled.Stop();
     }
 
     void Start()

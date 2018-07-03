@@ -131,12 +131,14 @@ public class Nav2 : MyCharacter
 
             pD.trail.SetActive(true);
             
-            switch(direction)
+            Debug.Log(this.direction);
+            switch (direction)
             {
                 case Direction.Right:
                 case Direction.Left:
                     eventDelegate(EventState.AttackSide);
 
+                    Debug.Log(IsLookingRight());
                     // Find dash End and Start point
                     if (IsLookingRight())
                     {
@@ -312,13 +314,13 @@ public class Nav2 : MyCharacter
 
             rb.velocity = Vector3.zero;
             rb.useGravity = false;
-            EndAttacking();
             travel = 0;
         };
         abilities.onAbilityReady = () => 
         {
             rb.velocity = Vector3.zero;
             rb.useGravity = true;
+            EndAttacking();
         };
         #endregion
 
