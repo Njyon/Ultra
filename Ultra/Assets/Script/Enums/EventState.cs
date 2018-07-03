@@ -25,5 +25,6 @@
    ChangeDirectionRight,
    AttackEnd,
    AttackHit,
-   ResetDashes
+   ResetDashes,
+   WallJump
 };

@@ -53,6 +53,13 @@ public class MyCharacter : MonoBehaviour
     Vector3 spawnPos;
     InGameUI ui;
 
+    //Material change Vars
+    int emissionID;
+    int colorID;
+    Color bodyColor;
+    Color clothColor;
+    Color swordColor;
+
     protected GameObject lastBounceObj;
 
     [SerializeField] protected ParticleData pD;
@@ -239,6 +246,12 @@ public class MyCharacter : MonoBehaviour
         {
             UIStart();
         }
+
+        emissionID = Shader.PropertyToID("_EmissionColor");
+        colorID = Shader.PropertyToID("_Color");
+        bodyColor = bodyRenderer.material.color;
+        clothColor = clothRenderer.materials[0].color;
+        swordColor = clothRenderer.materials[1].color;
     }
 
     #region InputCheck#
@@ -273,12 +286,13 @@ public class MyCharacter : MonoBehaviour
     }
     #endregion
 
-    void EventCheck(EventState eventState)
+    public void EventCheck(EventState eventState)
     {
         switch (eventState)
         {
             case EventState.Idle:
                 animator.SetFloat(animGroundBlend, (float)GroundState.Idle);
+                animator.SetBool(animIsFalling, false);
 
                 break;
             case EventState.Walking:
@@ -290,23 +304,30 @@ public class MyCharacter : MonoBehaviour
             case EventState.JumpOnGround:
                 animator.SetFloat(animAirBlend, (float)FallState.Jump);
                 animator.SetFloat(animJumpBlend, (float)JumpState.JumpOnGround);
-                //CancelInvoke();
-                //Invoke("Falling", 0.3f);
                 Instantiate(pD.ps_JumpOnGround, new Vector3(this.transform.position.x, this.transform.position.y + 1f, 0),  Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y - 90, this.transform.rotation.z));  // Spawn Particle
                 break;
             case EventState.JumpInAir:
                 animator.SetFloat(animAirBlend, (float)FallState.Jump);
                 animator.SetFloat(animJumpBlend, (float)JumpState.JumpInAir);
-                //CancelInvoke();
-                //Invoke("Falling", 0.3f);
                 Instantiate(pD.ps_JumpInAir, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0), Quaternion.identity);  // Spawn Particle
                 break;
             case EventState.JumpInAir2:
                 animator.SetFloat(animAirBlend, (float)FallState.Jump);
                 animator.SetFloat(animJumpBlend, (float)JumpState.JumpInAirTwo);
-                //CancelInvoke();
-                //Invoke("Falling", 0.3f);
-                Instantiate(pD.ps_JumpInAir, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0), Quaternion.identity);  // Spawn Particle
+                Instantiate(pD.ps_JumpInAir2, new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0), Quaternion.identity);  // Spawn Particle
+                break;
+            case EventState.WallJump:
+                animator.SetFloat(animAirBlend, (float)FallState.Jump);
+                animator.SetFloat(animJumpBlend, (float)JumpState.JumpOnGround);
+                switch (IsLookingRight())
+                {
+                    case true:
+                        Instantiate(pD.ps_OnWall_Right, new Vector3(this.transform.position.x, this.transform.position.y, 0), Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y - 90, this.transform.rotation.z));  // Spawn Particle
+                        break;
+                    case false:
+                        Instantiate(pD.ps_OnWall_Left, new Vector3(this.transform.position.x, this.transform.position.y, 0), Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y - 90, this.transform.rotation.z));  // Spawn Particle
+                        break;
+                }
                 break;
             case EventState.Fall:
                 if (isAttacking)
@@ -315,9 +336,11 @@ public class MyCharacter : MonoBehaviour
                 animator.SetFloat(animAirBlend, (float)FallState.Fall);
                 break;
             case EventState.Landing:
+                animator.SetBool(animIsHiting, false);
                 animator.SetBool(animIsFalling, false);
                 animator.SetFloat(animGroundBlend, (float)GroundState.Landing);
-                Instantiate(pD.ps_Landing, new Vector3(this.transform.position.x, this.transform.position.y - 1f, 0), Quaternion.Euler(this.transform.rotation.x + 90, this.transform.rotation.y, this.transform.rotation.z));  // Spawn Particle
+                animator.SetFloat(animAirBlend, (float)FallState.Fall);
+                Instantiate(pD.ps_Landing, new Vector3(this.transform.position.x, this.transform.position.y, 0), Quaternion.Euler(this.transform.rotation.x + 90, this.transform.rotation.y, this.transform.rotation.z));  // Spawn Particle
                 break;
             case EventState.Dodge:
                 animator.SetFloat(animAirBlend, (float)FallState.Dodge);
@@ -381,8 +404,11 @@ public class MyCharacter : MonoBehaviour
             case EventState.ResetDashes:
                 currentDashes = 0;
                 break;
+            case EventState.Bounce:
+
+                break;
             default:
-                Debug.Log("Coundnt Find State! Character: " + gameObject.name);
+                Debug.Log("Coundnt Find State! " + "Event: " + eventState + " Character: " + gameObject.name);
                 break;
 
         }
@@ -397,7 +423,6 @@ public class MyCharacter : MonoBehaviour
 
     void Start()
     {
-    
     }
 
     //////////////////////////////////////////////////
@@ -568,7 +593,6 @@ public class MyCharacter : MonoBehaviour
                 rb.velocity = new Vector3(Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), dir.y, 0);
             }
         }
-        Debug.Log("Kcikaway: " + playerEnum + " " + rb.velocity);
         float time = X * Mathf.Sqrt(percent);
         Disable(time);
     }
@@ -830,6 +854,7 @@ public class MyCharacter : MonoBehaviour
 
                 // Count enemy Combo Up
                 enemyCharacter.Combo(ComboState.Bounce);
+                eventDelegate(EventState.Bounce);
                 // COunt All Bounces for the EndScreen
                 enemyCharacter.bounceAction(enemyCharacter.playerEnum);
                 // Spawn Bounce Particle
@@ -928,13 +953,6 @@ public class MyCharacter : MonoBehaviour
     [ColorUsageAttribute(false, true, 10, 10, 10, 10)] public Color blendColor;
     IEnumerator Blink()
     {
-        Color bodyColor = bodyRenderer.material.color;
-        Color clothColor = clothRenderer.materials[0].color;
-        Color swordColor = clothRenderer.materials[1].color;
-        
-        int emissionID = Shader.PropertyToID("_EmissionColor");
-        int colorID = Shader.PropertyToID("_Color");
-
         float speed = 10;
         
         while (isDisabled)
@@ -943,23 +961,18 @@ public class MyCharacter : MonoBehaviour
             clothRenderer.materials[0].SetColor(colorID, Color.Lerp(clothColor, blendRed, Mathf.PingPong(Time.time * speed, 1)));
             clothRenderer.materials[1].SetColor(colorID, Color.Lerp(swordColor, blendRed, Mathf.PingPong(Time.time * speed, 1)));
 
+            Debug.Log("Blink");
             yield return null;
         }
 
-        ReturnColorToNoraml(colorID, emissionID, bodyColor, clothColor, swordColor);
+        ReturnColorToNoraml();
 
         StartCoroutine(Recovery());
     }
     IEnumerator Recovery()
     {
-        Color bodyColor = bodyRenderer.material.color;
-        Color clothColor = clothRenderer.materials[0].color;
-        Color swordColor = clothRenderer.materials[1].color;
+        Debug.Log(Time.time);
 
-
-        int emissionID = Shader.PropertyToID("_EmissionColor");
-        int colorID = Shader.PropertyToID("_Color");
-        
         bodyRenderer.material.SetColor(colorID, Color.Lerp(bodyColor, blendColor, 1));
         clothRenderer.materials[0].SetColor(colorID, Color.Lerp(clothColor, blendColor, 1));
         clothRenderer.materials[1].SetColor(colorID, Color.Lerp(swordColor, blendColor, 1));
@@ -981,39 +994,19 @@ public class MyCharacter : MonoBehaviour
 
         yield return new WaitForSeconds(0.4f);
 
-        ReturnColorToNoraml(colorID, emissionID, bodyColor, clothColor, swordColor);
+        Debug.Log(Time.time);
+
+        ReturnColorToNoraml();
         yield return null;
     }
-    void ReturnColorToNoraml(int colorID, int emissionID, Color bodyColor, Color clothColor, Color swordColor)
-    {
-        bodyRenderer.material.SetColor(colorID, Color.Lerp(bodyColor, blendColor, 0));
-        clothRenderer.materials[0].SetColor(colorID, Color.Lerp(clothColor, blendColor, 0));
-        clothRenderer.materials[1].SetColor(colorID, Color.Lerp(swordColor, blendColor, 0));
-
-        switch (playerEnum)
-        {
-            case PlayerEnum.PlayerOne:
-                bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, 0));
-                clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, 0));
-                clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, 0));
-                break;
-            case PlayerEnum.PlayerTwo:
-                bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, 0));
-                clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, 0));
-                clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, 0));
-                break;
-        }
-    }
-
     protected IEnumerator FreezCharacter(bool wigle, float maxTime, bool hitting)
     {
+
         float time = 0;
         float speed = 15;
         Vector3 vel = this.rb.velocity;
         Vector3 pos = this.transform.position;
-
-        Debug.Log(playerEnum + " " + vel);
-
+        
         if (hitting)
             animator.speed = 0;
 
@@ -1023,7 +1016,7 @@ public class MyCharacter : MonoBehaviour
         {
             if (wigle)
             {
-                this.transform.position = new Vector3(pos.x + Mathf.PingPong(Time.time * speed, 1),
+                this.transform.position = new Vector3(pos.x + Mathf.PingPong(Time.time * speed, 0.5f),
                     pos.y,
                     pos.z);
             }
@@ -1043,6 +1036,26 @@ public class MyCharacter : MonoBehaviour
         this.rb.useGravity = true;
         this.rb.velocity = vel;
         yield return null;
+    }
+    void ReturnColorToNoraml()
+    {
+        bodyRenderer.material.SetColor(colorID, Color.Lerp(bodyColor, blendColor, 0));
+        clothRenderer.materials[0].SetColor(colorID, Color.Lerp(clothColor, blendColor, 0));
+        clothRenderer.materials[1].SetColor(colorID, Color.Lerp(swordColor, blendColor, 0));
+
+        switch (playerEnum)
+        {
+            case PlayerEnum.PlayerOne:
+                bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, 0));
+                clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, 0));
+                clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, 0));
+                break;
+            case PlayerEnum.PlayerTwo:
+                bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, 0));
+                clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, 0));
+                clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, 0));
+                break;
+        }
     }
 }
 

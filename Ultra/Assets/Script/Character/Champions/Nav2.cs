@@ -314,12 +314,9 @@ public class Nav2 : MyCharacter
             rb.useGravity = false;
             EndAttacking();
             travel = 0;
-
-            Debug.Log(Time.time);
         };
         abilities.onAbilityReady = () => 
         {
-            Debug.Log(Time.time);
             rb.velocity = Vector3.zero;
             rb.useGravity = true;
         };
