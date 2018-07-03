@@ -144,27 +144,27 @@ public class InputManager : MonoBehaviour {
         }
         #endregion
         #region B Button
-        if (Input.GetKeyDown(KeyCode.Joystick1Button1) && Input.GetAxisRaw("P1_Horizontal") == 1)
-        {
-            if (P1_SpecalRightAction != null)
-                P1_SpecalRightAction();
-        }
-        else if (Input.GetKeyDown(KeyCode.Joystick1Button1) && Input.GetAxisRaw("P1_Horizontal") == -1)
-        {
-            if (P1_SpecalLeftAction != null)
-                P1_SpecalLeftAction();
-        }
-        else if (Input.GetKeyDown(KeyCode.Joystick1Button1) && Input.GetAxisRaw("P1_Vertical") == 1)
-        {
-            if (P1_SpecalBottomAction != null)
-                P1_SpecalBottomAction();
-        }
-        else if (Input.GetKeyDown(KeyCode.Joystick1Button1) && Input.GetAxisRaw("P1_Vertical") == -1)
-        {
-            if (P1_SpecalTopAction != null)
-                P1_SpecalTopAction();
-        }
-        else if (Input.GetKeyDown(KeyCode.Joystick1Button1))
+        //if (Input.GetKeyDown(KeyCode.Joystick1Button1) && Input.GetAxisRaw("P1_Horizontal") == 1)
+        //{
+        //    if (P1_SpecalRightAction != null)
+        //        P1_SpecalRightAction();
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Joystick1Button1) && Input.GetAxisRaw("P1_Horizontal") == -1)
+        //{
+        //    if (P1_SpecalLeftAction != null)
+        //        P1_SpecalLeftAction();
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Joystick1Button1) && Input.GetAxisRaw("P1_Vertical") == 1)
+        //{
+        //    if (P1_SpecalBottomAction != null)
+        //        P1_SpecalBottomAction();
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Joystick1Button1) && Input.GetAxisRaw("P1_Vertical") == -1)
+        //{
+        //    if (P1_SpecalTopAction != null)
+        //        P1_SpecalTopAction();
+        //}
+        if (Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
             if (p1_OnKeyPressed != null)
                 p1_OnKeyPressed(KeyCode.Joystick1Button1);
@@ -228,27 +228,27 @@ public class InputManager : MonoBehaviour {
         }
         #endregion
         #region Y Button
-        if (Input.GetKeyDown(KeyCode.Joystick1Button3) && Input.GetAxisRaw("P1_Horizontal") == 1)
-        {
-            if (P1_SpecalRightAction != null)
-                P1_SpecalRightAction();
-        }
-        else if (Input.GetKeyDown(KeyCode.Joystick1Button3) && Input.GetAxisRaw("P1_Horizontal") == -1)
-        {
-            if (P1_SpecalLeftAction != null)
-                P1_SpecalLeftAction();
-        }
-        else if (Input.GetKeyDown(KeyCode.Joystick1Button3) && Input.GetAxisRaw("P1_Vertical") == 1)
-        {
-            if (P1_SpecalBottomAction != null)
-                P1_SpecalBottomAction();
-        }
-        else if (Input.GetKeyDown(KeyCode.Joystick1Button3) && Input.GetAxisRaw("P1_Vertical") == -1)
-        {
-            if (P1_SpecalTopAction != null)
-                P1_SpecalTopAction();
-        }
-        else if (Input.GetKeyDown(KeyCode.Joystick1Button3))
+        //if (Input.GetKeyDown(KeyCode.Joystick1Button3) && Input.GetAxisRaw("P1_Horizontal") == 1)
+        //{
+        //    if (P1_SpecalRightAction != null)
+        //        P1_SpecalRightAction();
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Joystick1Button3) && Input.GetAxisRaw("P1_Horizontal") == -1)
+        //{
+        //    if (P1_SpecalLeftAction != null)
+        //        P1_SpecalLeftAction();
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Joystick1Button3) && Input.GetAxisRaw("P1_Vertical") == 1)
+        //{
+        //    if (P1_SpecalBottomAction != null)
+        //        P1_SpecalBottomAction();
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Joystick1Button3) && Input.GetAxisRaw("P1_Vertical") == -1)
+        //{
+        //    if (P1_SpecalTopAction != null)
+        //        P1_SpecalTopAction();
+        //}
+        if (Input.GetKeyDown(KeyCode.Joystick1Button3))
         {
             if (p1_OnKeyPressed != null)
                 p1_OnKeyPressed(KeyCode.Joystick1Button3);
@@ -360,27 +360,27 @@ public class InputManager : MonoBehaviour {
         }
         #endregion
         #region B Button
-        if (Input.GetKeyDown(KeyCode.Joystick2Button1) && Input.GetAxisRaw("P2_Horizontal") == 1)
-        {
-            if (P2_SpecalRightAction != null)
-                P2_SpecalRightAction();
-        }
-        else if (Input.GetKeyDown(KeyCode.Joystick2Button1) && Input.GetAxisRaw("P2_Horizontal") == -1)
-        {
-            if (P2_SpecalLeftAction != null)
-                P2_SpecalLeftAction();
-        }
-        else if (Input.GetKeyDown(KeyCode.Joystick2Button1) && Input.GetAxisRaw("P2_Vertical") == 1)
-        {
-            if (P2_SpecalBottomAction != null)
-                P2_SpecalBottomAction();
-        }
-        else if (Input.GetKeyDown(KeyCode.Joystick2Button1) && Input.GetAxisRaw("P2_Vertical") == -1)
-        {
-            if (P2_SpecalTopAction != null)
-                P2_SpecalTopAction();
-        }
-        else if (Input.GetKeyDown(KeyCode.Joystick2Button1))
+        //if (Input.GetKeyDown(KeyCode.Joystick2Button1) && Input.GetAxisRaw("P2_Horizontal") == 1)
+        //{
+        //    if (P2_SpecalRightAction != null)
+        //        P2_SpecalRightAction();
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Joystick2Button1) && Input.GetAxisRaw("P2_Horizontal") == -1)
+        //{
+        //    if (P2_SpecalLeftAction != null)
+        //        P2_SpecalLeftAction();
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Joystick2Button1) && Input.GetAxisRaw("P2_Vertical") == 1)
+        //{
+        //    if (P2_SpecalBottomAction != null)
+        //        P2_SpecalBottomAction();
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Joystick2Button1) && Input.GetAxisRaw("P2_Vertical") == -1)
+        //{
+        //    if (P2_SpecalTopAction != null)
+        //        P2_SpecalTopAction();
+        //}
+        if (Input.GetKeyDown(KeyCode.Joystick2Button1))
         {
             if (p2_OnKeyPressed != null)
                 p2_OnKeyPressed(KeyCode.Joystick2Button1);
@@ -444,27 +444,27 @@ public class InputManager : MonoBehaviour {
         }
         #endregion
         #region Y Button
-        if (Input.GetKeyDown(KeyCode.Joystick2Button3) && Input.GetAxisRaw("P2_Horizontal") == 1)
-        {
-            if (P2_SpecalRightAction != null)
-                P2_SpecalRightAction();
-        }
-        else if (Input.GetKeyDown(KeyCode.Joystick2Button3) && Input.GetAxisRaw("P2_Horizontal") == -1)
-        {
-            if (P2_SpecalLeftAction != null)
-                P2_SpecalLeftAction();
-        }
-        else if (Input.GetKeyDown(KeyCode.Joystick2Button3) && Input.GetAxisRaw("P2_Vertical") == 1)
-        {
-            if (P2_SpecalBottomAction != null)
-                P2_SpecalBottomAction();
-        }
-        else if (Input.GetKeyDown(KeyCode.Joystick2Button3) && Input.GetAxisRaw("P2_Vertical") == -1)
-        {
-            if (P2_SpecalTopAction != null)
-                P2_SpecalTopAction();
-        }
-        else if (Input.GetKeyDown(KeyCode.Joystick2Button3))
+        //if (Input.GetKeyDown(KeyCode.Joystick2Button3) && Input.GetAxisRaw("P2_Horizontal") == 1)
+        //{
+        //    if (P2_SpecalRightAction != null)
+        //        P2_SpecalRightAction();
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Joystick2Button3) && Input.GetAxisRaw("P2_Horizontal") == -1)
+        //{
+        //    if (P2_SpecalLeftAction != null)
+        //        P2_SpecalLeftAction();
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Joystick2Button3) && Input.GetAxisRaw("P2_Vertical") == 1)
+        //{
+        //    if (P2_SpecalBottomAction != null)
+        //        P2_SpecalBottomAction();
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Joystick2Button3) && Input.GetAxisRaw("P2_Vertical") == -1)
+        //{
+        //    if (P2_SpecalTopAction != null)
+        //        P2_SpecalTopAction();
+        //}
+       if (Input.GetKeyDown(KeyCode.Joystick2Button3))
         {
             if (p2_OnKeyPressed != null)
                 p2_OnKeyPressed(KeyCode.Joystick2Button3);

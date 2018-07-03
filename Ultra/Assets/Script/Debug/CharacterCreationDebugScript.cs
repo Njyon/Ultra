@@ -13,7 +13,7 @@ public class CharacterCreationDebugScript : MonoBehaviour
 
     public bool TESTMOV2;
     GameObject debugPlayer;
-
+   
     private void Start()
     {
         Initiate();

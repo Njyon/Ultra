@@ -212,6 +212,17 @@ public class Movement : MonoBehaviour
 
     //      Public      //
 
+    public bool IsOnWall()
+    {
+        if(fallComp.isOnWallLeft || fallComp.isOnWallRight)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     public bool CanMove()
     {
         return canMove;
@@ -422,7 +433,7 @@ public class Movement : MonoBehaviour
         if (!this.canMove || !dash.canMove)
             return;
 
-        if(!islookingToTheRight)
+        if(!islookingToTheRight && !IsFalling())
         {
             islookingToTheRight = true;
             eventDelegate(EventState.ChangeDirectionRight);
@@ -512,7 +523,7 @@ public class Movement : MonoBehaviour
         if (!this.canMove || !dash.canMove)
             return;
 
-        if (islookingToTheRight)
+        if (islookingToTheRight && !IsFalling())
         {
             islookingToTheRight = false;
             eventDelegate(EventState.ChangeDirectionLeft);
@@ -619,7 +630,7 @@ public class Movement : MonoBehaviour
             StartCoroutine(JumpCoolDown());
             StartCoroutine(ForceDownDelay());
             fallComp.isOnWallLeft = false;
-            eventDelegate(EventState.JumpOnGround);
+            eventDelegate(EventState.WallJump);
         }
         else if (fallComp.isOnWallRight && fallComp.isFalling)
         {
@@ -637,7 +648,7 @@ public class Movement : MonoBehaviour
             StartCoroutine(JumpCoolDown());
             StartCoroutine(ForceDownDelay());
             fallComp.isOnWallRight = false;
-            eventDelegate(EventState.JumpOnGround);
+            eventDelegate(EventState.WallJump);
         }
         else if (jumps < maxJumps)
         {

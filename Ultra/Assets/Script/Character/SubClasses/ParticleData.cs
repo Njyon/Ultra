@@ -7,7 +7,10 @@ public class ParticleData : MonoBehaviour
     [Header("JumpParticle")]
     public GameObject ps_JumpOnGround;
     public GameObject ps_JumpInAir;
+    public GameObject ps_JumpInAir2;
     public GameObject ps_Landing;
+    public GameObject ps_OnWall_Right;
+    public GameObject ps_OnWall_Left;
 
     [Header("Dash")]
     public GameObject ps_DashCloudLeft;
