@@ -8,8 +8,18 @@ public class InGameUI : MonoBehaviour
     [SerializeField] Text combo;
     [SerializeField] Text score;
     [SerializeField] Text multiplier;
+    [SerializeField] Image blur;
 
-    //[SerializeField] Animation comboAnim;
+    Color color;
+    
+    public void SetHUDColor(Color color)
+    {
+        //blur.material.SetColor("_Color", color);
+        combo.color = color;
+        multiplier.color = color;
+        this.color = color;
+        HiddeCombo();
+    }
 
     /// <summary>
     /// UpdateScore
@@ -17,7 +27,7 @@ public class InGameUI : MonoBehaviour
     /// <param name="score"></param>
     public void UpdateScore(int score)
     {
-        this.score.text = "Score: " + score.ToString();
+        this.score.text = score.ToString();
     }
     /// <summary>
     /// Update Combo
@@ -40,15 +50,15 @@ public class InGameUI : MonoBehaviour
     /// </summary>
     public void ShowCombo()
     {
-        combo.color = new Color(Color.white.r, Color.white.g, Color.white.b, 1);
-        multiplier.color = new Color(Color.white.r, Color.white.g, Color.white.b, 1);
+        combo.color = new Color(color.r, color.g, color.b, 1);
+        multiplier.color = new Color(color.r, color.g, color.b, 1);
     }
     /// <summary>
     /// Make ComboCounter InVisible
     /// </summary>
     public void HiddeCombo()
     {
-        combo.color = new Color(Color.white.r, Color.white.g, Color.white.b, 0);
-        multiplier.color = new Color(Color.white.r, Color.white.g, Color.white.b, 0);
+        combo.color = new Color(color.r, color.g, color.b, 0);
+        multiplier.color = new Color(color.r, color.g, color.b, 0);
     }
 }
