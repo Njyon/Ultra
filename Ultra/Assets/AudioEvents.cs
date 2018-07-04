@@ -5,19 +5,24 @@ using UnityEngine;
 public class AudioEvents : MonoBehaviour {
 
     private Movement movement;
+    private MyCharacter character;
     private delegate void EventDelegate(EventState eventState);
     private EventDelegate eventDelegate;
 
     void Awake () {
         movement = gameObject.transform.parent.gameObject.transform.parent.gameObject.GetComponent<Movement>();
+        character = gameObject.transform.parent.gameObject.transform.parent.gameObject.GetComponent<MyCharacter>();
     }
 
     private void OnEnable() {
+        character.eventDelegate += EventCheck;
         movement.eventDelegate += EventCheck;
         eventDelegate += EventCheck;
     }
 
-    private void OnDisable() {
+    private void OnDisable()
+    {
+        character.eventDelegate -= EventCheck;
         movement.eventDelegate -= EventCheck;
         eventDelegate -= EventCheck;
     }
