@@ -37,6 +37,7 @@ public class MyCharacter : MonoBehaviour
     int animAirBlend;
     int animAttackBlend;
     int animJumpBlend;
+    int animDodge;
 
     protected bool isAttacking = false;
     protected Rigidbody rb;
@@ -57,9 +58,9 @@ public class MyCharacter : MonoBehaviour
     int emissionID;
     int colorID;
     Color bodyColor;
-    Color clothColor;
-    Color swordColor;
-
+    [HideInInspector] public Color clothColor;
+    [HideInInspector] public Color swordColor;
+    
     protected GameObject lastBounceObj;
 
     [SerializeField] protected ParticleData pD;
@@ -237,6 +238,7 @@ public class MyCharacter : MonoBehaviour
             animAirBlend = Animator.StringToHash("AirBlend");
             animAttackBlend = Animator.StringToHash("DashBlend");
             animJumpBlend = Animator.StringToHash("JumpBlend");
+            animDodge = Animator.StringToHash("isDodgeing");
         }
         if (ui == null)
         {
@@ -348,8 +350,10 @@ public class MyCharacter : MonoBehaviour
                 Instantiate(pD.ps_Landing, new Vector3(this.transform.position.x, this.transform.position.y, 0), Quaternion.Euler(this.transform.rotation.x + 90, this.transform.rotation.y, this.transform.rotation.z));  // Spawn Particle
                 break;
             case EventState.Dodge:
-                animator.SetFloat(animAirBlend, (float)FallState.Dodge);
-
+                animator.SetBool(animDodge, true);
+                break;
+            case EventState.DodgeEnd:
+                animator.SetBool(animDodge, false);
                 break;
             case EventState.GetHit:
 
@@ -1034,23 +1038,23 @@ public class MyCharacter : MonoBehaviour
         this.rb.velocity = vel;
         yield return null;
     }
-    void ReturnColorToNoraml()
+    public void ReturnColorToNoraml()
     {
-        bodyRenderer.material.SetColor(colorID, Color.Lerp(bodyColor, blendColor, 0));
-        clothRenderer.materials[0].SetColor(colorID, Color.Lerp(clothColor, blendColor, 0));
-        clothRenderer.materials[1].SetColor(colorID, Color.Lerp(swordColor, blendColor, 0));
+        bodyRenderer.material.SetColor(colorID, bodyColor);
+        clothRenderer.materials[0].SetColor(colorID, clothColor);
+        clothRenderer.materials[1].SetColor(colorID, swordColor);
 
         switch (playerEnum)
         {
             case PlayerEnum.PlayerOne:
-                bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, 0));
-                clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, 0));
-                clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, 0));
+                bodyRenderer.material.SetColor(emissionID, Color.white);
+                clothRenderer.materials[0].SetColor(emissionID, PlayerInfoManager.playerOne.color);
+                clothRenderer.materials[1].SetColor(emissionID, PlayerInfoManager.playerOne.color);
                 break;
             case PlayerEnum.PlayerTwo:
-                bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, 0));
-                clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, 0));
-                clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, 0));
+                bodyRenderer.material.SetColor(emissionID, Color.white);
+                clothRenderer.materials[0].SetColor(emissionID, PlayerInfoManager.playerTwo.color);
+                clothRenderer.materials[1].SetColor(emissionID, PlayerInfoManager.playerTwo.color);
                 break;
         }
     }

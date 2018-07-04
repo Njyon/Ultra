@@ -146,6 +146,7 @@ public class OneVsOneGameMode : MonoBehaviour
                     PlayerOne.GetComponent<MyCharacter>().bounceAction += BounceCounter;
                     PlayerOne.GetComponent<MyCharacter>().shakeCameraAction += sCam.Shake;
                     PlayerOne.GetComponent<MyCharacter>().Posses();
+                    playerOneUI.SetHUDColor(PlayerInfoManager.playerOne.color);
                     sCam.AddTarget(PlayerOne.transform);
 
 
@@ -165,6 +166,7 @@ public class OneVsOneGameMode : MonoBehaviour
                     PlayerTwo.GetComponent<MyCharacter>().bounceAction += BounceCounter;
                     PlayerTwo.GetComponent<MyCharacter>().shakeCameraAction += sCam.Shake;
                     PlayerTwo.GetComponent<MyCharacter>().Posses();
+                    playerTwoUI.SetHUDColor(PlayerInfoManager.playerTwo.color);
                     sCam.AddTarget(PlayerTwo.transform);
 
                     Renderer rend = PlayerTwo.GetComponent<Dash>().rendererCloth;

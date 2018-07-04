@@ -71,7 +71,6 @@ public class MainMenuData : MonoBehaviour
     /// </summary>
     public void DisableHeaderButtons()
     {
-        Debug.Log(headerButtons.Length);
         for (int i = 0; i < headerButtons.Length; i++)
         {
             headerButtons[i].GetComponent<Button>().enabled = false;
