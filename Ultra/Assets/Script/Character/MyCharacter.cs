@@ -39,7 +39,7 @@ public class MyCharacter : MonoBehaviour
     int animJumpBlend;
     int animDodge;
 
-    protected bool isAttacking = false;
+    [HideInInspector] public bool isAttacking = false;
     protected Rigidbody rb;
     protected Movement movement;
     
@@ -464,6 +464,7 @@ public class MyCharacter : MonoBehaviour
     protected void IsAttacking()
     {
         movement.CantMove();
+        isAttacking = true;
     }
     /// <summary>
     /// Lets the Character be able to move again
@@ -471,6 +472,7 @@ public class MyCharacter : MonoBehaviour
     protected void EndAttacking()
     {
         movement.CanMoveTrue();
+        isAttacking = false;
     }
     /// <summary>
     /// Disables the own Character

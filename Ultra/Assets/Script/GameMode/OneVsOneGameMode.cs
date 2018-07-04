@@ -212,7 +212,7 @@ public class OneVsOneGameMode : MonoBehaviour
         PlayerTwo.GetComponent<MyCharacter>().DePosses();
 
         // Load the Win Screen
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3);
     }
     void DataCounter(PlayerEnum pE, int combo, int multiplier, int score)
     {

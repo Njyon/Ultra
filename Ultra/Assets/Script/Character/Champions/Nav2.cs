@@ -356,6 +356,12 @@ public class Nav2 : MyCharacter
             enemyCharacter.dodgeAction(enemyCharacter.playerEnum);
             return;
         }
+        if(enemyCharacter.isAttacking)
+        {
+            StartCoroutine(FreezCharacter(false, freezTimeHit, false));
+            eventDelegate(EventState.Parry);
+            return;
+        }
 
         StartCoroutine(FreezCharacter(false, freezTimeHit, true));
         if (!enemyCharacter.isDisabled)
@@ -376,7 +382,7 @@ public class Nav2 : MyCharacter
             // Update the Combo
             Combo(ComboState.HitStrak);
         }
-
+        eventDelegate(EventState.Slash);
         // Freez the Cam // in the Moment deactive
         //freezCamAction();
         // End the Dash
@@ -387,10 +393,10 @@ public class Nav2 : MyCharacter
     {
         Bounce();
         abilities.Update();
-        if (Input.GetKeyDown(KeyCode.Escape))
-            UnityEditor.EditorApplication.isPaused = true;
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
-            UnityEditor.EditorApplication.isPaused = false;
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //    UnityEditor.EditorApplication.isPaused = true;
+        //if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        //    UnityEditor.EditorApplication.isPaused = false;
     }
 
     
