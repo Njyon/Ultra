@@ -231,7 +231,7 @@ public class CharacterSelecterV2 : MonoBehaviour
     IEnumerator LoadNewScene()
     {
         yield return new WaitForSeconds(0.1f);
-        AsyncOperation async = SceneManager.LoadSceneAsync(1);
+        AsyncOperation async = SceneManager.LoadSceneAsync(2);
         while (!async.isDone)
         {
             yield return null;
@@ -260,22 +260,22 @@ public class CharacterSelecterV2 : MonoBehaviour
 
     IEnumerator P1Up()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.2f);
         playerOne.isSwitchingUp = false;
     }
     IEnumerator P1Down()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.2f);
         playerOne.isSwitchingDown = false;
     }
     IEnumerator P2Up()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.2f);
         playerTwo.isSwitchingUp = false;
     }
     IEnumerator P2Down()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.2f);
         playerTwo.isSwitchingDown = false;
     }
 #endregion
