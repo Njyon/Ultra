@@ -86,8 +86,8 @@ public class MyCharacter : MonoBehaviour
 
     //////////// Deleagtes ///////////
 
-    protected delegate void EventDelegate(EventState eventState);
-    protected EventDelegate eventDelegate;
+    public delegate void EventDelegate(EventState eventState);
+    public EventDelegate eventDelegate;
 
     public delegate void EndGame();
     public static EndGame endGameAction;
@@ -962,8 +962,7 @@ public class MyCharacter : MonoBehaviour
             bodyRenderer.material.SetColor(colorID, Color.Lerp(bodyColor, blendRed, Mathf.PingPong(Time.time * speed, 1)));
             clothRenderer.materials[0].SetColor(colorID, Color.Lerp(clothColor, blendRed, Mathf.PingPong(Time.time * speed, 1)));
             clothRenderer.materials[1].SetColor(colorID, Color.Lerp(swordColor, blendRed, Mathf.PingPong(Time.time * speed, 1)));
-
-            Debug.Log("Blink");
+            
             yield return null;
         }
 
@@ -973,8 +972,6 @@ public class MyCharacter : MonoBehaviour
     }
     IEnumerator Recovery()
     {
-        Debug.Log(Time.time);
-
         bodyRenderer.material.SetColor(colorID, Color.Lerp(bodyColor, blendColor, 1));
         clothRenderer.materials[0].SetColor(colorID, Color.Lerp(clothColor, blendColor, 1));
         clothRenderer.materials[1].SetColor(colorID, Color.Lerp(swordColor, blendColor, 1));
@@ -995,9 +992,7 @@ public class MyCharacter : MonoBehaviour
         }
 
         yield return new WaitForSeconds(0.4f);
-
-        Debug.Log(Time.time);
-
+        
         ReturnColorToNoraml();
         yield return null;
     }
