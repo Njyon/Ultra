@@ -16,9 +16,10 @@ public class Dash : MonoBehaviour
     // Curves
     public AnimationCurve dashCurve;
 
+    int emissionID;
+    int colorID;
     public Renderer rendererCloth;
-    Color startColorCloth;
-    [SerializeField] Color EndColor;
+    [ColorUsageAttribute(false, true, 10, 10, 10, 10)] [SerializeField] Color EndColor;
 
     // Character Vars
     [HideInInspector] public bool isDashing = false;
@@ -35,11 +36,12 @@ public class Dash : MonoBehaviour
 
     //Delegate
     public delegate void EventDelegate(EventState eventState);
-    public EventDelegate eventDelegate;
+    public MyCharacter.EventDelegate eventDelegate;
 
     private void Start()
     {
-        startColorCloth = rendererCloth.material.GetColor("_EmissionColor");
+        emissionID = Shader.PropertyToID("_EmissionColor");
+        colorID = Shader.PropertyToID("_Color");
     }
 
     public void DashCheck()
@@ -188,48 +190,36 @@ public class Dash : MonoBehaviour
     }
     IEnumerator DogeTime(float time)
     {
+        eventDelegate(EventState.Dodge);
         myCharacter.canGetDamaged = false;
-        float elapsedTime = 0;
-        float colorTime = 0;
-        bool positive = true;
-        Color colorCloth;
-        while(elapsedTime < time)
+        Color playerColor = Color.white;
+        Color clothColor = GetComponent<MyCharacter>().clothColor;
+        Color swordColor = GetComponent<MyCharacter>().swordColor;
+        PlayerEnum playerEnum = GetComponent<MyCharacter>().playerEnum;
+
+        rendererCloth.materials[0].SetColor(emissionID, EndColor);
+        rendererCloth.materials[1].SetColor(emissionID, EndColor);
+
+        switch(playerEnum)
         {
-            if(colorTime > 1)
-            {
-                positive = false;
-            }
-            else if(colorTime < 0)
-            {
-                positive = true;
-            }
+            case PlayerEnum.PlayerOne:
+                playerColor = PlayerInfoManager.playerOne.color;
+                break;
+            case PlayerEnum.PlayerTwo:
+                playerColor = PlayerInfoManager.playerTwo.color;
+                break;
+        }
+        Debug.Log(playerColor);
+        while (time > 0)
+        {
+            //TODO: LERP Color
 
-            if(positive)
-            {
-                colorTime += Time.deltaTime;
-            }
-            else
-            {
-                colorTime -= Time.deltaTime;
-            }
-
-            colorCloth = Color.Lerp(startColorCloth, EndColor, colorTime);
-            rendererCloth.material.SetColor("_EmissionColor", colorCloth);
-
-            elapsedTime += Time.deltaTime;
+            time -= Time.deltaTime;
             yield return null;
         }
         myCharacter.canGetDamaged = true;
-        while(colorTime < 1)
-        {
-
-            colorTime += Time.deltaTime;
-
-            colorCloth = Color.Lerp(EndColor, startColorCloth , colorTime);
-            rendererCloth.material.SetColor("_EmissionColor", colorCloth);
-
-            yield return null;
-        }
+        GetComponent<MyCharacter>().ReturnColorToNoraml();
+        eventDelegate(EventState.DodgeEnd);
         yield return null;
     }
 }

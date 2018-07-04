@@ -26,5 +26,6 @@
    AttackEnd,
    AttackHit,
    ResetDashes,
-   WallJump
+   WallJump,
+   DodgeEnd
 };
