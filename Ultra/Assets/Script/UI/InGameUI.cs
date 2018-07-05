@@ -31,7 +31,7 @@ public class InGameUI : MonoBehaviour
         float decimals;
         if (score >= 1000000)
         {
-            digit = score / 1000000;
+            digit = score / 1000000f;
             digit = Mathf.Round(digit * 100.0f) / 100.0f;
             decimals = digit - (int)digit;
             this.score.text = digit.ToString() + "M";
@@ -39,13 +39,8 @@ public class InGameUI : MonoBehaviour
         else if (score >= 1000)
         {
             digit = score / 1000f;
-            Debug.Log("/1000: " + digit);
             digit = Mathf.Round(digit * 100.0f) / 100.0f;
-            Debug.Log("Round: " + digit);
             decimals = digit - (int)digit;
-            Debug.Log("Decimal = " + decimals);
-            decimals *= 100;
-            Debug.Log("*100: " + decimals);
             this.score.text = digit.ToString() + "K";
         }
         else
