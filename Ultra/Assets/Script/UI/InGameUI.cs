@@ -14,7 +14,7 @@ public class InGameUI : MonoBehaviour
     
     public void SetHUDColor(Color color)
     {
-        border.material.SetColor("_Color", color);
+        border.color = color;
         combo.color = color;
         multiplier.color = color;
         this.color = color;
@@ -26,8 +26,21 @@ public class InGameUI : MonoBehaviour
     /// </summary>
     /// <param name="score"></param>
     public void UpdateScore(int score)
-    {
-        this.score.text = score.ToString();
+    {   
+        if (score >= 1000000)
+        {
+            score = score / 1000000;
+            this.score.text = score.ToString() + "M";
+        }
+        else if (score >= 1000)
+        {
+            score = score / 1000;
+            this.score.text = score.ToString() + "K";
+        }
+        else
+        {
+            this.score.text = score.ToString();
+        }
     }
     /// <summary>
     /// Update Combo

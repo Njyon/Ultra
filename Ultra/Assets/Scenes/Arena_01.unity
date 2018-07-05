@@ -1041,6 +1041,21 @@ Prefab:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 114541046552039508, guid: 933068d493079bc46b2c1ddac7e3cea7,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114541046552039508, guid: 933068d493079bc46b2c1ddac7e3cea7,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114541046552039508, guid: 933068d493079bc46b2c1ddac7e3cea7,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 933068d493079bc46b2c1ddac7e3cea7, type: 2}
   m_IsPrefabParent: 0
@@ -2986,7 +3001,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2011167554}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.73, y: 0.95, z: 0}
+  m_LocalPosition: {x: 3.9, y: 2.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1859916842}

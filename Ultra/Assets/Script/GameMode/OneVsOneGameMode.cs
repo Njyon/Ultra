@@ -21,6 +21,7 @@ public class OneVsOneGameMode : MonoBehaviour
     [Header("Timer")]
     [SerializeField] float time;
     Text timer;
+    Image border;
 
     //[Header("PlayerData")]
     //[SerializeField] GameObject playerDataPref;
@@ -68,6 +69,7 @@ public class OneVsOneGameMode : MonoBehaviour
         try
         {
             timer = GameObject.Find("Timer").GetComponent<Text>();
+            border = GameObject.Find("Border1").GetComponent<Image>();
         }
         catch
         {
@@ -81,6 +83,8 @@ public class OneVsOneGameMode : MonoBehaviour
         {
             timer.text = time.ToString();
         }
+        if (border != null)
+            border.material.SetColor("_Color", Color.white);
         #endregion
 
         //PlayerOne
@@ -277,7 +281,14 @@ public class OneVsOneGameMode : MonoBehaviour
                 timer.text = minutes + ":" + second;
             }
 
-            if(time - Time.deltaTime <= 0)
+            //Color TIme in Last Secods Red (only fast hack for the Gate)
+            if((int)time / 60 == 0 && (int)time % 60 <= 10 && timer.color != Color.red)
+            {
+                border.material.SetColor("_Color", Color.red);
+                StartCoroutine(TimerBlink());
+            }
+
+            if (time - Time.deltaTime <= 0)
             {
                 // Todo: Pause Game or End animation etc
                 timer.text = "0:00";
@@ -290,5 +301,15 @@ public class OneVsOneGameMode : MonoBehaviour
         {
             EndGame();
         }
+    }
+
+    IEnumerator TimerBlink()
+    {
+        while(time > 0)
+        {
+            timer.color = Color.Lerp(Color.white, Color.red, Mathf.PingPong(Time.time * 2, 1));
+            yield return null;
+        }
+        yield return null;
     }
 }

@@ -97,6 +97,8 @@ public class Dash : MonoBehaviour
 
     void Dodge()
     {
+        if (this.GetComponent<MyCharacter>().isAttacking)
+            return;
         StartCoroutine(DogeTime(dodgeNoDmgTime));
     }
     public void DashStanding()
@@ -147,6 +149,9 @@ public class Dash : MonoBehaviour
                     canDash = false;
                     if (isFalling)
                     {
+                        if (this.GetComponent<MyCharacter>().isAttacking)
+                            return;
+
                         StartCoroutine(DogeTime(dodgeNoDmgTime));
                         StartCoroutine(DashCoolDown(dashCoolDown));
 

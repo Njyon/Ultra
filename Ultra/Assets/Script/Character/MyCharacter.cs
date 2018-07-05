@@ -39,6 +39,7 @@ public class MyCharacter : MonoBehaviour
     int animJumpBlend;
     int animDodge;
 
+    [HideInInspector] public bool isDodgeing = false;
     [HideInInspector] public bool isAttacking = false;
     protected Rigidbody rb;
     protected Movement movement;
@@ -351,9 +352,11 @@ public class MyCharacter : MonoBehaviour
                 break;
             case EventState.Dodge:
                 animator.SetBool(animDodge, true);
+                isDodgeing = true;
                 break;
             case EventState.DodgeEnd:
                 animator.SetBool(animDodge, false);
+                isDodgeing = false;
                 break;
             case EventState.GetHit:
 
@@ -793,8 +796,8 @@ public class MyCharacter : MonoBehaviour
     public void EndCombo()
     {
         // Calc new Score
-        combo = hitCounter * combo;
-        score += combo * multiplier;
+        float interimResult = Mathf.Pow(combo, 2) * hitCounter;
+        score += (int)interimResult * multiplier;
 
         //Safe Data for EndScreen
         playerDataAction(playerEnum, combo, multiplier, score);

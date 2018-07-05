@@ -5720,6 +5720,11 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 223161153388911314, guid: 017218bbe38e8be4caf10cb67a0e39f1,
+        type: 2}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 544435182}
     - target: {fileID: 114529169633230418, guid: 017218bbe38e8be4caf10cb67a0e39f1,
         type: 2}
       propertyPath: eventSystem
@@ -5735,11 +5740,6 @@ Prefab:
       propertyPath: Camera
       value: 
       objectReference: {fileID: 544435180}
-    - target: {fileID: 223161153388911314, guid: 017218bbe38e8be4caf10cb67a0e39f1,
-        type: 2}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 544435182}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 017218bbe38e8be4caf10cb67a0e39f1, type: 2}
   m_IsPrefabParent: 0
@@ -8162,7 +8162,7 @@ MonoBehaviour:
   - {r: 41.660645, g: 0, b: 1024, a: 1}
   - {r: 0, g: 71.24365, b: 1024, a: 1}
   - {r: 0, g: 1024, b: 0, a: 1}
-  - {r: 0, g: 1.4167479, b: 1023.9999, a: 1}
+  - {r: 0, g: 0, b: 1024, a: 1}
   renderer1: {fileID: 656394980}
   renderer2: {fileID: 1307502703}
 --- !u!4 &955537418
