@@ -214,7 +214,6 @@ public class Dash : MonoBehaviour
                 playerColor = PlayerInfoManager.playerTwo.color;
                 break;
         }
-        Debug.Log(playerColor);
         while (time > 0)
         {
             //TODO: LERP Color

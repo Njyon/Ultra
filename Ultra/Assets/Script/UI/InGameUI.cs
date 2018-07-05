@@ -26,16 +26,27 @@ public class InGameUI : MonoBehaviour
     /// </summary>
     /// <param name="score"></param>
     public void UpdateScore(int score)
-    {   
+    {
+        float digit;
+        float decimals;
         if (score >= 1000000)
         {
-            score = score / 1000000;
-            this.score.text = score.ToString() + "M";
+            digit = score / 1000000;
+            digit = Mathf.Round(digit * 100.0f) / 100.0f;
+            decimals = digit - (int)digit;
+            this.score.text = digit.ToString() + "M";
         }
         else if (score >= 1000)
         {
-            score = score / 1000;
-            this.score.text = score.ToString() + "K";
+            digit = score / 1000f;
+            Debug.Log("/1000: " + digit);
+            digit = Mathf.Round(digit * 100.0f) / 100.0f;
+            Debug.Log("Round: " + digit);
+            decimals = digit - (int)digit;
+            Debug.Log("Decimal = " + decimals);
+            decimals *= 100;
+            Debug.Log("*100: " + decimals);
+            this.score.text = digit.ToString() + "K";
         }
         else
         {

@@ -131,14 +131,12 @@ public class Nav2 : MyCharacter
 
             pD.trail.SetActive(true);
             
-            Debug.Log(this.direction);
             switch (direction)
             {
                 case Direction.Right:
                 case Direction.Left:
                     eventDelegate(EventState.AttackSide);
-
-                    Debug.Log(IsLookingRight());
+                    
                     // Find dash End and Start point
                     if (IsLookingRight())
                     {

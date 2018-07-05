@@ -34,6 +34,12 @@ public class MainMenuUI : MonoBehaviour
             mMD.eventSystem.SetSelectedGameObject(mMD.buttons[(int)menuState]);
         }
 
+        // Fast Gate 02 Hack, Remove as Soon as Possible!
+        if(Input.GetKeyDown(KeyCode.JoystickButton1) && menuState == MenuState.Options)
+        {
+            ShowMain();
+        }
+
         if(menuState == MenuState.Options)
         {
             if(optionsPannel != OptionsPannel.Video && mMD.eventSystem.currentSelectedGameObject == mMD.optionsButton[0])
