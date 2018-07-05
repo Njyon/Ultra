@@ -6,10 +6,10 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: MAT_buildingClose2
+  m_Name: Ads2
   m_Shader: {fileID: 4800000, guid: 9c6ece3d5ef8bb84db19471daaf6c788, type: 3}
-  m_ShaderKeywords: _EMISSION _NORMALMAP
-  m_LightmapFlags: 5
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -35,7 +35,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: 6baee56ac796f7246b0aa25d464473d6, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -47,7 +47,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 2800000, guid: 21b27fe852da385478478a154994602e, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
@@ -62,8 +62,8 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _LightSmoothness: 0.88
-    - _LightThreshold: 0.52
+    - _LightSmoothness: 1
+    - _LightThreshold: 0.3
     - _MKEditorShowDetailBehavior: 0
     - _MKEditorShowDissolveBehavior: 0
     - _MKEditorShowLightBehavior: 1
@@ -72,20 +72,20 @@ Material:
     - _MKEditorShowReflectionBehavior: 0
     - _MKEditorShowRenderBehavior: 0
     - _MKEditorShowRimBehavior: 1
-    - _MKEditorShowShadowBehavior: 1
+    - _MKEditorShowShadowBehavior: 0
     - _MKEditorShowSketchBehavior: 0
     - _MKEditorShowSpecularBehavior: 1
     - _MKEditorShowTranslucentBehavior: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OutlineSize: 0.01
+    - _OutlineSize: 0.02
     - _Parallax: 0.02
-    - _RimIntensity: 0.4
+    - _RimIntensity: 0.5
     - _RimSize: 1.5
     - _RimSmoothness: 0.5
-    - _ShadowIntensity: 0.69
-    - _Shininess: 0.05
+    - _ShadowIntensity: 1
+    - _Shininess: 0.275
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SpecularIntensity: 0.5
@@ -93,10 +93,10 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.16470589, g: 0.8078432, b: 0.8078432, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Color: {r: 1, g: 0.6586788, b: 0.23921567, a: 1}
+    - _EmissionColor: {r: 1.4980392, g: 1.4980392, b: 1.4980392, a: 1}
     - _HighlightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColor: {r: 0.021777777, g: 0.10577779, b: 0.14, a: 1}
+    - _OutlineColor: {r: 0.120749995, g: 0.16521916, b: 0.25, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ShadowColor: {r: 0.13333334, g: 0.15294118, b: 0.16078432, a: 1}
+    - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 0.5}
