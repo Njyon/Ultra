@@ -9559,12 +9559,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d62a236e4633f4c8af235184aeaad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  potenz: 1.1
-  basisWert: 30
+  potenz: 1.005
+  basisWert: 5
   xFactor: 1
   gesamtFactor: 1
   UpDivider: 1
-  startForce: 30
+  startForce: 10
   startForceUp: 100
   X: 0.2
   freezTimeBounce: 0.15
@@ -9579,9 +9579,13 @@ MonoBehaviour:
   enemyCharacter: {fileID: 0}
   disabledTime: 1
   animator: {fileID: 95885822823921126}
+  isDodgeing: 0
+  isAttacking: 0
   dashCoolDown: 0.4
   maxDashes: 2
   meshController: {fileID: 1447890962482332}
+  clothColor: {r: 0, g: 0, b: 0, a: 0}
+  swordColor: {r: 0, g: 0, b: 0, a: 0}
   pD: {fileID: 114996467066509520}
   hitCounter: 0
   combo: 0

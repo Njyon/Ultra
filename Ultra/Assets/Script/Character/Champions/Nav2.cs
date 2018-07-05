@@ -402,14 +402,14 @@ public class Nav2 : MyCharacter
     
     void LightAttack()
     {
-        if (IsFalling() && !isUsingAbility && !isDisabled)
+        if (IsFalling() && !isUsingAbility && !isDisabled && !isDodgeing)
         {
             abilities.Activate();
         }
     }
     void LightAttackRight()
     {
-        if (IsFalling() && !isUsingAbility && !isDisabled)
+        if (IsFalling() && !isUsingAbility && !isDisabled && !isDodgeing)
         {
             LookRight();
             abilities.Activate();
@@ -417,7 +417,7 @@ public class Nav2 : MyCharacter
     }
     void LightAttackLeft()
     {
-        if (IsFalling() && !isUsingAbility && !isDisabled)
+        if (IsFalling() && !isUsingAbility && !isDisabled && !isDodgeing)
         {
             LookLeft();
             abilities.Activate();
@@ -425,17 +425,17 @@ public class Nav2 : MyCharacter
     }
     void LightAttackUp()
     {
-        if (!isUsingAbility && IsFalling() && !isDisabled)
+        if (!isUsingAbility && IsFalling() && !isDisabled && !isDodgeing)
             abilities.Activate();
     }
     void LightAttackDown()
     {
-        if (IsFalling() && !isUsingAbility && !isDisabled)
+        if (IsFalling() && !isUsingAbility && !isDisabled && !isDodgeing)
             abilities.Activate();
     }
     void LightAttackRightUp()
     {
-        if (IsFalling() && !isUsingAbility && !isDisabled)
+        if (IsFalling() && !isUsingAbility && !isDisabled && !isDodgeing)
         {
             LookRight();
             abilities.Activate();
@@ -443,7 +443,7 @@ public class Nav2 : MyCharacter
     }
     void LightAttackRightDown()
     {
-        if (IsFalling() && !isUsingAbility && !isDisabled)
+        if (IsFalling() && !isUsingAbility && !isDisabled && !isDodgeing)
         {
             LookRight();
             abilities.Activate();
@@ -451,7 +451,7 @@ public class Nav2 : MyCharacter
     }
     void LightAttackLefttUp()
     {
-        if (IsFalling() && !isUsingAbility && !isDisabled)
+        if (IsFalling() && !isUsingAbility && !isDisabled && !isDodgeing)
         {
             LookLeft();
             abilities.Activate();
@@ -459,7 +459,7 @@ public class Nav2 : MyCharacter
     }
     void LightAttackLeftDown()
     {
-        if (IsFalling() && !isUsingAbility && !isDisabled)
+        if (IsFalling() && !isUsingAbility && !isDisabled && !isDodgeing)
         {
             LookLeft();
             abilities.Activate();
