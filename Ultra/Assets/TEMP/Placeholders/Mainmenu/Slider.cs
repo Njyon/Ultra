@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Slider : MonoBehaviour {
+public class MySlider : MonoBehaviour {
     #region Variables
     //--Public--//
 

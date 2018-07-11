@@ -109,7 +109,7 @@ public class Movement : MonoBehaviour
         dash.playerEnum = playerEnum;
         dash.rb = rb;
         #endregion
-        fallComp = new FallComponent(forceDownEnabled, forcingDown, islookingToTheRight, fallSpeed, wallDetectionLength, maxFallVelocity, transform, rb, this, dash, myCharacter);
+        fallComp = new FallComponent(forceDownEnabled, forcingDown, fallSpeed, wallDetectionLength, maxFallVelocity, transform, rb, this, dash, myCharacter);
 
         switch (playerEnum)
         {

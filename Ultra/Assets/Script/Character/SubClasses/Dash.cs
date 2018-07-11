@@ -19,7 +19,7 @@ public class Dash : MonoBehaviour
     int emissionID;
     int colorID;
     public Renderer rendererCloth;
-    [ColorUsageAttribute(false, true, 10, 10, 10, 10)] [SerializeField] Color EndColor;
+    [ColorUsageAttribute(false, true)] [SerializeField] Color EndColor;
 
     // Character Vars
     [HideInInspector] public bool isDashing = false;

@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenuUI : MonoBehaviour
 {
     [SerializeField] MainMenuData mMD;
     MenuState menuState = MenuState.Main;
     OptionsPannel optionsPannel = OptionsPannel.Video;
+    bool inSubMenu = false;
 
     void Start()
     {
@@ -16,8 +18,16 @@ public class MainMenuUI : MonoBehaviour
             return;
         }
 
+        GetResolutions();
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
+        mMD.DeActivateButtons(mMD.videoButtons);
+        mMD.DeActivateButtons(mMD.audioButtons);
+        mMD.DeActivateButtons(mMD.headerButtons);
+
+        mMD.DeactivatePanels(mMD.optionsPannel);
 
         // Deactivate all Pannels exept main
         mMD.options.SetActive(false);
@@ -31,36 +41,64 @@ public class MainMenuUI : MonoBehaviour
         // if the Player hits the mouse button the last main button get reSelected
         if(Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1) || Input.GetMouseButtonUp(2))
         {
-            mMD.eventSystem.SetSelectedGameObject(mMD.buttons[(int)menuState]);
+            mMD.eventSystem.SetSelectedGameObject(mMD.mainbuttons[(int)menuState]);
         }
 
         // Fast Gate 02 Hack, Remove as Soon as Possible!
-        if(Input.GetKeyDown(KeyCode.JoystickButton1) && menuState == MenuState.Options)
+        if(Input.GetKeyDown(KeyCode.JoystickButton1))
         {
-            ShowMain();
+            if(menuState == MenuState.Credits)
+            {
+                mMD.ActivateButtons(mMD.mainbuttons);
+                ShowMain();
+            }
+            else if(menuState == MenuState.Options && !inSubMenu)
+            {
+                mMD.ActivateButtons(mMD.mainbuttons);
+                ShowMain();
+            }
+            else if (menuState == MenuState.Options && inSubMenu)
+            {
+                //Leaves subMenu
+                inSubMenu = false;
+                // Select the button of the subMenu
+                mMD.ActivateButtons(mMD.headerButtons);
+                //Go to the Optons Menu
+                ShowOptions();
+            }
         }
 
         if(menuState == MenuState.Options)
         {
-            if(optionsPannel != OptionsPannel.Video && mMD.eventSystem.currentSelectedGameObject == mMD.optionsButton[0])
+            if(optionsPannel != OptionsPannel.Video && mMD.eventSystem.currentSelectedGameObject == mMD.headerButtons[0])
             {
                 optionsPannel = OptionsPannel.Video;
                 mMD.TurnOptionsPannelOff(optionsPannel);
             }
-            else if (optionsPannel != OptionsPannel.Audio && mMD.eventSystem.currentSelectedGameObject == mMD.optionsButton[1])
+            else if (optionsPannel != OptionsPannel.Audio && mMD.eventSystem.currentSelectedGameObject == mMD.headerButtons[1])
             {
                 optionsPannel = OptionsPannel.Audio;
                 mMD.TurnOptionsPannelOff(optionsPannel);
             }
-            else if (optionsPannel != OptionsPannel.Controlls &&mMD.eventSystem.currentSelectedGameObject == mMD.optionsButton[2])
+            else if (optionsPannel != OptionsPannel.Controlls &&mMD.eventSystem.currentSelectedGameObject == mMD.headerButtons[2])
             {
                 optionsPannel = OptionsPannel.Controlls;
                 mMD.TurnOptionsPannelOff(optionsPannel);
             }
         }
     }
-    
-    // Funtions to turn Pannels on and off
+
+    void GetResolutions()
+    {
+        mMD.resolutions = Screen.resolutions;
+        foreach(Resolution res in mMD.resolutions)
+        {
+            mMD.videoButtons[0].GetComponent<Dropdown>().options.Add(new Dropdown.OptionData(res.ToString()));
+        }
+    }
+
+    #region Buttons
+
     /// <summary>
     /// Turn Main pannel on and the rest off
     /// </summary>
@@ -75,21 +113,32 @@ public class MainMenuUI : MonoBehaviour
         mMD.cS.HiddeNav();
         mMD.cS.RemoveInput();
         menuState = MenuState.Main;
-        mMD.eventSystem.SetSelectedGameObject(mMD.buttons[(int)menuState]);
+        mMD.eventSystem.SetSelectedGameObject(mMD.mainbuttons[(int)menuState]);
     }
     /// <summary>
     /// Turn Options pannel on and the rest off
     /// </summary>
     public void ShowOptions()
     {
-        mMD.main.SetActive(false);
+        mMD.main.SetActive(true);
         mMD.options.SetActive(true);
         mMD.credits.SetActive(false);
         mMD.championSelect.SetActive(false);
         mMD.arenaSelect.SetActive(false);
+        
+        //Deactivate objects
+        mMD.DeActivateButtons(mMD.videoButtons);
+        mMD.DeActivateButtons(mMD.audioButtons);
+        mMD.DeActivateButtons(mMD.mainbuttons);
+        //Activate the HEader buttons
+        mMD.ActivateButtons(mMD.headerButtons);
 
+        mMD.TurnOptionsPannelOff(optionsPannel);
+        //Set menuState to Options
         menuState = MenuState.Options;
-        mMD.eventSystem.SetSelectedGameObject(mMD.buttons[(int)menuState]);
+        //Set the selected Object to the last selected Object
+        mMD.eventSystem.SetSelectedGameObject(mMD.headerButtons[(int)optionsPannel]);
+
     }
     /// <summary>
     /// Turn Cretis pannel on and the rest off
@@ -115,19 +164,63 @@ public class MainMenuUI : MonoBehaviour
         mMD.championSelect.SetActive(true);
         mMD.arenaSelect.SetActive(false);
 
-        mMD.Camera.Play();
+        mMD.myCamera.Play();
 
         mMD.cS.ShowNav();
         mMD.cS.ApplyInput();
     }
-
     public void OnVideoEdit()
     {
-        mMD.SetSelectedGameObject(mMD.VideoButtons[0]);
+        //Enters subMenu
+        inSubMenu = true;
 
-        mMD.DisableHeaderButtons();
+        //Activate the Objects in the VideoPanelBody
+        mMD.ActivateButtons(mMD.videoButtons);
+        // Select the first object
+        mMD.SetSelectedGameObject(mMD.videoButtons[0]);
 
+        //Deactivate the HeaderButtons
+        mMD.DeActivateButtons(mMD.headerButtons);
     }
+    public void OnSoundEdit()
+    {
+        //Enters subMenu
+        inSubMenu = true;
+
+        //Activate the Objects in the VideoPanelBody
+        mMD.ActivateButtons(mMD.audioButtons);
+        // Select the first object
+        mMD.SetSelectedGameObject(mMD.audioButtons[0]);
+
+        //Deactivate the HeaderButtons
+        mMD.DeActivateButtons(mMD.headerButtons);
+    }
+
+    #endregion
+    #region Settings
+
+    public void VSync(GameObject go)
+    {
+        if(go.GetComponent<Toggle>().isOn)
+        {
+            Debug.Log("VSync ON");
+            QualitySettings.vSyncCount = 2;
+        }
+        else
+        {
+            Debug.Log("VSync OFF");
+            QualitySettings.vSyncCount = 0;
+        }
+    }
+    public void OnResChange()
+    {
+        Screen.SetResolution(mMD.resolutions[mMD.videoButtons[0].GetComponent<Dropdown>().value].width,
+            mMD.resolutions[mMD.videoButtons[0].GetComponent<Dropdown>().value].height,
+            Screen.fullScreen
+            );
+    }
+
+    #endregion
 }
 
 public enum MenuState

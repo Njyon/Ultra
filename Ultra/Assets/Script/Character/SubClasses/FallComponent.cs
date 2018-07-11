@@ -11,7 +11,6 @@ public class FallComponent
 
     bool forceDownEnabled;
     bool forcingDown;
-    bool islookingToTheRight;
     float wallDetectionLength;
     float fallSpeed;
     float maxFallVelocity;
@@ -25,11 +24,10 @@ public class FallComponent
     public delegate void EventDelegate(EventState eventState);
     public EventDelegate eventDelegate;
 
-    public FallComponent(bool forceDownEnabled, bool forcingDown, bool islookingToTheRight, float fallSpeed, float wallDetectionLength, float maxFallVelocity, Transform transform, Rigidbody rb, Movement mov, Dash dash, MyCharacter myCharacter)
+    public FallComponent(bool forceDownEnabled, bool forcingDown, float fallSpeed, float wallDetectionLength, float maxFallVelocity, Transform transform, Rigidbody rb, Movement mov, Dash dash, MyCharacter myCharacter)
     {
         this.forceDownEnabled = forceDownEnabled;
         this.forcingDown = forcingDown;
-        this.islookingToTheRight = islookingToTheRight;
         this.mov = mov;
         this.fallSpeed = fallSpeed;
         this.wallDetectionLength = wallDetectionLength;
@@ -170,7 +168,7 @@ public class FallComponent
         if (myCharacter.isDisabled && !isFalling && !mov.CanMove())
             return;
 
-        if(islookingToTheRight)
+        if(mov.islookingToTheRight)
         {
             if (MyRayCast.RayCastHitRight(transform.position, wallDetectionLength))
             {

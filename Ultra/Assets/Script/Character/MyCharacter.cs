@@ -960,8 +960,8 @@ public class MyCharacter : MonoBehaviour
             SpecialUpAction();
     }
 
-    [ColorUsageAttribute(false, true, 10, 10, 10, 10)] public Color blendRed;
-    [ColorUsageAttribute(false, true, 10, 10, 10, 10)] public Color blendColor;
+    [ColorUsageAttribute(false, true)] public Color blendRed;
+    [ColorUsageAttribute(false, true)] public Color blendColor;
     IEnumerator Blink()
     {
         float speed = 10;
@@ -981,26 +981,33 @@ public class MyCharacter : MonoBehaviour
     }
     IEnumerator Recovery()
     {
-        bodyRenderer.material.SetColor(colorID, Color.Lerp(bodyColor, blendColor, 1));
-        clothRenderer.materials[0].SetColor(colorID, Color.Lerp(clothColor, blendColor, 1));
-        clothRenderer.materials[1].SetColor(colorID, Color.Lerp(swordColor, blendColor, 1));
-        
+        bodyRenderer.material.SetColor(colorID, blendColor);
+        clothRenderer.materials[0].SetColor(colorID, blendColor);
+        clothRenderer.materials[1].SetColor(colorID, blendColor);
+
+        bodyRenderer.material.SetColor(emissionID, blendColor);
+        clothRenderer.materials[0].SetColor(emissionID, blendColor);
+        clothRenderer.materials[1].SetColor(emissionID, blendColor);
+
+        float time = 1f;
+        Color playerColor = Color.white;
+
 
         switch (playerEnum)
         {
             case PlayerEnum.PlayerOne:
-                bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, 1));
-                clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, 1));
-                clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerOne.color, blendColor, 1));
+                playerColor = PlayerInfoManager.playerOne.color;
                 break;
             case PlayerEnum.PlayerTwo:
-                bodyRenderer.material.SetColor(emissionID, Color.Lerp(Color.white, blendColor, 1));
-                clothRenderer.materials[0].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, 1));
-                clothRenderer.materials[1].SetColor(emissionID, Color.Lerp(PlayerInfoManager.playerTwo.color, blendColor, 1));
+                playerColor = PlayerInfoManager.playerTwo.color;
                 break;
         }
+        while(time > 0f)
+        {
+            bodyRenderer.material.SetColor(emissionID, Color.Lerp(blendColor / 10, blendColor, time));
 
-        yield return new WaitForSeconds(0.4f);
+            time -= Time.deltaTime * 2;
+        }
         
         ReturnColorToNoraml();
         yield return null;

@@ -10,28 +10,26 @@ public class MainMenuData : MonoBehaviour
     public GameObject arenaSelect;
     public GameObject championSelect;
     public GameObject credits;
+    public List<GameObject> optionsPannel;
 
     [Header("EventSystem")]
     public UnityEngine.EventSystems.EventSystem eventSystem;
 
     [Header("Buttons OBJs")]
-    /// <summary>
-    /// Lists of all Buttons that get Selected First
-    /// </summary>
-    public List<GameObject> buttons;
-    public List<GameObject> optionsButton;
-    public List<GameObject> optionsPannel;
+    public List<GameObject> mainbuttons;
 
-    [Header("Buttons")]
-    public GameObject[] headerButtons;
-    public List<GameObject> VideoButtons;
-    public List<GameObject> AudioButtons;
+    [Header("Options OBJs")]
+    public List<GameObject> headerButtons;
+    public List<GameObject> videoButtons;
+    public List<GameObject> audioButtons;
 
     [Header("CharacterSelecter")]
     public CharacterSelecterV2 cS;
 
     [Header("Camera")]
-    public MainMenuCam Camera;
+    public MainMenuCam myCamera;
+
+    [HideInInspector] public Resolution[] resolutions;
 
     /// <summary>
     /// Dependend on the oP State, turn all other oP Pannel off
@@ -59,6 +57,17 @@ public class MainMenuData : MonoBehaviour
         }
     }
     /// <summary>
+    /// Deactivates all GameObjects in "goList"
+    /// </summary>
+    /// <param name="goList"></param>
+    public void DeactivatePanels(List<GameObject> goList)
+    {
+        foreach(GameObject go in goList)
+        {
+            go.SetActive(false);
+        }
+    }
+    /// <summary>
     /// Set the new Selected GameObject in the EventSystem (for Controller Input)
     /// </summary>
     /// <param name="go"></param>
@@ -67,14 +76,56 @@ public class MainMenuData : MonoBehaviour
         eventSystem.SetSelectedGameObject(go);
     }
     /// <summary>
-    /// Disable Header Buttons
+    /// Deactivates all Buttons, Slider and Dropdownmenus in "goList"
     /// </summary>
-    public void DisableHeaderButtons()
+    /// <param name="goList"></param>
+    public void DeActivateButtons(List<GameObject> goList)
     {
-        for (int i = 0; i < headerButtons.Length; i++)
+        foreach (GameObject go in goList)
         {
-            headerButtons[i].GetComponent<Button>().enabled = false;
+            if (go.GetComponent<Button>())
+            {
+                go.GetComponent<Button>().interactable = false;
+            }
+            else if (go.GetComponent<Slider>())
+            {
+                go.GetComponent<Slider>().interactable = false;
+            }
+            else if (go.GetComponent<Dropdown>())
+            {
+                go.GetComponent<Dropdown>().interactable = false;
+            }
+            else if (go.GetComponent<Toggle>())
+            {
+                go.GetComponent<Toggle>().interactable = false;
+            }
         }
     }
-    
+    /// <summary>
+    /// Activates all Buttons, Slider and Dropdownmenus in "goList"
+    /// </summary>
+    /// <param name="goList"></param>
+    public void ActivateButtons(List<GameObject> goList)
+    {
+        foreach (GameObject go in goList)
+        {
+            if (go.GetComponent<Button>())
+            {
+                go.GetComponent<Button>().interactable = true;
+            }
+            else if (go.GetComponent<Slider>())
+            {
+                go.GetComponent<Slider>().interactable = true;
+            }
+            else if (go.GetComponent<Dropdown>())
+            {
+                go.GetComponent<Dropdown>().interactable = true;
+            }
+            else if (go.GetComponent<Toggle>())
+            {
+                go.GetComponent<Toggle>().interactable = true;
+            }
+        }
+    }
+
 }
