@@ -19,6 +19,7 @@ public class MainMenuUI : MonoBehaviour
         }
 
         GetResolutions();
+        GetQualityLevels();
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -95,6 +96,18 @@ public class MainMenuUI : MonoBehaviour
         {
             mMD.videoButtons[0].GetComponent<Dropdown>().options.Add(new Dropdown.OptionData(res.ToString()));
         }
+        // fast hack to display a value at start
+        mMD.videoButtons[0].GetComponent<Dropdown>().value = mMD.videoButtons[0].GetComponent<Dropdown>().options.Count - 2;
+    }
+    void GetQualityLevels()
+    {
+        mMD.qulaityLevels = QualitySettings.names;
+        foreach(string level in mMD.qulaityLevels)
+        {
+            mMD.videoButtons[1].GetComponent<Dropdown>().options.Add(new Dropdown.OptionData(level));
+        }
+        // fast hack to display a value at start
+        mMD.videoButtons[1].GetComponent<Dropdown>().value = mMD.videoButtons[1].GetComponent<Dropdown>().options.Count - 1;
     }
 
     #region Buttons
@@ -203,13 +216,22 @@ public class MainMenuUI : MonoBehaviour
     {
         if(go.GetComponent<Toggle>().isOn)
         {
-            Debug.Log("VSync ON");
             QualitySettings.vSyncCount = 2;
         }
         else
         {
-            Debug.Log("VSync OFF");
             QualitySettings.vSyncCount = 0;
+        }
+    }
+    public void FullScreen(GameObject go)
+    {
+        if (go.GetComponent<Toggle>().isOn)
+        {
+            Screen.fullScreen = true;
+        }
+        else
+        {
+            Screen.fullScreen = false;
         }
     }
     public void OnResChange()
@@ -218,6 +240,14 @@ public class MainMenuUI : MonoBehaviour
             mMD.resolutions[mMD.videoButtons[0].GetComponent<Dropdown>().value].height,
             Screen.fullScreen
             );
+    }
+    public void OnQualityChange()
+    {
+        QualitySettings.SetQualityLevel(mMD.videoButtons[1].GetComponent<Dropdown>().value);
+    }
+    public void OnExit()
+    {
+        Application.Quit();
     }
 
     #endregion

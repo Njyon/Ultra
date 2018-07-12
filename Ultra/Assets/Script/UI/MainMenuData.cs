@@ -30,6 +30,7 @@ public class MainMenuData : MonoBehaviour
     public MainMenuCam myCamera;
 
     [HideInInspector] public Resolution[] resolutions;
+    [HideInInspector] public string[] qulaityLevels;
 
     /// <summary>
     /// Dependend on the oP State, turn all other oP Pannel off
