@@ -4046,6 +4046,10 @@ MonoBehaviour:
   keeram: {fileID: 1539067981596278, guid: caf6f3f19c80d4c46913c87baac21770, type: 2}
   nav: {fileID: 1705125410865688, guid: d61cc58934f954b4ab231afdc85281b4, type: 2}
   time: 180
+  maxDifference: 2000
+  comeBackTime: 0
+  comeBackTCooldown: 0
+  comeBackActive: 0
 --- !u!4 &531783413
 Transform:
   m_ObjectHideFlags: 0

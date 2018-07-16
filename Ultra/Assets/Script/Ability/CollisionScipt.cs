@@ -41,11 +41,6 @@ public class CollisionScipt : MonoBehaviour
                     break;
             }
         }
-        else if (other.tag == "ScrollButton")
-        {
-            myCharacter.hasSlider = true;
-            myCharacter.slider = other.gameObject;
-        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -70,10 +65,6 @@ public class CollisionScipt : MonoBehaviour
                     myCharacter.xDownHitAngeldBox = false;
                     break;
             }
-        }
-        else if (other.tag == "ScrollButton")
-        {
-            myCharacter.hasSlider = false;
         }
     }
 }

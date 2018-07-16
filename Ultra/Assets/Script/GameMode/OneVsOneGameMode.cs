@@ -12,6 +12,8 @@ public class OneVsOneGameMode : MonoBehaviour
     GameObject SpawnLocationP2;
     GameObject PlayerOne;
     GameObject PlayerTwo;
+    MyCharacter CharacterOne;
+    MyCharacter CharacterTwo;
 
     [Header("Keeram")]
     [SerializeField] GameObject keeram;
@@ -23,6 +25,13 @@ public class OneVsOneGameMode : MonoBehaviour
     Text timer;
     Image border;
 
+    [Header("MaxScore Differece befor 2x Points")]
+    [SerializeField] int maxDifference;
+    [SerializeField] int comeBackTime;
+    [SerializeField] int comeBackTCooldown;
+    [HideInInspector] public bool comeBackActive = false;
+    bool comeBackCooling = false;
+
     //[Header("PlayerData")]
     //[SerializeField] GameObject playerDataPref;
     //GameObject playerDataObj;
@@ -30,6 +39,7 @@ public class OneVsOneGameMode : MonoBehaviour
 
     void Start()
     {
+
         #region Spawns
         //Set SpawnLocation
         SpawnLocationP1 = GameObject.Find("Spawn P1");
@@ -143,13 +153,15 @@ public class OneVsOneGameMode : MonoBehaviour
                 if (isPlayerOne)
                 {
                     PlayerOne = Instantiate(nav, SpawnLocationP1.transform.position, SpawnLocationP1.transform.rotation);
-                    PlayerOne.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerOne;
-                    PlayerOne.GetComponent<MyCharacter>().SetUI(playerOneUI);
-                    PlayerOne.GetComponent<MyCharacter>().playerDataAction += DataCounter;
-                    PlayerOne.GetComponent<MyCharacter>().dodgeAction += DodgeCounter;
-                    PlayerOne.GetComponent<MyCharacter>().bounceAction += BounceCounter;
-                    PlayerOne.GetComponent<MyCharacter>().shakeCameraAction += sCam.Shake;
-                    PlayerOne.GetComponent<MyCharacter>().Posses();
+                    CharacterOne = PlayerOne.GetComponent<MyCharacter>();
+                    CharacterOne.playerEnum = PlayerEnum.PlayerOne;
+                    CharacterOne.SetUI(playerOneUI);
+                    CharacterOne.playerDataAction += DataCounter;
+                    CharacterOne.dodgeAction += DodgeCounter;
+                    CharacterOne.bounceAction += BounceCounter;
+                    CharacterOne.shakeCameraAction += sCam.Shake;
+                    CharacterOne.Posses();
+                    CharacterOne.gameMode = this;
                     playerOneUI.SetHUDColor(PlayerInfoManager.playerOne.color);
                     sCam.AddTarget(PlayerOne.transform);
 
@@ -163,13 +175,15 @@ public class OneVsOneGameMode : MonoBehaviour
                 else
                 {
                     PlayerTwo = Instantiate(nav, SpawnLocationP2.transform.position, SpawnLocationP2.transform.rotation);
-                    PlayerTwo.GetComponent<MyCharacter>().playerEnum = PlayerEnum.PlayerTwo;
-                    PlayerTwo.GetComponent<MyCharacter>().SetUI(playerTwoUI);
-                    PlayerTwo.GetComponent<MyCharacter>().playerDataAction += DataCounter;
-                    PlayerTwo.GetComponent<MyCharacter>().dodgeAction += DodgeCounter;
-                    PlayerTwo.GetComponent<MyCharacter>().bounceAction += BounceCounter;
-                    PlayerTwo.GetComponent<MyCharacter>().shakeCameraAction += sCam.Shake;
-                    PlayerTwo.GetComponent<MyCharacter>().Posses();
+                    CharacterTwo = PlayerOne.GetComponent<MyCharacter>();
+                    CharacterTwo.playerEnum = PlayerEnum.PlayerTwo;
+                    CharacterTwo.SetUI(playerTwoUI);
+                    CharacterTwo.playerDataAction += DataCounter;
+                    CharacterTwo.dodgeAction += DodgeCounter;
+                    CharacterTwo.bounceAction += BounceCounter;
+                    CharacterTwo.shakeCameraAction += sCam.Shake;
+                    CharacterTwo.Posses();
+                    CharacterTwo.gameMode = this;
                     playerTwoUI.SetHUDColor(PlayerInfoManager.playerTwo.color);
                     sCam.AddTarget(PlayerTwo.transform);
 
@@ -261,6 +275,43 @@ public class OneVsOneGameMode : MonoBehaviour
                 PlayerDataManager.playerTwo.Bounces++;
                 break;
         }
+    }
+
+    public void CheckForBalance()
+    {
+        if(CharacterOne.score - CharacterTwo.score > maxDifference)
+        {
+            StartComeBack(CharacterOne);
+        }
+        else if(CharacterTwo.score - CharacterOne.score > maxDifference)
+        {
+            StartComeBack(CharacterTwo);
+        }
+    }
+
+    void StartComeBack(MyCharacter characterToBoost)
+    {
+        if(!comeBackActive && !comeBackCooling)
+        {
+            comeBackActive = true;
+            characterToBoost.inComeBackMode = true;
+            Invoke("EndComeBackMode", comeBackTime);
+        }
+    }
+
+    void EndComeBackMode()
+    {
+        //Fast Fix
+        CharacterOne.CheckIfComebackModeShouldEnd();
+        CharacterOne.CheckIfComebackModeShouldEnd();
+
+        comeBackCooling = true;
+        comeBackActive = true;
+        Invoke("EndComeBackCooldown", comeBackTCooldown);
+    }
+    void EndComeBackCooldown()
+    {
+        comeBackCooling = false;
     }
 
     void Update()
