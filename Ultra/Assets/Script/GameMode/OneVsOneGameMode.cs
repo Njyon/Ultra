@@ -175,7 +175,7 @@ public class OneVsOneGameMode : MonoBehaviour
                 else
                 {
                     PlayerTwo = Instantiate(nav, SpawnLocationP2.transform.position, SpawnLocationP2.transform.rotation);
-                    CharacterTwo = PlayerOne.GetComponent<MyCharacter>();
+                    CharacterTwo = PlayerTwo.GetComponent<MyCharacter>();
                     CharacterTwo.playerEnum = PlayerEnum.PlayerTwo;
                     CharacterTwo.SetUI(playerTwoUI);
                     CharacterTwo.playerDataAction += DataCounter;

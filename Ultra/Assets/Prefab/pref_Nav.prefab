@@ -2130,7 +2130,6 @@ GameObject:
   - component: {fileID: 4445329874751864}
   - component: {fileID: 33771133266458286}
   - component: {fileID: 23426398675890606}
-  - component: {fileID: 64344731018553608}
   m_Layer: 8
   m_Name: Quad
   m_TagString: Untagged
@@ -9689,20 +9688,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 88
   m_CollisionDetection: 2
---- !u!64 &64344731018553608
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1433561308182188}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!65 &65295816204102150
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -10411,7 +10396,7 @@ LensFlare:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1256481878776726}
   m_Enabled: 1
-  m_Flare: {fileID: 12100000, guid: fc05ea72b64827a448e37b0c9e2d9e1b, type: 2}
+  m_Flare: {fileID: 0}
   m_Color: {r: 1, g: 0, b: 0, a: 0}
   m_Brightness: 0.17
   m_FadeSpeed: 0.5
@@ -55228,7 +55213,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 352ec17fad692564988a47c4fd81df18, type: 2}
+  - {fileID: 0}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -55396,7 +55381,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 6574435646581f34f9f80e0c7cafdde1, type: 2}
+  - {fileID: 0}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -55508,7 +55493,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 6574435646581f34f9f80e0c7cafdde1, type: 2}
+  - {fileID: 0}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -55564,7 +55549,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 6574435646581f34f9f80e0c7cafdde1, type: 2}
+  - {fileID: 0}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -55620,7 +55605,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 6574435646581f34f9f80e0c7cafdde1, type: 2}
+  - {fileID: 0}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -55676,7 +55661,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 6574435646581f34f9f80e0c7cafdde1, type: 2}
+  - {fileID: 0}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
