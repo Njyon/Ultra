@@ -201,7 +201,7 @@ public class Nav2 : MyCharacter
                     break;
             }
 
-            PartilceSlash();
+            //PartilceSlash();
             rb.useGravity = false;
         };
         abilities.onAbilityUpdate = () =>
