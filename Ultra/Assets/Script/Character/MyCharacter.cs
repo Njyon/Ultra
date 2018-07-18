@@ -70,6 +70,10 @@ public class MyCharacter : MonoBehaviour
     [HideInInspector] public int combo = 0;
     [HideInInspector] public int multiplier = 1;
     [HideInInspector] public int score = 0;
+    [HideInInspector] public bool inCombo = false;
+
+    [HideInInspector] public OneVsOneGameMode gameMode;
+    [HideInInspector] public bool inComeBackMode = false;
 
     //////////// Collision ///////////
 
@@ -80,11 +84,6 @@ public class MyCharacter : MonoBehaviour
     [HideInInspector] public bool xDownHitAngeldBox = false;
     [HideInInspector] public bool sUpHitBox = false;
     [HideInInspector] public bool sDownHitBox = false;
-
-    //////////// Menu ///////////
-
-    [HideInInspector] public bool hasSlider = false;
-    [HideInInspector] public GameObject slider;
 
     //////////// Deleagtes ///////////
 
@@ -739,6 +738,7 @@ public class MyCharacter : MonoBehaviour
     /// <param name="comboState"></param>
     public void Combo(ComboState comboState)
     {
+        inCombo = true;
         switch(comboState)
         {
             case ComboState.Bounce:
@@ -788,17 +788,23 @@ public class MyCharacter : MonoBehaviour
                 ui.UpdateMultiplier(multiplier);
                 break;
         }
-        // Update Combo
     }
     /// <summary>
     /// Ends the Combo and add the Points to the Score
     /// </summary>
     public void EndCombo()
     {
+        inCombo = false;
+
         // Calc new Score
         float interimResult = Mathf.Pow(combo, 2) * hitCounter;
-        score += (int)interimResult * multiplier;
+        interimResult += (int)interimResult * multiplier;
 
+        if(inComeBackMode)
+        {
+            score = (int)interimResult * 2;
+            CheckIfComebackModeShouldEnd();
+        }
         //Safe Data for EndScreen
         playerDataAction(playerEnum, combo, multiplier, score);
 
@@ -810,6 +816,13 @@ public class MyCharacter : MonoBehaviour
 
         // Hidde Combo Counter
         ui.HiddeCombo();
+    }
+    public void CheckIfComebackModeShouldEnd()
+    {
+        if(inComeBackMode && !gameMode.comeBackActive && !inCombo)
+        {
+            inComeBackMode = false;
+        }
     }
 
     #region Deprecated
