@@ -460,6 +460,18 @@ public class MyCharacter : MonoBehaviour
         }
     }
 
+    public void SpecialBounce(float time)
+    {
+        if (isDisabled)
+            return;
+
+        // Disable movement
+        movement.CantMove();
+        // Set the disable state to true
+        //isDisabled = true;
+        // Invoke the EndDisable() after param:"time"
+        Invoke("EndDisable", time);
+    }
     /// <summary>
     /// Lets the Character not be able to move
     /// </summary>

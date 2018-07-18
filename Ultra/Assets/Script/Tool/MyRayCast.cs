@@ -665,6 +665,8 @@ public static class MyRayCast
                 Physics.Raycast(new Vector3(charPosition.x, charPosition.y, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore)
                 )
             {
+                if (hit.transform.tag == "noSlide")
+                    return false;
                 // if an Obsticle hit return true
                 return true;
             }
@@ -682,6 +684,8 @@ public static class MyRayCast
                 Physics.Raycast(new Vector3(charPosition.x, charPosition.y, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore)
                 )
             {
+                if (hit.transform.tag == "noSlide")
+                    return false;
                 // if an Obsticle hit return true
                 return true;
             }
@@ -710,6 +714,8 @@ public static class MyRayCast
                 Physics.Raycast(new Vector3(charPosition.x, charPosition.y, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore)
                 )
             {
+                if (hit.transform.tag == "noSlide")
+                    return false;
                 // if an Obsticle hit return true
                 return true;
             }
@@ -727,6 +733,8 @@ public static class MyRayCast
                 Physics.Raycast(new Vector3(charPosition.x, charPosition.y, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore)
                 )
             {
+                if (hit.transform.tag == "noSlide")
+                    return false;
                 // if an Obsticle hit return true
                 return true;
             }
@@ -752,6 +760,8 @@ public static class MyRayCast
             if (Physics.Raycast(new Vector3(charPosition.x + with, charPosition.y + head, 0), new Vector3(0, -charPosition.y, 0), out hit, length, 9, QueryTriggerInteraction.Ignore) ||
                 Physics.Raycast(new Vector3(charPosition.x - with, charPosition.y + head, 0), new Vector3(0, -charPosition.y, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
+                if (hit.transform.tag == "noSlide")
+                    return false;
                 // if an Obsticle hit return true
                 return true;
             }
@@ -766,6 +776,8 @@ public static class MyRayCast
             if (Physics.Raycast(new Vector3(charPosition.x + with, charPosition.y + head, 0), new Vector3(0, charPosition.y, 0), out hit, length, 9, QueryTriggerInteraction.Ignore) ||
                 Physics.Raycast(new Vector3(charPosition.x - with, charPosition.y + head, 0), new Vector3(0, charPosition.y, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
+                if (hit.transform.tag == "noSlide")
+                    return false;
                 // if an Obsticle hit return true
                 return true;
             }
@@ -791,6 +803,8 @@ public static class MyRayCast
             if (Physics.Raycast(new Vector3(charPosition.x + with, charPosition.y - feed, 0), new Vector3(0, charPosition.y, 0), out hit, length, 9, QueryTriggerInteraction.Ignore) || 
                 Physics.Raycast(new Vector3(charPosition.x - with, charPosition.y - feed, 0), new Vector3(0, charPosition.y, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
+                if (hit.transform.tag == "noSlide")
+                    return false;
                 // if an Obsticle hit return true
                 return true;
             }
@@ -805,6 +819,8 @@ public static class MyRayCast
             if (Physics.Raycast(new Vector3(charPosition.x + with, charPosition.y - feed, 0), new Vector3(0, -charPosition.y, 0), out hit, length, 9, QueryTriggerInteraction.Ignore) ||
                 Physics.Raycast(new Vector3(charPosition.x - with, charPosition.y - feed, 0), new Vector3(0, -charPosition.y, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
+                if (hit.transform.tag == "noSlide")
+                    return false;
                 // if an Obsticle hit return true
                 return true;
             }
