@@ -53,7 +53,7 @@ public class MyCharacter : MonoBehaviour
     [Header("Stuff")]
     [SerializeField] GameObject meshController;
     Vector3 spawnPos;
-    InGameUI ui;
+    protected InGameUI ui;
 
     //Material change Vars
     int emissionID;
