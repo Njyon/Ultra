@@ -15,6 +15,9 @@ public class VideoScript : MonoBehaviour
     private VideoSource videoSource;
 
     private AudioSource audioSource;
+    public bool loop;
+
+    public bool loadScene;
 
     // Use this for initialization
     void Start()
@@ -56,6 +59,7 @@ public class VideoScript : MonoBehaviour
         //Set video To Play then prepare Audio to prevent Buffering
         videoPlayer.clip = videoToPlay;
         videoPlayer.Prepare();
+        videoPlayer.isLooping = loop;
 
         //Wait until video is prepared
         while (!videoPlayer.isPrepared)
@@ -81,8 +85,11 @@ public class VideoScript : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("Done Playing Video");
-        StartCoroutine(LoadNewScene());
+        if(loadScene)
+        {
+            Debug.Log("Done Playing Video");
+            StartCoroutine(LoadNewScene());
+        }
     }
 
 
