@@ -101,6 +101,18 @@ public class OneVsOneGameMode : MonoBehaviour
         Initiate(PlayerInfoManager.playerOne.character, true);
         //PlayerTwo
         Initiate(PlayerInfoManager.playerTwo.character, false);
+        SetPlayerEnemys();
+
+    }
+
+    void SetPlayerEnemys()
+    {
+
+        CharacterOne.enemy = CharacterTwo.gameObject;
+        CharacterTwo.enemy = CharacterOne.gameObject;
+
+        CharacterOne.enemyCharacter = CharacterTwo;
+        CharacterTwo.enemyCharacter = CharacterOne;
     }
 
     //Spawn both Player
