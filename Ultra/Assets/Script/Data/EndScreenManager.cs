@@ -14,6 +14,8 @@ public class EndScreenManager : MonoBehaviour
     public List<GameObject> Plateaus;
     [Header("Text")]
     public List<TextManager> textManger;
+    [Header("HighestPoint")]
+    public Transform maxScoreHight;
 
     GameObject playerOne;
     GameObject playerTwo;
@@ -80,6 +82,26 @@ public class EndScreenManager : MonoBehaviour
         RemoveInput();
         StartCoroutine(LoadNewScene());
     }
+    bool PlayerOneWins(int p1_Score, int p2_Score)
+    {
+        if (p1_Score > p2_Score)
+            return true;
+        else if (p2_Score > p1_Score)
+            return false;
+        else
+            return true;
+    }
+    float GetLoserHight(bool playerOneWon, float maxHight, int p1_Score, int p2_Score)
+    {
+        switch (playerOneWon)
+        {
+            case true:
+                return (maxHight / p1_Score * p2_Score) * 0.2f;
+            case false:
+                return (maxHight / p2_Score * p1_Score) * 0.2f;
+        }
+        return 0;
+    }
 
     IEnumerator LoadNewScene()
     {
@@ -92,11 +114,14 @@ public class EndScreenManager : MonoBehaviour
     }
     IEnumerator CountPoints()
     {
+        int p1_Score = 50000;//PlayerDataManager.playerOne.Score;
+        int p2_Score = 30000;//PlayerDataManager.playerTwo.Score;
         bool done = false;
-        int p1_Score = 5000;//PlayerDataManager.playerOne.Score;
-        int p2_Score = 3776;//PlayerDataManager.playerTwo.Score;
+        bool playerOneWon = PlayerOneWins(p1_Score, p2_Score);
         float p1_CurrentsScore = 0;
         float p2_CurrentsScore = 0;
+        float winnerYPos = maxScoreHight.position.y;
+        float loserYPos = GetLoserHight(playerOneWon, winnerYPos, p1_Score, p2_Score);
 
         Vector3 p1_PlateauStartPos = Plateaus[0].transform.position;
         Vector3 p2_PlateauStartPos = Plateaus[1].transform.position;
@@ -104,16 +129,18 @@ public class EndScreenManager : MonoBehaviour
         //Vector3 p1_PlateauEndPos = new Vector3(p1_PlateauStartPos.x, p1_PlateauStartPos.y += p1_Score / 100);
         //Vector3 p2_PlateauEndPos = new Vector3(p2_PlateauStartPos.x, p2_PlateauStartPos.y += p1_Score / 100);
 
-        float speed = 1000f;
+        float time = 0;
+        float speed = 5f;
+        
 
         yield return new WaitForSeconds(1f);
         
         while(!done)
         {
-            Debug.Log(p1_CurrentsScore);
+            time += Time.deltaTime / speed;
             // Count Score Up
-            p1_CurrentsScore += Time.deltaTime * speed;
-            p2_CurrentsScore += Time.deltaTime * speed;
+            p1_CurrentsScore = Mathf.Lerp(0, p1_Score, time);
+            p2_CurrentsScore = Mathf.Lerp(0, p2_Score, time);
 
             int p1_IntScore = (int)p1_CurrentsScore;
             int p2_IntScore = (int)p2_CurrentsScore;
@@ -121,9 +148,18 @@ public class EndScreenManager : MonoBehaviour
             // Display new Score
             textManger[0].score.text = p1_IntScore.ToString();
             textManger[1].score.text = p2_IntScore.ToString();
+            if(playerOneWon)
+            {
+                Plateaus[0].transform.position = Vector3.Lerp(p1_PlateauStartPos, new Vector3(p1_PlateauStartPos.x, winnerYPos, p1_PlateauStartPos.z), time);
+                Plateaus[1].transform.position = Vector3.Lerp(p2_PlateauStartPos, new Vector3(p2_PlateauStartPos.x, loserYPos, p2_PlateauStartPos.z), time);
+            }
+            else
+            {
+                Plateaus[0].transform.position = Vector3.Lerp(p1_PlateauStartPos, new Vector3(p1_PlateauStartPos.x, loserYPos, p1_PlateauStartPos.z), time);
+                Plateaus[1].transform.position = Vector3.Lerp(p2_PlateauStartPos, new Vector3(p2_PlateauStartPos.x, winnerYPos, p2_PlateauStartPos.z), time);
+            }
 
-            Plateaus[0].transform.position = new Vector3(p1_PlateauStartPos.x, p1_PlateauStartPos.y + p1_CurrentsScore / 1000, p1_PlateauStartPos.z);
-            Plateaus[1].transform.position = new Vector3(p2_PlateauStartPos.x, p2_PlateauStartPos.y + p2_CurrentsScore / 1000, p2_PlateauStartPos.z);
+    
 
             //playerOne.transform.position = new Vector3(playerOne.transform.position.x, playerOne.transform.position.y + p1_CurrentsScore / 1000, playerOne.transform.position.z);
             //playerTwo.transform.position = new Vector3(playerTwo.transform.position.x, playerTwo.transform.position.y + p2_CurrentsScore / 1000, playerTwo.transform.position.z);
@@ -140,8 +176,6 @@ public class EndScreenManager : MonoBehaviour
             }
             if(p1_CurrentsScore == p1_Score && p2_CurrentsScore == p2_Score)
             {
-                Plateaus[0].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                Plateaus[1].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 done = true;
             }
             yield return null;

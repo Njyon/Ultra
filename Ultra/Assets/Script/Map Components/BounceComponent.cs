@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class BounceComponent : MonoBehaviour
 {
-    public float power;
+    public float xPower, yPower;
 
     void OnCollisionEnter(Collision collision)
     {
@@ -14,8 +14,9 @@ public class BounceComponent : MonoBehaviour
             RaycastHit hit;
             if (Physics.Linecast(collision.transform.position, this.transform.position, out hit, 9, QueryTriggerInteraction.Ignore))
             {
-                collision.gameObject.GetComponent<Rigidbody>().velocity *= power;
-                collision.gameObject.GetComponent<MyCharacter>().SpecialBounce(0.1f);
+                Vector3 vel = collision.gameObject.GetComponent<Rigidbody>().velocity;
+                collision.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(vel.x *= xPower, vel.y *= yPower, 0);
+                collision.gameObject.GetComponent<MyCharacter>().SpecialBounce(0.01f);
             }
         }
     }
