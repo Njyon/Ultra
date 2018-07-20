@@ -367,16 +367,46 @@ public class Nav2 : MyCharacter
             // Count up the enemy Perzent (Damaged Amount)
             enemyCharacter.Damage(abilities.GetDamage());
             // Kick the Enemy away from you
+            switch(direction)
+            {
+                case Direction.RightUpAngel:
+                case Direction.LeftUpAngel:
+                case Direction.Up:
+                    enemyCharacter.KickUp(transform.position, false);
+                    break;
+                case Direction.Down:
+                case Direction.Left:
+                case Direction.LeftDownAngel:
+                case Direction.Right:
+                case Direction.RightDownAngel:
+                    enemyCharacter.KickAway(transform.position, false);
+                    break;
+            }
             enemyCharacter.KickAway(transform.position, false);
 
             // Update the Combo
             Combo(ComboState.Hit);
         }
         else
-        {  // Count up the enemy Perzent (Damaged Amount)
-            enemyCharacter.Damage(abilities.GetDamage());
+        {
             // Kick the Enemy away from you
-            enemyCharacter.KickAway(transform.position, false);
+            switch (direction)
+            {
+                case Direction.RightUpAngel:
+                case Direction.LeftUpAngel:
+                case Direction.Up:
+                    Debug.Log("Up");
+                    enemyCharacter.KickUp(transform.position, false);
+                    break;
+                case Direction.Down:
+                case Direction.Left:
+                case Direction.LeftDownAngel:
+                case Direction.Right:
+                case Direction.RightDownAngel:
+                    enemyCharacter.KickAway(transform.position, false);
+                    break;
+            }
+
             // Update the Combo
             Combo(ComboState.HitStrak);
         }

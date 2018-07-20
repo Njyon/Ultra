@@ -626,34 +626,34 @@ public class MyCharacter : MonoBehaviour
     /// <param name="hard"></param>
     public void KickUp(Vector3 enemyPos, bool hard)
     {
-        Debug.Log (Mathf.Pow(Mathf.Sqrt(30 * percent), potenz));
-        float direction = 300;
 
-        enemyPos = new Vector3(this.transform.position.x - enemyPos.x, this.transform.position.y - enemyPos.y, 0);
+        Vector3 dir = new Vector3(this.transform.position.x - enemyPos.x, this.transform.position.y - enemyPos.y, 0);
 
+        Instantiate(pD.ps_GetDamaged, transform.position, Quaternion.identity);
         if (enemyPos.x < 0)                         // Direction = Right
         {
             if (hard)
             {
-                rb.AddForce(new Vector3(-direction, Mathf.Pow(Mathf.Sqrt(basisWert * percent), potenz) * xFactor, 0) * gesamtFactor);
+                rb.AddForce(new Vector3(-enemyPos.x, Mathf.Pow(Mathf.Sqrt(basisWert * percent), potenz) * xFactor, 0) * gesamtFactor);
             }
             else
             {
-                rb.AddForce(new Vector3(-direction, Mathf.Pow(Mathf.Sqrt(basisWert * percent), potenz) / UpDivider + startForceUp, 0));
+                rb.velocity = new Vector3(-enemyPos.x, Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), 0);
             }
         }
         else                                    // Direction = Left
         {
             if (hard)
             {
-                rb.AddForce(new Vector3(direction, Mathf.Pow(Mathf.Sqrt(basisWert * percent), potenz) * xFactor, 0) * gesamtFactor);
+                rb.AddForce(new Vector3(enemyPos.x, Mathf.Pow(Mathf.Sqrt(basisWert * percent), potenz) * xFactor, 0) * gesamtFactor);
             }
             else
             {
-                rb.AddForce(new Vector3(direction, Mathf.Pow(Mathf.Sqrt(basisWert * percent), potenz) / UpDivider + startForceUp, 0));
+                rb.velocity = new Vector3(enemyPos.x, Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), 0);
             }
         }
-        enemyCharacter.Disable(disabledTime);
+        float time = X * Mathf.Sqrt(percent);
+        Disable(time);
     }
     /// <summary>
     /// Kick the character down to the ground
