@@ -65,7 +65,12 @@ public class MainMenuUI : MonoBehaviour
                 // Select the button of the subMenu
                 mMD.ActivateButtons(mMD.headerButtons);
                 //Go to the Optons Menu
-                ShowOptions();
+                OptionsOn();
+            }
+            else if(menuState == MenuState.PlayerSelect && mMD.cS.NoCharSelected())
+            {
+                mMD.ActivateButtons(mMD.mainbuttons);
+                ShowMain();
             }
         }
 
@@ -88,7 +93,7 @@ public class MainMenuUI : MonoBehaviour
             }
         }
     }
-
+    
     void GetResolutions()
     {
         mMD.resolutions = Screen.resolutions;
@@ -117,28 +122,47 @@ public class MainMenuUI : MonoBehaviour
     /// </summary>
     public void ShowMain()
     {
+        if(menuState == MenuState.Options)
+        {
+            mMD.OptionsAnimator.SetBool("ButtonsOut", true);
+        }
+        mMD.main.SetActive(true);
+        Invoke("MainOn", 0.4f);
+    }
+    void MainOn()
+    {
         mMD.main.SetActive(true);
         mMD.options.SetActive(false);
         mMD.credits.SetActive(false);
         mMD.championSelect.SetActive(false);
         mMD.arenaSelect.SetActive(false);
+        mMD.background.SetActive(true);
+        mMD.DeactivatePanels(mMD.optionsPannel);
 
         mMD.cS.HiddeNav();
         mMD.cS.RemoveInput();
         menuState = MenuState.Main;
         mMD.eventSystem.SetSelectedGameObject(mMD.mainbuttons[(int)menuState]);
+
+        mMD.MainAnimator.SetBool("ButtonsOut", false);
     }
     /// <summary>
     /// Turn Options pannel on and the rest off
     /// </summary>
     public void ShowOptions()
     {
-        mMD.main.SetActive(true);
+        mMD.MainAnimator.SetBool("ButtonsOut", true);
+        Invoke("OptionsOn", 0.4f);
+    }
+    void OptionsOn()
+    {
+        mMD.main.SetActive(false);
         mMD.options.SetActive(true);
         mMD.credits.SetActive(false);
         mMD.championSelect.SetActive(false);
         mMD.arenaSelect.SetActive(false);
-        
+        mMD.background.SetActive(true);
+
         //Deactivate objects
         mMD.DeActivateButtons(mMD.videoButtons);
         mMD.DeActivateButtons(mMD.audioButtons);
@@ -152,6 +176,7 @@ public class MainMenuUI : MonoBehaviour
         //Set the selected Object to the last selected Object
         mMD.eventSystem.SetSelectedGameObject(mMD.headerButtons[(int)optionsPannel]);
 
+        mMD.OptionsAnimator.SetBool("ButtonsOut", false);
     }
     /// <summary>
     /// Turn Cretis pannel on and the rest off
@@ -171,14 +196,16 @@ public class MainMenuUI : MonoBehaviour
     /// </summary>
     public void ShowPlayerSelect()
     {
-        mMD.main.SetActive(true);
+        mMD.main.SetActive(false);
         mMD.options.SetActive(false);
         mMD.credits.SetActive(false);
         mMD.championSelect.SetActive(true);
         mMD.arenaSelect.SetActive(false);
+        mMD.background.SetActive(false);
 
         mMD.myCamera.Play();
 
+        menuState = MenuState.PlayerSelect;
         mMD.cS.ShowNav();
         mMD.cS.ApplyInput();
     }
@@ -258,6 +285,7 @@ public enum MenuState
     Main,
     Options,
     Credits,
+    PlayerSelect
 }
 
 public enum OptionsPannel

@@ -10,6 +10,7 @@ public class MainMenuData : MonoBehaviour
     public GameObject arenaSelect;
     public GameObject championSelect;
     public GameObject credits;
+    public GameObject background;
     public List<GameObject> optionsPannel;
 
     [Header("EventSystem")]
@@ -28,6 +29,10 @@ public class MainMenuData : MonoBehaviour
 
     [Header("Camera")]
     public MainMenuCam myCamera;
+
+    [Header("Animator")]
+    public Animator MainAnimator;
+    public Animator OptionsAnimator;
 
     [HideInInspector] public Resolution[] resolutions;
     [HideInInspector] public string[] qulaityLevels;

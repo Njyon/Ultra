@@ -141,6 +141,17 @@ public class CharacterSelecterV2 : MonoBehaviour
             
         }
     }
+    public bool NoCharSelected()
+    {
+        if(!playerOne.charakterSelected && !playerTwo.charakterSelected && !gameStarting)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     void Awake()
     {

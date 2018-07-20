@@ -4,19 +4,26 @@ using UnityEngine;
 public class MainMenuCam : MonoBehaviour
 {
     public Animator animator;
+    public bool on;
 
     public void Play()
     {
-        animator.SetBool("Play", true);
+        if(on)
+            animator.SetBool("Play", true);
     }
     public void ReversePlaye()
     {
-        animator.SetBool("ReversePlay", true);
+        if (on)
+            animator.SetBool("ReversePlay", true);
     }
 
     public void SetBoolsBackToDefault()
     {
-        animator.SetBool("Play", false);
-        animator.SetBool("ReversePlay", false);
+        if (on)
+        {
+            animator.SetBool("Play", false);
+            animator.SetBool("ReversePlay", false);
+
+        }
     }
 }
