@@ -24,7 +24,6 @@ public class ParticleData : MonoBehaviour
     public ParticleSystem ps_Disabled;
 
     [Header("Atttack Dash")]
-    public GameObject trail;
     public GameObject ps_Slash;
 
     [Header("Bounce")]

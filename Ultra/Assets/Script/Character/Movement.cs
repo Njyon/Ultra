@@ -7,7 +7,7 @@ public class Movement : MonoBehaviour
     //Components
     Turning turnclass;
     Dash dash;
-    FallComponent fallComp;
+    [HideInInspector] public FallComponent fallComp;
 
     // Helper
     [HideInInspector] public bool islookingToTheRight;
@@ -19,7 +19,7 @@ public class Movement : MonoBehaviour
     bool checkForIdeling = true;
     Vector3 lastPos;
     MyCharacter myCharacter;
-    Rigidbody rb;
+    [HideInInspector] public Rigidbody rb;
     PlayerEnum playerEnum = PlayerEnum.NotAssigned;
 
     // Movement
@@ -37,7 +37,9 @@ public class Movement : MonoBehaviour
     [HideInInspector] public int jumps = 0;
     [Range(0, 10)] public float fallSpeed;
     [Range(5, 30)] public float maxFallVelocity;
-    [Header("How much Jumps in a Row")] public int maxJumps;
+
+    [Header("How much Jumps in a Row")]
+    public int maxJumps;
 
     [Header("Velocity")]
     [SerializeField] float maxVelocityX;

@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioEvents : MonoBehaviour {
+public class AudioEvents : MonoBehaviour
+{
+
+    private float yVelocity = 0;
 
     private Movement movement;
     private MyCharacter character;
@@ -96,6 +99,14 @@ public class AudioEvents : MonoBehaviour {
                 break;
             default:
                 break;
+        }
+    }
+
+    void Update()
+    {
+        if(movement.fallComp.isFalling)
+        {
+            yVelocity = movement.rb.velocity.y;
         }
     }
 }

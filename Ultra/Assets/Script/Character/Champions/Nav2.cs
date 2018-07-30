@@ -128,8 +128,6 @@ public class Nav2 : MyCharacter
             isUsingAbility = true;
             StartCoroutine(DashCooldown());
             IsAttacking();
-
-            pD.trail.SetActive(true);
             
             switch (direction)
             {
@@ -288,8 +286,6 @@ public class Nav2 : MyCharacter
         };
         abilities.onAbilityCancel = () =>
         {
-            pD.trail.SetActive(false);
-
             isAttacking = false;
             rb.useGravity = true;
             EndAttacking();
@@ -307,8 +303,6 @@ public class Nav2 : MyCharacter
             {
                 eventDelegate(EventState.AttackEnd);
             }
-
-            pD.trail.SetActive(false);
 
             rb.velocity = Vector3.zero;
             rb.useGravity = false;
