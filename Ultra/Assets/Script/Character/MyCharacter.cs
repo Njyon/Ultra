@@ -357,8 +357,15 @@ public class MyCharacter : MonoBehaviour
                 isDodgeing = false;
                 break;
             case EventState.GetHit:
+                GameObject calc = Instantiate(new GameObject(), this.transform);
 
+                calc.transform.LookAt(enemy.transform);
+                var main = pD.ps_GetHit.GetComponent<ParticleSystem>().main;
+                main.startRotation = calc.transform.eulerAngles.z;
+
+                Instantiate(pD.ps_GetHit, calc.transform.position, calc.transform.rotation);
                 Instantiate(pD.ps_GetDamaged, new Vector3(this.transform.position.x, this.transform.position.y, 3), Quaternion.identity);  // Spawn Particle
+                Debug.Log("LOL");
                 break;
             case EventState.isDisabled:
                 animator.SetBool(animDisabled, true);
