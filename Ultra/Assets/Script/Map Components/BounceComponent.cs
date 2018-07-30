@@ -75,7 +75,7 @@ public class BounceComponent : MonoBehaviour
 
     IEnumerator Wigle()
     {
-        float wigleTime = 1f;
+        float wigleTime = 0.5f;
         float speed = 5f;
         
         while(wigleTime > 0)

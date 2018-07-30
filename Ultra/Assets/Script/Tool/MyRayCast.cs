@@ -146,7 +146,7 @@ public static class MyRayCast
             }
             else
             {
-                if(charPosition.position.x < feedHit.point.x)
+                if(distancefeed <= distanceHead && distancefeed <= distancecore)
                 {
                     return new Vector3(feedHit.point.x - 0.5f, feedHit.point.y + feed, 0);
                 }
@@ -242,7 +242,7 @@ public static class MyRayCast
             }
             else
             {
-                if (charPosition.position.x < feedHit.point.x)
+                if (distancefeed <= distanceHead && distancefeed <= distancecore)
                 {
                     return new Vector3(feedHit.point.x - 0.5f, feedHit.point.y + feed, 0);
                 }

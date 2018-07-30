@@ -132,7 +132,7 @@ Prefab:
     - target: {fileID: 224365564518292442, guid: 933068d493079bc46b2c1ddac7e3cea7,
         type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 224365564518292442, guid: 933068d493079bc46b2c1ddac7e3cea7,
         type: 2}
@@ -172,7 +172,7 @@ Prefab:
     - target: {fileID: 224365564518292442, guid: 933068d493079bc46b2c1ddac7e3cea7,
         type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 224365564518292442, guid: 933068d493079bc46b2c1ddac7e3cea7,
         type: 2}
@@ -1949,9 +1949,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xPower: 1
   yPower: 1
-  shouldWigle: 0
+  shouldWigle: 1
   shouldScale: 0
-  go: {fileID: 0}
+  go: {fileID: 305692284}
   curve:
     serializedVersion: 2
     m_Curve: []
@@ -3617,8 +3617,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.86, y: 15.2139845, z: 7.885622}
-  m_Center: {x: 0.39, y: 0.010226383, z: -0.048471954}
+  m_Size: {x: 1.671443, y: 15.213986, z: 7.885622}
+  m_Center: {x: -0.015720889, y: 0.010226648, z: -0.048471954}
 --- !u!114 &543698796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3632,7 +3632,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xPower: 1
   yPower: 1.5
-  shouldWigle: 0
+  shouldWigle: 1
   shouldScale: 0
   go: {fileID: 543698793}
   curve:
@@ -6970,7 +6970,7 @@ MonoBehaviour:
   debugCharacter: {fileID: 1705125410865688, guid: d61cc58934f954b4ab231afdc85281b4,
     type: 2}
   spawnLocation: {fileID: 391467534}
-  playerEnum: 2
+  playerEnum: 1
   TESTMOV2: 0
 --- !u!4 &1021113194
 Transform:
@@ -14081,22 +14081,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4152536297685934, guid: f7ed1c382a1ba1345a9b0901f0ea4963,
     type: 2}
   m_PrefabInternal: {fileID: 719406341}
---- !u!1 &2117760353 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100000, guid: 22f34598833129d44998ef88322e34d8, type: 3}
-  m_PrefabInternal: {fileID: 1889188356}
---- !u!65 &2117760357
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2117760353}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.79, y: 15.158436, z: 8.141074}
-  m_Center: {x: -0.3, y: -5.004988, z: 3.5951104}
 --- !u!4 &2118012183 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: ed8537c71d6874b459392a4855682eed, type: 3}

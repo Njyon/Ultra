@@ -893,7 +893,7 @@ public class MyCharacter : MonoBehaviour
         {
             // Bounce Ray
             RaycastHit hit;
-            if (MyRayCast.RayCastInDirection(transform.position, new Vector3(rb.velocity.x, rb.velocity.y, 0), out hit, 1.1f))
+            if (MyRayCast.RayCastInDirection(transform.position, new Vector3(rb.velocity.x, rb.velocity.y, 0), out hit, 0.9f))
             {
                 // End Bounce
                 //if (lastBounceObj != null && lastBounceObj == hit.transform.gameObject)
