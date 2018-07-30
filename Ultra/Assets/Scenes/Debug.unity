@@ -7170,7 +7170,9 @@ Prefab:
       propertyPath: meshController
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114150070826655276, guid: 29f2a041376ba3947b0f60e673148e98, type: 2}
+    - {fileID: 114085885135749186, guid: 29f2a041376ba3947b0f60e673148e98, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 29f2a041376ba3947b0f60e673148e98, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &1056302693 stripped
@@ -9582,6 +9584,11 @@ Prefab:
     - target: {fileID: 4735181418182888, guid: baca789a42292564eb0118fefe517120, type: 2}
       propertyPath: m_RootOrder
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114898727643962756, guid: baca789a42292564eb0118fefe517120,
+        type: 2}
+      propertyPath: _eventListFoldout
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: baca789a42292564eb0118fefe517120, type: 2}
