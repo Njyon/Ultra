@@ -21,8 +21,8 @@ public class ParticleData : MonoBehaviour
 
     [Header("GetDamage")]
     public GameObject ps_GetDamaged;
-    public ParticleSystem ps_Disabled;
     public GameObject ps_GetHit;
+    public ParticleSystem ps_Disabled;
 
     [Header("Atttack Dash")]
     public GameObject ps_Slash;

@@ -1223,7 +1223,14 @@ MonoBehaviour:
   xPower: 0
   yPower: 0
   shouldWigle: 0
+  shouldScale: 0
   go: {fileID: 0}
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &169128944
 Prefab:
   m_ObjectHideFlags: 0
@@ -1630,7 +1637,14 @@ MonoBehaviour:
   xPower: 1
   yPower: 1
   shouldWigle: 1
+  shouldScale: 0
   go: {fileID: 1252214515}
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &207940109
 GameObject:
   m_ObjectHideFlags: 0
@@ -1936,7 +1950,14 @@ MonoBehaviour:
   xPower: 1
   yPower: 1
   shouldWigle: 0
+  shouldScale: 0
   go: {fileID: 0}
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &316832199 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100006, guid: aa7cfa0f0ba8f81458c652b8e3217c6a, type: 3}
@@ -2349,7 +2370,14 @@ MonoBehaviour:
   xPower: 1
   yPower: 1.3
   shouldWigle: 0
+  shouldScale: 0
   go: {fileID: 0}
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &334742936
 GameObject:
   m_ObjectHideFlags: 0
@@ -2450,7 +2478,14 @@ MonoBehaviour:
   xPower: 0
   yPower: 0
   shouldWigle: 0
+  shouldScale: 0
   go: {fileID: 0}
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &338410200 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4152536297685934, guid: f7ed1c382a1ba1345a9b0901f0ea4963,
@@ -3362,7 +3397,14 @@ MonoBehaviour:
   xPower: 1
   yPower: 1
   shouldWigle: 0
+  shouldScale: 0
   go: {fileID: 0}
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &474346599
 Prefab:
   m_ObjectHideFlags: 0
@@ -3537,7 +3579,14 @@ MonoBehaviour:
   xPower: 0
   yPower: 0
   shouldWigle: 0
+  shouldScale: 0
   go: {fileID: 0}
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &529880337 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: d4d1add1d018cf344b0954db3a37ce8b, type: 3}
@@ -3584,7 +3633,14 @@ MonoBehaviour:
   xPower: 1
   yPower: 1.5
   shouldWigle: 0
+  shouldScale: 0
   go: {fileID: 543698793}
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &552352156
 GameObject:
   m_ObjectHideFlags: 0
@@ -3879,7 +3935,14 @@ MonoBehaviour:
   xPower: 1.3
   yPower: 1.3
   shouldWigle: 0
+  shouldScale: 0
   go: {fileID: 0}
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &623783287 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400002, guid: fddbe49c5be40c94d9964cd9ce465ead, type: 3}
@@ -4059,7 +4122,14 @@ MonoBehaviour:
   xPower: 0
   yPower: 0
   shouldWigle: 0
+  shouldScale: 0
   go: {fileID: 0}
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &628589184
 Prefab:
   m_ObjectHideFlags: 0
@@ -4716,7 +4786,14 @@ MonoBehaviour:
   xPower: 0
   yPower: 0
   shouldWigle: 0
+  shouldScale: 0
   go: {fileID: 0}
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &705500619 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400004, guid: b9828cb8483709e4ea1d829d2231fb72, type: 3}
@@ -6163,7 +6240,14 @@ MonoBehaviour:
   xPower: 1
   yPower: 1.5
   shouldWigle: 1
+  shouldScale: 0
   go: {fileID: 2012714480}
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &898039494
 GameObject:
   m_ObjectHideFlags: 0
@@ -6257,6 +6341,48 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f1b256b3374611847ba97ee8f74f44cc, type: 3}
+  m_IsPrefabParent: 0
+--- !u!1001 &931232152
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4821962795015024, guid: 2513ccabb55f2b2418594920856472a5, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -3.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 4821962795015024, guid: 2513ccabb55f2b2418594920856472a5, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 9.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 4821962795015024, guid: 2513ccabb55f2b2418594920856472a5, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4821962795015024, guid: 2513ccabb55f2b2418594920856472a5, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4821962795015024, guid: 2513ccabb55f2b2418594920856472a5, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4821962795015024, guid: 2513ccabb55f2b2418594920856472a5, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4821962795015024, guid: 2513ccabb55f2b2418594920856472a5, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4821962795015024, guid: 2513ccabb55f2b2418594920856472a5, type: 2}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 2513ccabb55f2b2418594920856472a5, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &934004289
 Prefab:
@@ -6844,7 +6970,7 @@ MonoBehaviour:
   debugCharacter: {fileID: 1705125410865688, guid: d61cc58934f954b4ab231afdc85281b4,
     type: 2}
   spawnLocation: {fileID: 391467534}
-  playerEnum: 1
+  playerEnum: 2
   TESTMOV2: 0
 --- !u!4 &1021113194
 Transform:
@@ -7170,6 +7296,23 @@ Prefab:
       propertyPath: meshController
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 114763746124875908, guid: 29f2a041376ba3947b0f60e673148e98,
+        type: 2}
+      propertyPath: ps_hit
+      value: 
+      objectReference: {fileID: 1486479595042340, guid: d4755c1c6a05a294e89869a005ada145,
+        type: 2}
+    - target: {fileID: 114763746124875908, guid: 29f2a041376ba3947b0f60e673148e98,
+        type: 2}
+      propertyPath: ps_GetHit
+      value: 
+      objectReference: {fileID: 1446782140535078, guid: 640cff3d400835b409df8967cf553a4b,
+        type: 2}
+    - target: {fileID: 114745443635865496, guid: 29f2a041376ba3947b0f60e673148e98,
+        type: 2}
+      propertyPath: col
+      value: 
+      objectReference: {fileID: 1421966557}
     m_RemovedComponents:
     - {fileID: 114150070826655276, guid: 29f2a041376ba3947b0f60e673148e98, type: 2}
     - {fileID: 114085885135749186, guid: 29f2a041376ba3947b0f60e673148e98, type: 2}
@@ -8931,8 +9074,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xPower: 1.5
   yPower: 1.5
-  shouldWigle: 1
+  shouldWigle: 0
+  shouldScale: 1
   go: {fileID: 951312329}
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: -0.0031516552
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.99999905
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: -0.004198432
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &1302828988
 Prefab:
   m_ObjectHideFlags: 0
@@ -9683,6 +9860,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b9828cb8483709e4ea1d829d2231fb72, type: 3}
   m_IsPrefabParent: 0
+--- !u!136 &1421966557 stripped
+CapsuleCollider:
+  m_PrefabParentObject: {fileID: 136475114027293318, guid: 29f2a041376ba3947b0f60e673148e98,
+    type: 2}
+  m_PrefabInternal: {fileID: 1054707565}
 --- !u!4 &1430166941 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4152536297685934, guid: f7ed1c382a1ba1345a9b0901f0ea4963,
@@ -9937,7 +10119,14 @@ MonoBehaviour:
   xPower: 1
   yPower: 1
   shouldWigle: 0
+  shouldScale: 0
   go: {fileID: 0}
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &1461905894
 Prefab:
   m_ObjectHideFlags: 0
@@ -10549,8 +10738,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xPower: 1.5
   yPower: 1.5
-  shouldWigle: 1
+  shouldWigle: 0
+  shouldScale: 1
   go: {fileID: 238155409}
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: -0.0031516552
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.99999905
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: -0.004198432
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &1583197651
 Prefab:
   m_ObjectHideFlags: 0
@@ -10863,7 +11086,14 @@ MonoBehaviour:
   xPower: 1.1
   yPower: 1.1
   shouldWigle: 0
+  shouldScale: 0
   go: {fileID: 0}
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!65 &1632537128
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10906,8 +11136,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xPower: 1.5
   yPower: 1.5
-  shouldWigle: 1
+  shouldWigle: 0
+  shouldScale: 1
   go: {fileID: 1989966935}
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: -0.0031516552
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.99999905
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: -0.004198432
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &1641970854
 Prefab:
   m_ObjectHideFlags: 0
@@ -11375,7 +11639,14 @@ MonoBehaviour:
   xPower: 1.1
   yPower: 1.1
   shouldWigle: 0
+  shouldScale: 0
   go: {fileID: 0}
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!65 &1727165745
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12306,7 +12577,14 @@ MonoBehaviour:
   xPower: 1.1
   yPower: 1.1
   shouldWigle: 0
+  shouldScale: 0
   go: {fileID: 0}
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!65 &1821501647
 BoxCollider:
   m_ObjectHideFlags: 0

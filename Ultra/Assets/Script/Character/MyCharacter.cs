@@ -26,6 +26,7 @@ public class MyCharacter : MonoBehaviour
     [HideInInspector] public bool isStunned = false;
     [HideInInspector] public GameObject enemy;
     [HideInInspector] public MyCharacter enemyCharacter;
+    [SerializeField] CapsuleCollider col;
     public float disabledTime;
 
     [Header("Animator")]
@@ -357,15 +358,8 @@ public class MyCharacter : MonoBehaviour
                 isDodgeing = false;
                 break;
             case EventState.GetHit:
-                GameObject calc = Instantiate(new GameObject(), this.transform);
-
-                calc.transform.LookAt(enemy.transform);
-                var main = pD.ps_GetHit.GetComponent<ParticleSystem>().main;
-                main.startRotation = calc.transform.eulerAngles.z;
-
-                Instantiate(pD.ps_GetHit, calc.transform.position, calc.transform.rotation);
-                Instantiate(pD.ps_GetDamaged, new Vector3(this.transform.position.x, this.transform.position.y, 3), Quaternion.identity);  // Spawn Particle
-                Debug.Log("LOL");
+                Instantiate(pD.ps_GetHit, new Vector3(transform.position.x, transform.position.y, -1), Quaternion.identity);  // Spawn Particle
+                Instantiate(pD.ps_GetDamaged, transform.position, Quaternion.identity);  // Spawn Particle
                 break;
             case EventState.isDisabled:
                 animator.SetBool(animDisabled, true);
@@ -499,6 +493,10 @@ public class MyCharacter : MonoBehaviour
     /// </summary>
     public void Disable()
     {
+
+        // Scale Hitbox up
+        col.radius = 1;
+
         // SHow the Combo Counter
         enemyCharacter.ui.ShowCombo();
         // Disable movement for the Character
@@ -517,6 +515,9 @@ public class MyCharacter : MonoBehaviour
         // Cancel all Invokes if player gets disabled again and restart the time below
         if (IsInvoking())
             CancelInvoke();
+
+        // Scale Hitbox up
+        col.radius = 1;
 
         // SHow the Combo Counter
         enemyCharacter.ui.ShowCombo();
@@ -540,6 +541,8 @@ public class MyCharacter : MonoBehaviour
     /// </summary>
     public void EndDisable()
     {
+        // Scale Hitbox back to normal
+        col.radius = 0.5f;
         // End the Enemy Combo
         enemyCharacter.EndCombo();
         // Remove the last Bounce Object
@@ -595,7 +598,8 @@ public class MyCharacter : MonoBehaviour
 
         Vector3 dir = new Vector3(this.transform.position.x - enemyPos.x, this.transform.position.y - enemyPos.y, 0);
       
-        Instantiate(pD.ps_GetDamaged, transform.position, Quaternion.identity);
+        //Instantiate(pD.ps_GetDamaged, transform.position, Quaternion.identity);
+        eventDelegate(EventState.GetHit);
 
         if (dir.x < 0)                             // Direction = right
         {
@@ -635,7 +639,8 @@ public class MyCharacter : MonoBehaviour
 
         Vector3 dir = new Vector3(this.transform.position.x - enemyPos.x, this.transform.position.y - enemyPos.y, 0);
 
-        Instantiate(pD.ps_GetDamaged, transform.position, Quaternion.identity);
+        //Instantiate(pD.ps_GetDamaged, transform.position, Quaternion.identity);
+        eventDelegate(EventState.GetHit);
         if (enemyPos.x < 0)                         // Direction = Right
         {
             if (hard)
@@ -888,7 +893,7 @@ public class MyCharacter : MonoBehaviour
         {
             // Bounce Ray
             RaycastHit hit;
-            if (MyRayCast.RayCastInDirection(transform.position, new Vector3(rb.velocity.x, rb.velocity.y, 0), out hit, 1.5f))
+            if (MyRayCast.RayCastInDirection(transform.position, new Vector3(rb.velocity.x, rb.velocity.y, 0), out hit, 1.1f))
             {
                 // End Bounce
                 //if (lastBounceObj != null && lastBounceObj == hit.transform.gameObject)

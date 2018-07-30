@@ -376,7 +376,6 @@ public class Nav2 : MyCharacter
                     enemyCharacter.KickAway(transform.position, false);
                     break;
             }
-            enemyCharacter.KickAway(transform.position, false);
 
             // Update the Combo
             Combo(ComboState.Hit);

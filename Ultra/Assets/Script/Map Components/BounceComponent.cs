@@ -8,13 +8,22 @@ public class BounceComponent : MonoBehaviour
     public float xPower, yPower;
 
     public bool shouldWigle;
+    public bool shouldScale;
     public GameObject go;
     Vector3 pos;
+    
+    [Header("Scale Curve")]
+    public AnimationCurve curve;
+
+    Vector3 normalScale;
 
     void Start()
     {
         if(shouldWigle)
-           pos = go.transform.position;    
+           pos = go.transform.position;
+
+        if (shouldScale)
+            normalScale = go.transform.localScale;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -23,12 +32,14 @@ public class BounceComponent : MonoBehaviour
         {
             Vector3 vel = collision.gameObject.GetComponent<Rigidbody>().velocity;
             collision.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(vel.x *= xPower, vel.y *= yPower, 0);
-
-            Debug.Log("hmm");
+            
             if (collision.gameObject.GetComponent<MyCharacter>().isDisabled && shouldWigle)
             {
-                Debug.Log("lol");
                 StartCoroutine(Wigle());
+            }
+            else if (shouldScale)
+            {
+                StartCoroutine(Scale());
             }
 
             //RaycastHit hit;
@@ -41,21 +52,39 @@ public class BounceComponent : MonoBehaviour
         }
     }
 
+    IEnumerator Scale()
+    {
+        float scaleTime = 1f;
+        float currentTime = 0f;
+        float scaleMultiplayer = 1.5f;
+        float speed = 3f;
+
+        Vector3 scaleUp = new Vector3(go.transform.localScale.x * scaleMultiplayer, go.transform.localScale.y * scaleMultiplayer, go.transform.localScale.z);
+
+        while(scaleTime > currentTime)
+        {
+            float curvePos = curve.Evaluate(currentTime);
+            go.transform.localScale = Vector3.Lerp(normalScale, scaleUp, curvePos);
+
+            currentTime += Time.deltaTime * speed;
+            yield return null;
+        }
+
+        yield return null;
+    }
+
     IEnumerator Wigle()
     {
-        float wigleTime = 3f;
-        float speed = 10f;
-
-        Debug.Log("Start");
+        float wigleTime = 1f;
+        float speed = 5f;
+        
         while(wigleTime > 0)
         {
-            Debug.Log("Wigle");
             go.transform.position = new Vector3(pos.x + Mathf.PingPong(Time.time * speed, wigleTime), pos.y, pos.z);
 
             wigleTime -= Time.deltaTime;
             yield return null;
         }
-        Debug.Log("End");
 
         go.transform.position = pos;
         yield return null;

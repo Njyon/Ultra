@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4783999876171094}
   - component: {fileID: 198730074742055100}
   - component: {fileID: 199720788143399518}
+  - component: {fileID: 114453835849164550}
   m_Layer: 0
   m_Name: ps_ParryOrHit_1
   m_TagString: Untagged
@@ -36,11 +37,23 @@ Transform:
   m_GameObject: {fileID: 1446782140535078}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114453835849164550
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1446782140535078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4885e00a0bab9334685c623dcdb02157, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyTimer: 0.5
 --- !u!198 &198730074742055100
 ParticleSystem:
   m_ObjectHideFlags: 1
