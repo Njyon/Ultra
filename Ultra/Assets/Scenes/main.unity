@@ -10525,10 +10525,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1862839374054558, guid: 8b0d9ff791a08c443a903e7474cd33a7, type: 2}
-      propertyPath: m_Name
-      value: MainMenu (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 114676109327048948, guid: 8b0d9ff791a08c443a903e7474cd33a7,
         type: 2}
       propertyPath: eventSystem
@@ -10544,15 +10540,9 @@ Prefab:
       propertyPath: myCamera
       value: 
       objectReference: {fileID: 544435180}
-    - target: {fileID: 224133715045295404, guid: 8b0d9ff791a08c443a903e7474cd33a7,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224827583230474974, guid: 8b0d9ff791a08c443a903e7474cd33a7,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 0
+    - target: {fileID: 1862839374054558, guid: 8b0d9ff791a08c443a903e7474cd33a7, type: 2}
+      propertyPath: m_Name
+      value: MainMenu (1)
       objectReference: {fileID: 0}
     - target: {fileID: 224080166409311468, guid: 8b0d9ff791a08c443a903e7474cd33a7,
         type: 2}
@@ -10560,6 +10550,16 @@ Prefab:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224646897665501382, guid: 8b0d9ff791a08c443a903e7474cd33a7,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224133715045295404, guid: 8b0d9ff791a08c443a903e7474cd33a7,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224827583230474974, guid: 8b0d9ff791a08c443a903e7474cd33a7,
         type: 2}
       propertyPath: m_AnchorMax.y
       value: 0

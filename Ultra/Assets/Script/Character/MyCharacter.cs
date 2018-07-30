@@ -257,7 +257,6 @@ public class MyCharacter : MonoBehaviour
 
 
         spawnPos = transform.position;
-        pD.trail.SetActive(false);
         pD.ps_Disabled.Stop();
     }
 
@@ -814,9 +813,14 @@ public class MyCharacter : MonoBehaviour
 
         if(inComeBackMode)
         {
-            score = (int)interimResult * 2;
+            score += (int)interimResult * 2;
             CheckIfComebackModeShouldEnd();
         }
+        else
+        {
+            score += (int)interimResult;
+        }   
+                    
         //Safe Data for EndScreen
         playerDataAction(playerEnum, combo, multiplier, score);
 
