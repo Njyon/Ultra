@@ -26,6 +26,11 @@ public class VideoScript : MonoBehaviour
         StartCoroutine(PlayVideo());
     }
 
+    public void IStart()
+    {
+        StartCoroutine(PlayVideo());
+    }
+
     IEnumerator PlayVideo()
     {
 

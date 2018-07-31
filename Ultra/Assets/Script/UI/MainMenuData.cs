@@ -40,6 +40,8 @@ public class MainMenuData : MonoBehaviour
     [HideInInspector] public Resolution[] resolutions;
     [HideInInspector] public string[] qulaityLevels;
 
+    public VideoScript vS;
+
     /// <summary>
     /// Dependend on the oP State, turn all other oP Pannel off
     /// </summary>
