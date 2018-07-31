@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198900614580143790}
   - component: {fileID: 199858682133323628}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3703,7 +3703,7 @@ ParticleSystem:
       type: 0
       properties: 0
   LightsModule:
-    enabled: 1
+    enabled: 0
     ratio: 1
     light: {fileID: 108373957151523192, guid: 565102cd0d5be2847b9cd5f26c26ba05, type: 2}
     randomDistribution: 1
