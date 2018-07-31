@@ -11,6 +11,7 @@ public class MainMenuData : MonoBehaviour
     public GameObject championSelect;
     public GameObject credits;
     public GameObject background;
+    public GameObject optionsBody;
     public List<GameObject> optionsPannel;
 
     [Header("EventSystem")]
@@ -33,9 +34,13 @@ public class MainMenuData : MonoBehaviour
     [Header("Animator")]
     public Animator MainAnimator;
     public Animator OptionsAnimator;
+    public Animator TransitionAnimator;
+    public Animator ChooseColorAnimator;
 
     [HideInInspector] public Resolution[] resolutions;
     [HideInInspector] public string[] qulaityLevels;
+
+    public VideoScript vS;
 
     /// <summary>
     /// Dependend on the oP State, turn all other oP Pannel off

@@ -35,6 +35,7 @@ public class MainMenuUI : MonoBehaviour
         mMD.credits.SetActive(false);
         mMD.championSelect.SetActive(false);
         mMD.arenaSelect.SetActive(false);
+        mMD.optionsBody.SetActive(false);
     }
 
     void Update()
@@ -70,7 +71,8 @@ public class MainMenuUI : MonoBehaviour
             else if(menuState == MenuState.PlayerSelect && mMD.cS.NoCharSelected())
             {
                 mMD.ActivateButtons(mMD.mainbuttons);
-                ShowMain();
+                mMD.TransitionAnimator.SetBool("makeTransition", false);
+                Invoke("ShowMain", 0.3f);
             }
         }
 
@@ -127,10 +129,13 @@ public class MainMenuUI : MonoBehaviour
             mMD.OptionsAnimator.SetBool("ButtonsOut", true);
         }
         mMD.main.SetActive(true);
+        mMD.background.SetActive(true);
+        mMD.vS.IStart();
         Invoke("MainOn", 0.4f);
     }
     void MainOn()
     {
+        mMD.optionsBody.SetActive(false);
         mMD.main.SetActive(true);
         mMD.options.SetActive(false);
         mMD.credits.SetActive(false);
@@ -151,6 +156,7 @@ public class MainMenuUI : MonoBehaviour
     /// </summary>
     public void ShowOptions()
     {
+        mMD.optionsBody.SetActive(true);
         mMD.MainAnimator.SetBool("ButtonsOut", true);
         Invoke("OptionsOn", 0.4f);
     }
@@ -191,11 +197,19 @@ public class MainMenuUI : MonoBehaviour
 
         menuState = MenuState.Credits;
     }
+    public void Play()
+    {
+        mMD.MainAnimator.SetBool("ButtonsOut", true);
+        mMD.TransitionAnimator.SetBool("makeTransition", true);
+        Invoke("ShowPlayerSelect", 0.5f);
+    }
     /// <summary>
     /// Turn PlayerSelect pannel on and the rest off
     /// </summary>
     public void ShowPlayerSelect()
     {
+        //    mMD.ChooseColorAnimator.SetBool("DragBarAway", false);
+
         mMD.main.SetActive(false);
         mMD.options.SetActive(false);
         mMD.credits.SetActive(false);
@@ -203,11 +217,13 @@ public class MainMenuUI : MonoBehaviour
         mMD.arenaSelect.SetActive(false);
         mMD.background.SetActive(false);
 
-        mMD.myCamera.Play();
+        //mMD.myCamera.Play();
 
         menuState = MenuState.PlayerSelect;
         mMD.cS.ShowNav();
         mMD.cS.ApplyInput();
+
+        mMD.ChooseColorAnimator.SetBool("DragBarAway", true);
     }
     public void OnVideoEdit()
     {

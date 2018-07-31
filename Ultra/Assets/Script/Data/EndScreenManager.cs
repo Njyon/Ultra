@@ -114,8 +114,8 @@ public class EndScreenManager : MonoBehaviour
     }
     IEnumerator CountPoints()
     {
-        int p1_Score = 50000;//PlayerDataManager.playerOne.Score;
-        int p2_Score = 30000;//PlayerDataManager.playerTwo.Score;
+        int p1_Score = PlayerDataManager.playerOne.Score;
+        int p2_Score = PlayerDataManager.playerTwo.Score;
         bool done = false;
         bool playerOneWon = PlayerOneWins(p1_Score, p2_Score);
         float p1_CurrentsScore = 0;
@@ -158,9 +158,7 @@ public class EndScreenManager : MonoBehaviour
                 Plateaus[0].transform.position = Vector3.Lerp(p1_PlateauStartPos, new Vector3(p1_PlateauStartPos.x, loserYPos, p1_PlateauStartPos.z), time);
                 Plateaus[1].transform.position = Vector3.Lerp(p2_PlateauStartPos, new Vector3(p2_PlateauStartPos.x, winnerYPos, p2_PlateauStartPos.z), time);
             }
-
-    
-
+            
             //playerOne.transform.position = new Vector3(playerOne.transform.position.x, playerOne.transform.position.y + p1_CurrentsScore / 1000, playerOne.transform.position.z);
             //playerTwo.transform.position = new Vector3(playerTwo.transform.position.x, playerTwo.transform.position.y + p2_CurrentsScore / 1000, playerTwo.transform.position.z);
 
