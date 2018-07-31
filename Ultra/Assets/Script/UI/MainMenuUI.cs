@@ -129,6 +129,8 @@ public class MainMenuUI : MonoBehaviour
             mMD.OptionsAnimator.SetBool("ButtonsOut", true);
         }
         mMD.main.SetActive(true);
+        mMD.background.SetActive(true);
+        mMD.vS.IStart();
         Invoke("MainOn", 0.4f);
     }
     void MainOn()
