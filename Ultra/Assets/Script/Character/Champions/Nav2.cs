@@ -351,7 +351,7 @@ public class Nav2 : MyCharacter
         if(enemyCharacter.isAttacking)
         {
             StartCoroutine(FreezCharacter(false, freezTimeHit, false));
-            eventDelegate(EventState.Parry);
+            parryDelegate();
             return;
         }
 

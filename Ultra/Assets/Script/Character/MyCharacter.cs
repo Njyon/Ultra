@@ -108,6 +108,9 @@ public class MyCharacter : MonoBehaviour
 
     public delegate void ShakeCamera();
     public ShakeCamera shakeCameraAction;
+
+    public delegate void ParryDelegate();
+    public ParryDelegate parryDelegate;
     
     // Deprecated
     #region X Attack 

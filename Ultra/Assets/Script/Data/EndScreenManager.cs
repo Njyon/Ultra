@@ -16,6 +16,9 @@ public class EndScreenManager : MonoBehaviour
     public List<TextManager> textManger;
     [Header("HighestPoint")]
     public Transform maxScoreHight;
+    [Header("HighestPoint")]
+    public Animator anim;
+    public Text winnerText;
 
     GameObject playerOne;
     GameObject playerTwo;
@@ -23,30 +26,19 @@ public class EndScreenManager : MonoBehaviour
     private void Start()
     {
         //PlayerOne
-        textManger[0].header.color = PlayerInfoManager.playerOne.color;
         textManger[0].score.text = "Score: 0"; //+ PlayerDataManager.playerOne.Score.ToString();
-        textManger[0].maxCombo.text = "MaxCombo: " + PlayerDataManager.playerOne.HighestCombo.ToString();
-        textManger[0].dodges.text = "Dodges: " + PlayerDataManager.playerOne.AmountOfDodges.ToString();
-        textManger[0].maxMultiplier.text = "MaxMultiplier: " + PlayerDataManager.playerOne.HighestMultiplier.ToString();
-        textManger[0].bounces.text = "Bounces: " + PlayerDataManager.playerOne.Bounces.ToString();
+        //textManger[0].maxCombo.text = "MaxCombo: " + PlayerDataManager.playerOne.HighestCombo.ToString();
+        //textManger[0].dodges.text = "Dodges: " + PlayerDataManager.playerOne.AmountOfDodges.ToString();
+        //textManger[0].maxMultiplier.text = "MaxMultiplier: " + PlayerDataManager.playerOne.HighestMultiplier.ToString();
+        //textManger[0].bounces.text = "Bounces: " + PlayerDataManager.playerOne.Bounces.ToString();
 
         //PlayerTwo
-        textManger[1].header.color = PlayerInfoManager.playerTwo.color;
         textManger[1].score.text = "Score: 0"; // + PlayerDataManager.playerTwo.Score.ToString();
-        textManger[1].maxCombo.text = "MaxCombo: " + PlayerDataManager.playerTwo.HighestCombo.ToString();
-        textManger[1].dodges.text = "Dodges: " + PlayerDataManager.playerTwo.AmountOfDodges.ToString();
-        textManger[1].maxMultiplier.text = "MaxMultiplier: " + PlayerDataManager.playerTwo.HighestMultiplier.ToString();
-        textManger[1].bounces.text = "Bounces: " + PlayerDataManager.playerTwo.Bounces.ToString();
-
-        // Only production prototyp
-        if(PlayerDataManager.playerOne.Score > PlayerDataManager.playerTwo.Score)
-        {
-            textManger[1].crown.SetActive(false);
-        }
-        else
-        {
-            textManger[0].crown.SetActive(false);
-        }
+        //textManger[1].maxCombo.text = "MaxCombo: " + PlayerDataManager.playerTwo.HighestCombo.ToString();
+        //textManger[1].dodges.text = "Dodges: " + PlayerDataManager.playerTwo.AmountOfDodges.ToString();
+        //textManger[1].maxMultiplier.text = "MaxMultiplier: " + PlayerDataManager.playerTwo.HighestMultiplier.ToString();
+        //textManger[1].bounces.text = "Bounces: " + PlayerDataManager.playerTwo.Bounces.ToString();
+        
 
         Invoke("EnableInput", 1);
         Init();
@@ -146,8 +138,9 @@ public class EndScreenManager : MonoBehaviour
             int p2_IntScore = (int)p2_CurrentsScore;
 
             // Display new Score
-            textManger[0].score.text = p1_IntScore.ToString();
-            textManger[1].score.text = p2_IntScore.ToString();
+            textManger[0].score.text = "Score: " + p1_IntScore.ToString();
+            textManger[1].score.text = "Score: " + p2_IntScore.ToString();
+
             if(playerOneWon)
             {
                 Plateaus[0].transform.position = Vector3.Lerp(p1_PlateauStartPos, new Vector3(p1_PlateauStartPos.x, winnerYPos, p1_PlateauStartPos.z), time);
@@ -178,19 +171,32 @@ public class EndScreenManager : MonoBehaviour
             }
             yield return null;
         }
+        
+        if(playerOneWon)
+        {
+            winnerText.text = "Player One Wins";
+        }
+        else
+        {
+            winnerText.text = "Player Two Wins";
+        }
 
+        Invoke("DisplayWinner", 0.5f);
         yield return null;
+    }
+
+    void DisplayWinner()
+    {
+        anim.SetBool("Play", true);
     }
 }
 
 [System.Serializable]
 public class TextManager
 {
-    public Text header;
     public Text score;
     public Text maxCombo;
     public Text dodges;
     public Text maxMultiplier;
     public Text bounces;
-    public GameObject crown;
 }

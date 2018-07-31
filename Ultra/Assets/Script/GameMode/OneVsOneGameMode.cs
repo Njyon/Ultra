@@ -32,6 +32,9 @@ public class OneVsOneGameMode : MonoBehaviour
     [HideInInspector] public bool comeBackActive = false;
     bool comeBackCooling = false;
 
+    [Header("ParryParticle")]
+    [SerializeField] GameObject parry;
+
     //[Header("PlayerData")]
     //[SerializeField] GameObject playerDataPref;
     //GameObject playerDataObj;
@@ -102,6 +105,9 @@ public class OneVsOneGameMode : MonoBehaviour
         //PlayerTwo
         Initiate(PlayerInfoManager.playerTwo.character, false);
         SetPlayerEnemys();
+        
+        CharacterOne.parryDelegate += Parry;
+        CharacterTwo.parryDelegate += Parry;
 
     }
 
@@ -286,6 +292,25 @@ public class OneVsOneGameMode : MonoBehaviour
             case PlayerEnum.PlayerTwo:
                 PlayerDataManager.playerTwo.Bounces++;
                 break;
+        }
+    }
+    bool parried = false;
+    void Parry()
+    {
+        Debug.Log("LOL");
+        if (!parried)
+        {
+            Debug.Log("Parry!");
+            var bounds = new Bounds(CharacterOne.transform.position, Vector3.zero); 
+            parried = true;
+            bounds.Encapsulate(CharacterOne.transform.position);
+            bounds.Encapsulate(CharacterTwo.transform.position);
+
+            Instantiate(parry, bounds.center, Quaternion.identity);
+        }
+        else
+        {
+            parried = false;
         }
     }
 
