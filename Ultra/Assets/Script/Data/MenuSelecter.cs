@@ -37,7 +37,7 @@ public class MenuSelecter
 
         //TEST
 
-        characters[1].transform.position = new Vector3(characters[1].transform.position.x, characters[1].transform.position.y + 1, characters[1].transform.position.z);
+        //characters[1].transform.position = new Vector3(characters[1].transform.position.x, characters[1].transform.position.y + 1, characters[1].transform.position.z);
     }
 
     public void UnselectSlot()
@@ -47,7 +47,7 @@ public class MenuSelecter
         {
             charakterSelected = false;
 
-            characters[1].transform.position = characterPosition;
+            //characters[1].transform.position = characterPosition;
         }
         else if (!charakterSelected)
         {
