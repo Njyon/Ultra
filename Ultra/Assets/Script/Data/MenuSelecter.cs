@@ -89,7 +89,8 @@ public class MenuSelecter
 
     public void ApplyColor(Color color)
     {
-        rend.material.SetColor("_EmissionColor", color);
+        rend.materials[0].SetColor("_EmissionColor", color);
+        //rend.materials[1].SetColor("_EmissionColor", color);
     }
 
     /// <summary>

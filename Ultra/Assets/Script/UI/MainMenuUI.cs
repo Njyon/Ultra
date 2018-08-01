@@ -306,10 +306,12 @@ public class MainMenuUI : MonoBehaviour
         if(isReady)
         {
             mMD.p1_Ready.SetActive(true);
+            mMD.p1_Animator.SetBool("Ready", true);
         }
         else
         {
             mMD.p1_Ready.SetActive(false);
+            mMD.p1_Animator.SetBool("Ready", false);
         }
     }
     void P2_IsReady(bool isReady)
@@ -317,10 +319,12 @@ public class MainMenuUI : MonoBehaviour
         if(isReady)
         {
             mMD.p2_Ready.SetActive(true);
+            mMD.p2_Animator.SetBool("Ready", true);
         }
         else
         {
             mMD.p2_Ready.SetActive(false);
+            mMD.p2_Animator.SetBool("Ready", false);
         }
     }
 }
