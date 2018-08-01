@@ -35,7 +35,7 @@ public class FallComponent
         this.transform = transform;
         this.rb = rb;
         this.dash = dash;
-        this.myCharacter = myCharacter;
+        this.myCharacter = mov.GetComponent<MyCharacter>();
     }
     
     public void Falling()
@@ -170,7 +170,7 @@ public class FallComponent
 
         if(mov.islookingToTheRight)
         {
-            if (MyRayCast.RayCastHitRight(transform.position, wallDetectionLength))
+            if (MyRayCast.RayCastHitRight(transform.position, wallDetectionLength + 0.2f))
             {
                 //WallSlide
                 if (!isOnWallLeft && !isOnWallRight)
@@ -192,7 +192,7 @@ public class FallComponent
         }
         else
         {
-            if (MyRayCast.RayCastHitLeft(transform.position, wallDetectionLength))
+            if (MyRayCast.RayCastHitLeft(transform.position, wallDetectionLength + 0.2f))
             {
                 //WallSlide
                 if (!isOnWallLeft && !isOnWallRight)

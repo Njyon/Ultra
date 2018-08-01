@@ -8,13 +8,13 @@ public class InGameUI : MonoBehaviour
     [SerializeField] Text combo;
     [SerializeField] Text score;
     [SerializeField] Text multiplier;
-    [SerializeField] Image border;
+    [SerializeField] Image Character;
 
     Color color;
     
     public void SetHUDColor(Color color)
     {
-        border.color = color;
+        Character.color = color;
         combo.color = color;
         multiplier.color = color;
         this.color = color;
