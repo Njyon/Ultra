@@ -53,8 +53,9 @@ public class AudioEvents : MonoBehaviour
                 break;
             case EventState.Landing:
                 var rand = Random.Range(0f, 1f);
-                Fabric.EventManager.Instance.SetParameter("Landing", "LandingImpact", rand, this.gameObject);
+                Fabric.EventManager.Instance.SetParameter("Landing", "LandingImpact", yVelocity, this.gameObject);
                 Fabric.EventManager.Instance.PostEvent("Landing", this.gameObject);
+                Debug.Log("Velocity: " + yVelocity);
                 break;
             case EventState.Dodge:
                 break;
@@ -104,9 +105,8 @@ public class AudioEvents : MonoBehaviour
 
     void Update()
     {
-        if(movement.fallComp.isFalling)
-        {
-            yVelocity = movement.rb.velocity.y;
+        if(movement.fallComp.isFalling) {
+            yVelocity = Mathf.Abs(movement.rb.velocity.y)/32;
         }
     }
 }

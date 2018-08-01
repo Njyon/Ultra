@@ -2520,7 +2520,20 @@ MonoBehaviour:
   _onEventNotifyEventName: 
   _regions:
   - {fileID: 114244003388994372}
-  _parameters: []
+  _parameters:
+  - _parameter: {fileID: 114386865036830366}
+    _property: 0
+    _envelope:
+      _points:
+      - _x: 0
+        _y: 0.000015848926
+        _curveType: 1
+        _locked: 0
+      - _x: 1
+        _y: 1
+        _curveType: 1
+        _locked: 0
+      _selectedPoint: 0
   _controlParameter: {fileID: 114386865036830366}
 --- !u!114 &114053369001312952
 MonoBehaviour:
@@ -4637,7 +4650,7 @@ MonoBehaviour:
   _loopBehaviour: 0
   _velocity: 0
   _seekSpeed: 0
-  _seekTarget: 0
+  _seekTarget: 0.067499995
   _value: 0
   _resetToDefaultValue: 0
   _markers:
@@ -6136,7 +6149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _numVirtualizationEvents: 100
-  _maxInstances: 1
+  _maxInstances: 4
   _stealingBehaviour: 0
   _minimumPlaybackInterval: 0
   _overrideParentVolume: 0
@@ -9136,11 +9149,15 @@ MonoBehaviour:
         _y: 0.000015848926
         _curveType: 1
         _locked: 0
-      - _x: 1
-        _y: 1
+      - _x: 0.6025
+        _y: 0.000015848926
         _curveType: 1
         _locked: 0
-      _selectedPoint: 1
+      - _x: 1
+        _y: 0.3548134
+        _curveType: 1
+        _locked: 0
+      _selectedPoint: 2
   _controlParameter: {fileID: 114386865036830366}
 --- !u!114 &114854479265834744
 MonoBehaviour:
@@ -10274,15 +10291,15 @@ MonoBehaviour:
         _min: 0
         _max: 1
   profiler:
-    totalMS: 666.666
-    recordedMS: 3.3569336
-    percent: 0.5035405
-    msPerFrame: 0.0022349758
+    totalMS: 554.9049
+    recordedMS: 0.015258789
+    percent: 0.0027498025
+    msPerFrame: 0.0015258789
     maxMsPerFrame: 0.6713867
-    msPerCall: 0.0022349758
+    msPerCall: 0.0015258789
     timesPerFrame: 1
   _eventMenuListFoldout: 1
-  _eventListFoldout: 0
+  _eventListFoldout: 1
   _forceQueueAllEvents: 0
   _eventSequencer:
     _sequenceEntries:
