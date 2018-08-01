@@ -15,7 +15,20 @@ public class BounceComponent : MonoBehaviour
     [Header("Scale Curve")]
     public AnimationCurve curve;
 
+    public enum BounceType {
+        Metal,
+        Concrete,
+        Stone,
+        Rubber,
+        Glass,
+        MetalGlass,
+    }
+
+    [Header("Audio")]
+    public BounceType audioMaterial;
+
     Vector3 normalScale;
+    double audioTriggerLast;
 
     void Start()
     {
@@ -80,6 +93,9 @@ public class BounceComponent : MonoBehaviour
         
         while(wigleTime > 0)
         {
+
+        HandleAudio();
+
             go.transform.position = new Vector3(pos.x + Mathf.PingPong(Time.time * speed, wigleTime), pos.y, pos.z);
 
             wigleTime -= Time.deltaTime;
@@ -88,6 +104,39 @@ public class BounceComponent : MonoBehaviour
 
         go.transform.position = pos;
         yield return null;
+    }
+
+    private void HandleAudio() {
+        if (AudioSettings.dspTime - audioTriggerLast < 0.1d) {
+            return;
+        }
+
+        audioTriggerLast = AudioSettings.dspTime;
+
+        switch (audioMaterial) {
+            case BounceType.Metal:
+                Fabric.EventManager.Instance.PostEvent("ParticleMetal", this.gameObject);
+                break;
+            case BounceType.Concrete:
+                Fabric.EventManager.Instance.PostEvent("ParticleRocks", this.gameObject);
+                break;
+            case BounceType.Stone:
+                Fabric.EventManager.Instance.PostEvent("ParticleStones", this.gameObject);
+                break;
+            case BounceType.Rubber:
+                Fabric.EventManager.Instance.PostEvent("RubberPitch", this.gameObject);
+                Fabric.EventManager.Instance.PostEvent("RubberNoPitch", this.gameObject);
+                break;
+            case BounceType.Glass:
+                Fabric.EventManager.Instance.PostEvent("ParticleGlass", this.gameObject);
+                break;
+            case BounceType.MetalGlass:
+                Fabric.EventManager.Instance.PostEvent("ParticleGlass", this.gameObject);
+                Fabric.EventManager.Instance.PostEvent("ParticleMetal", this.gameObject);
+                break;
+            default:
+                break;
+        }
     }
 }
   

@@ -30,6 +30,7 @@ AudioMixerController:
     - 2ae06f421e72c8a49a82463fe7654f18
     - 3e2df5063ded68049b36a72a4e177472
     - 38b94febe43ef574ba231be7dc1b1d9d
+    - ec5faef62e5b4fd4da439298ed559785
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -179,6 +180,7 @@ AudioMixerGroupController:
   - {fileID: 243316267677706328}
   - {fileID: 243995133231526960}
   - {fileID: 243294416998310826}
+  - {fileID: 243899786679284110}
   m_Volume: 3280a6a8f9fc2e045b604707d0a3e245
   m_Pitch: df3cb7714e7f2cc4f8b321bbd2c67f83
   m_Effects:
@@ -234,6 +236,23 @@ AudioMixerGroupController:
   m_Pitch: 3e81b9d5a1df61e4b8ef95311c73c2c8
   m_Effects:
   - {fileID: 244498137205872760}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!243 &243899786679284110
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Glass
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: ec5faef62e5b4fd4da439298ed559785
+  m_Children: []
+  m_Volume: d7eda5813a3618d4e829e46d1059b228
+  m_Pitch: 890478074e0a8ca4a926b79ebaa24a39
+  m_Effects:
+  - {fileID: 244511083030775788}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -320,6 +339,19 @@ AudioMixerEffectController:
   m_EffectID: c4edf87567a114f4f8e86198e265e047
   m_EffectName: Attenuation
   m_MixLevel: 095b51dff9de2c4488f509e55bae550c
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &244511083030775788
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_EffectID: e7877c0a37fbd1b4295737e88225d90b
+  m_EffectName: Attenuation
+  m_MixLevel: 8e5f9d39cafbf8147919a05b72261de5
   m_Parameters: []
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
