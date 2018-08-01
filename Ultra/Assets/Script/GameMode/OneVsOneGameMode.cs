@@ -34,6 +34,10 @@ public class OneVsOneGameMode : MonoBehaviour
     [Header("ParryParticle")]
     [SerializeField] GameObject parry;
 
+    bool gameOn = false;
+
+    public Animator gameDoneAnimator;
+
     //[Header("PlayerData")]
     //[SerializeField] GameObject playerDataPref;
     //GameObject playerDataObj;
@@ -105,6 +109,7 @@ public class OneVsOneGameMode : MonoBehaviour
         CharacterOne.parryDelegate += Parry;
         CharacterTwo.parryDelegate += Parry;
 
+        Invoke("GameStart", 4f);
     }
 
     void SetPlayerEnemys()
@@ -174,7 +179,6 @@ public class OneVsOneGameMode : MonoBehaviour
                     CharacterOne.dodgeAction += DodgeCounter;
                     CharacterOne.bounceAction += BounceCounter;
                     CharacterOne.shakeCameraAction += sCam.Shake;
-                    CharacterOne.Posses();
                     CharacterOne.gameMode = this;
                     playerOneUI.SetHUDColor(PlayerInfoManager.playerOne.color);
                     sCam.AddTarget(PlayerOne.transform);
@@ -196,7 +200,6 @@ public class OneVsOneGameMode : MonoBehaviour
                     CharacterTwo.dodgeAction += DodgeCounter;
                     CharacterTwo.bounceAction += BounceCounter;
                     CharacterTwo.shakeCameraAction += sCam.Shake;
-                    CharacterTwo.Posses();
                     CharacterTwo.gameMode = this;
                     playerTwoUI.SetHUDColor(PlayerInfoManager.playerTwo.color);
                     sCam.AddTarget(PlayerTwo.transform);
@@ -224,6 +227,13 @@ public class OneVsOneGameMode : MonoBehaviour
 
         MyCharacter.endGameAction += EndGame;
     }
+
+    void GameStart()
+    {
+        gameOn = true;
+        CharacterOne.Posses();
+        CharacterTwo.Posses();
+    }
     // End game and transition to next scene
     void EndGame()
     {
@@ -243,6 +253,14 @@ public class OneVsOneGameMode : MonoBehaviour
         PlayerOne.GetComponent<MyCharacter>().DePosses();
         PlayerTwo.GetComponent<MyCharacter>().DePosses();
 
+        Time.timeScale = 0.5f;
+        gameDoneAnimator.SetBool("GameDone", true);
+        Invoke("LoadScene", 2f);
+    }
+    void LoadScene()
+    {
+
+        Time.timeScale = 1f;
         // Load the Win Screen
         SceneManager.LoadScene(3);
     }

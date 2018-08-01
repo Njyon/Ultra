@@ -71,9 +71,9 @@ public class CharacterSelecterV2 : MonoBehaviour
     {
         InputManager.p1_OnKeyPressed -= P1_InputDownCheck;
         InputManager.p2_OnKeyPressed -= P2_InputDownCheck;
-        
-        InputManager.p1_OnKeyReleased -= P1_InputUpCheck;
-        InputManager.p2_OnKeyReleased -= P2_InputUpCheck;
+
+        InputManager.p1_OnKeyPressed -= P1_InputUpCheck;
+        InputManager.p2_OnKeyPressed -= P2_InputUpCheck;
 
         InputManager.P1_LeftStickRightAction -= playerOne.SwitchSlotUp;
         InputManager.P2_LeftStickRightAction -= playerTwo.SwitchSlotUp;

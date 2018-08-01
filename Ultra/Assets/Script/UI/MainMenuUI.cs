@@ -44,6 +44,12 @@ public class MainMenuUI : MonoBehaviour
         mMD.cS.p2_Ready += P2_IsReady;
     }
 
+    private void OnDisable()
+    {
+        mMD.cS.p1_Ready -= P1_IsReady;
+        mMD.cS.p2_Ready -= P2_IsReady;
+    }
+
     void Update()
     {
         // if the Player hits the mouse button the last main button get reSelected

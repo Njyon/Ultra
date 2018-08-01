@@ -104,6 +104,9 @@ public class AudioEvents : MonoBehaviour
 
     void Update()
     {
+        if (movement.fallComp == null)
+            return;
+
         if(movement.fallComp.isFalling)
         {
             yVelocity = movement.rb.velocity.y;

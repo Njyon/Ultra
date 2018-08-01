@@ -501,7 +501,11 @@ public class MyCharacter : MonoBehaviour
         col.radius = 1;
 
         // SHow the Combo Counter
-        enemyCharacter.ui.ShowCombo();
+        if(!ui.GetComboState())
+        {
+            enemyCharacter.ui.ShowCombo();
+            enemyCharacter.ui.UpdateMultiplier(1);
+        }
         // Disable movement for the Character
         movement.CantMove();
         // Set the disable state to true
@@ -523,7 +527,11 @@ public class MyCharacter : MonoBehaviour
         col.radius = 1;
 
         // SHow the Combo Counter
-        enemyCharacter.ui.ShowCombo();
+        if (!ui.GetComboState())
+        {
+            enemyCharacter.ui.ShowCombo();
+            enemyCharacter.ui.UpdateMultiplier(1);
+        }
         // Disable movement
         movement.CantMove();
         // Set the disable state to true
@@ -954,7 +962,6 @@ public class MyCharacter : MonoBehaviour
             ui.UpdateScore(score);
             ui.UpdateMultiplier(multiplier);
             ui.UpdateCombo(combo);
-            ui.HiddeCombo();
         }
     }
 

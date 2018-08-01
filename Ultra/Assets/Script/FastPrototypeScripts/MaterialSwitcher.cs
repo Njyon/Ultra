@@ -12,7 +12,10 @@ public class MaterialSwitcher : MonoBehaviour
     bool isXButton = false;
     void Update()
     {
-        if(mov.fallComp.isFalling && !isXButton)
+        if (mov.fallComp == null)
+            return;
+
+        if (mov.fallComp.isFalling && !isXButton)
         {
             isXButton = true;
             rend.material = XButton;
