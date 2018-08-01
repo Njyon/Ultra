@@ -24,6 +24,9 @@ public class MainMenuUI : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
+        mMD.p1_Ready.SetActive(false);
+        mMD.p2_Ready.SetActive(false);
+
         mMD.DeActivateButtons(mMD.videoButtons);
         mMD.DeActivateButtons(mMD.audioButtons);
         mMD.DeActivateButtons(mMD.headerButtons);
@@ -36,6 +39,9 @@ public class MainMenuUI : MonoBehaviour
         mMD.championSelect.SetActive(false);
         mMD.arenaSelect.SetActive(false);
         mMD.optionsBody.SetActive(false);
+
+        mMD.cS.p1_Ready += P1_IsReady;
+        mMD.cS.p2_Ready += P2_IsReady;
     }
 
     void Update()
@@ -294,6 +300,29 @@ public class MainMenuUI : MonoBehaviour
     }
 
     #endregion
+
+    void P1_IsReady(bool isReady)
+    {
+        if(isReady)
+        {
+            mMD.p1_Ready.SetActive(true);
+        }
+        else
+        {
+            mMD.p1_Ready.SetActive(false);
+        }
+    }
+    void P2_IsReady(bool isReady)
+    {
+        if(isReady)
+        {
+            mMD.p2_Ready.SetActive(true);
+        }
+        else
+        {
+            mMD.p2_Ready.SetActive(false);
+        }
+    }
 }
 
 public enum MenuState
