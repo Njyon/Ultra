@@ -78,15 +78,15 @@ public static class MyRayCast
         bool didHit = false;
 
         // Check if the Player would hit an obstical with his body
-        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + head, 0),charPosition.right + charPosition.up, out headHit, length + 0.5f, 9, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + head, 0),charPosition.right + charPosition.up, out headHit, length + 1f, 9, QueryTriggerInteraction.Ignore))
         {
             didHit = true;
         }
-        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y - feed, 0), charPosition.right + charPosition.up, out feedHit, length + 0.5f, 9, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y - feed, 0), charPosition.right + charPosition.up, out feedHit, length + 1f, 9, QueryTriggerInteraction.Ignore))
         {
             didHit = true;
         }
-        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y, 0), charPosition.right + charPosition.up, out coreHit, length + 0.5f, 9, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y, 0), charPosition.right + charPosition.up, out coreHit, length + 1f, 9, QueryTriggerInteraction.Ignore))
         {
             didHit = true;
         }
@@ -175,15 +175,15 @@ public static class MyRayCast
 
         bool didHit = false;
 
-        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y, 0), charPosition.right + -charPosition.up, out coreHit, length + 0.5f, 9, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y, 0), charPosition.right + -charPosition.up, out coreHit, length + 1f, 9, QueryTriggerInteraction.Ignore))
         {
             didHit = true;
         }
-        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y - feed, 0), charPosition.right + -charPosition.up, out feedHit, length + 0.5f, 9, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y - feed, 0), charPosition.right + -charPosition.up, out feedHit, length + 1f, 9, QueryTriggerInteraction.Ignore))
         {
             didHit = true;
         }    
-        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + head, 0), charPosition.right + -charPosition.up, out headHit, length + 0.5f, 9, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(new Vector3(charPosition.position.x, charPosition.position.y + head, 0), charPosition.right + -charPosition.up, out headHit, length + 1f, 9, QueryTriggerInteraction.Ignore))
         {
             didHit = true;
         }

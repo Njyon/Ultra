@@ -23,7 +23,6 @@ public class OneVsOneGameMode : MonoBehaviour
     [Header("Timer")]
     [SerializeField] float time;
     Text timer;
-    Image border;
 
     [Header("MaxScore Differece befor 2x Points")]
     [SerializeField] int maxDifference;
@@ -82,7 +81,6 @@ public class OneVsOneGameMode : MonoBehaviour
         try
         {
             timer = GameObject.Find("Timer").GetComponent<Text>();
-            border = GameObject.Find("Border1").GetComponent<Image>();
         }
         catch
         {
@@ -96,8 +94,6 @@ public class OneVsOneGameMode : MonoBehaviour
         {
             timer.text = time.ToString();
         }
-        if (border != null)
-            border.material.SetColor("_Color", Color.white);
         #endregion
 
         //PlayerOne
@@ -297,10 +293,8 @@ public class OneVsOneGameMode : MonoBehaviour
     bool parried = false;
     void Parry()
     {
-        Debug.Log("LOL");
         if (!parried)
         {
-            Debug.Log("Parry!");
             var bounds = new Bounds(CharacterOne.transform.position, Vector3.zero); 
             parried = true;
             bounds.Encapsulate(CharacterOne.transform.position);
@@ -372,7 +366,6 @@ public class OneVsOneGameMode : MonoBehaviour
             //Color TIme in Last Secods Red (only fast hack for the Gate)
             if((int)time / 60 == 0 && (int)time % 60 <= 10 && timer.color != Color.red)
             {
-                border.material.SetColor("_Color", Color.red);
                 StartCoroutine(TimerBlink());
             }
 
