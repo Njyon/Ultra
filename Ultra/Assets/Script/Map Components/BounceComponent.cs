@@ -59,7 +59,7 @@ public class BounceComponent : MonoBehaviour
         float scaleMultiplayer = 1.5f;
         float speed = 3f;
 
-        Vector3 scaleUp = new Vector3(go.transform.localScale.x * scaleMultiplayer, go.transform.localScale.y * scaleMultiplayer, go.transform.localScale.z);
+        Vector3 scaleUp = new Vector3(normalScale.x * scaleMultiplayer, normalScale.y * scaleMultiplayer, normalScale.z);
 
         while(scaleTime > currentTime)
         {

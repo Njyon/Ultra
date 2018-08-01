@@ -33,6 +33,12 @@ public class CharacterSelecterV2 : MonoBehaviour
     [SerializeField] Renderer renderer1;
     [SerializeField] Renderer renderer2;
 
+    public delegate void P1_IsReady(bool isReady);
+    public delegate void P2_IsReady(bool isReady);
+
+    public P1_IsReady p1_Ready;
+    public P2_IsReady p2_Ready;
+
     #region Subscibe & Unsubscribe from Delegates
     /// <summary>
     /// Subscribe to Delegate
@@ -96,7 +102,7 @@ public class CharacterSelecterV2 : MonoBehaviour
     }
     void P1_InputUpCheck(KeyCode keyCode)
     {
-        if (keyCode == KeyCode.Joystick1Button0)                                    // P1: Release A
+        if (keyCode == KeyCode.Joystick1Button0 || keyCode == KeyCode.Joystick1Button1)                                    // P1: Release A
         {
             Check();        //Check if Game can Start
         }
@@ -115,7 +121,7 @@ public class CharacterSelecterV2 : MonoBehaviour
     }
     void P2_InputUpCheck(KeyCode keyCode)
     {
-        if (keyCode == KeyCode.Joystick2Button0)                                    // P2: Release A
+        if (keyCode == KeyCode.Joystick2Button0 || keyCode == KeyCode.Joystick2Button1)                                    // P2: Release A
         {
             Check();        //Check if Game can Start
         }
@@ -124,6 +130,24 @@ public class CharacterSelecterV2 : MonoBehaviour
     
     void Check()
     {
+        if(playerOne.charakterSelected)
+        {
+            p1_Ready(true);
+        }
+        else
+        {
+            p1_Ready(false);
+        }
+
+        if(playerTwo.charakterSelected)
+        {
+            p2_Ready(true);
+        }
+        else
+        {
+            p2_Ready(false);
+        }
+
         if (playerOne.charakterSelected && playerTwo.charakterSelected && !gameStarting)
         {
             // TODO: TIMER!

@@ -42,6 +42,14 @@ public class MainMenuData : MonoBehaviour
 
     public VideoScript vS;
 
+    [Header("Ready Texts")]
+    public GameObject p1_Ready;
+    public GameObject p2_Ready;
+
+    [Header("Player Animator")]
+    public Animator p1_Animator;
+    public Animator p2_Animator;
+
     /// <summary>
     /// Dependend on the oP State, turn all other oP Pannel off
     /// </summary>
