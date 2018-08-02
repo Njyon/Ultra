@@ -365,6 +365,7 @@ public class MyCharacter : MonoBehaviour
                 Instantiate(pD.ps_Landing, new Vector3(this.transform.position.x, this.transform.position.y, 0), Quaternion.Euler(this.transform.rotation.x + 90, this.transform.rotation.y, this.transform.rotation.z));  // Spawn Particle
                 break;
             case EventState.Dodge:
+                Instantiate(pD.ps_Dodge, this.transform);
                 animator.SetBool(animDodge, true);
                 isDodgeing = true;
                 break;

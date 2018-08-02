@@ -66,7 +66,7 @@ public class Movement : MonoBehaviour
         VelocityCheck();
 
         fallComp.Falling();
-        dash.Dashing(fallComp.isFalling);
+        //dash.Dashing(fallComp.isFalling);
         //WallSlide();
         turnclass.IUpdate(this.transform);
 
@@ -623,12 +623,12 @@ public class Movement : MonoBehaviour
         {
             if (this.gameObject.transform.position.x < 0)
             {
-                this.rb.velocity = Vector3.up * jumpVelocity + Vector3.right * jumpVelocity / 1.3f;
+                this.rb.velocity = Vector3.up * jumpVelocity * 1.2f + Vector3.right * jumpVelocity / 2f;
                 jumps++;
             }
             else
             {
-                this.rb.velocity = Vector3.up * jumpVelocity + Vector3.right * jumpVelocity / 1.3f;
+                this.rb.velocity = Vector3.up * jumpVelocity * 1.2f + Vector3.right * jumpVelocity / 2f;
                 jumps++;
             }
             turnclass.LookRight(this.transform.rotation);
@@ -641,12 +641,12 @@ public class Movement : MonoBehaviour
         {
             if (this.gameObject.transform.position.x < 0)
             {
-                this.rb.velocity = Vector3.up * jumpVelocity + Vector3.left * jumpVelocity / 1.3f;
+                this.rb.velocity = Vector3.up * jumpVelocity * 1.2f + Vector3.left * jumpVelocity / 2f;
                 jumps++;
             }
             else
             {
-                this.rb.velocity = Vector3.up * jumpVelocity + Vector3.left * jumpVelocity / 1.3f;
+                this.rb.velocity = Vector3.up * jumpVelocity * 1.2f + Vector3.left * jumpVelocity / 2f;
                 jumps++;
             }
             turnclass.LookLeft(this.transform.rotation);

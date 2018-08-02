@@ -43,4 +43,7 @@ public class ParticleData : MonoBehaviour
     [Header("ChangeDirection")]
     public GameObject turnAroundLeft;
     public GameObject turnAroundRight;
+
+    [Header("Dodge")]
+    public GameObject ps_Dodge;
 }

@@ -52,7 +52,7 @@ public class FallComponent
                 return;
             }
             FallingWallDetection();
-            rb.velocity = Vector3.down * 2;
+            rb.velocity = Vector3.down * 1;
         }
         //else if (isFalling && forcingDown && forceDownEnabled)
         //{
@@ -99,7 +99,6 @@ public class FallComponent
 
                 this.isOnWallLeft = false;
                 this.isOnWallRight = false;
-                dash.canDash = true;
 
                 if (mov.jumps > 0)
                     mov.ResetJumps();

@@ -40,6 +40,7 @@ public class Dash : MonoBehaviour
 
     private void Start()
     {
+        canDash = true;
         emissionID = Shader.PropertyToID("_EmissionColor");
         colorID = Shader.PropertyToID("_Color");
     }
@@ -47,6 +48,8 @@ public class Dash : MonoBehaviour
     public void DashCheck()
     {
         if (myCharacter.isDisabled)
+            return;
+        if (!canDash)
             return;
 
         Dodge();
@@ -99,6 +102,10 @@ public class Dash : MonoBehaviour
     {
         if (this.GetComponent<MyCharacter>().isAttacking)
             return;
+        if (!canDash)
+            return;
+
+        StartCoroutine(DashCoolDown(dashCoolDown));
         StartCoroutine(DogeTime(dodgeNoDmgTime));
     }
     public void DashStanding()
@@ -106,15 +113,13 @@ public class Dash : MonoBehaviour
         if (canDash)
         {
             myCharacter.canGetDamaged = false;
-            canDash = false;
+            //canDash = false;
             canMove = false;
             rb.velocity = Vector3.zero;
             rb.useGravity = false;
             StartCoroutine(DashCoolDown(dashCoolDown));
             StartCoroutine(StandingDogeTime(dodgeNoDmgTime));
-
-            if (eventDelegate != null)
-                eventDelegate(EventState.Dodge);
+            
         }
     }
     public void DirectionDash(bool directionRight)
@@ -146,22 +151,19 @@ public class Dash : MonoBehaviour
             {
                 if (canDash)
                 {
-                    canDash = false;
                     if (isFalling)
                     {
                         if (this.GetComponent<MyCharacter>().isAttacking)
                             return;
 
-                        StartCoroutine(DogeTime(dodgeNoDmgTime));
-                        StartCoroutine(DashCoolDown(dashCoolDown));
-
-                        if (eventDelegate != null)
-                            eventDelegate(EventState.Dodge);
+                        //StartCoroutine(DogeTime(dodgeNoDmgTime));
+                        //StartCoroutine(DashCoolDown(dashCoolDown));
                     }
                     else
                     {
                         currentDashes = 0;
-                        StartCoroutine(DashCoolDown(dashCoolDown));
+                        //StartCoroutine(DogeTime(dodgeNoDmgTime));
+                        //StartCoroutine(DashCoolDown(dashCoolDown));
                     }
                 }
                 if (MyEpsilon.Epsilon(transform.position.x, dashEndPoint.x, 0.5f))
@@ -190,6 +192,7 @@ public class Dash : MonoBehaviour
     }
     IEnumerator DashCoolDown(float time)
     {
+        canDash = false;
         yield return new WaitForSeconds(time);
         canDash = true;
     }
