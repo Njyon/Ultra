@@ -108,9 +108,13 @@ public class MultiTargetCamera : MonoBehaviour
         targets.Add(t);
     }
 
-    public void Shake()
+    public void Shake(bool isHeavy)
     {
-        CameraShaker.Instance.ShakeOnce(0.3f, 10f, 0.1f, .3f);
+        if(isHeavy)
+            CameraShaker.Instance.ShakeOnce(0.7f, 11f, 0.3f, 0.7f);
+        else
+            CameraShaker.Instance.ShakeOnce(0.4f, 10f, 0.1f, 0.4f);
+            
         //StartCoroutine(IShake());
     }
 

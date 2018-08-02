@@ -106,7 +106,7 @@ public class MyCharacter : MonoBehaviour
     public delegate void BounceDelegate(PlayerEnum pE);
     public BounceDelegate bounceAction;
 
-    public delegate void ShakeCamera();
+    public delegate void ShakeCamera(bool isHeavy);
     public ShakeCamera shakeCameraAction;
 
     public delegate void ParryDelegate();
@@ -636,6 +636,9 @@ public class MyCharacter : MonoBehaviour
                 rb.velocity = new Vector3(Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), dir.y, 0);
             }
         }
+        if (shakeCameraAction != null)
+            shakeCameraAction(true);
+
         float time = X * Mathf.Sqrt(percent);
         Disable(time);
     }
@@ -674,6 +677,9 @@ public class MyCharacter : MonoBehaviour
                 rb.velocity = new Vector3(enemyPos.x, Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), 0);
             }
         }
+        if (shakeCameraAction != null)
+            shakeCameraAction(true);
+
         float time = X * Mathf.Sqrt(percent);
         Disable(time);
     }
@@ -932,7 +938,7 @@ public class MyCharacter : MonoBehaviour
                 StartCoroutine(FreezCharacter(false, freezTimeBounce, false));
 
                 if(shakeCameraAction != null)
-                    shakeCameraAction();
+                    shakeCameraAction(false);
             }
             //else if (MyEpsilon.Epsilon(rb.velocity.x, 0, 1) && MyEpsilon.Epsilon(rb.velocity.y, 0, 1))
             //{
