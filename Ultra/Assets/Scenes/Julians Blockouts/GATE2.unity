@@ -1942,9 +1942,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xPower: 1
   yPower: 1
-  shouldWigle: 0
+  shouldWigle: 1
   shouldScale: 0
-  go: {fileID: 0}
+  go: {fileID: 1679500336}
   curve:
     serializedVersion: 2
     m_Curve: []
@@ -3720,9 +3720,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xPower: 1
   yPower: 1
-  shouldWigle: 0
+  shouldWigle: 1
   shouldScale: 0
-  go: {fileID: 0}
+  go: {fileID: 496243271}
   curve:
     serializedVersion: 2
     m_Curve: []
@@ -6423,6 +6423,10 @@ Prefab:
 --- !u!4 &496243270 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400004, guid: 5af39442a97ce77459dbc9de2902442f, type: 3}
+  m_PrefabInternal: {fileID: 496243269}
+--- !u!1 &496243271 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100004, guid: 5af39442a97ce77459dbc9de2902442f, type: 3}
   m_PrefabInternal: {fileID: 496243269}
 --- !u!1001 &500335225
 Prefab:
@@ -20950,6 +20954,21 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114825481931552116, guid: 933068d493079bc46b2c1ddac7e3cea7,
+        type: 2}
+      propertyPath: m_FontData.m_HorizontalOverflow
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114825481931552116, guid: 933068d493079bc46b2c1ddac7e3cea7,
+        type: 2}
+      propertyPath: m_FontData.m_VerticalOverflow
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114783080416440760, guid: 933068d493079bc46b2c1ddac7e3cea7,
+        type: 2}
+      propertyPath: m_FontData.m_VerticalOverflow
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 933068d493079bc46b2c1ddac7e3cea7, type: 2}
   m_IsPrefabParent: 0
@@ -21784,8 +21803,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d350fd0697283342951b320f106dd34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xPower: 0
-  yPower: 0
+  xPower: 1
+  yPower: 1
   shouldWigle: 0
   shouldScale: 0
   go: {fileID: 0}
@@ -24095,6 +24114,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 89.551994
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 549abc9b53e7d2a40b5c97c41727b1ce, type: 3}
+      propertyPath: m_TagString
+      value: noSlide
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 549abc9b53e7d2a40b5c97c41727b1ce, type: 3}
   m_IsPrefabParent: 0
@@ -25194,6 +25217,10 @@ Prefab:
 --- !u!4 &1679500335 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 5d8a75eed9fef1d4e860eac905ecfb59, type: 3}
+  m_PrefabInternal: {fileID: 1679500334}
+--- !u!1 &1679500336 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100154, guid: 5d8a75eed9fef1d4e860eac905ecfb59, type: 3}
   m_PrefabInternal: {fileID: 1679500334}
 --- !u!1 &1681850660
 GameObject:
@@ -30392,7 +30419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   xPower: 1
-  yPower: 1
+  yPower: 1.5
   shouldWigle: 0
   shouldScale: 0
   go: {fileID: 0}

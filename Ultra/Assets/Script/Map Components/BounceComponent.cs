@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class BounceComponent : MonoBehaviour
 {
+    [Range(1, 5)]
     public float xPower, yPower;
 
     public bool shouldWigle;
