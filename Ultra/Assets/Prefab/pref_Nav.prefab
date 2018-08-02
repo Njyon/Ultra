@@ -6845,7 +6845,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1091865933872492}
-  m_LocalRotation: {x: -0.000000029443989, y: -0.00028797233, z: 0.0074063507, w: 0.9999725}
+  m_LocalRotation: {x: -0.000000029444035, y: -0.00028797233, z: 0.007406363, w: 0.9999725}
   m_LocalPosition: {x: -0.08868367, y: -0.00000007147537, z: 0.000000324937}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -9898,6 +9898,12 @@ MonoBehaviour:
   meshController: {fileID: 1447890962482332}
   clothColor: {r: 0, g: 0, b: 0, a: 0}
   swordColor: {r: 0, g: 0, b: 0, a: 0}
+  mat_Metal: {fileID: 13400000, guid: 89d8e7148aa08114c91359c766c63930, type: 2}
+  mat_Concrete: {fileID: 13400000, guid: efc77b72558d36a4580223ec9bc4bbde, type: 2}
+  mat_Stone: {fileID: 13400000, guid: 0db33160cc72fcb44951a66177a67963, type: 2}
+  mat_Rubber: {fileID: 13400000, guid: 03b9dc6c3c5276942abb40eaf8e530c4, type: 2}
+  mat_Glass: {fileID: 13400000, guid: d3539f3b6fb93bd4baef230c297c0f96, type: 2}
+  audioEvents: {fileID: 114719652419382040}
   pD: {fileID: 114996467066509520}
   hitCounter: 0
   combo: 0

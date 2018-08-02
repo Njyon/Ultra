@@ -2,6 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public enum BounceType
+{
+    Metal,
+    Concrete,
+    Stone,
+    Rubber,
+    Glass,
+    MetalGlass,
+}
+
 public class AudioEvents : MonoBehaviour {
     private float yVelocity = 0;
     private Movement movement;
@@ -10,14 +21,7 @@ public class AudioEvents : MonoBehaviour {
     private EventDelegate eventDelegate;
     private double bounceAudioLastTrigger;
 
-    public enum BounceType {
-        Metal,
-        Concrete,
-        Stone,
-        Rubber,
-        Glass,
-        MetalGlass,
-    }
+   
 
     void Awake () {
         movement = gameObject.transform.parent.gameObject.transform.parent.gameObject.GetComponent<Movement>();
@@ -61,7 +65,6 @@ public class AudioEvents : MonoBehaviour {
                 var rand = Random.Range(0f, 1f);
                 Fabric.EventManager.Instance.SetParameter("Landing", "LandingImpact", yVelocity, this.gameObject);
                 Fabric.EventManager.Instance.PostEvent("Landing", this.gameObject);
-                Debug.Log("Velocity: " + yVelocity);
                 break;
             case EventState.Dodge:
                 break;
@@ -86,7 +89,7 @@ public class AudioEvents : MonoBehaviour {
                 Fabric.EventManager.Instance.PostEvent("DashStab", this.gameObject);
                 break;
             case EventState.Bounce:
-                Fabric.EventManager.Instance.PostEvent("Bounce", this.gameObject);
+                //Fabric.EventManager.Instance.PostEvent("Bounce", this.gameObject);
                 break;
             case EventState.Parry:
                 break;
@@ -116,10 +119,7 @@ public class AudioEvents : MonoBehaviour {
 
         if(movement.fallComp.isFalling)
         {
-            yVelocity = movement.rb.velocity.y;
-    void Update() {
-        if(movement.fallComp.isFalling) {
-            yVelocity = Mathf.Abs(movement.rb.velocity.y)/32;
+            yVelocity = Mathf.Abs(movement.rb.velocity.y) / 32;
         }
     }
 

@@ -388,7 +388,6 @@ public class Nav2 : MyCharacter
                 case Direction.RightUpAngel:
                 case Direction.LeftUpAngel:
                 case Direction.Up:
-                    Debug.Log("Up");
                     enemyCharacter.KickUp(transform.position, false);
                     break;
                 case Direction.Down:
@@ -403,7 +402,7 @@ public class Nav2 : MyCharacter
             // Update the Combo
             Combo(ComboState.HitStrak);
         }
-        eventDelegate(EventState.Slash);
+        //eventDelegate(EventState.Slash);
         // Freez the Cam // in the Moment deactive
         //freezCamAction();
         // End the Dash

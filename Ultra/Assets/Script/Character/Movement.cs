@@ -618,7 +618,6 @@ public class Movement : MonoBehaviour
     {
         if (myCharacter.isDisabled)
             return;
-        Debug.Log(jumps);
 
         if (fallComp.isOnWallLeft && fallComp.isFalling)
         {

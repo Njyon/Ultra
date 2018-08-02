@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -63,6 +64,16 @@ public class MyCharacter : MonoBehaviour
     [HideInInspector] public Color clothColor;
     [HideInInspector] public Color swordColor;
     
+    [Header("PhysikMaterial")]
+    [SerializeField] PhysicMaterial mat_Metal;
+    [SerializeField] PhysicMaterial mat_Concrete;
+    [SerializeField] PhysicMaterial mat_Stone;
+    [SerializeField] PhysicMaterial mat_Rubber;
+    [SerializeField] PhysicMaterial mat_Glass;
+
+    [Header("AudioComp")]
+    [SerializeField] AudioEvents audioEvents;
+
     protected GameObject lastBounceObj;
 
     [SerializeField] protected ParticleData pD;
@@ -921,6 +932,10 @@ public class MyCharacter : MonoBehaviour
 
                 // ToDo: Check if the Character Bounced against some thing Special 
 
+                BounceType bounceType = GetPhysiksMaterial(hit);
+
+                audioEvents.Bounce(bounceType);
+
                 // Count enemy Combo Up
                 enemyCharacter.Combo(ComboState.Bounce);
                 eventDelegate(EventState.Bounce);
@@ -946,6 +961,36 @@ public class MyCharacter : MonoBehaviour
             //}
         }
     }
+
+    BounceType GetPhysiksMaterial(RaycastHit hit)
+    {
+        if(hit.collider.material.name == mat_Metal.name + " (Instance)")
+        {
+            return BounceType.Metal;
+        }
+        else if(hit.collider.material.name == mat_Concrete.name + " (Instance)")
+        {
+            return BounceType.Concrete;
+        }
+        else if (hit.collider.material.name == mat_Stone.name + " (Instance)")
+        {
+            return BounceType.Stone;
+        }
+        else if (hit.collider.material.name == mat_Rubber.name + " (Instance)")
+        {
+            return BounceType.Rubber;
+        }
+        else if (hit.collider.material.name == mat_Glass.name + " (Instance)")
+        {
+            return BounceType.Glass;
+        }
+        else
+        {
+            return BounceType.Concrete;
+        }
+
+    }
+
     /// <summary>
     ///  Resets the Combo Vars
     /// </summary>
