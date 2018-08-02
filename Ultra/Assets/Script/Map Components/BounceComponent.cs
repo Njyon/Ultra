@@ -74,13 +74,11 @@ public class BounceComponent : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator Wigle()
-    {
+    IEnumerator Wigle() {
         float wigleTime = 0.5f;
         float speed = 5f;
         
-        while(wigleTime > 0)
-        {
+        while(wigleTime > 0) {
             go.transform.position = new Vector3(pos.x + Mathf.PingPong(Time.time * speed, wigleTime), pos.y, pos.z);
 
             wigleTime -= Time.deltaTime;
