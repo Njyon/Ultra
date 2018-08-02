@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioEvents : MonoBehaviour
-{
-
+public class AudioEvents : MonoBehaviour {
     private float yVelocity = 0;
 
     private Movement movement;
@@ -23,8 +21,7 @@ public class AudioEvents : MonoBehaviour
         eventDelegate += EventCheck;
     }
 
-    private void OnDisable()
-    {
+    private void OnDisable() {
         character.eventDelegate -= EventCheck;
         movement.eventDelegate -= EventCheck;
         eventDelegate -= EventCheck;
@@ -103,10 +100,13 @@ public class AudioEvents : MonoBehaviour
         }
     }
 
-    void Update()
-    {
+    void Update() {
         if(movement.fallComp.isFalling) {
             yVelocity = Mathf.Abs(movement.rb.velocity.y)/32;
         }
+    }
+
+    public void Footstep() {
+        Fabric.EventManager.Instance.PostEvent("Footsteps", this.gameObject);
     }
 }
