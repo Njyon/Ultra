@@ -11,6 +11,7 @@ public class MyCharacter : MonoBehaviour
     public float xFactor;
     public float gesamtFactor;
     public float UpDivider;
+    public float disabledStartForce;
     public float startForce;
     public float startForceUp;
     public float X;
@@ -650,7 +651,7 @@ public class MyCharacter : MonoBehaviour
         if (shakeCameraAction != null)
             shakeCameraAction(true);
 
-        float time = X * Mathf.Sqrt(percent);
+        float time = disabledStartForce + X * Mathf.Sqrt(percent);
         Disable(time);
     }
     /// <summary>
@@ -691,7 +692,7 @@ public class MyCharacter : MonoBehaviour
         if (shakeCameraAction != null)
             shakeCameraAction(true);
 
-        float time = X * Mathf.Sqrt(percent);
+        float time = disabledStartForce + X * Mathf.Sqrt(percent);
         Disable(time);
     }
     /// <summary>
