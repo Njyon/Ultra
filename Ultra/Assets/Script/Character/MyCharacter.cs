@@ -18,6 +18,13 @@ public class MyCharacter : MonoBehaviour
     public float freezTimeBounce;
     public float freezTimeHit;
 
+    [Header("Combo Math")]
+    public float scoreFactor;
+    public float hitFactor;
+    public float sqrtA;
+    public float sqrtB;
+    public float sqrtC;
+
     [Header("Renderer")]
     public Renderer bodyRenderer;
     public Renderer clothRenderer;
@@ -859,8 +866,10 @@ public class MyCharacter : MonoBehaviour
         inCombo = false;
 
         // Calc new Score
-        float interimResult = Mathf.Pow(combo, 2) * hitCounter;
-        interimResult += (int)interimResult * multiplier;
+        float interimResult = scoreFactor * (sqrtA * Mathf.Sqrt(hitFactor * hitCounter + combo + sqrtB) + sqrtC);
+
+        // Mathf.Pow(combo, 2) * hitCounter;
+        // interimResult += (int)interimResult * multiplier;
 
         if(inComeBackMode)
         {
