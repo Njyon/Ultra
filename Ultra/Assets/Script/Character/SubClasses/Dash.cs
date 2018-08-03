@@ -47,8 +47,8 @@ public class Dash : MonoBehaviour
 
     public void DashCheck()
     {
-        if (myCharacter.isDisabled)
-            return;
+        //if (myCharacter.isDisabled)
+        //    return;
         if (!canDash)
             return;
 

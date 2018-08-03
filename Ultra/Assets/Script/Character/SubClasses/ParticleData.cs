@@ -46,4 +46,5 @@ public class ParticleData : MonoBehaviour
 
     [Header("Dodge")]
     public GameObject ps_Dodge;
+    public GameObject ps_Dodge_Sucsses;
 }
