@@ -203,27 +203,7 @@ public class InGameUI : MonoBehaviour
         {
             float currentScore = Mathf.Lerp(i_score, score, time);
 
-            float digit;
-            float decimals;
-            if (currentScore >= 1000000)
-            {
-                digit = currentScore / 1000000f;
-                digit = Mathf.Round(digit * 100.0f) / 100.0f;
-                decimals = digit - (int)digit;
-                this.score.text = digit.ToString() + "M";
-            }
-            else if (currentScore >= 1000)
-            {
-                digit = currentScore / 1000f;
-                digit = Mathf.Round(digit * 100.0f) / 100.0f;
-                decimals = digit - (int)digit;
-                this.score.text = digit.ToString() + "K";
-            }
-            else
-            {
-                int iScore = (int)currentScore;
-                this.score.text = iScore.ToString();
-            }
+            DisplayScore((int)currentScore);
 
             this.score.transform.position = new Vector3(this.scoreTextPos.x + Mathf.PingPong(Time.time * wigleSpeed, wiglePower), this.scoreTextPos.y, this.scoreTextPos.z);
             this.score.transform.localScale = new Vector3(scoreTextScale.x, scoreTextScale.y + Mathf.PingPong(Time.time * wigleSpeed, 1.3f), scoreTextScale.z);
@@ -232,9 +212,37 @@ public class InGameUI : MonoBehaviour
             yield return null;
         }
         i_score = score;
+
+        DisplayScore(score);
+
         this.score.transform.position = this.scoreTextPos;
         this.score.transform.localScale = this.scoreTextScale;
 
         yield return null;
+    }
+    void DisplayScore(float score)
+    {
+
+        float digit;
+        float decimals;
+        if (score >= 1000000)
+        {
+            digit = score / 1000000f;
+            digit = Mathf.Round(digit * 100.0f) / 100.0f;
+            decimals = digit - (int)digit;
+            this.score.text = digit.ToString() + "M";
+        }
+        else if (score >= 1000)
+        {
+            digit = score / 1000f;
+            digit = Mathf.Round(digit * 100.0f) / 100.0f;
+            decimals = digit - (int)digit;
+            this.score.text = digit.ToString() + "K";
+        }
+        else
+        {
+            int iScore = (int)score;
+            this.score.text = iScore.ToString();
+        }
     }
 }

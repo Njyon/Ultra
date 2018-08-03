@@ -88,11 +88,28 @@ public class EndScreenManager : MonoBehaviour
         switch (playerOneWon)
         {
             case true:
-                return (maxHight / p1_Score * p2_Score) * 0.2f;
+                return (maxHight / p1_Score * p2_Score);
             case false:
-                return (maxHight / p2_Score * p1_Score) * 0.2f;
+                return (maxHight / p2_Score * p1_Score);
         }
         return 0;
+    }
+
+    float GetDodgeHight()
+    {
+        return 0f;
+    }
+
+    int GetWinnerScore(int p1_Score, int p2_Score)
+    {
+        if (p1_Score > p2_Score)
+            return p1_Score;
+        else
+            return p2_Score;
+    }   
+    int GetDodgeScore(int Dodges)
+    {
+        return Dodges * 1000;
     }
 
     IEnumerator LoadNewScene()
@@ -104,7 +121,93 @@ public class EndScreenManager : MonoBehaviour
             yield return null;
         }
     }
+    IEnumerator RisePlateau(float p1_scoreToAdd, float p2_scoreToAdd)
+    {
+        float time = 2f;
+        float divideTime = time;
+
+        float p1_HightToAdd =  p1_scoreToAdd / scorePerHight;
+        float p2_HightToAdd =  p2_scoreToAdd / scorePerHight;
+
+        float p1_OldScore = p1_CurrentsScore;
+        float p2_OldScore = p2_CurrentsScore;
+
+        Vector3 p1_PlateauPos = Plateaus[0].transform.position;
+        Vector3 p2_PlateauPos = Plateaus[1].transform.position;
+
+        Vector3 p1_PlateauEndPos = new Vector3(Plateaus[0].transform.position.x, Plateaus[0].transform.position.y + p1_HightToAdd, Plateaus[0].transform.position.z);
+        Vector3 p2_PlateauENdPos = new Vector3(Plateaus[1].transform.position.x, Plateaus[1].transform.position.y + p2_HightToAdd, Plateaus[1].transform.position.z);
+
+        while (time > 0)
+        {
+            // Count Score Up
+            p1_CurrentsScore = Mathf.Lerp(p1_scoreToAdd + p1_OldScore, p1_OldScore, time / divideTime);
+            p2_CurrentsScore = Mathf.Lerp(p2_scoreToAdd + p2_OldScore, p2_OldScore, time / divideTime);
+            // Convert To Int to Display
+            int p1_IntScore = (int)p1_CurrentsScore;
+            int p2_IntScore = (int)p2_CurrentsScore;
+            // Display new Score
+            textManger[0].score.text = "Score: " + p1_IntScore.ToString();
+            textManger[1].score.text = "Score: " + p2_IntScore.ToString();
+
+            //Lerp Plateau to new Position
+            Plateaus[0].transform.position = Vector3.Lerp(p1_PlateauEndPos, p1_PlateauPos, time / divideTime);
+            Plateaus[1].transform.position = Vector3.Lerp(p2_PlateauENdPos, p2_PlateauPos, time / divideTime);
+            
+            time -= Time.deltaTime;
+
+            yield return null;
+        }
+
+        // Count Score Up
+        p1_CurrentsScore = p1_scoreToAdd + p1_OldScore;
+        p2_CurrentsScore = p2_scoreToAdd + p2_OldScore;
+
+        int p1_intScore = (int)p1_CurrentsScore;
+        int p2_intScore = (int)p2_CurrentsScore;
+
+        // Display new Score
+        textManger[0].score.text = "Score: " + p1_intScore.ToString();
+        textManger[1].score.text = "Score: " + p2_intScore.ToString();
+
+        yield return null;
+    }
+    float p1_CurrentsScore = 0;
+    float p2_CurrentsScore = 0;
+    float scorePerHight;
     IEnumerator CountPoints()
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        int winnerScore = GetWinnerScore(PlayerDataManager.playerOne.Score,PlayerDataManager.playerTwo.Score);
+        scorePerHight = winnerScore / maxScoreHight.position.y;
+
+        Debug.Log(maxScoreHight.position.y);
+
+        int p1_Dodge_Score = GetDodgeScore(PlayerDataManager.playerOne.AmountOfDodges);
+        int p2_Dodge_Score = GetDodgeScore(PlayerDataManager.playerTwo.AmountOfDodges);
+
+        int p1_RestScore = PlayerDataManager.playerOne.Score - p1_Dodge_Score;
+        int p2_RestScore = PlayerDataManager.playerTwo.Score - p2_Dodge_Score;
+
+        StartCoroutine(RisePlateau(p1_Dodge_Score, p2_Dodge_Score));
+        yield return new WaitForSeconds(3f);
+
+        StartCoroutine(RisePlateau(p1_RestScore * 0.35f, p2_RestScore * 0.35f));
+        yield return new WaitForSeconds(3f);
+
+        StartCoroutine(RisePlateau(p1_RestScore * 0.25f, p2_RestScore * 0.25f));
+        yield return new WaitForSeconds(3f);
+
+        StartCoroutine(RisePlateau(p1_RestScore * 0.50f, p2_RestScore * 0.50f));
+
+        textManger[0].score.text = "Score: " + PlayerDataManager.playerOne.Score.ToString();
+        textManger[1].score.text = "Score: " + PlayerDataManager.playerTwo.Score.ToString();
+
+        yield return null;
+    }
+
+    IEnumerator TEST()
     {
         int p1_Score = PlayerDataManager.playerOne.Score;
         int p2_Score = PlayerDataManager.playerTwo.Score;
@@ -123,11 +226,11 @@ public class EndScreenManager : MonoBehaviour
 
         float time = 0;
         float speed = 5f;
-        
+
 
         yield return new WaitForSeconds(1f);
-        
-        while(!done)
+
+        while (!done)
         {
             time += Time.deltaTime / speed;
             // Count Score Up
@@ -141,7 +244,7 @@ public class EndScreenManager : MonoBehaviour
             textManger[0].score.text = "Score: " + p1_IntScore.ToString();
             textManger[1].score.text = "Score: " + p2_IntScore.ToString();
 
-            if(playerOneWon)
+            if (playerOneWon)
             {
                 Plateaus[0].transform.position = Vector3.Lerp(p1_PlateauStartPos, new Vector3(p1_PlateauStartPos.x, winnerYPos, p1_PlateauStartPos.z), time);
                 Plateaus[1].transform.position = Vector3.Lerp(p2_PlateauStartPos, new Vector3(p2_PlateauStartPos.x, loserYPos, p2_PlateauStartPos.z), time);
@@ -151,7 +254,7 @@ public class EndScreenManager : MonoBehaviour
                 Plateaus[0].transform.position = Vector3.Lerp(p1_PlateauStartPos, new Vector3(p1_PlateauStartPos.x, loserYPos, p1_PlateauStartPos.z), time);
                 Plateaus[1].transform.position = Vector3.Lerp(p2_PlateauStartPos, new Vector3(p2_PlateauStartPos.x, winnerYPos, p2_PlateauStartPos.z), time);
             }
-            
+
             //playerOne.transform.position = new Vector3(playerOne.transform.position.x, playerOne.transform.position.y + p1_CurrentsScore / 1000, playerOne.transform.position.z);
             //playerTwo.transform.position = new Vector3(playerTwo.transform.position.x, playerTwo.transform.position.y + p2_CurrentsScore / 1000, playerTwo.transform.position.z);
 
@@ -165,14 +268,14 @@ public class EndScreenManager : MonoBehaviour
                 p2_CurrentsScore = p2_Score;
                 textManger[1].score.text = p2_Score.ToString();
             }
-            if(p1_CurrentsScore == p1_Score && p2_CurrentsScore == p2_Score)
+            if (p1_CurrentsScore == p1_Score && p2_CurrentsScore == p2_Score)
             {
                 done = true;
             }
             yield return null;
         }
-        
-        if(playerOneWon)
+
+        if (playerOneWon)
         {
             winnerText.text = "Player One Wins";
         }
