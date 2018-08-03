@@ -22,7 +22,9 @@ public class OneVsOneGameMode : MonoBehaviour
     
     [Header("Timer")]
     [SerializeField] float time;
+    public GameObject Border;
     Text timer;
+    public Animator BigTimer;
 
     [Header("MaxScore Differece befor 2x Points")]
     [SerializeField] int maxDifference;
@@ -367,6 +369,7 @@ public class OneVsOneGameMode : MonoBehaviour
         comeBackCooling = false;
     }
 
+    bool bigTimerOn = false;
     void Update()
     {
         if(timer != null)
@@ -386,9 +389,17 @@ public class OneVsOneGameMode : MonoBehaviour
             }
 
             //Color TIme in Last Secods Red (only fast hack for the Gate)
-            if((int)time / 60 == 0 && (int)time % 60 <= 10 && timer.color != Color.red)
+            if((int)time / 60 == 0 && (int)time % 60 <= 30 && timer.color != Color.red)
             {
                 StartCoroutine(TimerBlink());
+            }
+            if((int)time / 60 == 0 && (int)time % 60 <= 5f && !bigTimerOn)
+            {
+                bigTimerOn = true;
+                timer.gameObject.SetActive(false);
+                Border.SetActive(false);
+                StopCoroutine(TimerBlink());
+                BigTimer.SetBool("Go", true);
             }
 
             if (time - Time.deltaTime <= 0)

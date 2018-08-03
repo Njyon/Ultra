@@ -863,6 +863,11 @@ Transform:
   m_PrefabParentObject: {fileID: 4798545321699324, guid: 51da1a05f995a4d4b8c3a1f46e4480ce,
     type: 2}
   m_PrefabInternal: {fileID: 74238070}
+--- !u!1 &74935148 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1041117958704910, guid: 933068d493079bc46b2c1ddac7e3cea7,
+    type: 2}
+  m_PrefabInternal: {fileID: 1349863331}
 --- !u!1001 &78829459
 Prefab:
   m_ObjectHideFlags: 0
@@ -5534,7 +5539,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keeram: {fileID: 1539067981596278, guid: caf6f3f19c80d4c46913c87baac21770, type: 2}
   nav: {fileID: 1705125410865688, guid: d61cc58934f954b4ab231afdc85281b4, type: 2}
-  time: 180
+  time: 20
+  Border: {fileID: 74935148}
+  BigTimer: {fileID: 1349863332}
   maxDifference: 2000
   comeBackTime: 20
   comeBackTCooldown: 10
@@ -21780,6 +21787,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 933068d493079bc46b2c1ddac7e3cea7, type: 2}
   m_IsPrefabParent: 0
+--- !u!95 &1349863332 stripped
+Animator:
+  m_PrefabParentObject: {fileID: 95607016153327364, guid: 933068d493079bc46b2c1ddac7e3cea7,
+    type: 2}
+  m_PrefabInternal: {fileID: 1349863331}
 --- !u!1 &1351523864
 GameObject:
   m_ObjectHideFlags: 0
