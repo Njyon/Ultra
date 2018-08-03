@@ -160,10 +160,13 @@ public class CharacterSelecterV2 : MonoBehaviour
             PlayerInfoManager.playerOne.color = renderer1.material.GetColor("_EmissionColor");
             PlayerInfoManager.playerTwo.color = renderer2.material.GetColor("_EmissionColor");
 
-            RemoveInput();
-            StartGame();
-            
+            Invoke("DelayStartGame", 1f);
         }
+    }
+    void DelayStartGame()
+    {
+        RemoveInput();
+        StartGame();
     }
     public bool NoCharSelected()
     {
