@@ -116,7 +116,7 @@ public class MainMenuUI : MonoBehaviour
             mMD.videoButtons[0].GetComponent<Dropdown>().options.Add(new Dropdown.OptionData(res.ToString()));
         }
         // fast hack to display a value at start
-        mMD.videoButtons[0].GetComponent<Dropdown>().value = mMD.videoButtons[0].GetComponent<Dropdown>().options.Count - 2;
+        mMD.videoButtons[0].GetComponent<Dropdown>().value = mMD.videoButtons[0].GetComponent<Dropdown>().options.Count;
     }
     void GetQualityLevels()
     {

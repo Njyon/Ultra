@@ -10,7 +10,7 @@ public class Movement : MonoBehaviour
     [HideInInspector] public FallComponent fallComp;
 
     // Helper
-    [HideInInspector] public bool islookingToTheRight;
+    [HideInInspector] public bool islookingToTheRight = true;
     bool forcingDown = false;
     bool forceDownEnabled = true;
     bool isStunned = false;

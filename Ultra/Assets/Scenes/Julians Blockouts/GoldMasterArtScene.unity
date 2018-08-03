@@ -14796,9 +14796,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xPower: 1.3
   yPower: 1.3
-  shouldWigle: 0
+  shouldWigle: 1
   shouldScale: 0
-  go: {fileID: 0}
+  go: {fileID: 1790383522}
   curve:
     serializedVersion: 2
     m_Curve: []
@@ -22277,6 +22277,10 @@ GameObject:
 --- !u!4 &1790383521 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 5d8a75eed9fef1d4e860eac905ecfb59, type: 3}
+  m_PrefabInternal: {fileID: 1790383519}
+--- !u!1 &1790383522 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100008, guid: 5d8a75eed9fef1d4e860eac905ecfb59, type: 3}
   m_PrefabInternal: {fileID: 1790383519}
 --- !u!1001 &1795432743
 Prefab:

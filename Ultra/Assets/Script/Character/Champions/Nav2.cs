@@ -17,7 +17,6 @@ public class Nav2 : MyCharacter
 
     Direction direction;
 
-    bool isUsingAbility = false;
     Vector3 dashStartPosition;
     Vector3 dashEndPosition;
     Ability abilities;
@@ -61,6 +60,14 @@ public class Nav2 : MyCharacter
     {
         if (isUsingAbility)
             return;
+
+        if(direction == Direction.None)
+        {
+            if (movement.islookingToTheRight)
+                direction = Direction.Right;
+            else
+                direction = Direction.Left;
+        }
 
         this.direction = direction;
         switch (direction)

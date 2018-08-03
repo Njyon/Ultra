@@ -87,6 +87,8 @@ public class MyCharacter : MonoBehaviour
 
     [HideInInspector] public OneVsOneGameMode gameMode;
     [HideInInspector] public bool inComeBackMode = false;
+    
+    protected bool isUsingAbility = false;
 
     //////////// Collision ///////////
 
@@ -634,7 +636,7 @@ public class MyCharacter : MonoBehaviour
             }
             else
             {
-                rb.velocity = new Vector3(-Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), dir.y, 0);
+                rb.velocity = new Vector3(-Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), dir.y * 2, 0);
             }
         }
         else                                            // Direction = Left
@@ -646,7 +648,7 @@ public class MyCharacter : MonoBehaviour
             }
             else
             {
-                rb.velocity = new Vector3(Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), dir.y, 0);
+                rb.velocity = new Vector3(Mathf.Pow(Mathf.Sqrt(basisWert * percent) + startForce, potenz), dir.y * 2, 0);
             }
         }
         if (shakeCameraAction != null)
@@ -817,6 +819,13 @@ public class MyCharacter : MonoBehaviour
                 score += 1000;
                 // Update Score
                 ui.UpdateScore(score);
+
+                if(isDisabled)
+                {
+                    EndDisable();
+                    CancelInvoke("EndDisable");
+                }
+                Instantiate(pD.ps_Dodge_Sucsses, this.transform);
                 break;
 
             case ComboState.Hit:
@@ -1118,7 +1127,7 @@ public class MyCharacter : MonoBehaviour
     }
     protected IEnumerator FreezCharacter(bool wigle, float maxTime, bool hitting)
     {
-
+        isUsingAbility = true;
         float time = 0;
         float speed = 15;
         Vector3 vel = this.rb.velocity;
@@ -1150,6 +1159,7 @@ public class MyCharacter : MonoBehaviour
         if(hitting)
             animator.speed = 1;
 
+        isUsingAbility = false;
         this.rb.useGravity = true;
         this.rb.velocity = vel;
         yield return null;
