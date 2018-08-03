@@ -237,6 +237,10 @@ public class OneVsOneGameMode : MonoBehaviour
     // End game and transition to next scene
     void EndGame()
     {
+        if (!gameOn)
+            return;
+
+        gameOn = false;
         // End Combo from both Players
         PlayerOne.GetComponent<MyCharacter>().EndCombo();
         PlayerTwo.GetComponent<MyCharacter>().EndCombo();

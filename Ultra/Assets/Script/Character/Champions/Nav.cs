@@ -25,7 +25,6 @@ public class Nav : MyCharacter
     bool isCharging = false;
     bool doOnce = false;
     bool enemyKickingUp = false;
-    bool isUsingAbility = false;
     float currentSpecialAttackDashTime;
     float currentLightAttackDashTime;
     float currentEnemyTravelTime;

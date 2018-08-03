@@ -6474,7 +6474,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1871635218851576}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4885020113118866}
@@ -9189,11 +9189,17 @@ MonoBehaviour:
   xFactor: 1
   gesamtFactor: 1
   UpDivider: 1
+  disabledStartForce: 0
   startForce: 30
   startForceUp: 100
   X: 0
   freezTimeBounce: 0
   freezTimeHit: 0
+  scoreFactor: 0
+  hitFactor: 0
+  sqrtA: 0
+  sqrtB: 0
+  sqrtC: 0
   bodyRenderer: {fileID: 0}
   clothRenderer: {fileID: 0}
   playerEnum: 0
@@ -9212,6 +9218,12 @@ MonoBehaviour:
   meshController: {fileID: 0}
   clothColor: {r: 0, g: 0, b: 0, a: 0}
   swordColor: {r: 0, g: 0, b: 0, a: 0}
+  mat_Metal: {fileID: 0}
+  mat_Concrete: {fileID: 0}
+  mat_Stone: {fileID: 0}
+  mat_Rubber: {fileID: 0}
+  mat_Glass: {fileID: 0}
+  audioEvents: {fileID: 0}
   pD: {fileID: 0}
   hitCounter: 1
   combo: 0

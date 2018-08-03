@@ -53,7 +53,7 @@ public class EndScreenManager : MonoBehaviour
         playerOne.GetComponent<MyCharacter>().clothRenderer.materials[1].SetColor("_EmissionColor", PlayerInfoManager.playerOne.color);
 
         //Spawn PlayerTwo and Color his Character
-        playerTwo = Instantiate(character, playerSpawns[1].transform.position, Quaternion.identity);
+        playerTwo = Instantiate(character, playerSpawns[1].transform.position, Quaternion.Euler(0,180,0));
         playerTwo.GetComponent<MyCharacter>().clothRenderer.materials[0].SetColor("_EmissionColor", PlayerInfoManager.playerTwo.color);
         playerTwo.GetComponent<MyCharacter>().clothRenderer.materials[1].SetColor("_EmissionColor", PlayerInfoManager.playerTwo.color);
     }
@@ -178,6 +178,7 @@ public class EndScreenManager : MonoBehaviour
     IEnumerator CountPoints()
     {
         yield return new WaitForSeconds(1.5f);
+        bool playerOneWon = PlayerOneWins(PlayerDataManager.playerOne.Score, PlayerDataManager.playerTwo.Score);
 
         int winnerScore = GetWinnerScore(PlayerDataManager.playerOne.Score,PlayerDataManager.playerTwo.Score);
         scorePerHight = winnerScore / maxScoreHight.position.y;
@@ -203,6 +204,17 @@ public class EndScreenManager : MonoBehaviour
 
         textManger[0].score.text = "Score: " + PlayerDataManager.playerOne.Score.ToString();
         textManger[1].score.text = "Score: " + PlayerDataManager.playerTwo.Score.ToString();
+
+        if(playerOneWon)
+        {
+            playerOne.GetComponent<MyCharacter>().animator.SetBool("Won", true);
+            playerTwo.GetComponent<MyCharacter>().animator.SetBool("Lose", true);
+        }
+        else
+        {
+            playerOne.GetComponent<MyCharacter>().animator.SetBool("Lose", true);
+            playerTwo.GetComponent<MyCharacter>().animator.SetBool("Won", true);
+        }
 
         yield return null;
     }

@@ -833,6 +833,7 @@ public class MyCharacter : MonoBehaviour
                     CancelInvoke("EndDisable");
                 }
                 Instantiate(pD.ps_Dodge_Sucsses, this.transform);
+                canGetDamaged = true;
                 break;
 
             case ComboState.Hit:
