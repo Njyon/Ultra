@@ -220,6 +220,8 @@ public class InputManager : MonoBehaviour {
         {
             if (p1_OnKeyPressed != null)
                 p1_OnKeyPressed(KeyCode.Joystick1Button2);
+            if (P1_XButtonDirectionAction != null)
+                P1_XButtonDirectionAction(Direction.None);
         }
         else if (Input.GetKeyUp(KeyCode.Joystick1Button2))
         {
@@ -436,6 +438,8 @@ public class InputManager : MonoBehaviour {
         {
             if (p2_OnKeyPressed != null)
                 p2_OnKeyPressed(KeyCode.Joystick2Button2);
+            if (P2_XButtonDirectionAction != null)
+                P2_XButtonDirectionAction(Direction.None);
         }
         else if (Input.GetKeyDown(KeyCode.Joystick2Button2))
         {

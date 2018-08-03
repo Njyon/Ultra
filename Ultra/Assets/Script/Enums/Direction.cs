@@ -7,5 +7,6 @@
     RightUpAngel,
     RightDownAngel,
     LeftUpAngel,
-    LeftDownAngel
+    LeftDownAngel,
+    None
 };
