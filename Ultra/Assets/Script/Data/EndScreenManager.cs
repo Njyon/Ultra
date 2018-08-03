@@ -123,7 +123,8 @@ public class EndScreenManager : MonoBehaviour
     }
     IEnumerator RisePlateau(float p1_scoreToAdd, float p2_scoreToAdd)
     {
-        float time = 1f;
+        float time = 2f;
+        float divideTime = time;
 
         float p1_HightToAdd =  p1_scoreToAdd / scorePerHight;
         float p2_HightToAdd =  p2_scoreToAdd / scorePerHight;
@@ -140,8 +141,8 @@ public class EndScreenManager : MonoBehaviour
         while (time > 0)
         {
             // Count Score Up
-            p1_CurrentsScore = Mathf.Lerp(p1_scoreToAdd + p1_OldScore, p1_OldScore, time);
-            p2_CurrentsScore = Mathf.Lerp(p2_scoreToAdd + p2_OldScore, p2_OldScore, time);
+            p1_CurrentsScore = Mathf.Lerp(p1_scoreToAdd + p1_OldScore, p1_OldScore, time / divideTime);
+            p2_CurrentsScore = Mathf.Lerp(p2_scoreToAdd + p2_OldScore, p2_OldScore, time / divideTime);
             // Convert To Int to Display
             int p1_IntScore = (int)p1_CurrentsScore;
             int p2_IntScore = (int)p2_CurrentsScore;
@@ -150,13 +151,24 @@ public class EndScreenManager : MonoBehaviour
             textManger[1].score.text = "Score: " + p2_IntScore.ToString();
 
             //Lerp Plateau to new Position
-            Plateaus[0].transform.position = Vector3.Lerp(p1_PlateauEndPos, p1_PlateauPos, time);
-            Plateaus[1].transform.position = Vector3.Lerp(p2_PlateauENdPos, p2_PlateauPos, time);
+            Plateaus[0].transform.position = Vector3.Lerp(p1_PlateauEndPos, p1_PlateauPos, time / divideTime);
+            Plateaus[1].transform.position = Vector3.Lerp(p2_PlateauENdPos, p2_PlateauPos, time / divideTime);
             
             time -= Time.deltaTime;
 
             yield return null;
         }
+
+        // Count Score Up
+        p1_CurrentsScore = p1_scoreToAdd + p1_OldScore;
+        p2_CurrentsScore = p2_scoreToAdd + p2_OldScore;
+
+        int p1_intScore = (int)p1_CurrentsScore;
+        int p2_intScore = (int)p2_CurrentsScore;
+
+        // Display new Score
+        textManger[0].score.text = "Score: " + p1_intScore.ToString();
+        textManger[1].score.text = "Score: " + p2_intScore.ToString();
 
         yield return null;
     }
@@ -167,7 +179,7 @@ public class EndScreenManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1.5f);
 
-        int winnerScore = GetWinnerScore(PlayerDataManager.playerOne.Score, PlayerDataManager.playerTwo.Score);
+        int winnerScore = GetWinnerScore(PlayerDataManager.playerOne.Score,PlayerDataManager.playerTwo.Score);
         scorePerHight = winnerScore / maxScoreHight.position.y;
 
         Debug.Log(maxScoreHight.position.y);
@@ -179,18 +191,18 @@ public class EndScreenManager : MonoBehaviour
         int p2_RestScore = PlayerDataManager.playerTwo.Score - p2_Dodge_Score;
 
         StartCoroutine(RisePlateau(p1_Dodge_Score, p2_Dodge_Score));
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
 
         StartCoroutine(RisePlateau(p1_RestScore * 0.35f, p2_RestScore * 0.35f));
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
 
         StartCoroutine(RisePlateau(p1_RestScore * 0.25f, p2_RestScore * 0.25f));
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
 
         StartCoroutine(RisePlateau(p1_RestScore * 0.50f, p2_RestScore * 0.50f));
 
-        textManger[0].score.text = "Score: " + PlayerDataManager.playerOne.AmountOfDodges.ToString();
-        textManger[1].score.text = "Score: " + PlayerDataManager.playerTwo.AmountOfDodges.ToString();
+        textManger[0].score.text = "Score: " + PlayerDataManager.playerOne.Score.ToString();
+        textManger[1].score.text = "Score: " + PlayerDataManager.playerTwo.Score.ToString();
 
         yield return null;
     }
