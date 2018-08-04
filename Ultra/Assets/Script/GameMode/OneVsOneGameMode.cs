@@ -260,6 +260,7 @@ public class OneVsOneGameMode : MonoBehaviour
         PlayerTwo.GetComponent<MyCharacter>().DePosses();
 
         Time.timeScale = 0.5f;
+        Time.fixedDeltaTime = Time.deltaTime * 0.02f;
         gameDoneAnimator.SetBool("GameDone", true);
         Invoke("LoadScene", 2f);
     }
