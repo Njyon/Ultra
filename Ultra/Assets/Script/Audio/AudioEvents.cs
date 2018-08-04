@@ -20,7 +20,7 @@ public class AudioEvents : MonoBehaviour {
     private delegate void EventDelegate(EventState eventState);
     private EventDelegate eventDelegate;
     private double bounceAudioLastTrigger;
-
+    private bool firstDisable = false;
    
 
     void Awake () {
@@ -43,6 +43,11 @@ public class AudioEvents : MonoBehaviour {
     void EventCheck(EventState eventState) {
         switch (eventState) {
             case EventState.isDisabled:
+                if (firstDisable==false) {
+                    firstDisable = true;
+                    //Fabric.EventManager.Instance.PostEvent("MusicAction");
+                    Debug.Log("isDisabled ist angekommen.");
+                }
                 break;
             case EventState.EndDisabled:
                 break;
