@@ -956,8 +956,6 @@ public class MyCharacter : MonoBehaviour
 
                 BounceType bounceType = GetPhysiksMaterial(hit);
 
-                audioEvents.Bounce(bounceType);
-
                 // Count enemy Combo Up
                 enemyCharacter.Combo(ComboState.Bounce);
                 eventDelegate(EventState.Bounce);
