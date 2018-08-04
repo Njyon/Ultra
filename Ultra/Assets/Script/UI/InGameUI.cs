@@ -86,8 +86,8 @@ public class InGameUI : MonoBehaviour
     public void UpdateCombo(int combo)
     {
         this.combo.text = combo.ToString() + "x";
-        StopCoroutine(ComboAnim());
-        StartCoroutine(ComboAnim());
+        StopCoroutine(ComboAnim(comboObj));
+        StartCoroutine(ComboAnim(comboObj));
     }
     /// <summary>
     /// Update Multiplier
@@ -96,6 +96,8 @@ public class InGameUI : MonoBehaviour
     public void UpdateMultiplier(int multiplier)
     {
         this.multiplier.text = multiplier.ToString() + "x";
+        StopCoroutine(ComboAnim(multiplierObj));
+        StartCoroutine(ComboAnim(multiplierObj));
     }
     /// <summary>
     /// Make ComboCounter Visible
@@ -126,9 +128,9 @@ public class InGameUI : MonoBehaviour
         return comboActive;
     }
 
-    IEnumerator ComboAnim()
+    IEnumerator ComboAnim(RectTransform go)
     {
-        comboObj.localScale = new Vector3(1, 1, 1);
+        go.localScale = new Vector3(1, 1, 1);
         float time = 0f;
         float duration = 1f;
         float speed = 5f;
@@ -138,7 +140,7 @@ public class InGameUI : MonoBehaviour
             float xScale = xCurve.Evaluate(time);
             float yScale = yCurve.Evaluate(time);
 
-            comboObj.localScale = new Vector3(xScale, yScale, 1);
+            go.localScale = new Vector3(xScale, yScale, 1);
             //multiplierObj.position = Vector3.Lerp(objPos, posOffset, time);
             
             time += Time.deltaTime * speed;
@@ -146,7 +148,7 @@ public class InGameUI : MonoBehaviour
             yield return null;
         }
         
-        comboObj.localScale = new Vector3(1, 1, 1);
+        go.localScale = new Vector3(1, 1, 1);
         yield return null;
     }
     float cHPos = 0;
