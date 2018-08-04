@@ -9276,11 +9276,12 @@ MonoBehaviour:
   meshController: {fileID: 0}
   clothColor: {r: 0, g: 0, b: 0, a: 0}
   swordColor: {r: 0, g: 0, b: 0, a: 0}
-  mat_Metal: {fileID: 0}
-  mat_Concrete: {fileID: 0}
-  mat_Stone: {fileID: 0}
-  mat_Rubber: {fileID: 0}
-  mat_Glass: {fileID: 0}
+  mat_Metal: {fileID: 13400000, guid: 89d8e7148aa08114c91359c766c63930, type: 2}
+  mat_Concrete: {fileID: 13400000, guid: efc77b72558d36a4580223ec9bc4bbde, type: 2}
+  mat_Stone: {fileID: 13400000, guid: 0db33160cc72fcb44951a66177a67963, type: 2}
+  mat_Rubber: {fileID: 13400000, guid: 03b9dc6c3c5276942abb40eaf8e530c4, type: 2}
+  mat_Glass: {fileID: 13400000, guid: d3539f3b6fb93bd4baef230c297c0f96, type: 2}
+  mat_MetalGlass: {fileID: 13400000, guid: 5b4c16fa55710434f878907ac6750e95, type: 2}
   audioEvents: {fileID: 0}
   pD: {fileID: 0}
   hitCounter: 1

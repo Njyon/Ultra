@@ -78,6 +78,7 @@ public class MyCharacter : MonoBehaviour
     [SerializeField] PhysicMaterial mat_Stone;
     [SerializeField] PhysicMaterial mat_Rubber;
     [SerializeField] PhysicMaterial mat_Glass;
+    [SerializeField] PhysicMaterial mat_MetalGlass;
 
     [Header("AudioComp")]
     [SerializeField] AudioEvents audioEvents;
@@ -955,8 +956,6 @@ public class MyCharacter : MonoBehaviour
 
                 BounceType bounceType = GetPhysiksMaterial(hit);
 
-                audioEvents.Bounce(bounceType);
-
                 // Count enemy Combo Up
                 enemyCharacter.Combo(ComboState.Bounce);
                 eventDelegate(EventState.Bounce);
@@ -1004,7 +1003,11 @@ public class MyCharacter : MonoBehaviour
         else if (hit.collider.material.name == mat_Glass.name + " (Instance)")
         {
             return BounceType.Glass;
-        }
+        } 
+        else if (hit.collider.material.name == mat_MetalGlass.name + " (Instance)") 
+        {
+            return BounceType.MetalGlass;
+        } 
         else
         {
             return BounceType.Concrete;

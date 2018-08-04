@@ -2,25 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public enum BounceType
-{
-    Metal,
-    Concrete,
-    Stone,
-    Rubber,
-    Glass,
-    MetalGlass,
-}
-
 public class AudioEvents : MonoBehaviour {
     private float yVelocity = 0;
     private Movement movement;
     private MyCharacter character;
     private delegate void EventDelegate(EventState eventState);
     private EventDelegate eventDelegate;
-    private double bounceAudioLastTrigger;
-
+    private bool firstGetHit = false;
    
 
     void Awake () {
@@ -89,11 +77,15 @@ public class AudioEvents : MonoBehaviour {
                 Fabric.EventManager.Instance.PostEvent("DashStab", this.gameObject);
                 break;
             case EventState.Bounce:
-                //Fabric.EventManager.Instance.PostEvent("Bounce", this.gameObject);
+                Fabric.EventManager.Instance.PostEvent("Bounce", this.gameObject);
                 break;
             case EventState.Parry:
                 break;
             case EventState.GetHit:
+                if (firstGetHit == false) {
+                    firstGetHit = true;
+                    Fabric.EventManager.Instance.PostEvent("MusicAction");
+                }
                 break;
             case EventState.isFalling:
                 break;
@@ -125,38 +117,5 @@ public class AudioEvents : MonoBehaviour {
 
     public void Footstep() {
         Fabric.EventManager.Instance.PostEvent("Footsteps", this.gameObject);
-    }
-
-    public void Bounce(BounceType audioMaterial) {
-        if (AudioSettings.dspTime - bounceAudioLastTrigger < 0.1d) {
-            return;
-        }
-
-        bounceAudioLastTrigger = AudioSettings.dspTime;
-
-        switch (audioMaterial) {
-            case BounceType.Metal:
-                Fabric.EventManager.Instance.PostEvent("ParticleMetal", this.gameObject);
-                break;
-            case BounceType.Concrete:
-                Fabric.EventManager.Instance.PostEvent("ParticleRocks", this.gameObject);
-                break;
-            case BounceType.Stone:
-                Fabric.EventManager.Instance.PostEvent("ParticleStones", this.gameObject);
-                break;
-            case BounceType.Rubber:
-                Fabric.EventManager.Instance.PostEvent("RubberPitch", this.gameObject);
-                Fabric.EventManager.Instance.PostEvent("RubberNoPitch", this.gameObject);
-                break;
-            case BounceType.Glass:
-                Fabric.EventManager.Instance.PostEvent("ParticleGlass", this.gameObject);
-                break;
-            case BounceType.MetalGlass:
-                Fabric.EventManager.Instance.PostEvent("ParticleGlass", this.gameObject);
-                Fabric.EventManager.Instance.PostEvent("ParticleMetal", this.gameObject);
-                break;
-            default:
-                break;
-        }
     }
 }
