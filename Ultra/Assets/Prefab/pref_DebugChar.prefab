@@ -10132,6 +10132,11 @@ MonoBehaviour:
   X: 0.2
   freezTimeBounce: 0.15
   freezTimeHit: 0.3
+  scoreFactor: 0
+  hitFactor: 0
+  sqrtA: 0
+  sqrtB: 0
+  sqrtC: 0
   bodyRenderer: {fileID: 137346586986618720}
   clothRenderer: {fileID: 137840500645316842}
   playerEnum: 0
@@ -10155,6 +10160,7 @@ MonoBehaviour:
   mat_Stone: {fileID: 13400000, guid: 0db33160cc72fcb44951a66177a67963, type: 2}
   mat_Rubber: {fileID: 13400000, guid: 03b9dc6c3c5276942abb40eaf8e530c4, type: 2}
   mat_Glass: {fileID: 13400000, guid: d3539f3b6fb93bd4baef230c297c0f96, type: 2}
+  mat_MetalGlass: {fileID: 13400000, guid: 5b4c16fa55710434f878907ac6750e95, type: 2}
   audioEvents: {fileID: 114663489473457634}
   pD: {fileID: 114763746124875908}
   hitCounter: 1
@@ -10224,6 +10230,8 @@ MonoBehaviour:
     type: 2}
   turnAroundRight: {fileID: 1856191835499908, guid: f86dc019c5e47a34e8bb5c10c51f12ed,
     type: 2}
+  ps_Dodge: {fileID: 0}
+  ps_Dodge_Sucsses: {fileID: 0}
 --- !u!114 &114780651277069624
 MonoBehaviour:
   m_ObjectHideFlags: 1
