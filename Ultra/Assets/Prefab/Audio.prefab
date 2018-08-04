@@ -780,6 +780,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1476353542566348
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4239042079492286}
+  - component: {fileID: 114031150001730894}
+  m_Layer: 0
+  m_Name: NoAction
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1479549768483438
 GameObject:
   m_ObjectHideFlags: 0
@@ -892,6 +908,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1542365110184678
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4908331540602362}
+  - component: {fileID: 114000582762512752}
+  m_Layer: 0
+  m_Name: Samuryberpunk-Action
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1544889882285594
 GameObject:
   m_ObjectHideFlags: 1
@@ -903,6 +935,22 @@ GameObject:
   - component: {fileID: 114733385698882766}
   m_Layer: 0
   m_Name: Particle-Metal-005
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1563514484487618
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4289016039221768}
+  - component: {fileID: 114430379881813062}
+  m_Layer: 0
+  m_Name: Samuryberpunk-Outro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1294,6 +1342,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1806295396453102
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4454777479539018}
+  - component: {fileID: 114496441345121610}
+  m_Layer: 0
+  m_Name: Action
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1816639907017990
 GameObject:
   m_ObjectHideFlags: 0
@@ -1448,6 +1512,7 @@ GameObject:
   - component: {fileID: 4735181418182888}
   - component: {fileID: 114546615493044706}
   - component: {fileID: 114898727643962756}
+  - component: {fileID: 114705234150294862}
   m_Layer: 0
   m_Name: Audio
   m_TagString: Untagged
@@ -1466,6 +1531,22 @@ GameObject:
   - component: {fileID: 114643682098386706}
   m_Layer: 0
   m_Name: Footsteps-01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1924646783912500
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4588710902288954}
+  - component: {fileID: 114810338570777770}
+  m_Layer: 0
+  m_Name: Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1562,6 +1643,22 @@ GameObject:
   - component: {fileID: 114512275552946228}
   m_Layer: 0
   m_Name: Bounce-Heavy-004
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1965228646212298
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4555041446350058}
+  - component: {fileID: 114996341064865514}
+  m_Layer: 0
+  m_Name: Samuryberpunk-Intro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1823,6 +1920,19 @@ Transform:
   m_Father: {fileID: 4637385519119722}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4239042079492286
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1476353542566348}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -10, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4588710902288954}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4243140856069954
 Transform:
   m_ObjectHideFlags: 1
@@ -1861,6 +1971,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4383301944103052}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4289016039221768
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1563514484487618}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4454777479539018}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4293397223429764
 Transform:
@@ -2245,6 +2368,22 @@ Transform:
   m_Father: {fileID: 4735181418182888}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4454777479539018
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1806295396453102}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -10, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4555041446350058}
+  - {fileID: 4908331540602362}
+  - {fileID: 4289016039221768}
+  m_Father: {fileID: 4588710902288954}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4467327991778916
 Transform:
   m_ObjectHideFlags: 1
@@ -2407,6 +2546,19 @@ Transform:
   m_Father: {fileID: 4303939866053942}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4555041446350058
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1965228646212298}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4454777479539018}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4559295801099948
 Transform:
   m_ObjectHideFlags: 1
@@ -2452,6 +2604,21 @@ Transform:
   - {fileID: 4381382959942278}
   m_Father: {fileID: 4436051110811206}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4588710902288954
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1924646783912500}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4454777479539018}
+  - {fileID: 4239042079492286}
+  m_Father: {fileID: 4735181418182888}
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4598604256146638
 Transform:
@@ -2660,6 +2827,7 @@ Transform:
   - {fileID: 4923665033558726}
   - {fileID: 4559295801099948}
   - {fileID: 4637385519119722}
+  - {fileID: 4588710902288954}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2834,6 +3002,19 @@ Transform:
   m_Father: {fileID: 4735181418182888}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4908331540602362
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1542365110184678}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4454777479539018}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4923665033558726
 Transform:
   m_ObjectHideFlags: 1
@@ -2984,6 +3165,122 @@ Transform:
   m_Father: {fileID: 4294142681907018}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114000582762512752
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1542365110184678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -71199202, guid: 4b4e8768ed04d6a4f98af6f4f83be984, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _numVirtualizationEvents: 100
+  _maxInstances: 1
+  _stealingBehaviour: 0
+  _minimumPlaybackInterval: 0
+  _overrideParentVolume: 0
+  _volume: 1
+  _volumeRandomization: 0
+  _mute: 0
+  _overrideParentPitch: 0
+  _pitch: 1
+  _pitchRandomization: 0
+  _override2DProperties: 0
+  _pan2D: 0
+  _pan2DRandomization: 0
+  _override3DProperties: 0
+  _priority: 128
+  _panLevel: 1
+  _spreadLevel: 0
+  _spatialize: 0
+  _dopplerLevel: 1
+  _maxDistance: 500
+  _minDistance: 1
+  _rolloffMode: 0
+  _customCurvesType: 0
+  _customCurvesName: 
+  _overrideFadeProperties: 0
+  _fadeInTime: 0
+  _fadeInCurve: 0.5
+  _fadeOutTime: 1
+  _fadeOutCurve: 0.5
+  _reverbZoneMix: 1
+  _overrideBypassProperties: 0
+  _bypassEffects: 0
+  _bypassListenerEffects: 0
+  _bypassReverbZones: 0
+  _overrideAudioMixerGroup: 0
+  _audioMixerGroup: {fileID: 0}
+  _notifyParentComponent: 0
+  _audioBusName: 
+  _overrideAudioBus: 0
+  _overrideMusicTimeSettings: 0
+  _musicTimeSettingsIndex: -1
+  _musicTempo: -1
+  _musicTimeSignatureLower: 0
+  _musicTimeSignatureUpper: 0
+  _musicTimeResetOnPlay: 0
+  _midiProperties:
+    _overrideParentNoteTracking: 0
+    _noteTracking: 0
+    _keyRangeMin: 0
+    _keyRangeMax: 127
+    _velocityRangeMin: 0
+    _velocityRangeMax: 127
+    _channelRangeMin: 1
+    _channelRangeMax: 16
+    _rootNote: -36
+    _transpose: 0
+    _velocity: 0
+  _overrideSpatializeProperty: 0
+  _probability: 100
+  _multipleInstancesPerGameObject: 1
+  _componentVirtualization: 0
+  _overrideVolumeThreshold: 0
+  _volumeThreshold: 1
+  _virtualizationBehavior: 1
+  _RTPManager:
+    _parameters: []
+    _reference: {fileID: 0}
+  Guid: 
+  _componentHolder: {fileID: 114000582762512752}
+  _onEventNotifyEventName: 
+  _audioClip: {fileID: 8300000, guid: 4899b480bcf11c642bcdcf669df9bb58, type: 3}
+  _audioClipHandle:
+    _audioClipPath: 
+    _useAudioClipPath: 1
+  _dynamicAudioClipLoading: 0
+  _dynamicAudioClipUnloadDelay: 0
+  _dynamicAsyncAudioClipLoading: 0
+  _audioClipAssetPath: 0
+  _delay: 0
+  _delayInBeats: 0
+  _loop: 1
+  _ignoreNativeLoop: 0
+  _randomizeStart: 0
+  _randomizeStartPercentage: 100
+  _numLoops: -1
+  _loopMarkersLoaded: 0
+  _useLoopMarkers: 1
+  _startLoopMarkerIndex: 0
+  _endLoopMarkerIndex: 1
+  _loopRegionIndex: 0
+  _randomizeStartLoopMarkerIndex: 0
+  _randomizeEndLoopMarkerIndex: 0
+  _randomizeRegionIndex: 0
+  _dontPlay: 0
+  _dontStopOnDestroy: 0
+  _ignoreVirtualization: 0
+  _randomizePosition: 0
+  _randomizeMinPosition: 0
+  _randomizeMaxPosition: 10
+  _syncWithMusicTime: 0
+  _markers: []
+  _syncRegionsWithTempo: 0
+  _audioClipTempo: 120
+  _regions: []
 --- !u!114 &114011910857092922
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3193,6 +3490,122 @@ MonoBehaviour:
   _delay: 0
   _delayInBeats: 0
   _loop: 0
+  _ignoreNativeLoop: 0
+  _randomizeStart: 0
+  _randomizeStartPercentage: 100
+  _numLoops: -1
+  _loopMarkersLoaded: 0
+  _useLoopMarkers: 1
+  _startLoopMarkerIndex: 0
+  _endLoopMarkerIndex: 1
+  _loopRegionIndex: 0
+  _randomizeStartLoopMarkerIndex: 0
+  _randomizeEndLoopMarkerIndex: 0
+  _randomizeRegionIndex: 0
+  _dontPlay: 0
+  _dontStopOnDestroy: 0
+  _ignoreVirtualization: 0
+  _randomizePosition: 0
+  _randomizeMinPosition: 0
+  _randomizeMaxPosition: 10
+  _syncWithMusicTime: 0
+  _markers: []
+  _syncRegionsWithTempo: 0
+  _audioClipTempo: 120
+  _regions: []
+--- !u!114 &114031150001730894
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1476353542566348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -71199202, guid: 4b4e8768ed04d6a4f98af6f4f83be984, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _numVirtualizationEvents: 100
+  _maxInstances: 1
+  _stealingBehaviour: 0
+  _minimumPlaybackInterval: 0
+  _overrideParentVolume: 0
+  _volume: 1
+  _volumeRandomization: 0
+  _mute: 0
+  _overrideParentPitch: 0
+  _pitch: 1
+  _pitchRandomization: 0
+  _override2DProperties: 0
+  _pan2D: 0
+  _pan2DRandomization: 0
+  _override3DProperties: 0
+  _priority: 128
+  _panLevel: 1
+  _spreadLevel: 0
+  _spatialize: 0
+  _dopplerLevel: 1
+  _maxDistance: 500
+  _minDistance: 1
+  _rolloffMode: 0
+  _customCurvesType: 0
+  _customCurvesName: 
+  _overrideFadeProperties: 0
+  _fadeInTime: 0
+  _fadeInCurve: 0.5
+  _fadeOutTime: 1
+  _fadeOutCurve: 0.5
+  _reverbZoneMix: 1
+  _overrideBypassProperties: 0
+  _bypassEffects: 0
+  _bypassListenerEffects: 0
+  _bypassReverbZones: 0
+  _overrideAudioMixerGroup: 0
+  _audioMixerGroup: {fileID: 0}
+  _notifyParentComponent: 0
+  _audioBusName: 
+  _overrideAudioBus: 0
+  _overrideMusicTimeSettings: 0
+  _musicTimeSettingsIndex: -1
+  _musicTempo: -1
+  _musicTimeSignatureLower: 0
+  _musicTimeSignatureUpper: 0
+  _musicTimeResetOnPlay: 0
+  _midiProperties:
+    _overrideParentNoteTracking: 0
+    _noteTracking: 0
+    _keyRangeMin: 0
+    _keyRangeMax: 127
+    _velocityRangeMin: 0
+    _velocityRangeMax: 127
+    _channelRangeMin: 1
+    _channelRangeMax: 16
+    _rootNote: -36
+    _transpose: 0
+    _velocity: 0
+  _overrideSpatializeProperty: 0
+  _probability: 100
+  _multipleInstancesPerGameObject: 1
+  _componentVirtualization: 0
+  _overrideVolumeThreshold: 0
+  _volumeThreshold: 1
+  _virtualizationBehavior: 1
+  _RTPManager:
+    _parameters: []
+    _reference: {fileID: 0}
+  Guid: 
+  _componentHolder: {fileID: 114031150001730894}
+  _onEventNotifyEventName: 
+  _audioClip: {fileID: 8300000, guid: e05bbd17de9dd594cad7e4e6620a7223, type: 3}
+  _audioClipHandle:
+    _audioClipPath: 
+    _useAudioClipPath: 1
+  _dynamicAudioClipLoading: 0
+  _dynamicAudioClipUnloadDelay: 0
+  _dynamicAsyncAudioClipLoading: 0
+  _audioClipAssetPath: 0
+  _delay: 0
+  _delayInBeats: 0
+  _loop: 1
   _ignoreNativeLoop: 0
   _randomizeStart: 0
   _randomizeStartPercentage: 100
@@ -6908,6 +7321,122 @@ MonoBehaviour:
   _syncRegionsWithTempo: 0
   _audioClipTempo: 120
   _regions: []
+--- !u!114 &114430379881813062
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1563514484487618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -71199202, guid: 4b4e8768ed04d6a4f98af6f4f83be984, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _numVirtualizationEvents: 100
+  _maxInstances: 1
+  _stealingBehaviour: 0
+  _minimumPlaybackInterval: 0
+  _overrideParentVolume: 0
+  _volume: 1
+  _volumeRandomization: 0
+  _mute: 0
+  _overrideParentPitch: 0
+  _pitch: 1
+  _pitchRandomization: 0
+  _override2DProperties: 0
+  _pan2D: 0
+  _pan2DRandomization: 0
+  _override3DProperties: 0
+  _priority: 128
+  _panLevel: 1
+  _spreadLevel: 0
+  _spatialize: 0
+  _dopplerLevel: 1
+  _maxDistance: 500
+  _minDistance: 1
+  _rolloffMode: 0
+  _customCurvesType: 0
+  _customCurvesName: 
+  _overrideFadeProperties: 0
+  _fadeInTime: 0
+  _fadeInCurve: 0.5
+  _fadeOutTime: 0
+  _fadeOutCurve: 0.5
+  _reverbZoneMix: 1
+  _overrideBypassProperties: 0
+  _bypassEffects: 0
+  _bypassListenerEffects: 0
+  _bypassReverbZones: 0
+  _overrideAudioMixerGroup: 0
+  _audioMixerGroup: {fileID: 0}
+  _notifyParentComponent: 0
+  _audioBusName: 
+  _overrideAudioBus: 0
+  _overrideMusicTimeSettings: 0
+  _musicTimeSettingsIndex: -1
+  _musicTempo: -1
+  _musicTimeSignatureLower: 0
+  _musicTimeSignatureUpper: 0
+  _musicTimeResetOnPlay: 0
+  _midiProperties:
+    _overrideParentNoteTracking: 0
+    _noteTracking: 0
+    _keyRangeMin: 0
+    _keyRangeMax: 127
+    _velocityRangeMin: 0
+    _velocityRangeMax: 127
+    _channelRangeMin: 1
+    _channelRangeMax: 16
+    _rootNote: -36
+    _transpose: 0
+    _velocity: 0
+  _overrideSpatializeProperty: 0
+  _probability: 100
+  _multipleInstancesPerGameObject: 1
+  _componentVirtualization: 0
+  _overrideVolumeThreshold: 0
+  _volumeThreshold: 1
+  _virtualizationBehavior: 1
+  _RTPManager:
+    _parameters: []
+    _reference: {fileID: 0}
+  Guid: 
+  _componentHolder: {fileID: 114430379881813062}
+  _onEventNotifyEventName: 
+  _audioClip: {fileID: 8300000, guid: 8d91a5e8298af764092061944266f6cd, type: 3}
+  _audioClipHandle:
+    _audioClipPath: 
+    _useAudioClipPath: 1
+  _dynamicAudioClipLoading: 0
+  _dynamicAudioClipUnloadDelay: 0
+  _dynamicAsyncAudioClipLoading: 0
+  _audioClipAssetPath: 0
+  _delay: 0
+  _delayInBeats: 0
+  _loop: 0
+  _ignoreNativeLoop: 0
+  _randomizeStart: 0
+  _randomizeStartPercentage: 100
+  _numLoops: -1
+  _loopMarkersLoaded: 0
+  _useLoopMarkers: 1
+  _startLoopMarkerIndex: 0
+  _endLoopMarkerIndex: 1
+  _loopRegionIndex: 0
+  _randomizeStartLoopMarkerIndex: 0
+  _randomizeEndLoopMarkerIndex: 0
+  _randomizeRegionIndex: 0
+  _dontPlay: 0
+  _dontStopOnDestroy: 0
+  _ignoreVirtualization: 0
+  _randomizePosition: 0
+  _randomizeMinPosition: 0
+  _randomizeMaxPosition: 10
+  _syncWithMusicTime: 0
+  _markers: []
+  _syncRegionsWithTempo: 0
+  _audioClipTempo: 120
+  _regions: []
 --- !u!114 &114441456886472118
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7673,6 +8202,95 @@ MonoBehaviour:
   _componentHolder: {fileID: 114493566136871930}
   _onEventNotifyEventName: 
   _isOneShot: 1
+--- !u!114 &114496441345121610
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1806295396453102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2041792229, guid: 4b4e8768ed04d6a4f98af6f4f83be984, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _numVirtualizationEvents: 100
+  _maxInstances: 1
+  _stealingBehaviour: 0
+  _minimumPlaybackInterval: 0
+  _overrideParentVolume: 0
+  _volume: 1
+  _volumeRandomization: 0
+  _mute: 0
+  _overrideParentPitch: 0
+  _pitch: 1
+  _pitchRandomization: 0
+  _override2DProperties: 0
+  _pan2D: 0
+  _pan2DRandomization: 0
+  _override3DProperties: 0
+  _priority: 128
+  _panLevel: 1
+  _spreadLevel: 0
+  _spatialize: 0
+  _dopplerLevel: 1
+  _maxDistance: 500
+  _minDistance: 1
+  _rolloffMode: 0
+  _customCurvesType: 0
+  _customCurvesName: 
+  _overrideFadeProperties: 0
+  _fadeInTime: 0
+  _fadeInCurve: 0.5
+  _fadeOutTime: 0
+  _fadeOutCurve: 0.5
+  _reverbZoneMix: 1
+  _overrideBypassProperties: 0
+  _bypassEffects: 0
+  _bypassListenerEffects: 0
+  _bypassReverbZones: 0
+  _overrideAudioMixerGroup: 0
+  _audioMixerGroup: {fileID: 0}
+  _notifyParentComponent: 0
+  _audioBusName: 
+  _overrideAudioBus: 0
+  _overrideMusicTimeSettings: 0
+  _musicTimeSettingsIndex: -1
+  _musicTempo: -1
+  _musicTimeSignatureLower: 0
+  _musicTimeSignatureUpper: 0
+  _musicTimeResetOnPlay: 0
+  _midiProperties:
+    _overrideParentNoteTracking: 0
+    _noteTracking: 0
+    _keyRangeMin: 0
+    _keyRangeMax: 127
+    _velocityRangeMin: 0
+    _velocityRangeMax: 127
+    _channelRangeMin: 1
+    _channelRangeMax: 16
+    _rootNote: -36
+    _transpose: 0
+    _velocity: 0
+  _overrideSpatializeProperty: 0
+  _probability: 100
+  _multipleInstancesPerGameObject: 1
+  _componentVirtualization: 0
+  _overrideVolumeThreshold: 0
+  _volumeThreshold: 1
+  _virtualizationBehavior: 1
+  _RTPManager:
+    _parameters: []
+    _reference: {fileID: 0}
+  Guid: 
+  _componentHolder: {fileID: 114496441345121610}
+  _onEventNotifyEventName: 
+  _stages:
+  - {fileID: 114996341064865514}
+  - {fileID: 114000582762512752}
+  - {fileID: 114430379881813062}
+  _transitionOffset: -1.6666666
+  _transitionOffsetRandomization: 0
+  _playLoopToEnd: 0
 --- !u!114 &114501498021986664
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8404,7 +9022,19 @@ MonoBehaviour:
   _defaultLanguage: -1
   _sampleManager:
     _sampleFileList: []
-  _musicTimeSignatures: []
+  _musicTimeSignatures:
+  - _name: NoAction
+    _bpm: 72
+    _timeSignatureLower: 4
+    _timeSignatureUpper: 4
+    _syncType: 1
+    _syncTarget: {fileID: 0}
+  - _name: Action
+    _bpm: 144
+    _timeSignatureLower: 4
+    _timeSignatureUpper: 4
+    _syncType: 1
+    _syncTarget: {fileID: 0}
   _fabricEditorPath: Assets/Modules/Fabric/Editor
   _VRAudioManager:
     _vrPlatforms:
@@ -10336,6 +10966,52 @@ MonoBehaviour:
   _syncRegionsWithTempo: 0
   _audioClipTempo: 120
   _regions: []
+--- !u!114 &114705234150294862
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1897430974260146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2066047398, guid: 4b4e8768ed04d6a4f98af6f4f83be984, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  switchPresetData:
+    _sourcePreset: 
+    _targetPreset: 
+  globalParameterData:
+    _name: 
+    _value: 0
+  globalSwitchParameterData:
+    _name: 
+    _switch: 
+  transitionToSnapshotData:
+    _snapshot: 
+    _timeToReach: 0
+  _eventName: MusicStart
+  _eventAction: 0
+  _eventTriggerOnEnter: 0
+  _triggerEnterTag: 
+  _trigger: 0
+  _eventValue: 
+  _eventParameter: 1
+  _eventScheduleParameter: 0
+  _eventParameterName: 
+  _delay: 0
+  _probability: 100
+  _eventTriggerType: 0
+  _ignoreGameObject: 0
+  _overrideParentGameObject: 0
+  _addToQueue: 0
+  _min: 0
+  _max: 1
+  _dspType: 0
+  _timeToTarget: 0
+  _curve: 0.5
+  _parentGameObject: {fileID: 1897430974260146}
+  _useEventID: 0
+  _postCountMax: 0
 --- !u!114 &114723354201946230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11266,6 +11942,96 @@ MonoBehaviour:
   _syncRegionsWithTempo: 0
   _audioClipTempo: 120
   _regions: []
+--- !u!114 &114810338570777770
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1924646783912500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -889743216, guid: 4b4e8768ed04d6a4f98af6f4f83be984, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _numVirtualizationEvents: 100
+  _maxInstances: 1
+  _stealingBehaviour: 0
+  _minimumPlaybackInterval: 0
+  _overrideParentVolume: 0
+  _volume: 1
+  _volumeRandomization: 0
+  _mute: 0
+  _overrideParentPitch: 0
+  _pitch: 1
+  _pitchRandomization: 0
+  _override2DProperties: 0
+  _pan2D: 0
+  _pan2DRandomization: 0
+  _override3DProperties: 0
+  _priority: 128
+  _panLevel: 0
+  _spreadLevel: 0
+  _spatialize: 0
+  _dopplerLevel: 1
+  _maxDistance: 500
+  _minDistance: 1
+  _rolloffMode: 0
+  _customCurvesType: 0
+  _customCurvesName: 
+  _overrideFadeProperties: 0
+  _fadeInTime: 0
+  _fadeInCurve: 0.5
+  _fadeOutTime: 0
+  _fadeOutCurve: 0.5
+  _reverbZoneMix: 1
+  _overrideBypassProperties: 0
+  _bypassEffects: 0
+  _bypassListenerEffects: 0
+  _bypassReverbZones: 0
+  _overrideAudioMixerGroup: 0
+  _audioMixerGroup: {fileID: 243124593574248344, guid: 8646fc40930552345b1e4172126cdc3c,
+    type: 2}
+  _notifyParentComponent: 0
+  _audioBusName: None
+  _overrideAudioBus: 0
+  _overrideMusicTimeSettings: 0
+  _musicTimeSettingsIndex: -1
+  _musicTempo: -1
+  _musicTimeSignatureLower: 0
+  _musicTimeSignatureUpper: 0
+  _musicTimeResetOnPlay: 0
+  _midiProperties:
+    _overrideParentNoteTracking: 0
+    _noteTracking: 0
+    _keyRangeMin: 0
+    _keyRangeMax: 127
+    _velocityRangeMin: 0
+    _velocityRangeMax: 127
+    _channelRangeMin: 1
+    _channelRangeMax: 16
+    _rootNote: -36
+    _transpose: 0
+    _velocity: 0
+  _overrideSpatializeProperty: 0
+  _probability: 100
+  _multipleInstancesPerGameObject: 1
+  _componentVirtualization: 0
+  _overrideVolumeThreshold: 0
+  _volumeThreshold: 1
+  _virtualizationBehavior: 1
+  _RTPManager:
+    _parameters: []
+    _reference: {fileID: 0}
+  Guid: 
+  _componentHolder: {fileID: 114810338570777770}
+  _onEventNotifyEventName: 
+  _selectedComponent: {fileID: 0}
+  _startOnSwitch: 1
+  _syncToMusicOnFirstPlay: 1
+  _switchComponentSwitchType: 2
+  _useGlobalSwitch: 0
+  _globalSwitch: 
+  _globalSwitchMap: []
 --- !u!114 &114814885128060404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13130,6 +13896,9 @@ MonoBehaviour:
   - Jump2
   - Jump3
   - Landing
+  - MusicAction
+  - MusicNoAction
+  - MusicStart
   - ParticleGlass
   - ParticleMetal
   - ParticleRocks
@@ -13965,16 +14734,205 @@ MonoBehaviour:
         _curve: 0.5
         _min: 0
         _max: 1
+    - _delay: 0
+      _probability: 100
+      _postCountMax: 0
+      _addToQueue: 0
+      _eventName: MusicNoAction
+      _ignoreIncomingGameObject: 0
+      _eventList:
+      - _event:
+          _eventName: AudioMixer
+          _eventID: 0
+          EventAction: 6
+          parentGameObject: {fileID: 0}
+          _delay: 0
+          _delayTimer: 0
+          _eventCategory: 
+          _priority: 0
+        _component: {fileID: 114810338570777770}
+        _ignoreEventAction: 0
+        _parameterData:
+          _value: 0
+          _parameter: 0
+          _index: -1
+        _dspParameter:
+          _dspType: 0
+          _parameter: 
+          _value: 0
+          _time: 0
+          _curve: 0.5
+        _switchPresetData:
+          _sourcePreset: 
+          _targetPreset: 
+        _globalParameterData:
+          _name: 
+          _value: 0
+        _globalSwitchParameterData:
+          _name: 
+          _switch: 
+        _transitionToSnapshotData:
+          _snapshot: 
+          _timeToReach: 0
+        _eventValue: NoAction
+        _eventParameter: 1
+        _eventScheduleParameter: 0
+        _eventParameterName: 
+        _dspType: 0
+        _timeToTarget: 0
+        _curve: 0.5
+        _min: 0
+        _max: 1
+    - _delay: 0
+      _probability: 100
+      _postCountMax: 0
+      _addToQueue: 0
+      _eventName: MusicAction
+      _ignoreIncomingGameObject: 0
+      _eventList:
+      - _event:
+          _eventName: 
+          _eventID: 0
+          EventAction: 6
+          parentGameObject: {fileID: 0}
+          _delay: 0
+          _delayTimer: 0
+          _eventCategory: 
+          _priority: 0
+        _component: {fileID: 114810338570777770}
+        _ignoreEventAction: 0
+        _parameterData:
+          _value: 0
+          _parameter: 0
+          _index: -1
+        _dspParameter:
+          _dspType: 0
+          _parameter: 
+          _value: 0
+          _time: 0
+          _curve: 0.5
+        _switchPresetData:
+          _sourcePreset: 
+          _targetPreset: 
+        _globalParameterData:
+          _name: 
+          _value: 0
+        _globalSwitchParameterData:
+          _name: 
+          _switch: 
+        _transitionToSnapshotData:
+          _snapshot: 
+          _timeToReach: 0
+        _eventValue: Action
+        _eventParameter: 1
+        _eventScheduleParameter: 0
+        _eventParameterName: 
+        _dspType: 0
+        _timeToTarget: 0
+        _curve: 0.5
+        _min: 0
+        _max: 1
+    - _delay: 0
+      _probability: 100
+      _postCountMax: 0
+      _addToQueue: 0
+      _eventName: MusicStart
+      _ignoreIncomingGameObject: 0
+      _eventList:
+      - _event:
+          _eventName: 
+          _eventID: 0
+          EventAction: 6
+          parentGameObject: {fileID: 0}
+          _delay: 0
+          _delayTimer: 0
+          _eventCategory: 
+          _priority: 0
+        _component: {fileID: 114810338570777770}
+        _ignoreEventAction: 0
+        _parameterData:
+          _value: 0
+          _parameter: 0
+          _index: -1
+        _dspParameter:
+          _dspType: 0
+          _parameter: 
+          _value: 0
+          _time: 0
+          _curve: 0.5
+        _switchPresetData:
+          _sourcePreset: 
+          _targetPreset: 
+        _globalParameterData:
+          _name: 
+          _value: 0
+        _globalSwitchParameterData:
+          _name: 
+          _switch: 
+        _transitionToSnapshotData:
+          _snapshot: 
+          _timeToReach: 0
+        _eventValue: NoAction
+        _eventParameter: 1
+        _eventScheduleParameter: 0
+        _eventParameterName: 
+        _dspType: 0
+        _timeToTarget: 0
+        _curve: 0.5
+        _min: 0
+        _max: 1
+      - _event:
+          _eventName: 
+          _eventID: 0
+          EventAction: 0
+          parentGameObject: {fileID: 0}
+          _delay: 0
+          _delayTimer: 0
+          _eventCategory: 
+          _priority: 0
+        _component: {fileID: 114810338570777770}
+        _ignoreEventAction: 0
+        _parameterData:
+          _value: 0
+          _parameter: 0
+          _index: -1
+        _dspParameter:
+          _dspType: 0
+          _parameter: 
+          _value: 0
+          _time: 0
+          _curve: 0.5
+        _switchPresetData:
+          _sourcePreset: 
+          _targetPreset: 
+        _globalParameterData:
+          _name: 
+          _value: 0
+        _globalSwitchParameterData:
+          _name: 
+          _switch: 
+        _transitionToSnapshotData:
+          _snapshot: 
+          _timeToReach: 0
+        _eventValue: 
+        _eventParameter: 1
+        _eventScheduleParameter: 0
+        _eventParameterName: 
+        _dspType: 0
+        _timeToTarget: 0
+        _curve: 0.5
+        _min: 0
+        _max: 1
   profiler:
-    totalMS: 666.66797
-    recordedMS: 4.638672
-    percent: 0.6957994
-    msPerFrame: 0.003746908
+    totalMS: 640.69556
+    recordedMS: 0.47302246
+    percent: 0.073829524
+    msPerFrame: 0.0025990244
     maxMsPerFrame: 1.0986328
-    msPerCall: 0.003746908
+    msPerCall: 0.0025990244
     timesPerFrame: 1
   _eventMenuListFoldout: 1
-  _eventListFoldout: 1
+  _eventListFoldout: 0
   _forceQueueAllEvents: 0
   _eventSequencer:
     _sequenceEntries:
@@ -14756,6 +15714,122 @@ MonoBehaviour:
   _componentHolder: {fileID: 114994243566655270}
   _onEventNotifyEventName: 
   _audioClip: {fileID: 8300000, guid: 82b7ff5d70e32b14e9d011d9e03d0c58, type: 3}
+  _audioClipHandle:
+    _audioClipPath: 
+    _useAudioClipPath: 1
+  _dynamicAudioClipLoading: 0
+  _dynamicAudioClipUnloadDelay: 0
+  _dynamicAsyncAudioClipLoading: 0
+  _audioClipAssetPath: 0
+  _delay: 0
+  _delayInBeats: 0
+  _loop: 0
+  _ignoreNativeLoop: 0
+  _randomizeStart: 0
+  _randomizeStartPercentage: 100
+  _numLoops: -1
+  _loopMarkersLoaded: 0
+  _useLoopMarkers: 1
+  _startLoopMarkerIndex: 0
+  _endLoopMarkerIndex: 1
+  _loopRegionIndex: 0
+  _randomizeStartLoopMarkerIndex: 0
+  _randomizeEndLoopMarkerIndex: 0
+  _randomizeRegionIndex: 0
+  _dontPlay: 0
+  _dontStopOnDestroy: 0
+  _ignoreVirtualization: 0
+  _randomizePosition: 0
+  _randomizeMinPosition: 0
+  _randomizeMaxPosition: 10
+  _syncWithMusicTime: 0
+  _markers: []
+  _syncRegionsWithTempo: 0
+  _audioClipTempo: 120
+  _regions: []
+--- !u!114 &114996341064865514
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1965228646212298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -71199202, guid: 4b4e8768ed04d6a4f98af6f4f83be984, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _numVirtualizationEvents: 100
+  _maxInstances: 1
+  _stealingBehaviour: 0
+  _minimumPlaybackInterval: 0
+  _overrideParentVolume: 0
+  _volume: 1
+  _volumeRandomization: 0
+  _mute: 0
+  _overrideParentPitch: 0
+  _pitch: 1
+  _pitchRandomization: 0
+  _override2DProperties: 0
+  _pan2D: 0
+  _pan2DRandomization: 0
+  _override3DProperties: 0
+  _priority: 128
+  _panLevel: 1
+  _spreadLevel: 0
+  _spatialize: 0
+  _dopplerLevel: 1
+  _maxDistance: 500
+  _minDistance: 1
+  _rolloffMode: 0
+  _customCurvesType: 0
+  _customCurvesName: 
+  _overrideFadeProperties: 0
+  _fadeInTime: 0
+  _fadeInCurve: 0.5
+  _fadeOutTime: 0
+  _fadeOutCurve: 0.5
+  _reverbZoneMix: 1
+  _overrideBypassProperties: 0
+  _bypassEffects: 0
+  _bypassListenerEffects: 0
+  _bypassReverbZones: 0
+  _overrideAudioMixerGroup: 0
+  _audioMixerGroup: {fileID: 0}
+  _notifyParentComponent: 0
+  _audioBusName: 
+  _overrideAudioBus: 0
+  _overrideMusicTimeSettings: 0
+  _musicTimeSettingsIndex: -1
+  _musicTempo: -1
+  _musicTimeSignatureLower: 0
+  _musicTimeSignatureUpper: 0
+  _musicTimeResetOnPlay: 0
+  _midiProperties:
+    _overrideParentNoteTracking: 0
+    _noteTracking: 0
+    _keyRangeMin: 0
+    _keyRangeMax: 127
+    _velocityRangeMin: 0
+    _velocityRangeMax: 127
+    _channelRangeMin: 1
+    _channelRangeMax: 16
+    _rootNote: -36
+    _transpose: 0
+    _velocity: 0
+  _overrideSpatializeProperty: 0
+  _probability: 100
+  _multipleInstancesPerGameObject: 1
+  _componentVirtualization: 0
+  _overrideVolumeThreshold: 0
+  _volumeThreshold: 1
+  _virtualizationBehavior: 1
+  _RTPManager:
+    _parameters: []
+    _reference: {fileID: 0}
+  Guid: 
+  _componentHolder: {fileID: 114996341064865514}
+  _onEventNotifyEventName: 
+  _audioClip: {fileID: 8300000, guid: 01e1c9268cfe42348915925a22bac77a, type: 3}
   _audioClipHandle:
     _audioClipPath: 
     _useAudioClipPath: 1

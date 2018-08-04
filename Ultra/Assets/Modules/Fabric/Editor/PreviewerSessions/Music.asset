@@ -1,0 +1,161 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 598428135, guid: e63091ca6420aef40badd679c391c90a, type: 3}
+  m_Name: Music
+  m_EditorClassIdentifier: 
+  windowData:
+  - _x: 0
+    _y: 0
+    _eventItem:
+      _event:
+        _eventName: MusicAction
+        _eventID: 0
+        EventAction: 6
+        parentGameObject: {fileID: 0}
+        _delay: 0
+        _delayTimer: 0
+        _eventCategory: 
+        _priority: 0
+      _component: {fileID: 0}
+      _ignoreEventAction: 0
+      _parameterData:
+        _value: 0
+        _parameter: 0
+        _index: -1
+      _dspParameter:
+        _dspType: 0
+        _parameter: 
+        _value: 0
+        _time: 0
+        _curve: 0.5
+      _switchPresetData:
+        _sourcePreset: 
+        _targetPreset: 
+      _globalParameterData:
+        _name: 
+        _value: 0
+      _globalSwitchParameterData:
+        _name: 
+        _switch: 
+      _transitionToSnapshotData:
+        _snapshot: 
+        _timeToReach: 0
+      _eventValue: 
+      _eventParameter: 1
+      _eventScheduleParameter: 0
+      _eventParameterName: 
+      _dspType: 0
+      _timeToTarget: 0
+      _curve: 0.5
+      _min: 0
+      _max: 1
+    Guid: 
+    _component: {fileID: 0}
+    _name: Event
+    _type: 1
+  - _x: 209
+    _y: 1
+    _eventItem:
+      _event:
+        _eventName: MusicNoAction
+        _eventID: 0
+        EventAction: 6
+        parentGameObject: {fileID: 0}
+        _delay: 0
+        _delayTimer: 0
+        _eventCategory: 
+        _priority: 0
+      _component: {fileID: 0}
+      _ignoreEventAction: 0
+      _parameterData:
+        _value: 0
+        _parameter: 0
+        _index: -1
+      _dspParameter:
+        _dspType: 0
+        _parameter: 
+        _value: 0
+        _time: 0
+        _curve: 0.5
+      _switchPresetData:
+        _sourcePreset: 
+        _targetPreset: 
+      _globalParameterData:
+        _name: 
+        _value: 0
+      _globalSwitchParameterData:
+        _name: 
+        _switch: 
+      _transitionToSnapshotData:
+        _snapshot: 
+        _timeToReach: 0
+      _eventValue: 
+      _eventParameter: 1
+      _eventScheduleParameter: 0
+      _eventParameterName: 
+      _dspType: 0
+      _timeToTarget: 0
+      _curve: 0.5
+      _min: 0
+      _max: 1
+    Guid: 
+    _component: {fileID: 0}
+    _name: Event
+    _type: 1
+  - _x: 424
+    _y: 1
+    _eventItem:
+      _event:
+        _eventName: MusicStart
+        _eventID: 0
+        EventAction: 0
+        parentGameObject: {fileID: 0}
+        _delay: 0
+        _delayTimer: 0
+        _eventCategory: 
+        _priority: 0
+      _component: {fileID: 0}
+      _ignoreEventAction: 0
+      _parameterData:
+        _value: 0
+        _parameter: 0
+        _index: -1
+      _dspParameter:
+        _dspType: 0
+        _parameter: 
+        _value: 0
+        _time: 0
+        _curve: 0.5
+      _switchPresetData:
+        _sourcePreset: 
+        _targetPreset: 
+      _globalParameterData:
+        _name: 
+        _value: 0
+      _globalSwitchParameterData:
+        _name: 
+        _switch: 
+      _transitionToSnapshotData:
+        _snapshot: 
+        _timeToReach: 0
+      _eventValue: 
+      _eventParameter: 1
+      _eventScheduleParameter: 0
+      _eventParameterName: 
+      _dspType: 0
+      _timeToTarget: 0
+      _curve: 0.5
+      _min: 0
+      _max: 1
+    Guid: 
+    _component: {fileID: 0}
+    _name: Event
+    _type: 1
