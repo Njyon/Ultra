@@ -16,7 +16,7 @@ public class AudioMaterialBounces : MonoBehaviour {
 
     private double bounceAudioLastTrigger;
 
-    public void Bounce(BounceType audioMaterial) {
+    public void Bounce(BounceType audioMaterial, int comboCounter) {
         if (AudioSettings.dspTime - bounceAudioLastTrigger < 0.1d) {
             return;
         }
