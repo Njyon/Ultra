@@ -412,6 +412,7 @@ public class OneVsOneGameMode : MonoBehaviour
         {
             var bounds = new Bounds(CharacterOne.transform.position, Vector3.zero); 
             parried = true;
+            Fabric.EventManager.Instance.PostEvent("Parry", this.gameObject);
             bounds.Encapsulate(CharacterOne.transform.position);
             bounds.Encapsulate(CharacterTwo.transform.position);
 
