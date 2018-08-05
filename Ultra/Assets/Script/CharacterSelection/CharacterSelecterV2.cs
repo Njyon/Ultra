@@ -39,6 +39,8 @@ public class CharacterSelecterV2 : MonoBehaviour
     public P1_IsReady p1_Ready;
     public P2_IsReady p2_Ready;
 
+    public Animator gameStartAnim;
+
     #region Subscibe & Unsubscribe from Delegates
     /// <summary>
     /// Subscribe to Delegate
@@ -48,8 +50,8 @@ public class CharacterSelecterV2 : MonoBehaviour
         InputManager.p1_OnKeyPressed += P1_InputDownCheck;
         InputManager.p2_OnKeyPressed += P2_InputDownCheck;
 
-        InputManager.p1_OnKeyPressed += P1_InputUpCheck;
-        InputManager.p2_OnKeyPressed += P2_InputUpCheck;
+        InputManager.p1_OnKeyReleased += P1_InputUpCheck;
+        InputManager.p2_OnKeyReleased += P2_InputUpCheck;
 
         InputManager.P1_LeftStickRightAction += playerOne.ChangeColorUp;
         InputManager.P2_LeftStickRightAction += playerTwo.ChangeColorUp;
@@ -72,15 +74,16 @@ public class CharacterSelecterV2 : MonoBehaviour
         InputManager.p1_OnKeyPressed -= P1_InputDownCheck;
         InputManager.p2_OnKeyPressed -= P2_InputDownCheck;
 
-        InputManager.p1_OnKeyPressed -= P1_InputUpCheck;
-        InputManager.p2_OnKeyPressed -= P2_InputUpCheck;
+        InputManager.p1_OnKeyReleased -= P1_InputUpCheck;
+        InputManager.p2_OnKeyReleased -= P2_InputUpCheck;
 
-        InputManager.P1_LeftStickRightAction -= playerOne.SwitchSlotUp;
-        InputManager.P2_LeftStickRightAction -= playerTwo.SwitchSlotUp;
+        InputManager.P1_LeftStickRightAction -= playerOne.ChangeColorUp;
+        InputManager.P2_LeftStickRightAction -= playerTwo.ChangeColorUp;
 
-        InputManager.P1_LeftStickLeftAction -= playerOne.SwitchSlotDown;
-        InputManager.P2_LeftStickLeftAction -= playerTwo.SwitchSlotDown;
+        InputManager.P1_LeftStickLeftAction -= playerOne.ChangeColorDown;
+        InputManager.P2_LeftStickLeftAction -= playerTwo.ChangeColorDown;
 
+        //Fix because The Input is an Update and gets called Every Frame
         playerOne.SwitchUpAction -= P1SwitchUp;
         playerOne.SwitchDownAction -= P1SwitchDown;
         playerTwo.SwitchUpAction -= P2SwitchUp;
@@ -160,11 +163,12 @@ public class CharacterSelecterV2 : MonoBehaviour
             PlayerInfoManager.playerOne.color = renderer1.material.GetColor("_EmissionColor");
             PlayerInfoManager.playerTwo.color = renderer2.material.GetColor("_EmissionColor");
 
-            Invoke("DelayStartGame", 1f);
+            Invoke("DelayStartGame", 2f);
         }
     }
     void DelayStartGame()
     {
+        gameStartAnim.SetBool("StartGame", true);
         RemoveInput();
         StartGame();
     }
@@ -268,8 +272,8 @@ public class CharacterSelecterV2 : MonoBehaviour
     }
     IEnumerator LoadNewScene()
     {
-        yield return new WaitForSeconds(0.1f);
-        AsyncOperation async = SceneManager.LoadSceneAsync(2);
+        yield return new WaitForSeconds(1.1f);
+        AsyncOperation async = SceneManager.LoadSceneAsync(4);
         while (!async.isDone)
         {
             yield return null;

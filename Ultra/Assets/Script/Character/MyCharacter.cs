@@ -85,7 +85,7 @@ public class MyCharacter : MonoBehaviour
 
     protected GameObject lastBounceObj;
 
-    [SerializeField] protected ParticleData pD;
+    public ParticleData pD;
 
     [HideInInspector] public int hitCounter = 1;
     [HideInInspector] public int combo = 0;
@@ -457,6 +457,7 @@ public class MyCharacter : MonoBehaviour
 
     void Start()
     {
+        pD.doublePoints.Stop();
     }
 
     //////////////////////////////////////////////////
@@ -592,7 +593,8 @@ public class MyCharacter : MonoBehaviour
         // Reset Rotation and Position
         meshController.transform.localPosition = Vector3.down;
         meshController.transform.localRotation = Quaternion.identity;
-        
+
+        gameMode.CheckForBalance();
     }
     /// <summary>
     /// Starts the Stun effect this Character
@@ -897,8 +899,10 @@ public class MyCharacter : MonoBehaviour
     }
     public void CheckIfComebackModeShouldEnd()
     {
-        if(inComeBackMode && !gameMode.comeBackActive && !inCombo)
+        Debug.Log(inComeBackMode + " " + gameMode.comeBackActive + " " + inCombo);
+        if (inComeBackMode && !gameMode.comeBackActive && !inCombo)
         {
+            pD.doublePoints.Stop();
             inComeBackMode = false;
         }
     }

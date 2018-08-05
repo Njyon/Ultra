@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -39,6 +40,9 @@ public class OneVsOneGameMode : MonoBehaviour
     bool gameOn = false;
 
     public Animator gameDoneAnimator;
+    public Animator pauseMenuAnimator;
+    public EventSystem eS;
+    public GameObject mainButton;
 
     //[Header("PlayerData")]
     //[SerializeField] GameObject playerDataPref;
@@ -47,6 +51,8 @@ public class OneVsOneGameMode : MonoBehaviour
 
     void Start()
     {
+        InputManager.p1_OnKeyPressed += GetInput;
+        InputManager.p2_OnKeyPressed += GetInput;
 
         #region Spawns
         //Set SpawnLocation
@@ -111,7 +117,7 @@ public class OneVsOneGameMode : MonoBehaviour
         CharacterOne.parryDelegate += Parry;
         CharacterTwo.parryDelegate += Parry;
 
-        Invoke("GameStart", 4f);
+        Invoke("GameStart", 5f);
     }
 
     void SetPlayerEnemys()
@@ -230,6 +236,75 @@ public class OneVsOneGameMode : MonoBehaviour
         MyCharacter.endGameAction += EndGame;
     }
 
+    void GetInput(KeyCode keyCode)
+    {
+        if(keyCode == KeyCode.Joystick1Button7 || keyCode == KeyCode.Joystick2Button7)
+        {
+            PauseGame();
+        }
+        if(!gameOn && Time.timeScale == 0f)
+        {
+            if(keyCode == KeyCode.Joystick1Button1 || keyCode == KeyCode.Joystick2Button1)
+            {
+                GameResume();
+            }
+        }
+    }
+    void PauseGame()
+    {
+        eS.SetSelectedGameObject(mainButton);
+        gameOn = false;
+        Time.timeScale = 0f;
+        pauseMenuAnimator.SetBool("pauseActive", true);
+    }
+    void GameResumeDelayed()
+    {
+        eS.SetSelectedGameObject(null);
+        gameOn = true;
+        Time.timeScale = 1f;
+    }
+    public void GameResume()
+    {
+        GameResumeDelayed();
+        //Invoke("GameResumeDelayed", 0.9f);
+        pauseMenuAnimator.SetBool("pauseActive", false);
+    }
+    public void LeaveGame()
+    {
+        gameOn = false;
+        // End Combo from both Players
+        PlayerOne.GetComponent<MyCharacter>().EndCombo();
+        PlayerTwo.GetComponent<MyCharacter>().EndCombo();
+
+        // Desubscribe both player from the Score counter events
+        PlayerOne.GetComponent<MyCharacter>().playerDataAction -= DataCounter;
+        PlayerOne.GetComponent<MyCharacter>().dodgeAction -= DodgeCounter;
+        PlayerOne.GetComponent<MyCharacter>().bounceAction -= BounceCounter;
+        PlayerTwo.GetComponent<MyCharacter>().playerDataAction -= DataCounter;
+        PlayerTwo.GetComponent<MyCharacter>().dodgeAction -= DodgeCounter;
+        PlayerTwo.GetComponent<MyCharacter>().bounceAction -= BounceCounter;
+
+        //Deposses both player and Desubsribe them so from events
+        PlayerOne.GetComponent<MyCharacter>().DePosses();
+        PlayerTwo.GetComponent<MyCharacter>().DePosses();
+
+        InputManager.p1_OnKeyPressed -= GetInput;
+        InputManager.p2_OnKeyPressed -= GetInput;
+        Time.timeScale = 1f;
+
+        StartCoroutine(LoadNewScene(1));
+    }
+    IEnumerator LoadNewScene(int scene)
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+        AsyncOperation async = SceneManager.LoadSceneAsync(scene);
+        while (!async.isDone)
+        {
+            yield return null;
+        }
+    }
+
+
     void GameStart()
     {
         gameOn = true;
@@ -258,6 +333,9 @@ public class OneVsOneGameMode : MonoBehaviour
         //Deposses both player and Desubsribe them so from events
         PlayerOne.GetComponent<MyCharacter>().DePosses();
         PlayerTwo.GetComponent<MyCharacter>().DePosses();
+        
+        InputManager.p1_OnKeyPressed -= GetInput;
+        InputManager.p2_OnKeyPressed -= GetInput;
 
         Time.timeScale = 0.5f;
         Time.fixedDeltaTime = Time.deltaTime * 0.02f;
@@ -332,16 +410,55 @@ public class OneVsOneGameMode : MonoBehaviour
             parried = false;
         }
     }
-
+    int GetHigherScore(out bool playerOneWins)
+    {
+        if(CharacterOne.score > CharacterTwo.score)
+        {
+            playerOneWins = true;
+            return CharacterOne.score;
+        }
+        else
+        {
+            playerOneWins = false;
+            return CharacterTwo.score;
+        }       
+    }
+    int GetScoreDifference(bool playerOneWins)
+    {
+        if (playerOneWins)
+        {
+            return CharacterOne.score - CharacterTwo.score;
+        }
+        else
+        {
+            return CharacterTwo.score - CharacterOne.score;
+        }
+    }
+    bool ShouldCheckBalance()
+    {
+        if (CharacterOne.score == 0 || CharacterTwo.score == 0)
+            return false;
+        else
+            return true;
+    }
     public void CheckForBalance()
     {
-        if(CharacterOne.score - CharacterTwo.score > maxDifference)
+        if (!ShouldCheckBalance())
+            return;
+        
+        bool playerOneWins;
+        int winnerScore = GetHigherScore(out playerOneWins);
+        int difference = GetScoreDifference(playerOneWins);
+
+        if(!playerOneWins)
         {
-            StartComeBack(CharacterOne);
+            if (difference > winnerScore * 0.4f)
+                StartComeBack(CharacterOne);
         }
-        else if(CharacterTwo.score - CharacterOne.score > maxDifference)
+        else
         {
-            StartComeBack(CharacterTwo);
+            if (difference > winnerScore * 0.4f)
+                StartComeBack(CharacterTwo);
         }
     }
 
@@ -351,18 +468,20 @@ public class OneVsOneGameMode : MonoBehaviour
         {
             comeBackActive = true;
             characterToBoost.inComeBackMode = true;
+            characterToBoost.pD.doublePoints.Play();
             Invoke("EndComeBackMode", comeBackTime);
         }
     }
 
     void EndComeBackMode()
     {
+        comeBackCooling = true;
+        comeBackActive = false;
+
         //Fast Fix
         CharacterOne.CheckIfComebackModeShouldEnd();
         CharacterOne.CheckIfComebackModeShouldEnd();
 
-        comeBackCooling = true;
-        comeBackActive = true;
         Invoke("EndComeBackCooldown", comeBackTCooldown);
     }
     void EndComeBackCooldown()
@@ -373,6 +492,9 @@ public class OneVsOneGameMode : MonoBehaviour
     bool bigTimerOn = false;
     void Update()
     {
+        if (!gameOn)
+            return;
+
         if(timer != null)
         {
             time -= Time.deltaTime;
