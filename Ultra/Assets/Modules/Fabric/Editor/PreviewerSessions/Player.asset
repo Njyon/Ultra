@@ -1,0 +1,504 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 598428135, guid: e63091ca6420aef40badd679c391c90a, type: 3}
+  m_Name: Player
+  m_EditorClassIdentifier: 
+  windowData:
+  - _x: 0
+    _y: 0
+    _eventItem:
+      _event:
+        _eventName: DashDown
+        _eventID: 0
+        EventAction: 0
+        parentGameObject: {fileID: 0}
+        _delay: 0
+        _delayTimer: 0
+        _eventCategory: 
+        _priority: 0
+      _component: {fileID: 0}
+      _ignoreEventAction: 0
+      _parameterData:
+        _value: 0
+        _parameter: 0
+        _index: -1
+      _dspParameter:
+        _dspType: 0
+        _parameter: 
+        _value: 0
+        _time: 0
+        _curve: 0.5
+      _switchPresetData:
+        _sourcePreset: 
+        _targetPreset: 
+      _globalParameterData:
+        _name: 
+        _value: 0
+      _globalSwitchParameterData:
+        _name: 
+        _switch: 
+      _transitionToSnapshotData:
+        _snapshot: 
+        _timeToReach: 0
+      _eventValue: 
+      _eventParameter: 1
+      _eventScheduleParameter: 0
+      _eventParameterName: 
+      _dspType: 0
+      _timeToTarget: 0
+      _curve: 0.5
+      _min: 0
+      _max: 1
+    Guid: 
+    _component: {fileID: 0}
+    _name: Event
+    _type: 1
+  - _x: 204
+    _y: 0
+    _eventItem:
+      _event:
+        _eventName: DashSide
+        _eventID: 0
+        EventAction: 0
+        parentGameObject: {fileID: 0}
+        _delay: 0
+        _delayTimer: 0
+        _eventCategory: 
+        _priority: 0
+      _component: {fileID: 0}
+      _ignoreEventAction: 0
+      _parameterData:
+        _value: 0
+        _parameter: 0
+        _index: -1
+      _dspParameter:
+        _dspType: 0
+        _parameter: 
+        _value: 0
+        _time: 0
+        _curve: 0.5
+      _switchPresetData:
+        _sourcePreset: 
+        _targetPreset: 
+      _globalParameterData:
+        _name: 
+        _value: 0
+      _globalSwitchParameterData:
+        _name: 
+        _switch: 
+      _transitionToSnapshotData:
+        _snapshot: 
+        _timeToReach: 0
+      _eventValue: 
+      _eventParameter: 1
+      _eventScheduleParameter: 0
+      _eventParameterName: 
+      _dspType: 0
+      _timeToTarget: 0
+      _curve: 0.5
+      _min: 0
+      _max: 1
+    Guid: 
+    _component: {fileID: 0}
+    _name: Event
+    _type: 1
+  - _x: 411
+    _y: 3
+    _eventItem:
+      _event:
+        _eventName: DashStab
+        _eventID: 0
+        EventAction: 0
+        parentGameObject: {fileID: 0}
+        _delay: 0
+        _delayTimer: 0
+        _eventCategory: 
+        _priority: 0
+      _component: {fileID: 0}
+      _ignoreEventAction: 0
+      _parameterData:
+        _value: 0
+        _parameter: 0
+        _index: -1
+      _dspParameter:
+        _dspType: 0
+        _parameter: 
+        _value: 0
+        _time: 0
+        _curve: 0.5
+      _switchPresetData:
+        _sourcePreset: 
+        _targetPreset: 
+      _globalParameterData:
+        _name: 
+        _value: 0
+      _globalSwitchParameterData:
+        _name: 
+        _switch: 
+      _transitionToSnapshotData:
+        _snapshot: 
+        _timeToReach: 0
+      _eventValue: 
+      _eventParameter: 1
+      _eventScheduleParameter: 0
+      _eventParameterName: 
+      _dspType: 0
+      _timeToTarget: 0
+      _curve: 0.5
+      _min: 0
+      _max: 1
+    Guid: 
+    _component: {fileID: 0}
+    _name: Event
+    _type: 1
+  - _x: 628
+    _y: 0
+    _eventItem:
+      _event:
+        _eventName: DashUp
+        _eventID: 0
+        EventAction: 0
+        parentGameObject: {fileID: 0}
+        _delay: 0
+        _delayTimer: 0
+        _eventCategory: 
+        _priority: 0
+      _component: {fileID: 0}
+      _ignoreEventAction: 0
+      _parameterData:
+        _value: 0
+        _parameter: 0
+        _index: -1
+      _dspParameter:
+        _dspType: 0
+        _parameter: 
+        _value: 0
+        _time: 0
+        _curve: 0.5
+      _switchPresetData:
+        _sourcePreset: 
+        _targetPreset: 
+      _globalParameterData:
+        _name: 
+        _value: 0
+      _globalSwitchParameterData:
+        _name: 
+        _switch: 
+      _transitionToSnapshotData:
+        _snapshot: 
+        _timeToReach: 0
+      _eventValue: 
+      _eventParameter: 1
+      _eventScheduleParameter: 0
+      _eventParameterName: 
+      _dspType: 0
+      _timeToTarget: 0
+      _curve: 0.5
+      _min: 0
+      _max: 1
+    Guid: 
+    _component: {fileID: 0}
+    _name: Event
+    _type: 1
+  - _x: 837
+    _y: 1
+    _eventItem:
+      _event:
+        _eventName: Footsteps
+        _eventID: 0
+        EventAction: 0
+        parentGameObject: {fileID: 0}
+        _delay: 0
+        _delayTimer: 0
+        _eventCategory: 
+        _priority: 0
+      _component: {fileID: 0}
+      _ignoreEventAction: 0
+      _parameterData:
+        _value: 0
+        _parameter: 0
+        _index: -1
+      _dspParameter:
+        _dspType: 0
+        _parameter: 
+        _value: 0
+        _time: 0
+        _curve: 0.5
+      _switchPresetData:
+        _sourcePreset: 
+        _targetPreset: 
+      _globalParameterData:
+        _name: 
+        _value: 0
+      _globalSwitchParameterData:
+        _name: 
+        _switch: 
+      _transitionToSnapshotData:
+        _snapshot: 
+        _timeToReach: 0
+      _eventValue: 
+      _eventParameter: 1
+      _eventScheduleParameter: 0
+      _eventParameterName: 
+      _dspType: 0
+      _timeToTarget: 0
+      _curve: 0.5
+      _min: 0
+      _max: 1
+    Guid: 
+    _component: {fileID: 0}
+    _name: Event
+    _type: 1
+  - _x: 4
+    _y: 135
+    _eventItem:
+      _event:
+        _eventName: HitVFX
+        _eventID: 0
+        EventAction: 0
+        parentGameObject: {fileID: 0}
+        _delay: 0
+        _delayTimer: 0
+        _eventCategory: 
+        _priority: 0
+      _component: {fileID: 0}
+      _ignoreEventAction: 0
+      _parameterData:
+        _value: 0
+        _parameter: 0
+        _index: -1
+      _dspParameter:
+        _dspType: 0
+        _parameter: 
+        _value: 0
+        _time: 0
+        _curve: 0.5
+      _switchPresetData:
+        _sourcePreset: 
+        _targetPreset: 
+      _globalParameterData:
+        _name: 
+        _value: 0
+      _globalSwitchParameterData:
+        _name: 
+        _switch: 
+      _transitionToSnapshotData:
+        _snapshot: 
+        _timeToReach: 0
+      _eventValue: 
+      _eventParameter: 1
+      _eventScheduleParameter: 0
+      _eventParameterName: 
+      _dspType: 0
+      _timeToTarget: 0
+      _curve: 0.5
+      _min: 0
+      _max: 1
+    Guid: 
+    _component: {fileID: 0}
+    _name: Event
+    _type: 1
+  - _x: 214
+    _y: 137
+    _eventItem:
+      _event:
+        _eventName: Jump1
+        _eventID: 0
+        EventAction: 0
+        parentGameObject: {fileID: 0}
+        _delay: 0
+        _delayTimer: 0
+        _eventCategory: 
+        _priority: 0
+      _component: {fileID: 0}
+      _ignoreEventAction: 0
+      _parameterData:
+        _value: 0
+        _parameter: 0
+        _index: -1
+      _dspParameter:
+        _dspType: 0
+        _parameter: 
+        _value: 0
+        _time: 0
+        _curve: 0.5
+      _switchPresetData:
+        _sourcePreset: 
+        _targetPreset: 
+      _globalParameterData:
+        _name: 
+        _value: 0
+      _globalSwitchParameterData:
+        _name: 
+        _switch: 
+      _transitionToSnapshotData:
+        _snapshot: 
+        _timeToReach: 0
+      _eventValue: 
+      _eventParameter: 1
+      _eventScheduleParameter: 0
+      _eventParameterName: 
+      _dspType: 0
+      _timeToTarget: 0
+      _curve: 0.5
+      _min: 0
+      _max: 1
+    Guid: 
+    _component: {fileID: 0}
+    _name: Event
+    _type: 1
+  - _x: 425
+    _y: 138
+    _eventItem:
+      _event:
+        _eventName: Jump2
+        _eventID: 0
+        EventAction: 0
+        parentGameObject: {fileID: 0}
+        _delay: 0
+        _delayTimer: 0
+        _eventCategory: 
+        _priority: 0
+      _component: {fileID: 0}
+      _ignoreEventAction: 0
+      _parameterData:
+        _value: 0
+        _parameter: 0
+        _index: -1
+      _dspParameter:
+        _dspType: 0
+        _parameter: 
+        _value: 0
+        _time: 0
+        _curve: 0.5
+      _switchPresetData:
+        _sourcePreset: 
+        _targetPreset: 
+      _globalParameterData:
+        _name: 
+        _value: 0
+      _globalSwitchParameterData:
+        _name: 
+        _switch: 
+      _transitionToSnapshotData:
+        _snapshot: 
+        _timeToReach: 0
+      _eventValue: 
+      _eventParameter: 1
+      _eventScheduleParameter: 0
+      _eventParameterName: 
+      _dspType: 0
+      _timeToTarget: 0
+      _curve: 0.5
+      _min: 0
+      _max: 1
+    Guid: 
+    _component: {fileID: 0}
+    _name: Event
+    _type: 1
+  - _x: 634
+    _y: 134
+    _eventItem:
+      _event:
+        _eventName: Jump3
+        _eventID: 0
+        EventAction: 0
+        parentGameObject: {fileID: 0}
+        _delay: 0
+        _delayTimer: 0
+        _eventCategory: 
+        _priority: 0
+      _component: {fileID: 0}
+      _ignoreEventAction: 0
+      _parameterData:
+        _value: 0
+        _parameter: 0
+        _index: -1
+      _dspParameter:
+        _dspType: 0
+        _parameter: 
+        _value: 0
+        _time: 0
+        _curve: 0.5
+      _switchPresetData:
+        _sourcePreset: 
+        _targetPreset: 
+      _globalParameterData:
+        _name: 
+        _value: 0
+      _globalSwitchParameterData:
+        _name: 
+        _switch: 
+      _transitionToSnapshotData:
+        _snapshot: 
+        _timeToReach: 0
+      _eventValue: 
+      _eventParameter: 1
+      _eventScheduleParameter: 0
+      _eventParameterName: 
+      _dspType: 0
+      _timeToTarget: 0
+      _curve: 0.5
+      _min: 0
+      _max: 1
+    Guid: 
+    _component: {fileID: 0}
+    _name: Event
+    _type: 1
+  - _x: 843
+    _y: 136
+    _eventItem:
+      _event:
+        _eventName: Landing
+        _eventID: 0
+        EventAction: 0
+        parentGameObject: {fileID: 0}
+        _delay: 0
+        _delayTimer: 0
+        _eventCategory: 
+        _priority: 0
+      _component: {fileID: 0}
+      _ignoreEventAction: 0
+      _parameterData:
+        _value: 0
+        _parameter: 0
+        _index: -1
+      _dspParameter:
+        _dspType: 0
+        _parameter: 
+        _value: 0
+        _time: 0
+        _curve: 0.5
+      _switchPresetData:
+        _sourcePreset: 
+        _targetPreset: 
+      _globalParameterData:
+        _name: 
+        _value: 0
+      _globalSwitchParameterData:
+        _name: 
+        _switch: 
+      _transitionToSnapshotData:
+        _snapshot: 
+        _timeToReach: 0
+      _eventValue: 
+      _eventParameter: 1
+      _eventScheduleParameter: 0
+      _eventParameterName: 
+      _dspType: 0
+      _timeToTarget: 0
+      _curve: 0.5
+      _min: 0
+      _max: 1
+    Guid: 
+    _component: {fileID: 0}
+    _name: Event
+    _type: 1
