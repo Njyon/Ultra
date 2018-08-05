@@ -5944,6 +5944,7 @@ GameObject:
   m_Component:
   - component: {fileID: 955537418}
   - component: {fileID: 955537417}
+  - component: {fileID: 955537419}
   m_Layer: 0
   m_Name: CharacterSelecter
   m_TagString: Untagged
@@ -5979,8 +5980,6 @@ MonoBehaviour:
   renderer1: {fileID: 1621685740}
   renderer2: {fileID: 800587095}
   gameStartAnim: {fileID: 1350042236}
-  AudioManager: {fileID: 1897430974260146, guid: baca789a42292564eb0118fefe517120,
-    type: 2}
 --- !u!4 &955537418
 Transform:
   m_ObjectHideFlags: 0
@@ -5994,6 +5993,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &955537419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 955537416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 444de97af329ae24dbae64e98b332489, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AudioManager: {fileID: 1897430974260146, guid: baca789a42292564eb0118fefe517120,
+    type: 2}
 --- !u!4 &969499992 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 9db405076e2814744ab9ecb053835ada, type: 3}
