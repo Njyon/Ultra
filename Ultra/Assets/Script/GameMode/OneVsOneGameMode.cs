@@ -345,15 +345,17 @@ public class OneVsOneGameMode : MonoBehaviour
         InputManager.p1_OnKeyPressed -= GetInput;
         InputManager.p2_OnKeyPressed -= GetInput;
 
+        fixedDeltaTime = Time.fixedDeltaTime;
         Time.timeScale = 0.5f;
         Time.fixedDeltaTime = Time.deltaTime * 0.02f;
         gameDoneAnimator.SetBool("GameDone", true);
         Invoke("LoadScene", 2f);
     }
+    float fixedDeltaTime;
     void LoadScene()
     {
-
         Time.timeScale = 1f;
+        Time.fixedDeltaTime = fixedDeltaTime;
         // Load the Win Screen
         SceneManager.LoadScene(3);
     }
