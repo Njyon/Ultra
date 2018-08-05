@@ -280,6 +280,7 @@ public class OneVsOneGameMode : MonoBehaviour
     public void LeaveGame()
     {
         gameOn = false;
+        Fabric.EventManager.Instance.PostEvent("MusicNoAction");
         // End Combo from both Players
         PlayerOne.GetComponent<MyCharacter>().EndCombo();
         PlayerTwo.GetComponent<MyCharacter>().EndCombo();
@@ -326,6 +327,7 @@ public class OneVsOneGameMode : MonoBehaviour
             return;
 
         gameOn = false;
+        Fabric.EventManager.Instance.PostEvent("MusicNoAction");
         // End Combo from both Players
         PlayerOne.GetComponent<MyCharacter>().EndCombo();
         PlayerTwo.GetComponent<MyCharacter>().EndCombo();
