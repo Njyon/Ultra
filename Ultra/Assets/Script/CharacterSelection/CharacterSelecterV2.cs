@@ -40,6 +40,7 @@ public class CharacterSelecterV2 : MonoBehaviour
     public P2_IsReady p2_Ready;
 
     public Animator gameStartAnim;
+    public GameObject AudioManager;
 
     #region Subscibe & Unsubscribe from Delegates
     /// <summary>
@@ -196,6 +197,10 @@ public class CharacterSelecterV2 : MonoBehaviour
             {
                 Instantiate(playerInfoManagerObj, Vector3.zero, Quaternion.identity);
             }
+        }
+        if(GameObject.Find("Audio(Clone)") == null)
+        {
+            Instantiate(AudioManager, Vector3.zero, Quaternion.identity);
         }
 
         playerOne.characters = new GameObject[amountOfPlayableCharacters];

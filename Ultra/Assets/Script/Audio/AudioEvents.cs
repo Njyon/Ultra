@@ -8,7 +8,10 @@ public class AudioEvents : MonoBehaviour {
     private MyCharacter character;
     private delegate void EventDelegate(EventState eventState);
     private EventDelegate eventDelegate;
-    private static bool firstGetHit = false;
+    [HideInInspector] public static bool firstGetHit = false;
+
+    public  delegate void ActionTimer();
+    public static ActionTimer actionTimer;
    
 
     void Awake () {
@@ -87,8 +90,8 @@ public class AudioEvents : MonoBehaviour {
                     firstGetHit = true;
                     Fabric.EventManager.Instance.PostEvent("MusicAction");
                 }
-                StopCoroutine(NoAction());
-                StartCoroutine(NoAction());
+                if(actionTimer != null)
+                    actionTimer();
                 break;
             case EventState.isFalling:
                 break;
@@ -120,14 +123,5 @@ public class AudioEvents : MonoBehaviour {
 
     public void Footstep() {
         Fabric.EventManager.Instance.PostEvent("Footsteps", this.gameObject);
-    }
-
-    static IEnumerator NoAction()
-    {
-        yield return new WaitForSeconds(15f);
-        firstGetHit = false;
-        Fabric.EventManager.Instance.PostEvent("MusicNoAction");
-
-        yield return null;
     }
 }

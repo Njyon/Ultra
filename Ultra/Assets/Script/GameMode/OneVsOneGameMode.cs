@@ -44,6 +44,8 @@ public class OneVsOneGameMode : MonoBehaviour
     public EventSystem eS;
     public GameObject mainButton;
 
+    private float ActionTimer = 0;
+
     //[Header("PlayerData")]
     //[SerializeField] GameObject playerDataPref;
     //GameObject playerDataObj;
@@ -53,6 +55,8 @@ public class OneVsOneGameMode : MonoBehaviour
     {
         InputManager.p1_OnKeyPressed += GetInput;
         InputManager.p2_OnKeyPressed += GetInput;
+
+        AudioEvents.actionTimer += SetActionTimer;
 
         #region Spawns
         //Set SpawnLocation
@@ -118,6 +122,10 @@ public class OneVsOneGameMode : MonoBehaviour
         CharacterTwo.parryDelegate += Parry;
 
         Invoke("GameStart", 5f);
+    }
+    void SetActionTimer()
+    {
+        ActionTimer = 15f;
     }
 
     void SetPlayerEnemys()
@@ -494,6 +502,19 @@ public class OneVsOneGameMode : MonoBehaviour
     {
         if (!gameOn)
             return;
+
+        if(ActionTimer > 0f)
+        {
+            ActionTimer -= Time.deltaTime;
+        }
+        else
+        {
+            if(AudioEvents.firstGetHit)
+            {
+                AudioEvents.firstGetHit = false;
+                Fabric.EventManager.Instance.PostEvent("MusicNoAction");
+            }
+        }
 
         if(timer != null)
         {
