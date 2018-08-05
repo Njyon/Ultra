@@ -84,7 +84,7 @@ public class AudioEvents : MonoBehaviour {
                 Fabric.EventManager.Instance.PostEvent("Bounce", this.gameObject);
                 break;
             case EventState.Parry:
-                Fabric.EventManager.Instance.PostEvent("Parry", this.gameObject);
+                //Fabric.EventManager.Instance.PostEvent("Parry", this.gameObject);
                 break;
             case EventState.GetHit:
                 if (firstGetHit == false)

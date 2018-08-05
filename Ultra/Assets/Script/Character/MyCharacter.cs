@@ -829,8 +829,9 @@ public class MyCharacter : MonoBehaviour
                 score += 1000;
                 // Update Score
                 ui.UpdateScore(score);
+                Fabric.EventManager.Instance.PostEvent("DodgeSuccess", this.gameObject);
 
-                if(isDisabled)
+                if (isDisabled)
                 {
                     EndDisable();
                     CancelInvoke("EndDisable");
