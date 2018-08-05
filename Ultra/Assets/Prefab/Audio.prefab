@@ -6862,7 +6862,7 @@ MonoBehaviour:
     _parameters: []
     _reference: {fileID: 0}
   Guid: 
-  _componentHolder: {fileID: 0}
+  _componentHolder: {fileID: 114324187286376830}
   _onEventNotifyEventName: 
   _audioClip: {fileID: 8300000, guid: dd67ff00e694bfc49884e203f387f4cc, type: 3}
   _audioClipHandle:
@@ -9993,7 +9993,7 @@ MonoBehaviour:
     _parameters: []
     _reference: {fileID: 0}
   Guid: 
-  _componentHolder: {fileID: 0}
+  _componentHolder: {fileID: 114516296883181104}
   _onEventNotifyEventName: 
   _audioClip: {fileID: 8300000, guid: 572c68f79910d634c85387bced9c075d, type: 3}
   _audioClipHandle:
@@ -12164,7 +12164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _numVirtualizationEvents: 100
-  _maxInstances: 1
+  _maxInstances: 2
   _stealingBehaviour: 0
   _minimumPlaybackInterval: 0
   _overrideParentVolume: 0
@@ -12173,7 +12173,7 @@ MonoBehaviour:
   _mute: 0
   _overrideParentPitch: 0
   _pitch: 1
-  _pitchRandomization: 0
+  _pitchRandomization: 0.02930224
   _override2DProperties: 0
   _pan2D: 0
   _pan2DRandomization: 0
@@ -13964,7 +13964,7 @@ MonoBehaviour:
     _parameters: []
     _reference: {fileID: 0}
   Guid: 
-  _componentHolder: {fileID: 0}
+  _componentHolder: {fileID: 114809260857560744}
   _onEventNotifyEventName: 
   _audioClip: {fileID: 8300000, guid: f9a8a649f3279b148a20ede8a1b87968, type: 3}
   _audioClipHandle:
@@ -15381,7 +15381,7 @@ MonoBehaviour:
     _parameters: []
     _reference: {fileID: 0}
   Guid: 
-  _componentHolder: {fileID: 0}
+  _componentHolder: {fileID: 114873375670155906}
   _onEventNotifyEventName: 
   _showInMixerView: 1
   _targetGroupComponentPath: 
@@ -17509,12 +17509,12 @@ MonoBehaviour:
         _min: 0
         _max: 1
   profiler:
-    totalMS: 662.988
-    recordedMS: 4.055023
-    percent: 0.6116285
-    msPerFrame: 0.004556206
+    totalMS: 651.1383
+    recordedMS: 0.76293945
+    percent: 0.11717011
+    msPerFrame: 0.00414641
     maxMsPerFrame: 1.0986328
-    msPerCall: 0.004556206
+    msPerCall: 0.00414641
     timesPerFrame: 1
   _eventMenuListFoldout: 1
   _eventListFoldout: 1
@@ -17651,7 +17651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _numVirtualizationEvents: 100
-  _maxInstances: 1
+  _maxInstances: 2
   _stealingBehaviour: 0
   _minimumPlaybackInterval: 0
   _overrideParentVolume: 0
@@ -17660,7 +17660,7 @@ MonoBehaviour:
   _mute: 0
   _overrideParentPitch: 0
   _pitch: 1
-  _pitchRandomization: 0
+  _pitchRandomization: 0.02930224
   _override2DProperties: 0
   _pan2D: 0
   _pan2DRandomization: 0
@@ -18228,7 +18228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _numVirtualizationEvents: 100
-  _maxInstances: 1
+  _maxInstances: 2
   _stealingBehaviour: 0
   _minimumPlaybackInterval: 0
   _overrideParentVolume: 0
@@ -18237,7 +18237,7 @@ MonoBehaviour:
   _mute: 0
   _overrideParentPitch: 0
   _pitch: 1
-  _pitchRandomization: 0
+  _pitchRandomization: 0.02930224
   _override2DProperties: 0
   _pan2D: 0
   _pan2DRandomization: 0
