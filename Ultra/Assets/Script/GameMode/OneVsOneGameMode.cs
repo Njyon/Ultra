@@ -45,6 +45,7 @@ public class OneVsOneGameMode : MonoBehaviour
     public GameObject mainButton;
 
     private float ActionTimer = 0;
+    bool firstMinute = true;
     
     [Header("Colors")]
     [ColorUsageAttribute(true, true)] public Color[] colors;
@@ -135,10 +136,15 @@ public class OneVsOneGameMode : MonoBehaviour
         CharacterTwo.parryDelegate += Parry;
 
         Invoke("GameStart", 5f);
+        Invoke("FirstMinuteOver", 60f);
     }
     void SetActionTimer()
     {
         ActionTimer = 15f;
+    }
+    void FirstMinuteOver()
+    {
+        firstMinute = false;
     }
 
     void SetPlayerEnemys()
@@ -473,7 +479,7 @@ public class OneVsOneGameMode : MonoBehaviour
     }
     bool ShouldCheckBalance()
     {
-        if (CharacterOne.score == 0 || CharacterTwo.score == 0)
+        if (firstMinute)
             return false;
         else
             return true;
