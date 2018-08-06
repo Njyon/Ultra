@@ -68,6 +68,7 @@ public class MyCharacter : MonoBehaviour
     //Material change Vars
     int emissionID;
     int colorID;
+    [HideInInspector] public Color playerColor;
     Color bodyColor;
     [HideInInspector] public Color clothColor;
     [HideInInspector] public Color swordColor;
@@ -1188,19 +1189,9 @@ public class MyCharacter : MonoBehaviour
         clothRenderer.materials[0].SetColor(colorID, clothColor);
         clothRenderer.materials[1].SetColor(colorID, swordColor);
 
-        switch (playerEnum)
-        {
-            case PlayerEnum.PlayerOne:
-                bodyRenderer.material.SetColor(emissionID, Color.white);
-                clothRenderer.materials[0].SetColor(emissionID, PlayerInfoManager.playerOne.color);
-                clothRenderer.materials[1].SetColor(emissionID, PlayerInfoManager.playerOne.color);
-                break;
-            case PlayerEnum.PlayerTwo:
-                bodyRenderer.material.SetColor(emissionID, Color.white);
-                clothRenderer.materials[0].SetColor(emissionID, PlayerInfoManager.playerTwo.color);
-                clothRenderer.materials[1].SetColor(emissionID, PlayerInfoManager.playerTwo.color);
-                break;
-        }
+        bodyRenderer.material.SetColor(emissionID, Color.white);
+        clothRenderer.materials[0].SetColor(emissionID, playerColor);
+        clothRenderer.materials[1].SetColor(emissionID, playerColor);
     }
 }
 

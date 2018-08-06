@@ -140,8 +140,13 @@ public class MainMenuUI : MonoBehaviour
         {
             mMD.OptionsAnimator.SetBool("ButtonsOut", true);
         }
+        if (menuState == MenuState.Credits)
+        {
+            mMD.TransitionAnimator.SetBool("credits", false);
+        }
         mMD.main.SetActive(true);
         mMD.background.SetActive(true);
+        mMD.credits.SetActive(false);
         mMD.vS.IStart();
         Invoke("MainOn", 0.4f);
     }
@@ -200,6 +205,12 @@ public class MainMenuUI : MonoBehaviour
     /// Turn Cretis pannel on and the rest off
     /// </summary>
     public void ShowCredits()
+    {
+        mMD.TransitionAnimator.SetBool("credits", true);
+        mMD.MainAnimator.SetBool("ButtonsOut", true);
+        Invoke("CreditsOn", 1f);
+    }
+    void CreditsOn()
     {
         mMD.main.SetActive(false);
         mMD.options.SetActive(false);
