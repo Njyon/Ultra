@@ -42,7 +42,7 @@ public class EndScreenManager : MonoBehaviour
 
         Invoke("EnableInput", 1);
         Init();
-        StartCoroutine(CountPoints(50000,30000/*PlayerDataManager.playerOne.Score, PlayerDataManager.playerTwo.Score*/));
+        StartCoroutine(CountPoints(PlayerDataManager.playerOne.Score, PlayerDataManager.playerTwo.Score));
     }
 
     void Init()
@@ -185,8 +185,8 @@ public class EndScreenManager : MonoBehaviour
 
         Debug.Log(maxScoreHight.position.y);
 
-        int p1_Dodge_Score = GetDodgeScore(5/*PlayerDataManager.playerOne.AmountOfDodges*/);
-        int p2_Dodge_Score = GetDodgeScore(7/*PlayerDataManager.playerTwo.AmountOfDodges*/);
+        int p1_Dodge_Score = GetDodgeScore(PlayerDataManager.playerOne.AmountOfDodges);
+        int p2_Dodge_Score = GetDodgeScore(PlayerDataManager.playerTwo.AmountOfDodges);
 
         int p1_RestScore = p1_Score - p1_Dodge_Score;
         int p2_RestScore = p2_Score - p2_Dodge_Score;
