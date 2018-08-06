@@ -8,6 +8,7 @@ public class InGameUI : MonoBehaviour
     [Header("Text & Images")]
     [SerializeField] Text combo;
     [SerializeField] Text comboTxt;
+    [SerializeField] Text interimResultScore;
     [SerializeField] Text score;
     [SerializeField] Text multiplier;
     [SerializeField] Text multiplierTxt;
@@ -27,11 +28,16 @@ public class InGameUI : MonoBehaviour
     Color color;
     bool comboActive = false;
     int i_score = 0;
+    Vector3 intermTextPos;
     Vector3 scoreTextPos;
     Vector3 scoreTextScale;
 
+    MyCharacter character;
+    float interimResult;
+
     void Start()
     {
+        intermTextPos = interimResultScore.rectTransform.position;
         scoreTextScale = score.transform.localScale;
         scoreTextPos = score.transform.position;
         cHStartPos = comboHandel.position;
@@ -85,6 +91,7 @@ public class InGameUI : MonoBehaviour
     /// <param name="combo"></param>
     public void UpdateCombo(int combo)
     {
+        UptadeInterimResult();
         this.combo.text = combo.ToString() + "x";
         StopCoroutine(ComboAnim(comboObj));
         StartCoroutine(ComboAnim(comboObj));
@@ -95,6 +102,7 @@ public class InGameUI : MonoBehaviour
     /// <param name="combo"></param>
     public void UpdateMultiplier(int multiplier)
     {
+        UptadeInterimResult();
         this.multiplier.text = multiplier.ToString() + "x";
         StopCoroutine(ComboAnim(multiplierObj));
         StartCoroutine(ComboAnim(multiplierObj));
@@ -126,6 +134,23 @@ public class InGameUI : MonoBehaviour
     public bool GetComboState()
     {
         return comboActive;
+    }
+    public void GetCharacter(MyCharacter character)
+    {
+        this.character = character;
+    }
+    void UptadeInterimResult()
+    {
+        float oldInterimResult = interimResult;
+        // Calc new Score
+        interimResult = character.scoreFactor * (character.sqrtA * Mathf.Sqrt(character.hitFactor * character.hitCounter + character.combo + character.sqrtB) + character.sqrtC);
+        if (interimResult < 1)
+            return;
+        if (oldInterimResult < 1)
+            oldInterimResult = 0;
+
+        StopCoroutine(CountUpInterScore(oldInterimResult));
+        StartCoroutine(CountUpInterScore(oldInterimResult));
     }
 
     IEnumerator ComboAnim(RectTransform go)
@@ -193,6 +218,39 @@ public class InGameUI : MonoBehaviour
         yield return null; 
     }
 
+    IEnumerator CountUpInterScore(float oldScore)
+    {
+        float outPut;
+        float time = 0.5f;
+        float speed = 1 * time;
+        float lerp = 1;
+        float wigleSpeed = 1000f;
+        float wiglePower = 10f;
+
+        int i_outPut;
+
+        while (time > 0)
+        {
+            outPut = Mathf.Lerp(interimResult, oldScore, lerp);
+            i_outPut = (int)outPut;
+
+            interimResultScore.text = "+" + i_outPut.ToString();
+
+            interimResultScore.transform.position = new Vector3(this.intermTextPos.x + Mathf.PingPong(Time.time * wigleSpeed, wiglePower), this.intermTextPos.y, this.intermTextPos.z);
+          
+            lerp -= Time.deltaTime * speed;
+            time -= Time.deltaTime;
+
+            yield return null;
+        }
+        this.interimResultScore.rectTransform.position = intermTextPos;
+        outPut = interimResult;
+        i_outPut = (int)outPut;
+
+        interimResultScore.text = "+" + i_outPut.ToString();
+
+        yield return null;
+    }
     IEnumerator CountUpScore(int score)
     {
         float time = 0;
@@ -200,13 +258,22 @@ public class InGameUI : MonoBehaviour
         float speed = 1f;
         float wigleSpeed = 1000f;
         float wiglePower = 10f;
+        
+        float outPut;
+        int i_outPut;
 
-        while(time < endTime)
+        while (time < endTime)
         {
             float currentScore = Mathf.Lerp(i_score, score, time);
+            outPut = Mathf.Lerp(interimResult, 0, time);
 
             DisplayScore((int)currentScore);
 
+            i_outPut = (int)outPut;
+            interimResultScore.text = "+" + i_outPut.ToString();
+
+            interimResultScore.transform.position = new Vector3(this.intermTextPos.x + Mathf.PingPong(Time.time * wigleSpeed, wiglePower), this.intermTextPos.y, this.intermTextPos.z);
+            
             this.score.transform.position = new Vector3(this.scoreTextPos.x + Mathf.PingPong(Time.time * wigleSpeed, wiglePower), this.scoreTextPos.y, this.scoreTextPos.z);
             this.score.transform.localScale = new Vector3(scoreTextScale.x, scoreTextScale.y + Mathf.PingPong(Time.time * wigleSpeed, 1.3f), scoreTextScale.z);
 
@@ -214,8 +281,13 @@ public class InGameUI : MonoBehaviour
             yield return null;
         }
         i_score = score;
+        outPut = 0;
+        i_outPut = (int)outPut;
 
         DisplayScore(score);
+        interimResultScore.text = "+" + i_outPut.ToString();
+
+        this.interimResultScore.rectTransform.position = intermTextPos;
 
         this.score.transform.position = this.scoreTextPos;
         this.score.transform.localScale = this.scoreTextScale;

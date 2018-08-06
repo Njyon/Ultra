@@ -108,7 +108,17 @@ public class OneVsOneGameMode : MonoBehaviour
         }
         else
         {
-            timer.text = time.ToString();
+            string minutes = ((int)time / 60).ToString();
+            string second = ((int)time % 60).ToString();
+
+            if ((int)time % 60 < 10)
+            {
+                timer.text = minutes + ":0" + second;
+            }
+            else
+            {
+                timer.text = minutes + ":" + second;
+            }
         }
         #endregion
 
@@ -197,6 +207,7 @@ public class OneVsOneGameMode : MonoBehaviour
                     CharacterOne.shakeCameraAction += sCam.Shake;
                     CharacterOne.gameMode = this;
                     playerOneUI.SetHUDColor(PlayerInfoManager.playerOne.color);
+                    playerOneUI.GetCharacter(CharacterOne);
                     sCam.AddTarget(PlayerOne.transform);
 
 
@@ -218,6 +229,7 @@ public class OneVsOneGameMode : MonoBehaviour
                     CharacterTwo.shakeCameraAction += sCam.Shake;
                     CharacterTwo.gameMode = this;
                     playerTwoUI.SetHUDColor(PlayerInfoManager.playerTwo.color);
+                    playerTwoUI.GetCharacter(CharacterTwo);
                     sCam.AddTarget(PlayerTwo.transform);
 
                     Renderer rend = PlayerTwo.GetComponent<Dash>().rendererCloth;

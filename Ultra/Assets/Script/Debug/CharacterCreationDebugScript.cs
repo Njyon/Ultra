@@ -41,6 +41,7 @@ public class CharacterCreationDebugScript : MonoBehaviour
             debugPlayer.GetComponent<MyCharacter>().enemyCharacter = enemyChar;
             debugPlayer.GetComponent<MyCharacter>().SetUI(ui);
             debugPlayer.GetComponent<MyCharacter>().Posses();
+            ui.GetCharacter(debugPlayer.GetComponent<MyCharacter>());
 
             enemyChar.enemy = debugCharacter;
             enemyChar.enemyCharacter = debugPlayer.GetComponent<MyCharacter>();
