@@ -9217,6 +9217,7 @@ MonoBehaviour:
   dashCoolDown: 0
   maxDashes: 0
   meshController: {fileID: 0}
+  playerColor: {r: 0, g: 0, b: 0, a: 0}
   clothColor: {r: 0, g: 0, b: 0, a: 0}
   swordColor: {r: 0, g: 0, b: 0, a: 0}
   mat_Metal: {fileID: 13400000, guid: 89d8e7148aa08114c91359c766c63930, type: 2}
@@ -9431,8 +9432,8 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: c94d66b67dff2f94cb3adca3e4ba0031, type: 2}
-  - {fileID: 2100000, guid: c94d66b67dff2f94cb3adca3e4ba0031, type: 2}
+  - {fileID: 2100000, guid: 2d422256bbd691641974eab43ed4da6e, type: 2}
+  - {fileID: 2100000, guid: 2d422256bbd691641974eab43ed4da6e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9552,7 +9553,7 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 6270bff60f273364eb63d8acf67107ea, type: 2}
+  - {fileID: 2100000, guid: 0d3801160c19d994086ef036536c3154, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
