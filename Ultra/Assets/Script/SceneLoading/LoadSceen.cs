@@ -13,7 +13,7 @@ public class LoadSceen : MonoBehaviour
 
     IEnumerator LoadSceenDelayed()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.1f);
         AsyncOperation async = SceneManager.LoadSceneAsync(2);
         while (!async.isDone)
         {

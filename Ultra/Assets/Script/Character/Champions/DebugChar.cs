@@ -8,6 +8,7 @@ public class DebugChar : MyCharacter
     {
         rb = GetComponent<Rigidbody>();
         ui = GameObject.Find("PlayerTwoPannel").GetComponent<InGameUI>();
+        ui.GetCharacter(this);
         Posses();
     }
 
