@@ -8,13 +8,15 @@ public class PlayerInfoManager : MonoBehaviour
     {
         playerID = "PlayerOne",
         character = Characters.None,
-        color = Color.white
+        color = Color.white,
+        charColor = CharColors.None
     };
     public static PlayerInfo playerTwo = new PlayerInfo()
     {
         playerID = "PlayerTwo",
         character = Characters.None,
-        color = Color.white
+        color = Color.white,
+        charColor = CharColors.None
     };
 
     void Awake()

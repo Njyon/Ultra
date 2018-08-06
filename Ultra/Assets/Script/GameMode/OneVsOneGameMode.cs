@@ -45,6 +45,9 @@ public class OneVsOneGameMode : MonoBehaviour
     public GameObject mainButton;
 
     private float ActionTimer = 0;
+    
+    [Header("Colors")]
+    [ColorUsageAttribute(true, true)] public Color[] colors;
 
     //[Header("PlayerData")]
     //[SerializeField] GameObject playerDataPref;
@@ -167,8 +170,9 @@ public class OneVsOneGameMode : MonoBehaviour
         {
             Debug.Log("No UI Pannels Found!");
         }
+        
 
-        GameObject camera = GameObject.Find("CamerHolder");
+    GameObject camera = GameObject.Find("CamerHolder");
         MultiTargetCamera sCam = camera.GetComponent<MultiTargetCamera>();
         switch (character)
         {
@@ -197,6 +201,8 @@ public class OneVsOneGameMode : MonoBehaviour
             case Characters.Nav:
                 if (isPlayerOne)
                 {
+                    Color playerColor = colors[(int)PlayerInfoManager.playerOne.charColor];
+
                     PlayerOne = Instantiate(nav, SpawnLocationP1.transform.position, SpawnLocationP1.transform.rotation);
                     CharacterOne = PlayerOne.GetComponent<MyCharacter>();
                     CharacterOne.playerEnum = PlayerEnum.PlayerOne;
@@ -206,19 +212,23 @@ public class OneVsOneGameMode : MonoBehaviour
                     CharacterOne.bounceAction += BounceCounter;
                     CharacterOne.shakeCameraAction += sCam.Shake;
                     CharacterOne.gameMode = this;
-                    playerOneUI.SetHUDColor(PlayerInfoManager.playerOne.color);
+                    CharacterOne.playerColor = playerColor;
+                    playerOneUI.SetHUDColor(playerColor);
                     playerOneUI.GetCharacter(CharacterOne);
                     sCam.AddTarget(PlayerOne.transform);
 
 
                     Renderer rend = PlayerOne.GetComponent<Dash>().rendererCloth;
 
-                    rend.material.SetColor("_EmissionColor", PlayerInfoManager.playerOne.color);
-                    rend.materials[1].SetColor("_EmissionColor", PlayerInfoManager.playerOne.color);
-                    rend.material.color = PlayerInfoManager.playerOne.color;
+                    //rend.material.SetColor("_EmissionColor", PlayerInfoManager.playerOne.color);
+                    rend.materials[0].SetColor("_EmissionColor", playerColor);
+                    rend.materials[1].SetColor("_EmissionColor", playerColor);
+                    //rend.material.color = PlayerInfoManager.playerOne.color;
                 }
                 else
                 {
+                    Color playerColor = colors[(int)PlayerInfoManager.playerTwo.charColor];
+
                     PlayerTwo = Instantiate(nav, SpawnLocationP2.transform.position, SpawnLocationP2.transform.rotation);
                     CharacterTwo = PlayerTwo.GetComponent<MyCharacter>();
                     CharacterTwo.playerEnum = PlayerEnum.PlayerTwo;
@@ -228,15 +238,17 @@ public class OneVsOneGameMode : MonoBehaviour
                     CharacterTwo.bounceAction += BounceCounter;
                     CharacterTwo.shakeCameraAction += sCam.Shake;
                     CharacterTwo.gameMode = this;
-                    playerTwoUI.SetHUDColor(PlayerInfoManager.playerTwo.color);
+                    CharacterTwo.playerColor = playerColor;
+                    playerTwoUI.SetHUDColor(playerColor);
                     playerTwoUI.GetCharacter(CharacterTwo);
                     sCam.AddTarget(PlayerTwo.transform);
 
                     Renderer rend = PlayerTwo.GetComponent<Dash>().rendererCloth;
 
-                    rend.material.SetColor("_EmissionColor", PlayerInfoManager.playerTwo.color);
-                    rend.materials[1].SetColor("_EmissionColor", PlayerInfoManager.playerTwo.color);
-                    rend.material.color = PlayerInfoManager.playerTwo.color;
+                    //rend.material.SetColor("_EmissionColor", PlayerInfoManager.playerTwo.color);
+                    rend.materials[0].SetColor("_EmissionColor", playerColor);
+                    rend.materials[1].SetColor("_EmissionColor", playerColor);
+                    //rend.material.color = PlayerInfoManager.playerTwo.color;
                 }
 
                 break;
