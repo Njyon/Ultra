@@ -42,7 +42,7 @@ public class EndScreenManager : MonoBehaviour
 
         Invoke("EnableInput", 1);
         Init();
-        StartCoroutine(CountPoints());
+        StartCoroutine(CountPoints(PlayerDataManager.playerOne.Score, PlayerDataManager.playerTwo.Score));
     }
 
     void Init()
@@ -175,12 +175,12 @@ public class EndScreenManager : MonoBehaviour
     float p1_CurrentsScore = 0;
     float p2_CurrentsScore = 0;
     float scorePerHight;
-    IEnumerator CountPoints()
+    IEnumerator CountPoints(int p1_Score, int p2_Score)
     {
         yield return new WaitForSeconds(1.5f);
-        bool playerOneWon = PlayerOneWins(PlayerDataManager.playerOne.Score, PlayerDataManager.playerTwo.Score);
+        bool playerOneWon = PlayerOneWins(p1_Score, p2_Score);
 
-        int winnerScore = GetWinnerScore(PlayerDataManager.playerOne.Score,PlayerDataManager.playerTwo.Score);
+        int winnerScore = GetWinnerScore(p1_Score, p2_Score);
         scorePerHight = winnerScore / maxScoreHight.position.y;
 
         Debug.Log(maxScoreHight.position.y);
@@ -188,8 +188,8 @@ public class EndScreenManager : MonoBehaviour
         int p1_Dodge_Score = GetDodgeScore(PlayerDataManager.playerOne.AmountOfDodges);
         int p2_Dodge_Score = GetDodgeScore(PlayerDataManager.playerTwo.AmountOfDodges);
 
-        int p1_RestScore = PlayerDataManager.playerOne.Score - p1_Dodge_Score;
-        int p2_RestScore = PlayerDataManager.playerTwo.Score - p2_Dodge_Score;
+        int p1_RestScore = p1_Score - p1_Dodge_Score;
+        int p2_RestScore = p2_Score - p2_Dodge_Score;
 
         StartCoroutine(RisePlateau(p1_Dodge_Score, p2_Dodge_Score));
         yield return new WaitForSeconds(3f);
