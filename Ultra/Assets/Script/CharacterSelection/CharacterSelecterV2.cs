@@ -150,6 +150,16 @@ public class CharacterSelecterV2 : MonoBehaviour
         {
             p2_Ready(false);
         }
+        
+        if(playerOne.charakterSelected && playerTwo.charakterSelected)
+        {
+            if (renderer1.material.GetColor("_EmissionColor") == renderer2.material.GetColor("_EmissionColor"))
+            {
+                playerOne.UnselectSlot();
+                playerTwo.UnselectSlot();
+                Check();
+            }
+        }
 
         if (playerOne.charakterSelected && playerTwo.charakterSelected && !gameStarting)
         {
@@ -162,6 +172,9 @@ public class CharacterSelecterV2 : MonoBehaviour
 
             PlayerInfoManager.playerOne.color = renderer1.material.GetColor("_EmissionColor");
             PlayerInfoManager.playerTwo.color = renderer2.material.GetColor("_EmissionColor");
+
+            PlayerInfoManager.playerOne.charColor = playerOne.GetColor();
+            PlayerInfoManager.playerTwo.charColor = playerTwo.GetColor();
 
             Invoke("DelayStartGame", 2f);
         }
@@ -236,7 +249,7 @@ public class CharacterSelecterV2 : MonoBehaviour
         playerTwo.colors = colors;
 
         playerOne.ApplyColor(playerOne.colors[0]);
-        playerTwo.ApplyColor(playerOne.colors[0]);
+        playerTwo.ApplyColor(playerTwo.colors[1]);
 
         // Set both Character invisible
         for (int i = 0; i < playerOne.characters.Length; i++)

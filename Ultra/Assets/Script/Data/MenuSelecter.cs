@@ -68,8 +68,10 @@ public class MenuSelecter
             ApplyColor(colors[colorIndex]);
             if (SwitchUpAction != null)
                 SwitchUpAction();
+            GetColor();
         }
     }
+
 
     public void ChangeColorDown()
     {
@@ -84,13 +86,49 @@ public class MenuSelecter
             ApplyColor(colors[colorIndex]);
             if (SwitchUpAction != null)
                 SwitchUpAction();
+            GetColor();
+        }
+    }
+
+    public CharColors GetColor()
+    {
+
+        switch(colorIndex)
+        {
+            case 0:
+                // Orange
+                return CharColors.Orange;
+
+            case 1:
+                // Blue
+                return CharColors.Blue;
+                
+            case 2:
+                // Pink
+                return CharColors.Pink;
+                
+            case 3:
+                // Red
+                return CharColors.Red;
+                
+            case 4:
+                // Yellow
+                return CharColors.Yellow;
+                
+            case 5:
+                // Green
+                return CharColors.Green;
+                
+            default:
+                return CharColors.None;
+                
         }
     }
 
     public void ApplyColor(Color color)
     {
         rend.materials[0].SetColor("_EmissionColor", color);
-        //rend.materials[1].SetColor("_EmissionColor", color);
+        rend.materials[1].SetColor("_EmissionColor", color);
     }
 
     /// <summary>
