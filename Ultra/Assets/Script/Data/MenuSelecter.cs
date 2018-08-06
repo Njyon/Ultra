@@ -13,7 +13,7 @@ public class MenuSelecter
     public bool isSwitchingDown = false;
 
     [ColorUsageAttribute(true, true)] public Color[] colors;
-    int colorIndex = 0;
+    public int colorIndex = 0;
     public Renderer rend;
 
     #region Delegates

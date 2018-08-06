@@ -250,6 +250,7 @@ public class CharacterSelecterV2 : MonoBehaviour
 
         playerOne.ApplyColor(playerOne.colors[0]);
         playerTwo.ApplyColor(playerTwo.colors[1]);
+        playerTwo.colorIndex++;
 
         // Set both Character invisible
         for (int i = 0; i < playerOne.characters.Length; i++)
