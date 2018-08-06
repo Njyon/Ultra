@@ -4243,6 +4243,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 544435184}
   on: 0
+--- !u!114 &544435181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 544435179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: aa095941f4406694e8966b75d68b9183, type: 2}
 --- !u!95 &544435184 stripped
 Animator:
   m_PrefabParentObject: {fileID: 95518290815827516, guid: b22f75022693acf449c212699796b0b4,
