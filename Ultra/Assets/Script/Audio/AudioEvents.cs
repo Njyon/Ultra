@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Fabric;
 using UnityEngine;
 
 public class AudioEvents : MonoBehaviour {
@@ -162,7 +163,7 @@ public class AudioEvents : MonoBehaviour {
         }
     }
     
-    public void PlayerBounce(int comboCounter) {
+    public void PlayerBounce(float heavyness, int comboCounter) {
         if (AudioSettings.dspTime - playerBounceLastAudioTrigger < 0.1d) {
             return;
         }
