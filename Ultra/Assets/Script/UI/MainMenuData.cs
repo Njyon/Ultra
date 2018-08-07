@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class MainMenuData : MonoBehaviour
@@ -49,6 +50,10 @@ public class MainMenuData : MonoBehaviour
     [Header("Player Animator")]
     public Animator p1_Animator;
     public Animator p2_Animator;
+
+    [Header("Mixer")]
+    public AudioMixer musikMixer;
+    public AudioMixer sfxMixer;
 
     /// <summary>
     /// Dependend on the oP State, turn all other oP Pannel off
