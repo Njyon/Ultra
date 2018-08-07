@@ -23,19 +23,11 @@ public class MainMenuUI : MonoBehaviour
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-
-        float musik = 0;
-        float sFX = 0;
-        mMD.musikMixer.GetFloat("Music", out musik);
-        mMD.musikMixer.GetFloat("SFX", out sFX);
-        musik += 80;
-        musik /= 100;
-
-        musik += 80;
-        musik /= 100;
-
-        mMD.audioButtons[0].GetComponent<Slider>().value = musik;
-        mMD.audioButtons[1].GetComponent<Slider>().value = sFX;
+        
+        mMD.musikMixer.SetFloat("music", 0);
+        mMD.musikMixer.SetFloat("sfx", 0);
+        mMD.audioButtons[0].GetComponent<Slider>().value = 1;
+        mMD.audioButtons[1].GetComponent<Slider>().value = 1;
 
         mMD.p1_Ready.SetActive(false);
         mMD.p2_Ready.SetActive(false);
@@ -294,11 +286,11 @@ public class MainMenuUI : MonoBehaviour
 
     public void OnMusicChange()
     { 
-        mMD.musikMixer.SetFloat("Music", ((mMD.audioButtons[0].GetComponent<Slider>().value + 80) / 100));
+        mMD.musikMixer.SetFloat("music", ((mMD.audioButtons[0].GetComponent<Slider>().value * 80) - 80));
     }
     public void OnSFXChange()
     {
-        mMD.musikMixer.SetFloat("SFX", ((mMD.audioButtons[1].GetComponent<Slider>().value + 80) / 100));
+        mMD.musikMixer.SetFloat("sfx", ((mMD.audioButtons[1].GetComponent<Slider>().value * 80) - 80));
     }
 
     public void VSync(GameObject go)
