@@ -233,8 +233,8 @@ public class InGameUI : MonoBehaviour
         float wigleSpeed = 1000f;
         float wiglePower = 10f;
 
-        int i_outPut;
-        interimResultScore.text = "+" + interimResult.ToString();
+        int i_outPut = (int)interimResult;
+        interimResultScore.text = "+" + i_outPut.ToString();
 
         while (time > 0)
         {
