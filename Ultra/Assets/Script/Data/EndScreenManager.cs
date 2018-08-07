@@ -40,7 +40,7 @@ public class EndScreenManager : MonoBehaviour
         //textManger[1].bounces.text = "Bounces: " + PlayerDataManager.playerTwo.Bounces.ToString();
         
 
-        Invoke("EnableInput", 1);
+        Invoke("EnableInput", 1f);
         Init();
         StartCoroutine(CountPoints(PlayerDataManager.playerOne.Score, PlayerDataManager.playerTwo.Score));
     }

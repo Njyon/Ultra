@@ -228,13 +228,14 @@ public class InGameUI : MonoBehaviour
         float wiglePower = 10f;
 
         int i_outPut;
+        interimResultScore.text = "+" + interimResult.ToString();
 
         while (time > 0)
         {
-            outPut = Mathf.Lerp(interimResult, oldScore, lerp);
-            i_outPut = (int)outPut;
+            //outPut = Mathf.Lerp(interimResult, oldScore, lerp);
+            //i_outPut = (int)outPut;
 
-            interimResultScore.text = "+" + i_outPut.ToString();
+            //interimResultScore.text = "+" + i_outPut.ToString();
 
             interimResultScore.transform.position = new Vector3(this.intermTextPos.x + Mathf.PingPong(Time.time * wigleSpeed, wiglePower), this.intermTextPos.y, this.intermTextPos.z);
           

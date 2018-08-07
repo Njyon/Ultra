@@ -223,6 +223,9 @@ public class OneVsOneGameMode : MonoBehaviour
                     playerOneUI.GetCharacter(CharacterOne);
                     sCam.AddTarget(PlayerOne.transform);
 
+                    PlayerTriangleFollow pTF = PlayerOne.GetComponentInChildren<PlayerTriangleFollow>();
+                    pTF.SetPlayer(CharacterOne.playerEnum);
+                    pTF.ColorTriangle(playerColor);
 
                     Renderer rend = PlayerOne.GetComponent<Dash>().rendererCloth;
 
@@ -248,6 +251,10 @@ public class OneVsOneGameMode : MonoBehaviour
                     playerTwoUI.SetHUDColor(playerColor);
                     playerTwoUI.GetCharacter(CharacterTwo);
                     sCam.AddTarget(PlayerTwo.transform);
+
+                    PlayerTriangleFollow pTF = PlayerTwo.GetComponentInChildren<PlayerTriangleFollow>();
+                    pTF.SetPlayer(CharacterTwo.playerEnum);
+                    pTF.ColorTriangle(playerColor);
 
                     Renderer rend = PlayerTwo.GetComponent<Dash>().rendererCloth;
 
