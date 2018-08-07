@@ -44,6 +44,7 @@ public class MainMenuUI : MonoBehaviour
         mMD.championSelect.SetActive(false);
         mMD.arenaSelect.SetActive(false);
         mMD.optionsBody.SetActive(false);
+        Fabric.EventManager.Instance.PostEvent("MenuStart", this.gameObject);
 
         mMD.cS.p1_Ready += P1_IsReady;
         mMD.cS.p2_Ready += P2_IsReady;
@@ -89,6 +90,7 @@ public class MainMenuUI : MonoBehaviour
             {
                 mMD.ActivateButtons(mMD.mainbuttons);
                 mMD.TransitionAnimator.SetBool("makeTransition", false);
+                Fabric.EventManager.Instance.PostEvent("MenuStart", this.gameObject);
                 Invoke("ShowMain", 0.3f);
             }
         }
@@ -144,10 +146,12 @@ public class MainMenuUI : MonoBehaviour
         if(menuState == MenuState.Options)
         {
             mMD.OptionsAnimator.SetBool("ButtonsOut", true);
+            Fabric.EventManager.Instance.PostEvent("MenuOptionsLeave", this.gameObject);
         }
         if (menuState == MenuState.Credits)
         {
             mMD.TransitionAnimator.SetBool("credits", false);
+            Fabric.EventManager.Instance.PostEvent("MenuOptionsLeave", this.gameObject);
         }
         mMD.main.SetActive(true);
         mMD.background.SetActive(true);
@@ -215,6 +219,7 @@ public class MainMenuUI : MonoBehaviour
     {
         mMD.TransitionAnimator.SetBool("credits", true);
         mMD.MainAnimator.SetBool("ButtonsOut", true);
+        Fabric.EventManager.Instance.PostEvent("MenuOptionsEnter", this.gameObject);
         Invoke("CreditsOn", 1f);
     }
     void CreditsOn()
@@ -231,6 +236,7 @@ public class MainMenuUI : MonoBehaviour
     {
         mMD.MainAnimator.SetBool("ButtonsOut", true);
         mMD.TransitionAnimator.SetBool("makeTransition", true);
+        Fabric.EventManager.Instance.PostEvent("MenuMainLeaveEnterCharacterSelection", this.gameObject);
         Invoke("ShowPlayerSelect", 0.5f);
     }
     /// <summary>
@@ -282,6 +288,11 @@ public class MainMenuUI : MonoBehaviour
         mMD.DeActivateButtons(mMD.headerButtons);
     }
 
+    public void OnShowControls()
+    {
+        
+    }
+
     #endregion
     #region Settings
 
@@ -289,10 +300,12 @@ public class MainMenuUI : MonoBehaviour
     public void OnMusicChange()
     { 
         mMD.musikMixer.SetFloat("music", ((mMD.audioButtons[0].GetComponent<Slider>().value * 80) - 80));
+        Fabric.EventManager.Instance.PostEvent("MenuOptionsAdjustUp", this.gameObject);
     }
     public void OnSFXChange()
     {
         mMD.musikMixer.SetFloat("sfx", ((mMD.audioButtons[1].GetComponent<Slider>().value * 80) - 80));
+        Fabric.EventManager.Instance.PostEvent("MenuOptionsAdjustDown", this.gameObject);
     }
 
     public void VSync(GameObject go)
@@ -300,10 +313,14 @@ public class MainMenuUI : MonoBehaviour
         if(go.GetComponent<Toggle>().isOn)
         {
             QualitySettings.vSyncCount = 2;
+            Fabric.EventManager.Instance.PostEvent("MenuOptionsAdjustUp");
+            Debug.Log("Test");
         }
         else
         {
             QualitySettings.vSyncCount = 0;
+            Fabric.EventManager.Instance.PostEvent("MenuOptionsAdjustDown");
+            Debug.Log("Test");
         }
     }
     public void FullScreen(GameObject go)
@@ -311,10 +328,14 @@ public class MainMenuUI : MonoBehaviour
         if (go.GetComponent<Toggle>().isOn)
         {
             Screen.fullScreen = true;
+            Fabric.EventManager.Instance.PostEvent("MenuOptionsAdjustUp");
+            Debug.Log("Test");
         }
         else
         {
             Screen.fullScreen = false;
+            Fabric.EventManager.Instance.PostEvent("MenuOptionsAdjustDown");
+            Debug.Log("Test");
         }
     }
     public void OnResChange()
@@ -323,10 +344,12 @@ public class MainMenuUI : MonoBehaviour
             mMD.resolutions[mMD.videoButtons[0].GetComponent<Dropdown>().value].height,
             Screen.fullScreen
             );
+        Fabric.EventManager.Instance.PostEvent("MenuSubmenuBackward");
     }
     public void OnQualityChange()
     {
         QualitySettings.SetQualityLevel(mMD.videoButtons[1].GetComponent<Dropdown>().value);
+        Fabric.EventManager.Instance.PostEvent("MenuSubmenuClick");
     }
     public void OnExit()
     {
@@ -341,11 +364,13 @@ public class MainMenuUI : MonoBehaviour
         {
             mMD.p1_Ready.SetActive(true);
             mMD.p1_Animator.SetBool("Ready", true);
+            Fabric.EventManager.Instance.PostEvent("MenuCharSelectReady", mMD.p1_Animator.gameObject);
         }
         else
         {
             mMD.p1_Ready.SetActive(false);
             mMD.p1_Animator.SetBool("Ready", false);
+            Fabric.EventManager.Instance.PostEvent("MenuCharSelectUnready", mMD.p1_Animator.gameObject);
         }
     }
     void P2_IsReady(bool isReady)
@@ -354,12 +379,23 @@ public class MainMenuUI : MonoBehaviour
         {
             mMD.p2_Ready.SetActive(true);
             mMD.p2_Animator.SetBool("Ready", true);
+            Fabric.EventManager.Instance.PostEvent("MenuCharSelectReady", mMD.p2_Animator.gameObject);
         }
         else
         {
             mMD.p2_Ready.SetActive(false);
             mMD.p2_Animator.SetBool("Ready", false);
+            Fabric.EventManager.Instance.PostEvent("MenuCharSelectUnready", mMD.p2_Animator.gameObject);
         }
+    }
+
+    public void SelectMenuEntry()
+    {
+        Fabric.EventManager.Instance.PostEvent("MenuMainSelect", mMD.p2_Animator.gameObject);
+    }
+
+    public void OptionsVsyncFullScreenBool (Toggle value) {
+        Fabric.EventManager.Instance.PostEvent(value.isOn ? "MenuOptionsAdjustUp" : "MenuOptionsAdjustDown");
     }
 }
 

@@ -18,6 +18,7 @@ public class VideoScript : MonoBehaviour
     public bool loop;
 
     public bool loadScene;
+    public bool debug = false;
 
     // Use this for initialization
     void Start()
@@ -84,7 +85,7 @@ public class VideoScript : MonoBehaviour
         audioSource.Play();
 
         Debug.Log("Playing Video");
-        while (videoPlayer.isPlaying)
+        while (videoPlayer.isPlaying && debug == true)
         {
             Debug.LogWarning("Video Time: " + Mathf.FloorToInt((float)videoPlayer.time));
             yield return null;

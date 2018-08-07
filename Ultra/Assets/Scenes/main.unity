@@ -271,7 +271,8 @@ MonoBehaviour:
   - {r: 1024, g: 4.0156865, b: 0, a: 1}
   - {r: 0, g: 5.005892, b: 1367.1202, a: 1}
   - {r: 383.49805, g: 2.0078433, b: 383.49805, a: 1}
-  - {r: 383.49805, g: 18.07059, b: 0, a: 1}
+  - {r: 95.87451, g: 0, b: 0.5019608, a: 1}
+  - {r: 256, g: 11.043138, b: 0, a: 1}
   - {r: 1.0039216, g: 256, b: 0, a: 1}
   renderer1: {fileID: 1621685740}
   renderer2: {fileID: 800587095}
@@ -4312,6 +4313,48 @@ GameObject:
   m_PrefabParentObject: {fileID: 1811911076194896, guid: 8b0d9ff791a08c443a903e7474cd33a7,
     type: 2}
   m_PrefabInternal: {fileID: 1979377655}
+--- !u!1001 &1950947195
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4735181418182888, guid: baca789a42292564eb0118fefe517120, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4735181418182888, guid: baca789a42292564eb0118fefe517120, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4735181418182888, guid: baca789a42292564eb0118fefe517120, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4735181418182888, guid: baca789a42292564eb0118fefe517120, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4735181418182888, guid: baca789a42292564eb0118fefe517120, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4735181418182888, guid: baca789a42292564eb0118fefe517120, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4735181418182888, guid: baca789a42292564eb0118fefe517120, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4735181418182888, guid: baca789a42292564eb0118fefe517120, type: 2}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: baca789a42292564eb0118fefe517120, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &1979377655
 Prefab:
   m_ObjectHideFlags: 0
