@@ -9,7 +9,8 @@ public class AudioEvents : MonoBehaviour {
     private delegate void EventDelegate(EventState eventState);
     private EventDelegate eventDelegate;
     [HideInInspector] public static bool firstGetHit = false;
-    private double bounceAudioLastTrigger;
+    private double materialBounceLastAudioTrigger;
+    private double playerBounceLastAudioTrigger;
 
     public  delegate void ActionTimer();
     public static ActionTimer actionTimer;
@@ -82,7 +83,7 @@ public class AudioEvents : MonoBehaviour {
                 Fabric.EventManager.Instance.PostEvent("DashStab", this.gameObject);
                 break;
             case EventState.Bounce:
-                Fabric.EventManager.Instance.PostEvent("Bounce", this.gameObject);
+                //Fabric.EventManager.Instance.PostEvent("Bounce", this.gameObject);
                 break;
             case EventState.Parry:
                 //Fabric.EventManager.Instance.PostEvent("Parry", this.gameObject);
@@ -128,12 +129,12 @@ public class AudioEvents : MonoBehaviour {
         Fabric.EventManager.Instance.PostEvent("Footsteps", this.gameObject);
     }
     
-    public void Bounce(BounceType audioMaterial, int comboCounter) {
-        if (AudioSettings.dspTime - bounceAudioLastTrigger < 0.1d) {
+    public void MaterialBounce(BounceType audioMaterial, int comboCounter) {
+        if (AudioSettings.dspTime - materialBounceLastAudioTrigger < 0.1d) {
             return;
         }
 
-        bounceAudioLastTrigger = AudioSettings.dspTime;
+        materialBounceLastAudioTrigger = AudioSettings.dspTime;
 
         switch (audioMaterial) {
             case BounceType.Metal:
@@ -159,5 +160,15 @@ public class AudioEvents : MonoBehaviour {
             default:
                 break;
         }
+    }
+    
+    public void PlayerBounce(int comboCounter) {
+        if (AudioSettings.dspTime - playerBounceLastAudioTrigger < 0.1d) {
+            return;
+        }
+
+        playerBounceLastAudioTrigger = AudioSettings.dspTime;
+        
+        Fabric.EventManager.Instance.PostEvent("Bounce", this.gameObject);
     }
 }
