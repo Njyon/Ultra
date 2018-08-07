@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class InGameUI : MonoBehaviour
@@ -142,8 +143,12 @@ public class InGameUI : MonoBehaviour
     void UptadeInterimResult()
     {
         float oldInterimResult = interimResult;
-        // Calc new Score
-        interimResult = character.scoreFactor * (character.sqrtA * Mathf.Sqrt(character.hitFactor * character.hitCounter + character.combo + character.sqrtB) + character.sqrtC);
+        
+        if (SceneManager.GetActiveScene().name != "Debug") {
+            // Calc new Score
+            interimResult = character.scoreFactor * (character.sqrtA * Mathf.Sqrt(character.hitFactor * character.hitCounter + character.combo + character.sqrtB) + character.sqrtC);
+        }
+        
         if (interimResult < 1)
             return;
         if (oldInterimResult < 1)
