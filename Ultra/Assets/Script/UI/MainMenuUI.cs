@@ -180,6 +180,7 @@ public class MainMenuUI : MonoBehaviour
     {
         mMD.optionsBody.SetActive(true);
         mMD.MainAnimator.SetBool("ButtonsOut", true);
+        Fabric.EventManager.Instance.PostEvent("MenuOptionsEnter", this.gameObject);
         Invoke("OptionsOn", 0.4f);
     }
     void OptionsOn()
