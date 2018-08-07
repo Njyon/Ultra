@@ -11221,6 +11221,7 @@ MonoBehaviour:
   parry: {fileID: 1186233487971766, guid: b4e1cd5a97ba2c34985d6a746f6a41ed, type: 2}
   gameDoneAnimator: {fileID: 50091669}
   pauseMenuAnimator: {fileID: 738766946}
+  Anouncer: {fileID: 1864344344}
   eS: {fileID: 2070293819}
   mainButton: {fileID: 2138152012}
   colors:
@@ -27843,6 +27844,11 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: d0bcfab55d2219045b441b8d630cb70b, type: 3}
   m_PrefabInternal: {fileID: 1849182083}
+--- !u!95 &1864344344 stripped
+Animator:
+  m_PrefabParentObject: {fileID: 95633978460120604, guid: 933068d493079bc46b2c1ddac7e3cea7,
+    type: 2}
+  m_PrefabInternal: {fileID: 2138152011}
 --- !u!1 &1871535039
 GameObject:
   m_ObjectHideFlags: 0
@@ -31761,21 +31767,16 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114975392128244158, guid: 933068d493079bc46b2c1ddac7e3cea7,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 531783412}
     - target: {fileID: 114596814462739756, guid: 933068d493079bc46b2c1ddac7e3cea7,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 531783412}
-    - target: {fileID: 224441770178810910, guid: 933068d493079bc46b2c1ddac7e3cea7,
+    - target: {fileID: 114975392128244158, guid: 933068d493079bc46b2c1ddac7e3cea7,
         type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: 12.2
-      objectReference: {fileID: 0}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 531783412}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 933068d493079bc46b2c1ddac7e3cea7, type: 2}
   m_IsPrefabParent: 0

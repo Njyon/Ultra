@@ -41,6 +41,7 @@ public class OneVsOneGameMode : MonoBehaviour
 
     public Animator gameDoneAnimator;
     public Animator pauseMenuAnimator;
+    public Animator Anouncer;
     public EventSystem eS;
     public GameObject mainButton;
 
@@ -135,6 +136,8 @@ public class OneVsOneGameMode : MonoBehaviour
         CharacterOne.parryDelegate += Parry;
         CharacterTwo.parryDelegate += Parry;
 
+        MyCharacter.comboBreak += ComboBreak;
+
         Invoke("GameStart", 5f);
         Invoke("FirstMinuteOver", 60f);
     }
@@ -145,6 +148,11 @@ public class OneVsOneGameMode : MonoBehaviour
     void FirstMinuteOver()
     {
         firstMinute = false;
+    }
+    void ResetAnouncer()
+    {
+        Anouncer.SetBool("ComboBreak", false);
+        Anouncer.SetBool("UltraMode", false);
     }
 
     void SetPlayerEnemys()
@@ -223,6 +231,7 @@ public class OneVsOneGameMode : MonoBehaviour
                     playerOneUI.GetCharacter(CharacterOne);
                     sCam.AddTarget(PlayerOne.transform);
 
+
                     PlayerTriangleFollow pTF = PlayerOne.GetComponentInChildren<PlayerTriangleFollow>();
                     pTF.SetPlayer(CharacterOne.playerEnum);
                     pTF.ColorTriangle(playerColor);
@@ -281,6 +290,13 @@ public class OneVsOneGameMode : MonoBehaviour
         MyCharacter.endGameAction += EndGame;
     }
 
+    void ComboBreak()
+    {
+        Anouncer.SetBool("ComboBreak", true);
+        CancelInvoke("ResetAnouncer");
+        Invoke("ResetAnouncer", 0.7f);
+    }
+
     void GetInput(KeyCode keyCode)
     {
         if(keyCode == KeyCode.Joystick1Button7 || keyCode == KeyCode.Joystick2Button7)
@@ -336,6 +352,12 @@ public class OneVsOneGameMode : MonoBehaviour
 
         InputManager.p1_OnKeyPressed -= GetInput;
         InputManager.p2_OnKeyPressed -= GetInput;
+
+        CharacterOne.parryDelegate -= Parry;
+        CharacterTwo.parryDelegate -= Parry;
+
+        MyCharacter.comboBreak -= ComboBreak;
+
         Time.timeScale = 1f;
 
         StartCoroutine(LoadNewScene(1));
@@ -383,6 +405,11 @@ public class OneVsOneGameMode : MonoBehaviour
         
         InputManager.p1_OnKeyPressed -= GetInput;
         InputManager.p2_OnKeyPressed -= GetInput;
+        
+        CharacterOne.parryDelegate -= Parry;
+        CharacterTwo.parryDelegate -= Parry;
+
+        MyCharacter.comboBreak -= ComboBreak;
 
         fixedDeltaTime = Time.fixedDeltaTime;
         Time.timeScale = 0.5f;
@@ -516,10 +543,13 @@ public class OneVsOneGameMode : MonoBehaviour
     {
         if(!comeBackActive && !comeBackCooling)
         {
+            Anouncer.SetBool("UltraMode", true);
             comeBackActive = true;
             characterToBoost.inComeBackMode = true;
             characterToBoost.pD.doublePoints.Play();
             Invoke("EndComeBackMode", comeBackTime);
+            CancelInvoke("ResetAnouncer");
+            Invoke("ResetAnouncer", 0.7f);
         }
     }
 

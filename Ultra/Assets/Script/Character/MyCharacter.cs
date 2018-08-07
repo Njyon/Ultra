@@ -114,6 +114,9 @@ public class MyCharacter : MonoBehaviour
     public delegate void EventDelegate(EventState eventState);
     public EventDelegate eventDelegate;
 
+    public delegate void ComboBreak();
+    public static ComboBreak comboBreak;
+
     public delegate void EndGame();
     public static EndGame endGameAction;
 

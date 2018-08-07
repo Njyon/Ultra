@@ -350,6 +350,11 @@ public class Nav2 : MyCharacter
         // if enemy is dogding dont attack
         if (!enemyCharacter.canGetDamaged)
         {
+            if(enemyCharacter.isDisabled)
+            {
+                if (comboBreak != null)
+                    comboBreak();
+            }
             enemyCharacter.Combo(ComboState.Dodge);
             // Count All Dodges for the ENdScreen
             enemyCharacter.dodgeAction(enemyCharacter.playerEnum);
