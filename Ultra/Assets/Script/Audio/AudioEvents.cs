@@ -9,6 +9,8 @@ public class AudioEvents : MonoBehaviour {
     private delegate void EventDelegate(EventState eventState);
     private EventDelegate eventDelegate;
     [HideInInspector] public static bool firstGetHit = false;
+    private double materialBounceLastAudioTrigger;
+    private double playerBounceLastAudioTrigger;
 
     public  delegate void ActionTimer();
     public static ActionTimer actionTimer;
@@ -81,7 +83,7 @@ public class AudioEvents : MonoBehaviour {
                 Fabric.EventManager.Instance.PostEvent("DashStab", this.gameObject);
                 break;
             case EventState.Bounce:
-                Fabric.EventManager.Instance.PostEvent("Bounce", this.gameObject);
+                //Fabric.EventManager.Instance.PostEvent("Bounce", this.gameObject);
                 break;
             case EventState.Parry:
                 //Fabric.EventManager.Instance.PostEvent("Parry", this.gameObject);
@@ -125,5 +127,48 @@ public class AudioEvents : MonoBehaviour {
 
     public void Footstep() {
         Fabric.EventManager.Instance.PostEvent("Footsteps", this.gameObject);
+    }
+    
+    public void MaterialBounce(BounceType audioMaterial, int comboCounter) {
+        if (AudioSettings.dspTime - materialBounceLastAudioTrigger < 0.1d) {
+            return;
+        }
+
+        materialBounceLastAudioTrigger = AudioSettings.dspTime;
+
+        switch (audioMaterial) {
+            case BounceType.Metal:
+                Fabric.EventManager.Instance.PostEvent("ParticleMetal", this.gameObject);
+                break;
+            case BounceType.Concrete:
+                Fabric.EventManager.Instance.PostEvent("ParticleRocks", this.gameObject);
+                break;
+            case BounceType.Stone:
+                Fabric.EventManager.Instance.PostEvent("ParticleStones", this.gameObject);
+                break;
+            case BounceType.Rubber:
+                Fabric.EventManager.Instance.PostEvent("RubberPitch", this.gameObject);
+                Fabric.EventManager.Instance.PostEvent("RubberNoPitch", this.gameObject);
+                break;
+            case BounceType.Glass:
+                Fabric.EventManager.Instance.PostEvent("ParticleGlass", this.gameObject);
+                break;
+            case BounceType.MetalGlass:
+                Fabric.EventManager.Instance.PostEvent("ParticleGlass", this.gameObject);
+                Fabric.EventManager.Instance.PostEvent("ParticleMetal", this.gameObject);
+                break;
+            default:
+                break;
+        }
+    }
+    
+    public void PlayerBounce(int comboCounter) {
+        if (AudioSettings.dspTime - playerBounceLastAudioTrigger < 0.1d) {
+            return;
+        }
+
+        playerBounceLastAudioTrigger = AudioSettings.dspTime;
+        
+        Fabric.EventManager.Instance.PostEvent("Bounce", this.gameObject);
     }
 }
