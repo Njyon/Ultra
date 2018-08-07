@@ -207,6 +207,7 @@ public class MainMenuUI : MonoBehaviour
 
         mMD.OptionsAnimator.SetBool("ButtonsOut", false);
     }
+    
     /// <summary>
     /// Turn Cretis pannel on and the rest off
     /// </summary>

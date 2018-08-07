@@ -153,6 +153,7 @@ public class InGameUI : MonoBehaviour
         StartCoroutine(CountUpInterScore(oldInterimResult));
     }
 
+
     IEnumerator ComboAnim(RectTransform go)
     {
         go.localScale = new Vector3(1, 1, 1);
