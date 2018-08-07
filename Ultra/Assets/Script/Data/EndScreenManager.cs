@@ -209,12 +209,15 @@ public class EndScreenManager : MonoBehaviour
         {
             playerOne.GetComponent<MyCharacter>().animator.SetBool("Won", true);
             playerTwo.GetComponent<MyCharacter>().animator.SetBool("Lose", true);
+            winnerText.text = "PlayerOne Wins";
         }
         else
         {
             playerOne.GetComponent<MyCharacter>().animator.SetBool("Lose", true);
             playerTwo.GetComponent<MyCharacter>().animator.SetBool("Won", true);
+            winnerText.text = "PlayerTwo Wins";
         }
+        DisplayWinner();
 
         yield return null;
     }
