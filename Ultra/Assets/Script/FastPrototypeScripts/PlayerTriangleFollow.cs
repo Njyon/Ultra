@@ -32,6 +32,9 @@ public class PlayerTriangleFollow : MonoBehaviour
     void Update()
     {
         Vector3 imagePos = Camera.main.WorldToScreenPoint(this.transform.position);
+        if (triangle == null) {
+            return;
+        }
         triangle.transform.position = imagePos;
     }
 }
