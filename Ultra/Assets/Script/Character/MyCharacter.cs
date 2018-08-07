@@ -959,12 +959,15 @@ public class MyCharacter : MonoBehaviour
                 //}
 
                 // ToDo: Check if the Character Bounced against some thing Special 
-
-                BounceType bounceType = GetPhysiksMaterial(hit);
-
+                
                 // Count enemy Combo Up
                 enemyCharacter.Combo(ComboState.Bounce);
                 eventDelegate(EventState.Bounce);
+
+                BounceType bounceType = GetPhysiksMaterial(hit);
+                audioEvents.MaterialBounce(bounceType, enemyCharacter.combo);
+                audioEvents.PlayerBounce(enemyCharacter.combo);
+
                 // COunt All Bounces for the EndScreen
                 enemyCharacter.bounceAction(enemyCharacter.playerEnum);
                 // Spawn Bounce Particle

@@ -16,6 +16,9 @@ public class BounceComponent : MonoBehaviour
     [Header("Scale Curve")]
     public AnimationCurve curve;
 
+    public AudioMaterialBounces aMB;
+    public BounceType matType;
+
     Vector3 normalScale;
 
     void Start()
@@ -40,6 +43,9 @@ public class BounceComponent : MonoBehaviour
             }
             else if (shouldScale)
             {
+                if (!collision.gameObject.GetComponent<MyCharacter>().isDisabled)
+                    aMB.Bounce(matType);
+
                 StartCoroutine(Scale());
             }
 

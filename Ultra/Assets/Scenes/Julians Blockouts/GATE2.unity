@@ -317,6 +317,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  aMB: {fileID: 0}
+  matType: 0
 --- !u!65 &39331643
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5107,6 +5109,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  aMB: {fileID: 439602468}
+  matType: 3
 --- !u!136 &439602467
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5120,6 +5124,17 @@ CapsuleCollider:
   m_Height: 1.593522
   m_Direction: 1
   m_Center: {x: 0.00067738496, y: -0.015005557, z: 5.548819e-17}
+--- !u!114 &439602468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 439602463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6437f6842387f52409dfb2580e58c989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &440690279
 GameObject:
   m_ObjectHideFlags: 0
@@ -10973,6 +10988,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  aMB: {fileID: 517838537}
+  matType: 3
 --- !u!136 &517838536
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -10986,6 +11003,17 @@ CapsuleCollider:
   m_Height: 1.5996064
   m_Direction: 1
   m_Center: {x: 0.0033793484, y: -0.010136919, z: -3.8650113e-18}
+--- !u!114 &517838537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 517838532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6437f6842387f52409dfb2580e58c989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &521518529
 GameObject:
   m_ObjectHideFlags: 0
@@ -14966,6 +14994,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  aMB: {fileID: 0}
+  matType: 0
 --- !u!64 &774742562
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -15505,6 +15535,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  aMB: {fileID: 0}
+  matType: 0
 --- !u!65 &808256596
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17677,6 +17709,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  aMB: {fileID: 1043913704}
+  matType: 3
 --- !u!136 &1043913703
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -17690,6 +17724,17 @@ CapsuleCollider:
   m_Height: 1.5980788
   m_Direction: 1
   m_Center: {x: -0.015062138, y: -0.0082888, z: 6.546879e-13}
+--- !u!114 &1043913704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1043913699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6437f6842387f52409dfb2580e58c989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1050899970
 Prefab:
   m_ObjectHideFlags: 0
@@ -18352,6 +18397,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  aMB: {fileID: 0}
+  matType: 0
 --- !u!64 &1139734684
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -19299,6 +19346,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  aMB: {fileID: 0}
+  matType: 0
 --- !u!65 &1224356225
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22541,6 +22590,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  aMB: {fileID: 0}
+  matType: 0
 --- !u!65 &1455123021
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24014,6 +24065,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  aMB: {fileID: 0}
+  matType: 0
 --- !u!64 &1562634826
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -24462,6 +24515,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  aMB: {fileID: 0}
+  matType: 0
 --- !u!65 &1585321470
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26830,6 +26885,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  aMB: {fileID: 0}
+  matType: 0
 --- !u!65 &1749764307
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31251,6 +31308,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  aMB: {fileID: 0}
+  matType: 0
 --- !u!65 &2111277061
 BoxCollider:
   m_ObjectHideFlags: 0
