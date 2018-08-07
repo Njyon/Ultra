@@ -952,7 +952,7 @@ public class MyCharacter : MonoBehaviour
         {
             // Bounce Ray
             RaycastHit hit;
-            if (MyRayCast.RayCastInDirection(transform.position, new Vector3(rb.velocity.x, rb.velocity.y, 0), out hit, 1.1f))
+            if (MyRayCast.RayCastInDirection(transform.position, new Vector3(rb.velocity.x, rb.velocity.y, 0), out hit, 1.5f))
             {
                 // End Bounce
                 //if (lastBounceObj != null && lastBounceObj == hit.transform.gameObject)
@@ -969,7 +969,7 @@ public class MyCharacter : MonoBehaviour
 
                 BounceType bounceType = GetPhysiksMaterial(hit);
                 audioEvents.MaterialBounce(bounceType, enemyCharacter.combo);
-                audioEvents.PlayerBounce(enemyCharacter.combo);
+                audioEvents.PlayerBounce(rb.velocity.magnitude/24, enemyCharacter.combo);
 
                 // COunt All Bounces for the EndScreen
                 enemyCharacter.bounceAction(enemyCharacter.playerEnum);
