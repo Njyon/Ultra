@@ -17,6 +17,8 @@ public class VideoScript : MonoBehaviour
     private AudioSource audioSource;
     public bool loop;
 
+    public int SceneToLoad;
+
     public bool loadScene;
     public bool debug = false;
 
@@ -25,7 +27,16 @@ public class VideoScript : MonoBehaviour
     {
         Application.runInBackground = true;
         StartCoroutine(PlayVideo());
+        InputManager.p1_OnKeyPressed += GetInput;
+        InputManager.p2_OnKeyPressed += GetInput;
     }
+
+    void GetInput(KeyCode noNeed)
+    {
+        if (loadScene)
+            StartCoroutine(LoadNewScene());
+    }
+    
 
     public void IStart()
     {
@@ -101,8 +112,11 @@ public class VideoScript : MonoBehaviour
 
     IEnumerator LoadNewScene()
     {
+        InputManager.p1_OnKeyPressed -= GetInput;
+        InputManager.p2_OnKeyPressed -= GetInput;
+
         yield return new WaitForSeconds(0.1f);
-        AsyncOperation async = SceneManager.LoadSceneAsync(1);
+        AsyncOperation async = SceneManager.LoadSceneAsync(SceneToLoad);
         while (!async.isDone)
         {
             yield return null;
