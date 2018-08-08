@@ -118,11 +118,11 @@ public static class MyRayCast
             {
                 if(charPosition.position.x < headHit.point.x)
                 {
-                    return new Vector3(headHit.point.x - 0.5f, headHit.point.y - head, 0);
+                    return new Vector3(headHit.point.x /*- 0.5f*/, headHit.point.y - head, 0);
                 }
                 else if(charPosition.position.x > headHit.point.x)
                 {
-                    return new Vector3(headHit.point.x + 0.5f, headHit.point.y - head, 0);
+                    return new Vector3(headHit.point.x /*+ 0.5f*/, headHit.point.y - head, 0);
                 }
                 else
                 {
@@ -133,11 +133,11 @@ public static class MyRayCast
             {
                 if (charPosition.position.x < coreHit.point.x)
                 {
-                    return new Vector3(coreHit.point.x - 0.5f, coreHit.point.y, 0);
+                    return new Vector3(coreHit.point.x/* - 0.5f*/, coreHit.point.y, 0);
                 }
                 else if(charPosition.position.x > coreHit.point.x)
                 {
-                    return  new Vector3(coreHit.point.x + 0.5f, coreHit.point.y, 0);
+                    return  new Vector3(coreHit.point.x /*+ 0.5f*/, coreHit.point.y, 0);
                 }
                 else
                 {
@@ -148,11 +148,11 @@ public static class MyRayCast
             {
                 if(distancefeed <= distanceHead && distancefeed <= distancecore)
                 {
-                    return new Vector3(feedHit.point.x - 0.5f, feedHit.point.y + feed, 0);
+                    return new Vector3(feedHit.point.x /*- 0.5f*/, feedHit.point.y + feed, 0);
                 }
                 else if(charPosition.position.x > feedHit.point.x)
                 {
-                    return new Vector3(feedHit.point.x + 0.5f, feedHit.point.y + feed, 0);
+                    return new Vector3(feedHit.point.x/* + 0.5f*/, feedHit.point.y + feed, 0);
                 }
                 else
                 {
