@@ -904,12 +904,20 @@ public class MyCharacter : MonoBehaviour
     }
     public void CheckIfComebackModeShouldEnd()
     {
-        Debug.Log(inComeBackMode + " " + gameMode.comeBackActive + " " + inCombo);
         if (inComeBackMode && !gameMode.comeBackActive && !inCombo)
         {
             pD.doublePoints.Stop();
             inComeBackMode = false;
+            movement.movementSpeed -= 2f;
+            movement.maxInAirSpeed -= 2f;
         }
+    }
+    public void UltraMode()
+    {
+
+        inComeBackMode = true;
+        movement.movementSpeed += 2f;
+        movement.maxInAirSpeed += 2f;
     }
 
     #region Deprecated
@@ -1116,6 +1124,7 @@ public class MyCharacter : MonoBehaviour
         ReturnColorToNoraml();
 
         StartCoroutine(Recovery());
+        yield return null;
     }
     IEnumerator Recovery()
     {
@@ -1127,24 +1136,27 @@ public class MyCharacter : MonoBehaviour
         clothRenderer.materials[0].SetColor(emissionID, blendColor);
         clothRenderer.materials[1].SetColor(emissionID, blendColor);
 
-        float time = 1f;
-        Color playerColor = Color.white;
+        float time = 0.3f;
+        //Color playerColor = Color.white;
 
 
-        switch (playerEnum)
-        {
-            case PlayerEnum.PlayerOne:
-                playerColor = PlayerInfoManager.playerOne.color;
-                break;
-            case PlayerEnum.PlayerTwo:
-                playerColor = PlayerInfoManager.playerTwo.color;
-                break;
-        }
+        //switch (playerEnum)
+        //{
+        //    case PlayerEnum.PlayerOne:
+        //        playerColor = PlayerInfoManager.playerOne.color;
+        //        break;
+        //    case PlayerEnum.PlayerTwo:
+        //        playerColor = PlayerInfoManager.playerTwo.color;
+        //        break;
+        //}
         while(time > 0f)
         {
-            bodyRenderer.material.SetColor(emissionID, Color.Lerp(blendColor / 10, blendColor, time));
+            bodyRenderer.material.SetColor(emissionID, blendColor);
+            clothRenderer.materials[0].SetColor(emissionID, blendColor);
+            clothRenderer.materials[1].SetColor(emissionID, blendColor);
 
-            time -= Time.deltaTime * 2;
+            time -= Time.deltaTime;
+            yield return null;
         }
         
         ReturnColorToNoraml();

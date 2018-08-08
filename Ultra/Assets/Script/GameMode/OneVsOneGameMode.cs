@@ -547,7 +547,7 @@ public class OneVsOneGameMode : MonoBehaviour
             Anouncer.SetBool("UltraMode", true);
             Fabric.EventManager.Instance.PostEvent("AnnouncerUltramode");
             comeBackActive = true;
-            characterToBoost.inComeBackMode = true;
+            characterToBoost.UltraMode();
             characterToBoost.pD.doublePoints.Play();
             Invoke("EndComeBackMode", comeBackTime);
             CancelInvoke("ResetAnouncer");
