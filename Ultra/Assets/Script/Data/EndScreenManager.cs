@@ -138,6 +138,11 @@ public class EndScreenManager : MonoBehaviour
         Vector3 p1_PlateauEndPos = new Vector3(Plateaus[0].transform.position.x, Plateaus[0].transform.position.y + p1_HightToAdd, Plateaus[0].transform.position.z);
         Vector3 p2_PlateauENdPos = new Vector3(Plateaus[1].transform.position.x, Plateaus[1].transform.position.y + p2_HightToAdd, Plateaus[1].transform.position.z);
 
+        if (p1_scoreToAdd > 0 || p2_scoreToAdd > 0)
+        {
+            HandleSound(p1_scoreToAdd, p2_scoreToAdd, time);
+        }
+        
         while (time > 0)
         {
             // Count Score Up
@@ -169,9 +174,35 @@ public class EndScreenManager : MonoBehaviour
         // Display new Score
         textManger[0].score.text = "Score: " + p1_intScore.ToString();
         textManger[1].score.text = "Score: " + p2_intScore.ToString();
+        
 
         yield return null;
     }
+
+    private void HandleSound(float p1, float p2, float time)
+    {
+        if (p1 > 0)
+        {
+            Fabric.EventManager.Instance.PostEvent("PointsL", Plateaus[0].gameObject);
+            StartCoroutine(StopCounterLeftPlayer(time));
+        }
+
+        if (p2 > 0)
+        {
+            Fabric.EventManager.Instance.PostEvent("PointsR", Plateaus[1].gameObject); 
+            StartCoroutine(StopCounterRightPlayer(time));
+        }
+    }
+
+    private IEnumerator StopCounterLeftPlayer(float delay) {
+        yield return new WaitForSeconds(delay);
+        Fabric.EventManager.Instance.PostEvent("PointsLStop", Plateaus[0].gameObject);
+    }
+    private IEnumerator StopCounterRightPlayer(float delay) {
+        yield return new WaitForSeconds(delay);
+        Fabric.EventManager.Instance.PostEvent("PointsRStop", Plateaus[1].gameObject);
+    }
+
     float p1_CurrentsScore = 0;
     float p2_CurrentsScore = 0;
     float scorePerHight;

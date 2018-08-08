@@ -293,6 +293,7 @@ public class OneVsOneGameMode : MonoBehaviour
     void ComboBreak()
     {
         Anouncer.SetBool("ComboBreak", true);
+        Fabric.EventManager.Instance.PostEvent("AnnouncerCombobreaker");
         CancelInvoke("ResetAnouncer");
         Invoke("ResetAnouncer", 0.7f);
     }
@@ -544,6 +545,7 @@ public class OneVsOneGameMode : MonoBehaviour
         if(!comeBackActive && !comeBackCooling)
         {
             Anouncer.SetBool("UltraMode", true);
+            Fabric.EventManager.Instance.PostEvent("AnnouncerUltramode");
             comeBackActive = true;
             characterToBoost.inComeBackMode = true;
             characterToBoost.pD.doublePoints.Play();

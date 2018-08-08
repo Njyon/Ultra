@@ -2428,6 +2428,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4873066854476714}
   - component: {fileID: 95063302565421140}
+  - component: {fileID: 114871095638113728}
   m_Layer: 0
   m_Name: Nav_CS_WS_anim
   m_TagString: Untagged
@@ -9274,6 +9275,7 @@ MonoBehaviour:
   dashCoolDown: 0
   maxDashes: 0
   meshController: {fileID: 0}
+  playerColor: {r: 0, g: 0, b: 0, a: 0}
   clothColor: {r: 0, g: 0, b: 0, a: 0}
   swordColor: {r: 0, g: 0, b: 0, a: 0}
   mat_Metal: {fileID: 13400000, guid: 89d8e7148aa08114c91359c766c63930, type: 2}
@@ -9449,6 +9451,17 @@ MonoBehaviour:
   maxJumps: 3
   maxVelocityX: 0
   maxVelocityY: 0
+--- !u!114 &114871095638113728
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1497775924792806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c892be28a6678a48a4fd8eac7c3b593, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &136910399663466584
 CapsuleCollider:
   m_ObjectHideFlags: 1

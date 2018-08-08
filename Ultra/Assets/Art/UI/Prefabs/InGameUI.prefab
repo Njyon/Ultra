@@ -356,6 +356,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224661255985133392}
   - component: {fileID: 95607016153327364}
+  - component: {fileID: 114990017042905554}
   m_Layer: 5
   m_Name: TimerEnd
   m_TagString: Untagged
@@ -474,6 +475,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224742297695507570}
   - component: {fileID: 95122860804140802}
+  - component: {fileID: 114849169522094840}
   m_Layer: 5
   m_Name: StartTimer
   m_TagString: Untagged
@@ -1024,6 +1026,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224768534259958270}
   - component: {fileID: 95748924232521918}
+  - component: {fileID: 114500596554500530}
   m_Layer: 5
   m_Name: GameEnd
   m_TagString: Untagged
@@ -2280,6 +2283,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114500596554500530
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1947618842935420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1eca6c7556f75449d2dac2912f43f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114525234449729158
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2900,6 +2914,17 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 2x
+--- !u!114 &114849169522094840
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1401580234704208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26e4f3fba66b18545a956ffb6945a85d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114863072920188274
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3190,6 +3215,17 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!114 &114990017042905554
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1299461753204788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1eca6c7556f75449d2dac2912f43f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &222013024052196480
 CanvasRenderer:
   m_ObjectHideFlags: 1
