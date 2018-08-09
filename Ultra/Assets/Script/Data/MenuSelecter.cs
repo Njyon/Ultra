@@ -23,6 +23,9 @@ public class MenuSelecter
     public SwitchDown SwitchDownAction;
     #endregion
     
+    ~MenuSelecter()
+    { }
+
     public void SelectSlot()
     {
         if (charakterSelected)

@@ -112,9 +112,10 @@ public static class MyRayCast
             float distanceHead = Vector3.Distance(charPosition.position, headHit.point);
             float distancecore = Vector3.Distance(charPosition.position, coreHit.point);
             float distancefeed = Vector3.Distance(charPosition.position, feedHit.point);
+            
 
             // Check witch distance is the shortest
-            if(distanceHead <= distancecore && distanceHead <= distancefeed)
+            if (distanceHead <= distancecore && distanceHead <= distancefeed)
             {
                 if(charPosition.position.x < headHit.point.x)
                 {
@@ -415,7 +416,7 @@ public static class MyRayCast
             if (Physics.Raycast(charPosition, new Vector3(0, -charPosition.y, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
                 // if an Obsticle hit return hit point + offest as Destination
-                return new Vector3(hit.point.x, hit.point.y, 0);
+                return new Vector3(hit.point.x, hit.point.y + 0.5f , 0);
             }
             else
             {
@@ -429,7 +430,7 @@ public static class MyRayCast
             if (Physics.Raycast(charPosition, new Vector3(0, charPosition.y, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
                 // if an Obsticle hit return hit point + offest as Destination
-                return new Vector3(hit.point.x, hit.point.y, 0);
+                return new Vector3(hit.point.x, hit.point.y - 0.5f, 0);
             }
             else
             {
@@ -455,7 +456,7 @@ public static class MyRayCast
             if (Physics.Raycast(charPosition, new Vector3(0, charPosition.y, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
                 // if an Obsticle hit return hit point + offest as Destination
-                return new Vector3(hit.point.x, hit.point.y, 0);
+                return new Vector3(hit.point.x, hit.point.y - 0.5f, 0);
             }
             else
             {
@@ -469,7 +470,7 @@ public static class MyRayCast
             if (Physics.Raycast(charPosition, new Vector3(0, -charPosition.y, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
                 // if an Obsticle hit return hit point + offest as Destination
-                return new Vector3(hit.point.x, hit.point.y, 0);
+                return new Vector3(hit.point.x, hit.point.y + 0.5f, 0);
             }
             else
             {

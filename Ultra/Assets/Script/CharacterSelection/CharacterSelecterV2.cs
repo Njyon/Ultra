@@ -64,6 +64,7 @@ public class CharacterSelecterV2 : MonoBehaviour
         playerOne.SwitchDownAction += P1SwitchDown;
         playerTwo.SwitchUpAction += P2SwitchUp;
         playerTwo.SwitchDownAction += P2SwitchDown;
+        
     }
 
     /// <summary>
@@ -183,6 +184,7 @@ public class CharacterSelecterV2 : MonoBehaviour
     {
         gameStartAnim.SetBool("StartGame", true);
         RemoveInput();
+
         StartGame();
     }
     public bool NoCharSelected()

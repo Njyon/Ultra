@@ -35,7 +35,10 @@ public class BounceComponent : MonoBehaviour
         if (collision.gameObject.tag == "player")
         {
             Vector3 vel = collision.gameObject.GetComponent<Rigidbody>().velocity;
-            collision.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(vel.x *= xPower, vel.y *= yPower, 0);
+            if(vel.x < 40 && vel.y < 40)
+            {
+                collision.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(vel.x * xPower, vel.y * yPower, 0);
+            }
             
             if (collision.gameObject.GetComponent<MyCharacter>().isDisabled && shouldWigle)
             {
