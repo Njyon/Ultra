@@ -113,7 +113,7 @@ public static class MyRayCast
             float distancecore = Vector3.Distance(charPosition.position, coreHit.point);
             float distancefeed = Vector3.Distance(charPosition.position, feedHit.point);
 
-            if(MyEpsilon.Epsilon(charPosition.rotation.eulerAngles.y, 180, 90))
+            if(!right)
             {
                 // Check witch distance is the shortest
                 if (distanceHead <= distancecore && distanceHead <= distancefeed)
@@ -263,50 +263,102 @@ public static class MyRayCast
             float distancecore = Vector3.Distance(charPosition.position, coreHit.point);
             float distancefeed = Vector3.Distance(charPosition.position, feedHit.point);
 
-            // Check witch distance is the shortest
-            if (distanceHead <= distancecore && distanceHead <= distancefeed)
+            if (!right)
             {
-                if (charPosition.position.x < headHit.point.x)
+                // Check witch distance is the shortest
+                if (distanceHead <= distancecore && distanceHead <= distancefeed)
                 {
-                    return new Vector3(headHit.point.x - 0.5f, headHit.point.y - head, 0);
+                    if (charPosition.position.x < headHit.point.x)
+                    {
+                        return new Vector3(headHit.point.x - 0.5f, headHit.point.y - head, 0);
+                    }
+                    else if (charPosition.position.x > headHit.point.x)
+                    {
+                        return new Vector3(headHit.point.x + 0.5f, headHit.point.y - head, 0);
+                    }
+                    else
+                    {
+                        return new Vector3(headHit.point.x, headHit.point.y - head, 0);
+                    }
                 }
-                else if (charPosition.position.x > headHit.point.x)
+                else if (distancecore <= distanceHead && distancecore <= distancefeed)
                 {
-                    return new Vector3(headHit.point.x + 0.5f, headHit.point.y - head, 0);
+                    if (charPosition.position.x < coreHit.point.x)
+                    {
+                        return new Vector3(coreHit.point.x - 0.5f, coreHit.point.y, 0);
+                    }
+                    else if (charPosition.position.x > coreHit.point.x)
+                    {
+                        return new Vector3(coreHit.point.x + 0.5f, coreHit.point.y, 0);
+                    }
+                    else
+                    {
+                        return coreHit.point;
+                    }
                 }
                 else
                 {
-                    return new Vector3(headHit.point.x, headHit.point.y - head, 0);
-                }
-            }
-            else if (distancecore <= distanceHead && distancecore <= distancefeed)
-            {
-                if (charPosition.position.x < coreHit.point.x)
-                {
-                    return new Vector3(coreHit.point.x - 0.5f, coreHit.point.y, 0);
-                }
-                else if (charPosition.position.x > coreHit.point.x)
-                {
-                    return new Vector3(coreHit.point.x + 0.5f, coreHit.point.y, 0);
-                }
-                else
-                {
-                    return coreHit.point;
+                    if (distancefeed <= distanceHead && distancefeed <= distancecore)
+                    {
+                        return new Vector3(feedHit.point.x - 0.5f, feedHit.point.y + feed, 0);
+                    }
+                    else if (charPosition.position.x > feedHit.point.x)
+                    {
+                        return new Vector3(feedHit.point.x + 0.5f, feedHit.point.y + feed, 0);
+                    }
+                    else
+                    {
+                        return new Vector3(feedHit.point.x, feedHit.point.y + feed, 0);
+                    }
                 }
             }
             else
             {
-                if (distancefeed <= distanceHead && distancefeed <= distancecore)
+                // Check witch distance is the shortest
+                if (distanceHead <= distancecore && distanceHead <= distancefeed)
                 {
-                    return new Vector3(feedHit.point.x - 0.5f, feedHit.point.y + feed, 0);
+                    if (charPosition.position.x < headHit.point.x)
+                    {
+                        return new Vector3(headHit.point.x - 0.5f, headHit.point.y - head, 0);
+                    }
+                    else if (charPosition.position.x > headHit.point.x)
+                    {
+                        return new Vector3(headHit.point.x + 0.5f, headHit.point.y - head, 0);
+                    }
+                    else
+                    {
+                        return new Vector3(headHit.point.x, headHit.point.y - head, 0);
+                    }
                 }
-                else if (charPosition.position.x > feedHit.point.x)
+                else if (distancecore <= distanceHead && distancecore <= distancefeed)
                 {
-                    return new Vector3(feedHit.point.x + 0.5f, feedHit.point.y + feed, 0);
+                    if (charPosition.position.x < coreHit.point.x)
+                    {
+                        return new Vector3(coreHit.point.x - 0.5f, coreHit.point.y, 0);
+                    }
+                    else if (charPosition.position.x > coreHit.point.x)
+                    {
+                        return new Vector3(coreHit.point.x + 0.5f, coreHit.point.y, 0);
+                    }
+                    else
+                    {
+                        return coreHit.point;
+                    }
                 }
                 else
                 {
-                    return new Vector3(feedHit.point.x, feedHit.point.y + feed, 0);
+                    if (distancefeed <= distanceHead && distancefeed <= distancecore)
+                    {
+                        return new Vector3(feedHit.point.x - 0.5f, feedHit.point.y + feed, 0);
+                    }
+                    else if (charPosition.position.x > feedHit.point.x)
+                    {
+                        return new Vector3(feedHit.point.x + 0.5f, feedHit.point.y + feed, 0);
+                    }
+                    else
+                    {
+                        return new Vector3(feedHit.point.x, feedHit.point.y + feed, 0);
+                    }
                 }
             }
         }
@@ -329,7 +381,7 @@ public static class MyRayCast
             if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - feed, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
                 // if an Obsticle hit return hit point + offest as Destination
-                return new Vector3(hit.point.x, hit.point.y + 0.5f, 0);
+                return new Vector3(hit.point.x - 0.5f, hit.point.y + feed, 0);
             }
             else
             {
@@ -337,7 +389,7 @@ public static class MyRayCast
                 if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y + head, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
                 {
                     // if an Obsticle hit return hit point - offest as Destination
-                    return new Vector3(hit.point.x, hit.point.y - 0.5f, 0);
+                    return new Vector3(hit.point.x - 0.5f, hit.point.y - head, 0);
                 }
                 else
                 {
@@ -345,7 +397,7 @@ public static class MyRayCast
                     if (Physics.Raycast(charPosition, new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
                     {
                         // if an Obsticle hit return hit point - offest as Destination
-                        return hit.point;
+                        return new Vector3(hit.point.x, hit.point.y, 0);
                     }
                 }
                 // if no Obsticle found return Destination, Position + Lenght
@@ -358,7 +410,7 @@ public static class MyRayCast
             if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - feed, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
                 // if an Obsticle hit return hit point + offest as Destination
-                return new Vector3(hit.point.x, hit.point.y + 0.5f, 0);
+                return new Vector3(hit.point.x - 0.5f, hit.point.y + feed, 0);
             }
             else
             {
@@ -366,7 +418,7 @@ public static class MyRayCast
                 if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y + head, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
                 {
                     // if an Obsticle hit return hit point - offest as Destination
-                    return new Vector3(hit.point.x, hit.point.y - 0.5f, 0);
+                    return new Vector3(hit.point.x - 0.5f, hit.point.y - head, 0);
                 }
                 else
                 {
@@ -374,7 +426,7 @@ public static class MyRayCast
                     if (Physics.Raycast(charPosition, new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
                     {
                         // if an Obsticle hit return hit point - offest as Destination
-                        return hit.point;
+                        return new Vector3(hit.point.x - 0.5f, hit.point.y, 0);
                     }
                 }
                 // if no Obsticle found return Destination, Position + Lenght
@@ -399,7 +451,7 @@ public static class MyRayCast
             if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - feed, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
                 // if an Obsticle hit return hit point + offest as Destination
-                return new Vector3(hit.point.x, hit.point.y + 0.5f, 0);
+                return new Vector3(hit.point.x + 0.5f, hit.point.y + feed, 0);
             }
             else
             {
@@ -407,7 +459,7 @@ public static class MyRayCast
                 if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y + head, 0), new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
                 {
                     // if an Obsticle hit return hit point - offest as Destination
-                    return new Vector3(hit.point.x, hit.point.y - 0.5f, 0);
+                    return new Vector3(hit.point.x + 0.5f, hit.point.y - head, 0);
                 }
                 else
                 {
@@ -415,7 +467,7 @@ public static class MyRayCast
                     if (Physics.Raycast(charPosition, new Vector3(charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
                     {
                         // if an Obsticle hit return hit point - offest as Destination
-                        return hit.point;
+                        return new Vector3(hit.point.x + 0.5f, hit.point.y, 0);
                     }
                 }
                 // if no Obsticle found return Destination, Position + Lenght
@@ -428,7 +480,7 @@ public static class MyRayCast
             if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y - feed, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
             {
                 // if an Obsticle hit return hit point + offest as Destination
-                return new Vector3(hit.point.x, hit.point.y + 0.5f, 0);
+                return new Vector3(hit.point.x + 0.5f, hit.point.y + feed, 0);
             }
             else
             {
@@ -436,7 +488,7 @@ public static class MyRayCast
                 if (Physics.Raycast(new Vector3(charPosition.x, charPosition.y + head, 0), new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
                 {
                     // if an Obsticle hit return hit point - offest as Destination
-                    return new Vector3(hit.point.x, hit.point.y - 0.5f, 0);
+                    return new Vector3(hit.point.x + 0.5f, hit.point.y - head, 0);
                 }
                 else
                 {
@@ -444,7 +496,7 @@ public static class MyRayCast
                     if (Physics.Raycast(charPosition, new Vector3(-charPosition.x, 0, 0), out hit, length, 9, QueryTriggerInteraction.Ignore))
                     {
                         // if an Obsticle hit return hit point - offest as Destination
-                        return hit.point;
+                        return new Vector3(hit.point.x + 0.5f, hit.point.y, 0);
                     }
                 }
                 // if no Obsticle found return Destination, Position + Lenght

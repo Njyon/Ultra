@@ -135,26 +135,24 @@ public class Nav2 : MyCharacter
             isUsingAbility = true;
             StartCoroutine(DashCooldown());
             IsAttacking();
-            
+
             switch (direction)
             {
                 case Direction.Right:
+                    eventDelegate(EventState.AttackSide);
+
+                    dashEndPosition = MyRayCast.RaycastRight(transform.position, attackLength);
+                    dashStartPosition = transform.position;
+                    Instantiate(pD.attackRight, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
+
+                    break;
                 case Direction.Left:
                     eventDelegate(EventState.AttackSide);
-                    
-                    // Find dash End and Start point
-                    if (IsLookingRight())
-                    {
-                        dashEndPosition = MyRayCast.RaycastRight(transform.position, attackLength);
-                        dashStartPosition = transform.position;
-                        Instantiate(pD.attackRight, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
-                    }
-                    else
-                    {
-                        dashEndPosition = MyRayCast.RaycastLeft(transform.position, attackLength);
-                        dashStartPosition = transform.position;
-                        Instantiate(pD.attackLeft, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
-                    }
+
+                    dashEndPosition = MyRayCast.RaycastLeft(transform.position, attackLength);
+                    dashStartPosition = transform.position;
+                    Instantiate(pD.attackLeft, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
+
                     break;
                 case Direction.Up:
                     eventDelegate(EventState.AttackUp);
@@ -173,22 +171,35 @@ public class Nav2 : MyCharacter
                     Instantiate(pD.attackDown, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
                     break;
                 case Direction.RightDownAngel:
+                    eventDelegate(EventState.AttackDownAngled);
+
+
+                    Instantiate(pD.attackRightDown, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
+
+                    // Find dash End and Start point
+                    dashEndPosition = MyRayCast.RayCastDownAngeled(transform, attackLength, true);
+                    dashStartPosition = transform.position;
+                    break;
                 case Direction.LeftDownAngel:
                     eventDelegate(EventState.AttackDownAngled);
 
-                    if (IsLookingRight())
-                    {
-                        Instantiate(pD.attackRightDown, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
-                    }
-                    else
-                    {
-                        Instantiate(pD.attackLeftDown, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
-                    }
+
+                    Instantiate(pD.attackLeftDown, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
+
                     // Find dash End and Start point
-                    dashEndPosition = MyRayCast.RayCastDownAngeled(transform, attackLength, IsLookingRight());
+                    dashEndPosition = MyRayCast.RayCastDownAngeled(transform, attackLength, false);
                     dashStartPosition = transform.position;
                     break;
                 case Direction.RightUpAngel:
+                    eventDelegate(EventState.AttackUpAngled);
+
+                    Instantiate(pD.attackRightUp, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
+
+
+                    // Find dash End and Start point
+                    dashEndPosition = MyRayCast.RayCastUpAngeled(transform, attackLength, true);
+                    dashStartPosition = transform.position;
+                    break;
                 case Direction.LeftUpAngel:
                     eventDelegate(EventState.AttackUpAngled);
 
@@ -201,7 +212,7 @@ public class Nav2 : MyCharacter
                         Instantiate(pD.attackLeftUp, new Vector3(transform.position.x - 0.2f, transform.position.y, 0), Quaternion.identity, this.transform);
                     }
                     // Find dash End and Start point
-                    dashEndPosition = MyRayCast.RayCastUpAngeled(transform, attackLength, IsLookingRight());
+                    dashEndPosition = MyRayCast.RayCastUpAngeled(transform, attackLength, false);
                     dashStartPosition = transform.position;
                     break;
             }
@@ -434,6 +445,9 @@ public class Nav2 : MyCharacter
     
     void LightAttack()
     {
+        if (currentDashes >= 3)
+            return;
+
         if (IsFalling() && !isUsingAbility && !isDisabled && !isDodgeing)
         {
             abilities.Activate();
@@ -441,6 +455,9 @@ public class Nav2 : MyCharacter
     }
     void LightAttackRight()
     {
+        if (currentDashes >= 3)
+            return;
+
         if (IsFalling() && !isUsingAbility && !isDisabled && !isDodgeing)
         {
             LookRight();
@@ -449,6 +466,9 @@ public class Nav2 : MyCharacter
     }
     void LightAttackLeft()
     {
+        if (currentDashes >= 3)
+            return;
+
         if (IsFalling() && !isUsingAbility && !isDisabled && !isDodgeing)
         {
             LookLeft();
@@ -457,16 +477,25 @@ public class Nav2 : MyCharacter
     }
     void LightAttackUp()
     {
+        if (currentDashes >= 3)
+            return;
+
         if (!isUsingAbility && IsFalling() && !isDisabled && !isDodgeing)
             abilities.Activate();
     }
     void LightAttackDown()
     {
+        if (currentDashes >= 3)
+            return;
+
         if (IsFalling() && !isUsingAbility && !isDisabled && !isDodgeing)
             abilities.Activate();
     }
     void LightAttackRightUp()
     {
+        if (currentDashes >= 3)
+            return;
+
         if (IsFalling() && !isUsingAbility && !isDisabled && !isDodgeing)
         {
             LookRight();
@@ -475,6 +504,9 @@ public class Nav2 : MyCharacter
     }
     void LightAttackRightDown()
     {
+        if (currentDashes >= 3)
+            return;
+
         if (IsFalling() && !isUsingAbility && !isDisabled && !isDodgeing)
         {
             LookRight();
@@ -483,6 +515,9 @@ public class Nav2 : MyCharacter
     }
     void LightAttackLefttUp()
     {
+        if (currentDashes >= 3)
+            return;
+
         if (IsFalling() && !isUsingAbility && !isDisabled && !isDodgeing)
         {
             LookLeft();
@@ -491,6 +526,9 @@ public class Nav2 : MyCharacter
     }
     void LightAttackLeftDown()
     {
+        if (currentDashes >= 3)
+            return;
+
         if (IsFalling() && !isUsingAbility && !isDisabled && !isDodgeing)
         {
             LookLeft();
