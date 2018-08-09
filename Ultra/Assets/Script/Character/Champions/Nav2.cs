@@ -421,7 +421,7 @@ public class Nav2 : MyCharacter
         abilities.End();
     }
 
-    void Update()
+    void LateUpdate()
     {
         Bounce();
         abilities.Update();

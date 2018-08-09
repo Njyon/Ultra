@@ -112,54 +112,107 @@ public static class MyRayCast
             float distanceHead = Vector3.Distance(charPosition.position, headHit.point);
             float distancecore = Vector3.Distance(charPosition.position, coreHit.point);
             float distancefeed = Vector3.Distance(charPosition.position, feedHit.point);
-            
 
-            // Check witch distance is the shortest
-            if (distanceHead <= distancecore && distanceHead <= distancefeed)
+            if(MyEpsilon.Epsilon(charPosition.rotation.eulerAngles.y, 180, 90))
             {
-                if(charPosition.position.x < headHit.point.x)
+                // Check witch distance is the shortest
+                if (distanceHead <= distancecore && distanceHead <= distancefeed)
                 {
-                    return new Vector3(headHit.point.x /*- 0.5f*/, headHit.point.y - head, 0);
+                    if (charPosition.position.x < headHit.point.x)
+                    {
+                        return new Vector3(headHit.point.x + 0.5f, headHit.point.y - head, 0);
+                    }
+                    else if (charPosition.position.x > headHit.point.x)
+                    {
+                        return new Vector3(headHit.point.x - 0.5f, headHit.point.y - head, 0);
+                    }
+                    else
+                    {
+                        return new Vector3(headHit.point.x, headHit.point.y - head, 0);
+                    }
                 }
-                else if(charPosition.position.x > headHit.point.x)
+                else if (distancecore <= distanceHead && distancecore <= distancefeed)
                 {
-                    return new Vector3(headHit.point.x /*+ 0.5f*/, headHit.point.y - head, 0);
+                    if (charPosition.position.x < coreHit.point.x)
+                    {
+                        return new Vector3(coreHit.point.x + 0.5f, coreHit.point.y, 0);
+                    }
+                    else if (charPosition.position.x > coreHit.point.x)
+                    {
+                        return new Vector3(coreHit.point.x - 0.5f, coreHit.point.y, 0);
+                    }
+                    else
+                    {
+                        return coreHit.point;
+                    }
                 }
                 else
                 {
-                    return new Vector3(headHit.point.x, headHit.point.y - head, 0);
-                }
-            }
-            else if(distancecore <= distanceHead && distancecore <= distancefeed)
-            {
-                if (charPosition.position.x < coreHit.point.x)
-                {
-                    return new Vector3(coreHit.point.x/* - 0.5f*/, coreHit.point.y, 0);
-                }
-                else if(charPosition.position.x > coreHit.point.x)
-                {
-                    return  new Vector3(coreHit.point.x /*+ 0.5f*/, coreHit.point.y, 0);
-                }
-                else
-                {
-                    return coreHit.point;
+                    if (distancefeed <= distanceHead && distancefeed <= distancecore)
+                    {
+                        return new Vector3(feedHit.point.x + 0.5f, feedHit.point.y + feed, 0);
+                    }
+                    else if (charPosition.position.x > feedHit.point.x)
+                    {
+                        return new Vector3(feedHit.point.x - 0.5f, feedHit.point.y + feed, 0);
+                    }
+                    else
+                    {
+                        return new Vector3(feedHit.point.x, feedHit.point.y + feed, 0);
+                    }
                 }
             }
             else
             {
-                if(distancefeed <= distanceHead && distancefeed <= distancecore)
+                // Check witch distance is the shortest
+                if (distanceHead <= distancecore && distanceHead <= distancefeed)
                 {
-                    return new Vector3(feedHit.point.x /*- 0.5f*/, feedHit.point.y + feed, 0);
+                    if (charPosition.position.x < headHit.point.x)
+                    {
+                        return new Vector3(headHit.point.x - 0.5f, headHit.point.y - head, 0);
+                    }
+                    else if (charPosition.position.x > headHit.point.x)
+                    {
+                        return new Vector3(headHit.point.x + 0.5f, headHit.point.y - head, 0);
+                    }
+                    else
+                    {
+                        return new Vector3(headHit.point.x, headHit.point.y - head, 0);
+                    }
                 }
-                else if(charPosition.position.x > feedHit.point.x)
+                else if (distancecore <= distanceHead && distancecore <= distancefeed)
                 {
-                    return new Vector3(feedHit.point.x/* + 0.5f*/, feedHit.point.y + feed, 0);
+                    if (charPosition.position.x < coreHit.point.x)
+                    {
+                        return new Vector3(coreHit.point.x - 0.5f, coreHit.point.y, 0);
+                    }
+                    else if (charPosition.position.x > coreHit.point.x)
+                    {
+                        return new Vector3(coreHit.point.x + 0.5f, coreHit.point.y, 0);
+                    }
+                    else
+                    {
+                        return coreHit.point;
+                    }
                 }
                 else
                 {
-                    return new Vector3(feedHit.point.x, feedHit.point.y + feed, 0);
+                    if (distancefeed <= distanceHead && distancefeed <= distancecore)
+                    {
+                        return new Vector3(feedHit.point.x - 0.5f, feedHit.point.y + feed, 0);
+                    }
+                    else if (charPosition.position.x > feedHit.point.x)
+                    {
+                        return new Vector3(feedHit.point.x + 0.5f, feedHit.point.y + feed, 0);
+                    }
+                    else
+                    {
+                        return new Vector3(feedHit.point.x, feedHit.point.y + feed, 0);
+                    }
                 }
             }
+
+            
         } 
     }
     /// <summary>
